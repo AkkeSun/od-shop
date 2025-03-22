@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: account-service
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  datasource:
+    url: jdbc:mysql://140.245.70.130:3306/account?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: akkessun
+    password: sunyang2ek+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: 140.245.70.130
+      port: 6379
+      timeout: 3000
+    mongodb:
+      uri: mongodb://akkessun:sunyang2ek+@140.245.70.130:27017/account
+
+server:
+  port: 8081
+  shutdown: graceful
+
+jwt:
+  token:
+    secret-key: hello-jwt
+    valid-time: 600000 # ms
+    refresh-valid-time: 259200000 # ms (3days)
+
+kafka:
+  host: 152.67.206.159:9092
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      redis:
+        slidingWindowSize: 1
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+    instances:
+      redis:
+        base-config: redis
+
+service-constant:
+  aes:
+    secret-key: testKey

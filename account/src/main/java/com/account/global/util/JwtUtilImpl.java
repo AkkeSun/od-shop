@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 public class JwtUtilImpl implements JwtUtil{
 
     @Value("${jwt.token.secret-key}")
-    private static String secretKey;
+    private String secretKey;
 
     @Value("${jwt.token.valid-time}")
-    private static long tokenValidTime;
+    private long tokenValidTime;
 
     @Value("${jwt.token.refresh-valid-time}")
-    private static long refreshTokenValidTime;
+    private long refreshTokenValidTime;
 
     @Override
     public String createAccessToken(Account account) {
@@ -65,7 +65,7 @@ public class JwtUtilImpl implements JwtUtil{
 
     @Override
     public Long getAccountId(String token) {
-        return (Long) getClaims(token).get("accountId");
+        return Long.valueOf(getClaims(token).get("accountId").toString());
     }
 
     @Override
