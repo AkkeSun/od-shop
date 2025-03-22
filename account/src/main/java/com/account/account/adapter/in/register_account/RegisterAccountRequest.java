@@ -3,35 +3,46 @@ package com.account.account.adapter.in.register_account;
 import com.account.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.account.domain.model.Role;
 import com.account.global.exception.CustomValidationException;
+import com.account.global.validation.ValidPassword;
+import com.account.global.validation.ValidRole;
+import com.account.global.validation.ValidUserTel;
+import com.account.global.validation.ValidationGroups.CustomGroups;
+import com.account.global.validation.ValidationGroups.NotBlankGroups;
+import com.account.global.validation.ValidationGroups.SizeGroups;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.util.regex.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.util.StringUtils;
 
 @Getter
-@ToString
 @NoArgsConstructor
+@ValidPassword(groups = CustomGroups.class)
 class RegisterAccountRequest {
 
-    @NotBlank(message = "이메일은 필수값 입니다.")
+    @NotBlank(message = "이메일은 필수값 입니다.", groups = NotBlankGroups.class)
+    @Size(max = 50, message = "이메일은 50자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
     private String email;
 
-    @NotBlank(message = "비밀번호는 필수값 입니다.")
+    @NotBlank(message = "비밀번호는 필수값 입니다.", groups = NotBlankGroups.class)
     private String password;
 
-    @NotBlank(message = "비밀번호 확인은 필수값 입니다.")
+    @NotBlank(message = "비밀번호 확인은 필수값 입니다.", groups = NotBlankGroups.class)
     private String passwordCheck;
 
-    @NotBlank(message = "권한은 필수값 입니다.")
+    @ValidRole(groups = CustomGroups.class)
+    @NotBlank(message = "권한은 필수값 입니다.", groups = NotBlankGroups.class)
     private String role;
 
+    @Size(max = 100, message = "이름은 10자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
     private String username;
 
+    @ValidUserTel(groups = CustomGroups.class)
     private String userTel;
 
+    @Size(max = 100, message = "주소는 100자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
     private String address;
 
     @Builder

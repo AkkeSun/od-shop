@@ -1,27 +1,31 @@
 package com.account.account.adapter.in.update_account;
 
 import com.account.account.applicaiton.port.in.command.UpdateAccountCommand;
-import com.account.global.exception.CustomValidationException;
-import java.util.regex.Pattern;
+import com.account.global.validation.ValidPassword;
+import com.account.global.validation.ValidUserTel;
+import com.account.global.validation.ValidationGroups.CustomGroups;
+import com.account.global.validation.ValidationGroups.SizeGroups;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.util.StringUtils;
 
 @Getter
-@ToString
 @NoArgsConstructor
+@ValidPassword(groups = CustomGroups.class)
 class UpdateAccountRequest {
 
     private String password;
 
     private String passwordCheck;
 
+    @Size(max = 100, message = "이름은 10자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
     private String username;
 
+    @ValidUserTel(groups = CustomGroups.class)
     private String userTel;
 
+    @Size(max = 100, message = "주소는 100자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
     private String address;
 
     @Builder
@@ -32,17 +36,6 @@ class UpdateAccountRequest {
         this.username = username;
         this.userTel = userTel;
         this.address = address;
-    }
-
-    void validation() {
-        if (StringUtils.hasText(password) && StringUtils.hasText(passwordCheck) &&
-            !password.equals(passwordCheck)) {
-            throw new CustomValidationException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-        }
-        if (StringUtils.hasText(userTel) &&
-            !Pattern.compile("^01[016789]\\d{7,8}$").matcher(userTel).matches()) {
-            throw new CustomValidationException("올바른 전화번호 형식이 아닙니다.");
-        }
     }
 
     UpdateAccountCommand toCommand(String accessToken) {
