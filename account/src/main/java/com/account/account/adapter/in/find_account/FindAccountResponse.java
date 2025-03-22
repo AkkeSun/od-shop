@@ -4,10 +4,8 @@ import com.account.account.applicaiton.service.find_account.FindAccountServiceRe
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
-@ToString
 @NoArgsConstructor
 class FindAccountResponse {
 
