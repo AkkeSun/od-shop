@@ -34,7 +34,7 @@ server:
 jwt:
   token:
     secret-key: hello-jwt
-    valid-time: 600000 # ms
+    valid-time: 600000 # ms (10min)
     refresh-valid-time: 259200000 # ms (3days)
 
 kafka:
