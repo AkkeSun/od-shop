@@ -535,7 +535,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .password("1234")
                 .passwordCheck("1234")
                 .role("ROLE_CUSTOMER")
-                .username("od".repeat(6))
+                .username("od")
                 .userTel("01012345678")
                 .address("12345".repeat(21))
                 .build();
