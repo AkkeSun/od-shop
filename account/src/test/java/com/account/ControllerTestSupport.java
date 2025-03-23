@@ -9,9 +9,9 @@ import com.account.global.filter.ApiCallLogFilter;
 import com.account.global.filter.JwtAuthenticationFilter;
 import com.account.global.util.JsonUtil;
 import com.account.global.util.JwtUtil;
+import com.account.token.application.port.in.DeleteTokenUseCase;
 import com.account.token.application.port.in.RegisterTokenByRefreshUseCase;
 import com.account.token.application.port.in.RegisterTokenUseCase;
-import com.account.token.application.port.out.DeleteTokenPort;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -60,5 +60,5 @@ public class ControllerTestSupport {
     protected DeleteAccountUseCase deleteAccountUseCase;
 
     @MockBean
-    protected DeleteTokenPort deleteTokenPort;
+    protected DeleteTokenUseCase deleteTokenUseCase;
 }

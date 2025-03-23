@@ -36,7 +36,7 @@ class RegisterAccountRequest {
     @NotBlank(message = "권한은 필수값 입니다.", groups = NotBlankGroups.class)
     private String role;
 
-    @Size(max = 100, message = "이름은 10자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
+    @Size(max = 10, message = "이름은 10자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
     private String username;
 
     @ValidUserTel(groups = CustomGroups.class)
