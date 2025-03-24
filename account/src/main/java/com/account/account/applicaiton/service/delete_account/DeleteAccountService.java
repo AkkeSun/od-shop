@@ -1,5 +1,7 @@
 package com.account.account.applicaiton.service.delete_account;
 
+import static com.account.account.domain.model.AccountHistory.createAccountHistoryForDelete;
+
 import com.account.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.account.applicaiton.port.out.DeleteAccountPort;
 import com.account.account.applicaiton.port.out.ProduceAccountPort;
@@ -24,7 +26,7 @@ class DeleteAccountService implements DeleteAccountUseCase {
     public DeleteAccountServiceResponse deleteAccount(String authentication) {
 
         Long accountId = jwtUtil.getAccountId(authentication);
-        AccountHistory history = new AccountHistory().createAccountHistoryForDelete(accountId);
+        AccountHistory history = createAccountHistoryForDelete(accountId);
         registerAccountHistoryPort.register(history);
 
         deleteAccountPort.deleteById(accountId);

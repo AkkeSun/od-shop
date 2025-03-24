@@ -1,5 +1,7 @@
 package com.account.account.applicaiton.service.update_account;
 
+import static com.account.account.domain.model.AccountHistory.createAccountHistoryForUpdate;
+
 import com.account.account.applicaiton.port.in.UpdateAccountUseCase;
 import com.account.account.applicaiton.port.in.command.UpdateAccountCommand;
 import com.account.account.applicaiton.port.out.FindAccountPort;
@@ -56,8 +58,8 @@ class UpdateAccountService implements UpdateAccountUseCase {
                 .build();
         }
 
-        AccountHistory history = new AccountHistory()
-            .createAccountHistoryForUpdate(accountId, String.join(",", updateList));
+        AccountHistory history = createAccountHistoryForUpdate(accountId,
+            String.join(",", updateList));
 
         registerAccountHistoryPort.register(history);
         updateAccountPort.update(account);

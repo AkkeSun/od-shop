@@ -10,11 +10,11 @@ class AccountHistoryMapper {
 
     public AccountHistoryDocument toDocument(AccountHistory domain) {
         return AccountHistoryDocument.builder()
-            .accountId(domain.getAccountId())
-            .type(domain.getType())
-            .detailInfo(domain.getDetailInfo())
-            .regDate(domain.getRegDate())
-            .regDateTime(domain.getRegDateTime()
+            .accountId(domain.accountId())
+            .type(domain.type())
+            .detailInfo(domain.detailInfo())
+            .regDate(domain.regDate())
+            .regDateTime(domain.regDateTime()
                 .format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss")))
             .build();
     }
