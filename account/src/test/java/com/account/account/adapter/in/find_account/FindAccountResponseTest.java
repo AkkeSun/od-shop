@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class FindAccountInfoResponseTest {
+class FindAccountResponseTest {
 
     @Nested
     @DisplayName("[of] 서비스 응답 객채를 API 응답 객채로 변환하는 메소드")

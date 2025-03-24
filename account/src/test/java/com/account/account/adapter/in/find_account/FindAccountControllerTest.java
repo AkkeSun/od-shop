@@ -18,7 +18,7 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.ResultActions;
 
-class FindAccountInfoControllerTest extends ControllerTestSupport {
+class FindAccountControllerTest extends ControllerTestSupport {
 
     @Nested
     @DisplayName("[FindAccountInfo] 사용자 정보를 조회하는 API")
