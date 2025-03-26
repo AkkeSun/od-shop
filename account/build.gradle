@@ -35,7 +35,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // circuit breaker
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
     implementation 'commons-codec:commons-codec:1.15'
 
@@ -92,12 +91,12 @@ openapi3 {
 tasks.register('copyOasToSwagger', DefaultTask) {
     doLast {
         def openapi3File = file("src/main/resources/static/docs/account-api.yaml")
-        def securitySchemesContent = "  securitySchemes:\n" +        \
-                                            "    APIKey:\n" +        \
-                                            "      type: apiKey\n" +        \
-                                            "      name: Authorization\n" +        \
-                                            "      in: header\n" +       \
-                                            "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +           \
+                                               "    APIKey:\n" +           \
+                                               "      type: apiKey\n" +           \
+                                               "      name: Authorization\n" +           \
+                                               "      in: header\n" +          \
+                                               "security:\n" +
                 "  - APIKey: []"
 
         if (openapi3File.exists()) {
