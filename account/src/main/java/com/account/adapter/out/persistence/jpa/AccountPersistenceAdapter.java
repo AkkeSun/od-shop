@@ -28,13 +28,6 @@ class AccountPersistenceAdapter implements FindAccountPort, RegisterAccountPort,
     }
 
     @Override
-    public Account findByEmail(String email) {
-        AccountEntity entity = accountRepository.findByEmail(email)
-            .orElseThrow(() -> new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO));
-        return accountMapper.toDomain(entity);
-    }
-
-    @Override
     public Account findByEmailAndPassword(String email, String password) {
         AccountEntity entity = accountRepository.findByEmailAndPassword(email, password)
             .orElseThrow(() -> new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO));
