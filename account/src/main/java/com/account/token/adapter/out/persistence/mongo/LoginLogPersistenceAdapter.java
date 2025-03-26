@@ -1,9 +1,9 @@
 package com.account.token.adapter.out.persistence.mongo;
 
-import static com.account.global.util.DateUtil.getCurrentDate;
+import static com.account.infrastructure.util.DateUtil.getCurrentDate;
 
-import com.account.token.application.port.out.RegisterLoginLogPort;
-import com.account.token.domain.model.Token;
+import com.account.applicaiton.port.out.RegisterLoginLogPort;
+import com.account.domain.model.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
@@ -17,6 +17,6 @@ class LoginLogPersistenceAdapter implements RegisterLoginLogPort {
 
     @Override
     public void register(Token token) {
-        mongoTemplate.save(mapper.toDocument(token), "login_log_"+ getCurrentDate());
+        mongoTemplate.save(mapper.toDocument(token), "login_log_" + getCurrentDate());
     }
 }

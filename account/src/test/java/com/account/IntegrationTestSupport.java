@@ -1,8 +1,8 @@
 package com.account;
 
-import com.account.global.util.AesUtil;
-import com.account.global.util.JwtUtil;
-import com.account.global.util.UserAgentUtil;
+import com.account.infrastructure.util.AesUtil;
+import com.account.infrastructure.util.JwtUtil;
+import com.account.infrastructure.util.UserAgentUtil;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

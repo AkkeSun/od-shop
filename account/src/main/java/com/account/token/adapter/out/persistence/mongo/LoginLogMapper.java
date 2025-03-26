@@ -1,8 +1,8 @@
 package com.account.token.adapter.out.persistence.mongo;
 
-import static com.account.global.util.DateUtil.getCurrentDateTime;
+import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 
-import com.account.token.domain.model.Token;
+import com.account.domain.model.Token;
 import org.springframework.stereotype.Component;
 
 @Component
