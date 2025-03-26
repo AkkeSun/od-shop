@@ -1,4 +1,4 @@
-package com.accountagent.adapter.in.register_history;
+package com.accountagent.adapter.in.consumer;
 
 import com.accountagent.application.port.in.RegisterDqlInfoUseCase;
 import com.accountagent.application.port.in.RegisterHistoryUseCase;
