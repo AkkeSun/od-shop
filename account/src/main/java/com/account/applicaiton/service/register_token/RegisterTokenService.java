@@ -1,14 +1,16 @@
 package com.account.applicaiton.service.register_token;
 
 import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
+import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.RegisterTokenUseCase;
 import com.account.applicaiton.port.in.command.RegisterTokenCommand;
 import com.account.applicaiton.port.out.FindAccountPort;
-import com.account.applicaiton.port.out.RegisterLoginLogPort;
+import com.account.applicaiton.port.out.ProduceAccountPort;
 import com.account.applicaiton.port.out.RegisterTokenCachePort;
 import com.account.applicaiton.port.out.RegisterTokenPort;
 import com.account.domain.model.Account;
+import com.account.domain.model.LoginLog;
 import com.account.domain.model.Token;
 import com.account.infrastructure.util.AesUtil;
 import com.account.infrastructure.util.JwtUtil;
@@ -27,7 +29,7 @@ class RegisterTokenService implements RegisterTokenUseCase {
     private final UserAgentUtil userAgentUtil;
     private final FindAccountPort findAccountPort;
     private final RegisterTokenPort registerTokenPort;
-    private final RegisterLoginLogPort registerLoginLogPort;
+    private final ProduceAccountPort produceAccountPort;
     private final RegisterTokenCachePort registerTokenCachePort;
 
     @Override
@@ -46,9 +48,16 @@ class RegisterTokenService implements RegisterTokenUseCase {
             .role(account.getRole().name())
             .build();
 
-        registerLoginLogPort.register(token);
         registerTokenPort.registerToken(token);
         registerTokenCachePort.registerToken(token);
+
+        LoginLog loginLog = LoginLog.builder()
+            .accountId(account.getId())
+            .email(account.getEmail())
+            .loginDateTime(getCurrentDateTime())
+            .build();
+
+        produceAccountPort.sendMessage("login-log", toJsonString(loginLog));
 
         return RegisterTokenServiceResponse.builder()
             .accessToken(accessToken)

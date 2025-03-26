@@ -33,7 +33,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     // circuit breaker
     implementation 'org.springframework.boot:spring-boot-starter-aop'
@@ -93,12 +92,12 @@ openapi3 {
 tasks.register('copyOasToSwagger', DefaultTask) {
     doLast {
         def openapi3File = file("src/main/resources/static/docs/account-api.yaml")
-        def securitySchemesContent = "  securitySchemes:\n" +       \
-                                           "    APIKey:\n" +       \
-                                           "      type: apiKey\n" +       \
-                                           "      name: Authorization\n" +       \
-                                           "      in: header\n" +      \
-                                           "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +        \
+                                            "    APIKey:\n" +        \
+                                            "      type: apiKey\n" +        \
+                                            "      name: Authorization\n" +        \
+                                            "      in: header\n" +       \
+                                            "security:\n" +
                 "  - APIKey: []"
 
         if (openapi3File.exists()) {

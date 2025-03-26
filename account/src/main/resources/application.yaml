@@ -24,8 +24,6 @@ spring:
       host: 140.245.70.130
       port: 6379
       timeout: 3000
-    mongodb:
-      uri: mongodb://akkessun:sunyang2ek+@140.245.70.130:27017/account
 
 server:
   port: 8081
