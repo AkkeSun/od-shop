@@ -57,7 +57,7 @@ class RegisterTokenService implements RegisterTokenUseCase {
             .loginDateTime(getCurrentDateTime())
             .build();
 
-        produceAccountPort.sendMessage("login-log", toJsonString(loginLog));
+        produceAccountPort.sendMessage("account-login", toJsonString(loginLog));
 
         return RegisterTokenServiceResponse.builder()
             .accessToken(accessToken)
