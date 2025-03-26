@@ -5,6 +5,8 @@ import com.account.infrastructure.validation.ValidPassword;
 import com.account.infrastructure.validation.ValidUserTel;
 import com.account.infrastructure.validation.ValidationGroups.CustomGroups;
 import com.account.infrastructure.validation.ValidationGroups.SizeGroups;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,5 +49,14 @@ class UpdateAccountRequest {
             .userTel(userTel)
             .address(address)
             .build();
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            return super.toString();
+        }
     }
 }

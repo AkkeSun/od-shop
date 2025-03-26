@@ -9,6 +9,8 @@ import com.account.infrastructure.validation.ValidUserTel;
 import com.account.infrastructure.validation.ValidationGroups.CustomGroups;
 import com.account.infrastructure.validation.ValidationGroups.NotBlankGroups;
 import com.account.infrastructure.validation.ValidationGroups.SizeGroups;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.regex.Pattern;
@@ -80,5 +82,14 @@ class RegisterAccountRequest {
             .address(address)
             .role(role)
             .build();
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            return super.toString();
+        }
     }
 }

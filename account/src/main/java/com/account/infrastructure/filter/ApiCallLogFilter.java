@@ -1,14 +1,13 @@
 package com.account.infrastructure.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,31 +27,47 @@ public class ApiCallLogFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(wrappedRequest, wrappedResponse);
 
-        String method = request.getMethod();
-        String uri = request.getRequestURI();
-
-        Map<String, Object> requestInfo = new HashMap<>();
-
-        // request parameter
-        request.getParameterMap().forEach((key, value) -> {
-            requestInfo.put(key, String.join(",", value));
-        });
-        // request body
-        try {
-            String requestBody = new String(wrappedRequest.getContentAsByteArray(),
-                StandardCharsets.UTF_8);
-            requestInfo.putAll(new ObjectMapper().readValue(requestBody, Map.class));
-        } catch (Exception ignored) {
-        }
         // response body
         String responseBody = new String(wrappedResponse.getContentAsByteArray(),
             StandardCharsets.UTF_8);
 
-        if (!uri.equals("/docs/account-api.yaml")) {
-            log.info("[{} {}] request - {}", method, uri, requestInfo);
-            log.info("[{} {}] response - {}", method, uri, responseBody);
-        }
+        // -- Filter, Intercepter Level Exception Check ---
+        if (responseBody.contains("BAD_REQUEST") ||
+            (responseBody.contains("UNAUTHORIZED") && responseBody.contains("errorCode\":3003")) ||
+            responseBody.contains("FORBIDDEN") && responseBody.contains("errorCode\":5002")) {
 
+            try {
+                String method = request.getMethod();
+                String uri = request.getRequestURI();
+
+                ObjectNode requestInfo = new ObjectMapper().createObjectNode();
+                ObjectNode requestParam = new ObjectMapper().createObjectNode();
+                ObjectNode requestBody = new ObjectMapper().createObjectNode();
+
+                // request parameter
+                request.getParameterMap().forEach((key, value) -> {
+                    requestParam.put(key, String.join(",", value));
+                });
+
+                // request body
+                try {
+                    String requestBodyStr = new String(wrappedRequest.getContentAsByteArray(),
+                        StandardCharsets.UTF_8);
+                    requestBody = (ObjectNode) new ObjectMapper().readTree(requestBodyStr);
+                } catch (Exception ignored) {
+                }
+
+                requestInfo.put("param", requestParam);
+                requestInfo.put("body", requestBody);
+
+                if (!uri.equals("/docs/account-api.yaml")) {
+                    log.info("[{} {}] request - {}", method, uri, requestInfo);
+                    log.info("[{} {}] response - {}", method, uri, responseBody);
+                }
+
+            } catch (Exception ignored) {
+            }
+        }
         wrappedResponse.copyBodyToResponse();
     }
 }
