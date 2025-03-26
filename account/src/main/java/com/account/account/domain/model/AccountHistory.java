@@ -1,8 +1,7 @@
 package com.account.account.domain.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import static com.account.global.util.DateUtil.getCurrentDateTime;
+
 import lombok.Builder;
 
 @Builder
@@ -10,16 +9,14 @@ public record AccountHistory(
     Long accountId,
     String type,
     String detailInfo,
-    String regDate,
-    LocalDateTime regDateTime
+    String regDateTime
 ) {
 
     public static AccountHistory createAccountHistoryForDelete(Long accountId) {
         return AccountHistory.builder()
             .accountId(accountId)
             .type("delete")
-            .regDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
-            .regDateTime(LocalDateTime.now())
+            .regDateTime(getCurrentDateTime())
             .build();
     }
 
@@ -28,8 +25,7 @@ public record AccountHistory(
             .accountId(accountId)
             .type("update")
             .detailInfo(updateList)
-            .regDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
-            .regDateTime(LocalDateTime.now())
+            .regDateTime(getCurrentDateTime())
             .build();
     }
 }

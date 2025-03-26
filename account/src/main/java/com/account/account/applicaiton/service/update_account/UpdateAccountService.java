@@ -1,11 +1,12 @@
 package com.account.account.applicaiton.service.update_account;
 
 import static com.account.account.domain.model.AccountHistory.createAccountHistoryForUpdate;
+import static com.account.global.util.JsonUtil.toJsonString;
 
 import com.account.account.applicaiton.port.in.UpdateAccountUseCase;
 import com.account.account.applicaiton.port.in.command.UpdateAccountCommand;
 import com.account.account.applicaiton.port.out.FindAccountPort;
-import com.account.account.applicaiton.port.out.RegisterAccountHistoryPort;
+import com.account.account.applicaiton.port.out.ProduceAccountPort;
 import com.account.account.applicaiton.port.out.UpdateAccountPort;
 import com.account.account.domain.model.Account;
 import com.account.account.domain.model.AccountHistory;
@@ -26,7 +27,7 @@ class UpdateAccountService implements UpdateAccountUseCase {
     private final AesUtil aesUtil;
     private final FindAccountPort findAccountPort;
     private final UpdateAccountPort updateAccountPort;
-    private final RegisterAccountHistoryPort registerAccountHistoryPort;
+    private final ProduceAccountPort produceAccountPort;
 
     @Override
     public UpdateAccountServiceResponse updateAccount(UpdateAccountCommand command) {
@@ -61,8 +62,8 @@ class UpdateAccountService implements UpdateAccountUseCase {
         AccountHistory history = createAccountHistoryForUpdate(accountId,
             String.join(",", updateList));
 
-        registerAccountHistoryPort.register(history);
         updateAccountPort.update(account);
+        produceAccountPort.sendMessage("account-history", toJsonString(history));
 
         return UpdateAccountServiceResponse.builder()
             .updateYn("Y")
