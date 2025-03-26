@@ -1,6 +1,8 @@
 package com.account.adapter.in.register_token;
 
 import com.account.applicaiton.port.in.command.RegisterTokenCommand;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,4 +31,12 @@ class RegisterTokenRequest {
             .build();
     }
 
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            return super.toString();
+        }
+    }
 }
