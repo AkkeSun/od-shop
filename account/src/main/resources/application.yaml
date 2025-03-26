@@ -36,7 +36,7 @@ jwt:
     refresh-valid-time: 259200000 # ms (3days)
 
 kafka:
-  host: 152.67.206.159:9092
+  host: 152.67.206.159:9093
 
 resilience4j:
   circuitbreaker:
@@ -48,9 +48,18 @@ resilience4j:
         slow-call-duration-threshold: 3s
         slow-call-rate-threshold: 100
         permitted-number-of-calls-in-half-open-state: 5
+      kafka:
+        slidingWindowSize: 5
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
     instances:
       redis:
         base-config: redis
+      kafka:
+        base-config: kafka
 
 service-constant:
   aes:
