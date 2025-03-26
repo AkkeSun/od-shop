@@ -2,6 +2,7 @@ package com.account.infrastructure.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class JsonUtil {
 
@@ -21,5 +22,9 @@ public class JsonUtil {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static ObjectNode toObjectNode(Object obj) {
+        return objectMapper.valueToTree(obj);
     }
 }
