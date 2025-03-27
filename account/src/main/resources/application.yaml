@@ -36,7 +36,7 @@ jwt:
     refresh-valid-time: 259200000 # ms (3days)
 
 kafka:
-  host: 152.67.206.159:9093
+  host: 152.67.206.159:9092
 
 resilience4j:
   circuitbreaker:
