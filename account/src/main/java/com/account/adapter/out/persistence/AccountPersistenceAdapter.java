@@ -1,11 +1,8 @@
-package com.account.adapter.out.persistence.jpa;
+package com.account.adapter.out.persistence;
 
 import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
 
-import com.account.applicaiton.port.out.DeleteAccountPort;
-import com.account.applicaiton.port.out.FindAccountPort;
-import com.account.applicaiton.port.out.RegisterAccountPort;
-import com.account.applicaiton.port.out.UpdateAccountPort;
+import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.domain.model.Account;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-class AccountPersistenceAdapter implements FindAccountPort, RegisterAccountPort, DeleteAccountPort,
-    UpdateAccountPort {
+class AccountPersistenceAdapter implements AccountStoragePort {
 
     private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;

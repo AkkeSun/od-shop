@@ -1,4 +1,4 @@
-package com.account.adapter.out.persistence.jpa;
+package com.account.adapter.out.persistence;
 
 import com.account.domain.model.Account;
 import org.springframework.stereotype.Component;

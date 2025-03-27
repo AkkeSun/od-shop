@@ -6,10 +6,9 @@ import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
-import com.account.applicaiton.port.out.FindAccountPort;
-import com.account.applicaiton.port.out.RegisterAccountPort;
-import com.account.applicaiton.port.out.RegisterTokenCachePort;
-import com.account.applicaiton.port.out.RegisterTokenPort;
+import com.account.applicaiton.port.out.AccountStoragePort;
+import com.account.applicaiton.port.out.CachePort;
+import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.domain.model.Token;
@@ -31,15 +30,14 @@ class RegisterAccountService implements RegisterAccountUseCase {
 
     private final AesUtil aesUtil;
     private final JwtUtil jwtUtil;
+    private final CachePort cachePort;
     private final UserAgentUtil userAgentUtil;
-    private final FindAccountPort findAccountPort;
-    private final RegisterTokenPort registerTokenPort;
-    private final RegisterAccountPort registerAccountPort;
-    private final RegisterTokenCachePort registerTokenCachePort;
+    private final TokenStoragePort tokenStoragePort;
+    private final AccountStoragePort accountStoragePort;
 
     @Override
     public RegisterAccountServiceResponse registerAccount(RegisterAccountCommand command) {
-        if (findAccountPort.existsByEmail(command.email())) {
+        if (accountStoragePort.existsByEmail(command.email())) {
             throw new CustomBusinessException(Business_SAVED_ACCOUNT_INFO);
         }
 
@@ -53,7 +51,7 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .regDateTime(LocalDateTime.now())
             .regDate(getCurrentDate())
             .build();
-        Account savedAccount = registerAccountPort.register(account);
+        Account savedAccount = accountStoragePort.register(account);
 
         String accessToken = jwtUtil.createAccessToken(savedAccount);
         String refreshToken = jwtUtil.createRefreshToken(savedAccount.getEmail());
@@ -67,8 +65,8 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .role(command.role())
             .build();
 
-        registerTokenPort.registerToken(token);
-        registerTokenCachePort.registerToken(token);
+        cachePort.registerToken(token);
+        tokenStoragePort.registerToken(token);
 
         return RegisterAccountServiceResponse.builder()
             .accessToken(accessToken)

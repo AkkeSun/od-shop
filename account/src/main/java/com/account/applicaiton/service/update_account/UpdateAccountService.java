@@ -5,9 +5,8 @@ import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.UpdateAccountUseCase;
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;
-import com.account.applicaiton.port.out.FindAccountPort;
-import com.account.applicaiton.port.out.ProduceAccountPort;
-import com.account.applicaiton.port.out.UpdateAccountPort;
+import com.account.applicaiton.port.out.AccountStoragePort;
+import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.domain.model.Account;
 import com.account.domain.model.AccountHistory;
 import com.account.infrastructure.util.AesUtil;
@@ -25,14 +24,13 @@ class UpdateAccountService implements UpdateAccountUseCase {
 
     private final JwtUtil jwtUtil;
     private final AesUtil aesUtil;
-    private final FindAccountPort findAccountPort;
-    private final UpdateAccountPort updateAccountPort;
-    private final ProduceAccountPort produceAccountPort;
+    private final AccountStoragePort accountStoragePort;
+    private final MessageProducerPort messageProducerPort;
 
     @Override
     public UpdateAccountServiceResponse updateAccount(UpdateAccountCommand command) {
         Long accountId = jwtUtil.getAccountId(command.accessToken());
-        Account account = findAccountPort.findById(accountId);
+        Account account = accountStoragePort.findById(accountId);
 
         List<String> updateList = new ArrayList<>();
         if (command.isUsernameUpdateRequired(account.getUsername())) {
@@ -62,8 +60,8 @@ class UpdateAccountService implements UpdateAccountUseCase {
         AccountHistory history = createAccountHistoryForUpdate(accountId,
             String.join(",", updateList));
 
-        updateAccountPort.update(account);
-        produceAccountPort.sendMessage("account-history", toJsonString(history));
+        accountStoragePort.update(account);
+        messageProducerPort.sendMessage("account-history", toJsonString(history));
 
         return UpdateAccountServiceResponse.builder()
             .updateYn("Y")

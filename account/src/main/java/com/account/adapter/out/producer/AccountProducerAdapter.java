@@ -1,6 +1,6 @@
 package com.account.adapter.out.producer;
 
-import com.account.applicaiton.port.out.ProduceAccountPort;
+import com.account.applicaiton.port.out.MessageProducerPort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.time.Duration;
 import java.util.UUID;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class AccountProducerAdapter implements ProduceAccountPort {
+class AccountProducerAdapter implements MessageProducerPort {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final RedisTemplate<String, String> redisTemplate;

@@ -1,4 +1,4 @@
-package com.account.adapter.out.persistence.jpa;
+package com.account.adapter.out.persistence;
 
 import com.account.domain.model.Token;
 import org.springframework.stereotype.Component;

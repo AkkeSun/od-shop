@@ -3,10 +3,8 @@ package com.account.applicaiton.service.register_token_by_refresh;
 import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 
 import com.account.applicaiton.port.in.RegisterTokenByRefreshUseCase;
-import com.account.applicaiton.port.out.FindTokenCachePort;
-import com.account.applicaiton.port.out.FindTokenPort;
-import com.account.applicaiton.port.out.RegisterTokenCachePort;
-import com.account.applicaiton.port.out.UpdateTokenPort;
+import com.account.applicaiton.port.out.CachePort;
+import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.Token;
 import com.account.infrastructure.exception.CustomAuthenticationException;
@@ -26,11 +24,9 @@ import org.springframework.util.ObjectUtils;
 class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
 
     private final JwtUtil jwtUtil;
-    private final FindTokenPort findTokenPort;
+    private final CachePort cachePort;
     private final UserAgentUtil userAgentUtil;
-    private final UpdateTokenPort updateTokenPort;
-    private final FindTokenCachePort findTokenCachePort;
-    private final RegisterTokenCachePort registerTokenCachePort;
+    private final TokenStoragePort tokenStoragePort;
 
     @Override
     public RegisterTokenByRefreshServiceResponse registerTokenByRefresh(String refreshToken) {
@@ -40,11 +36,11 @@ class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
 
         String email = jwtUtil.getEmail(refreshToken);
         String userAgent = userAgentUtil.getUserAgent();
-        Token savedToken = findTokenCachePort.findByEmailAndUserAgent(email, userAgent);
+        Token savedToken = cachePort.findTokenByEmailAndUserAgent(email, userAgent);
 
         if (ObjectUtils.isEmpty(savedToken)) {
             log.info("[Token cache notfound] {} - {}", email, userAgent);
-            savedToken = findTokenPort.findByEmailAndUserAgent(email, userAgent);
+            savedToken = tokenStoragePort.findByEmailAndUserAgent(email, userAgent);
         }
         if (ObjectUtils.isEmpty(savedToken) || savedToken.isDifferentRefreshToken(refreshToken)) {
             log.info("[Invalid token] {} - {}", email, userAgent);
@@ -58,8 +54,8 @@ class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
         savedToken.updateRefreshToken(newRefreshToken);
         savedToken.updateRegTime(getCurrentDateTime());
 
-        updateTokenPort.updateToken(savedToken);
-        registerTokenCachePort.registerToken(savedToken);
+        cachePort.registerToken(savedToken);
+        tokenStoragePort.updateToken(savedToken);
 
         return RegisterTokenByRefreshServiceResponse.builder()
             .accessToken(newAccessToken)

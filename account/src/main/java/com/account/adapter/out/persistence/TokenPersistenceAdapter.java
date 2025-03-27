@@ -1,9 +1,6 @@
-package com.account.adapter.out.persistence.jpa;
+package com.account.adapter.out.persistence;
 
-import com.account.applicaiton.port.out.DeleteTokenPort;
-import com.account.applicaiton.port.out.FindTokenPort;
-import com.account.applicaiton.port.out.RegisterTokenPort;
-import com.account.applicaiton.port.out.UpdateTokenPort;
+import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,11 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-class TokenPersistenceAdapter implements FindTokenPort, RegisterTokenPort, DeleteTokenPort,
-    UpdateTokenPort {
+class TokenPersistenceAdapter implements TokenStoragePort {
 
     private final TokenMapper tokenCacheMapper;
-
     private final TokenRepository tokenRepository;
 
     @Override

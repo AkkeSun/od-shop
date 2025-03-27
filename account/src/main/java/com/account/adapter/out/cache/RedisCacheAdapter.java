@@ -1,11 +1,9 @@
-package com.account.adapter.out.redis;
+package com.account.adapter.out.cache;
 
 import static com.account.infrastructure.util.JsonUtil.parseJson;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
-import com.account.applicaiton.port.out.DeleteTokenCachePort;
-import com.account.applicaiton.port.out.FindTokenCachePort;
-import com.account.applicaiton.port.out.RegisterTokenCachePort;
+import com.account.applicaiton.port.out.CachePort;
 import com.account.domain.model.Token;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.ArrayList;
@@ -22,14 +20,13 @@ import org.springframework.util.StringUtils;
 
 @Slf4j
 @Component
-class RedisPersistenceAdapter implements RegisterTokenCachePort, FindTokenCachePort,
-    DeleteTokenCachePort {
+class RedisCacheAdapter implements CachePort {
 
     private final long validTime;
     private final String tokenCacheKey;
     private final RedisTemplate<String, String> redisTemplate;
 
-    RedisPersistenceAdapter(RedisTemplate<String, String> redisTemplate,
+    RedisCacheAdapter(RedisTemplate<String, String> redisTemplate,
         @Value("${jwt.token.refresh-valid-time}") long validTime) {
         this.redisTemplate = redisTemplate;
         this.validTime = validTime;
@@ -45,7 +42,7 @@ class RedisPersistenceAdapter implements RegisterTokenCachePort, FindTokenCacheP
 
     @Override
     @CircuitBreaker(name = "redis", fallbackMethod = "findByEmailAndUserAgentFallback")
-    public Token findByEmailAndUserAgent(String email, String userAgent) {
+    public Token findTokenByEmailAndUserAgent(String email, String userAgent) {
         String key = String.format(tokenCacheKey, email, userAgent);
         String redisData = redisTemplate.opsForValue().get(key);
         if (!StringUtils.hasText(redisData)) {

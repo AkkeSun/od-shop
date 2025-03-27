@@ -1,4 +1,4 @@
-package com.account.adapter.out.persistence.jpa;
+package com.account.adapter.out.persistence;
 
 import com.account.domain.model.Role;
 import jakarta.persistence.Column;

@@ -1,6 +1,6 @@
 package com.account.applicaiton.port.out;
 
-public interface ProduceAccountPort {
+public interface MessageProducerPort {
 
     void sendMessage(String topic, String message);
 }
