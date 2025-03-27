@@ -20,7 +20,7 @@ class DeleteTokenService implements DeleteTokenUseCase {
     @Override
     public DeleteTokenServiceResponse deleteToken(String accessToken) {
         String email = jwtUtil.getEmail(accessToken);
-        cachePort.deleteByEmail(email);
+        cachePort.deleteTokenByEmail(email);
         tokenStoragePort.deleteByEmail(email);
 
         log.info("[Delete token] {}", email);

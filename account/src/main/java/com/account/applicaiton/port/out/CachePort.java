@@ -6,7 +6,7 @@ public interface CachePort {
 
     void registerToken(Token token);
 
-    void deleteByEmail(String email);
+    void deleteTokenByEmail(String email);
 
     Token findTokenByEmailAndUserAgent(String email, String userAgent);
 

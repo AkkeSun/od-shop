@@ -1,8 +1,8 @@
-package com.accountagent.adapter.out.redis;
+package com.accountagent.adapter.out.cache;
 
 import static com.accountagent.global.util.JsonUtil.parseJson;
 
-import com.accountagent.application.port.out.RedisPort;
+import com.accountagent.application.port.out.CachePort;
 import com.accountagent.domain.model.AccountHistory;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RedisAdapter implements RedisPort {
+public class RedisCacheAdapter implements CachePort {
 
     private final RedisTemplate<String, String> redisTemplate;
 

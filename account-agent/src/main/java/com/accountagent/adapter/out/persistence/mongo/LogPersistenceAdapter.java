@@ -2,7 +2,7 @@ package com.accountagent.adapter.out.persistence.mongo;
 
 import static com.accountagent.global.util.DateUtil.getCurrentDate;
 
-import com.accountagent.application.port.out.RegisterLogPort;
+import com.accountagent.application.port.out.LogStoragePort;
 import com.accountagent.domain.model.AccountHistory;
 import com.accountagent.domain.model.DlqLog;
 import com.accountagent.domain.model.LoginLog;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class LogPersistenceAdapter implements RegisterLogPort {
+class LogPersistenceAdapter implements LogStoragePort {
 
     private final MongoTemplate mongoTemplate;
 

@@ -4,7 +4,7 @@ import com.accountagent.domain.model.AccountHistory;
 import com.accountagent.domain.model.DlqLog;
 import com.accountagent.domain.model.LoginLog;
 
-public interface RegisterLogPort {
+public interface LogStoragePort {
 
     void registerHistoryLog(AccountHistory history);
 

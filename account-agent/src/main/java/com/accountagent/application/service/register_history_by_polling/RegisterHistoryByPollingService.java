@@ -1,8 +1,8 @@
 package com.accountagent.application.service.register_history_by_polling;
 
 import com.accountagent.application.port.in.RegisterHistoryByPollingUseCase;
-import com.accountagent.application.port.out.RedisPort;
-import com.accountagent.application.port.out.RegisterLogPort;
+import com.accountagent.application.port.out.CachePort;
+import com.accountagent.application.port.out.LogStoragePort;
 import com.accountagent.domain.model.AccountHistory;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class RegisterHistoryByPollingService implements RegisterHistoryByPollingUseCase {
 
-    private final RedisPort redisPort;
-    private final RegisterLogPort registerLogPort;
+    private final CachePort cachePort;
+    private final LogStoragePort logStoragePort;
 
     @Override
     // TODO: 분산락
     public void registerHistory() {
-        Map<String, AccountHistory> hostoryMap = redisPort.findAllAccountHistory();
+        Map<String, AccountHistory> hostoryMap = cachePort.findAllAccountHistory();
         if (hostoryMap.isEmpty()) {
             return;
         }
@@ -28,8 +28,8 @@ class RegisterHistoryByPollingService implements RegisterHistoryByPollingUseCase
         log.info("Register AccountHistory by Polling - " + hostoryMap.size());
 
         hostoryMap.forEach((k, v) -> {
-            registerLogPort.registerHistoryLog(v);
-            redisPort.delete(k);
+            logStoragePort.registerHistoryLog(v);
+            cachePort.delete(k);
         });
     }
 }

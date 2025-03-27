@@ -53,7 +53,7 @@ class RedisCacheAdapter implements CachePort {
 
     @Override
     @CircuitBreaker(name = "redis", fallbackMethod = "deleteByEmailFallback")
-    public void deleteByEmail(String email) {
+    public void deleteTokenByEmail(String email) {
         String key = String.format(tokenCacheKey, email, "*");
         List<String> redisKeys = scanByPattern(key);
         redisTemplate.delete(redisKeys);
