@@ -1,12 +1,14 @@
 package com.account.applicaiton.service.delete_account;
 
 import static com.account.domain.model.AccountHistory.createAccountHistoryForDelete;
+import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.domain.model.AccountHistory;
+import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,17 @@ class DeleteAccountService implements DeleteAccountUseCase {
     @Override
     public DeleteAccountServiceResponse deleteAccount(String authentication) {
 
+        if (accountStoragePort.existsByEmail(jwtUtil.getEmail(authentication))) {
+            throw new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO);
+        }
+
         Long accountId = jwtUtil.getAccountId(authentication);
         AccountHistory history = createAccountHistoryForDelete(accountId);
+
         accountStoragePort.deleteById(accountId);
         messageProducerPort.sendMessage("delete-account", String.valueOf(accountId)); // TODO: 토큰 삭제
         messageProducerPort.sendMessage("account-history", toJsonString(history));
+
         return DeleteAccountServiceResponse.builder()
             .id(accountId)
             .result("Y")
