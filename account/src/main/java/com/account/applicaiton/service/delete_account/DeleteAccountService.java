@@ -6,7 +6,9 @@ import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.port.out.AccountStoragePort;
+import com.account.applicaiton.port.out.CachePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
+import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.AccountHistory;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.util.JwtUtil;
@@ -20,13 +22,17 @@ import org.springframework.transaction.annotation.Transactional;
 class DeleteAccountService implements DeleteAccountUseCase {
 
     private final JwtUtil jwtUtil;
+    private final CachePort cachePort;
+    private final TokenStoragePort tokenStoragePort;
     private final AccountStoragePort accountStoragePort;
     private final MessageProducerPort messageProducerPort;
 
     @Override
     public DeleteAccountServiceResponse deleteAccount(String authentication) {
 
-        if (accountStoragePort.existsByEmail(jwtUtil.getEmail(authentication))) {
+        String email = jwtUtil.getEmail(authentication);
+
+        if (accountStoragePort.existsByEmail(email)) {
             throw new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO);
         }
 
@@ -34,7 +40,10 @@ class DeleteAccountService implements DeleteAccountUseCase {
         AccountHistory history = createAccountHistoryForDelete(accountId);
 
         accountStoragePort.deleteById(accountId);
-        messageProducerPort.sendMessage("delete-account", String.valueOf(accountId)); // TODO: 토큰 삭제
+        tokenStoragePort.deleteByEmail(email);
+        cachePort.deleteTokenByEmail(email);
+
+        messageProducerPort.sendMessage("delete-account", String.valueOf(accountId));
         messageProducerPort.sendMessage("account-history", toJsonString(history));
 
         return DeleteAccountServiceResponse.builder()
