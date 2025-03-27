@@ -1,6 +1,6 @@
 package com.accountagent.adapter.out.cache;
 
-import static com.accountagent.global.util.JsonUtil.parseJson;
+import static com.accountagent.infrastructure.util.JsonUtil.parseJson;
 
 import com.accountagent.application.port.out.CachePort;
 import com.accountagent.domain.model.AccountHistory;

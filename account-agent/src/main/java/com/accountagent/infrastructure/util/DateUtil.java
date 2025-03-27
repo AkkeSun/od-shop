@@ -1,4 +1,4 @@
-package com.accountagent.global.util;
+package com.accountagent.infrastructure.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

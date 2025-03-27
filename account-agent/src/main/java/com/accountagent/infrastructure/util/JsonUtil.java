@@ -1,4 +1,4 @@
-package com.accountagent.global.util;
+package com.accountagent.infrastructure.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
