@@ -62,6 +62,7 @@ dependencies {
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'it.ozimov:embedded-redis:0.7.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
@@ -91,12 +92,12 @@ openapi3 {
 tasks.register('copyOasToSwagger', DefaultTask) {
     doLast {
         def openapi3File = file("src/main/resources/static/docs/account-api.yaml")
-        def securitySchemesContent = "  securitySchemes:\n" +           \
-                                               "    APIKey:\n" +           \
-                                               "      type: apiKey\n" +           \
-                                               "      name: Authorization\n" +           \
-                                               "      in: header\n" +          \
-                                               "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +            \
+                                                "    APIKey:\n" +            \
+                                                "      type: apiKey\n" +            \
+                                                "      name: Authorization\n" +            \
+                                                "      in: header\n" +           \
+                                                "security:\n" +
                 "  - APIKey: []"
 
         if (openapi3File.exists()) {
