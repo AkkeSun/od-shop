@@ -6,7 +6,6 @@ import java.time.Duration;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,6 @@ class AccountProducerAdapter implements MessageProducerPort {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final RedisTemplate<String, String> redisTemplate;
-    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @CircuitBreaker(name = "kafka", fallbackMethod = "sendMessageFallback")

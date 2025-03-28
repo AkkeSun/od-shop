@@ -52,9 +52,9 @@ class TokenEntity {
         this.regDateTime = regDateTime;
     }
 
-    void updateByDomain(Token tokenCache) {
-        this.refreshToken = tokenCache.getRefreshToken();
-        this.regDateTime = tokenCache.getRegDateTime();
-        this.userAgent = tokenCache.getUserAgent();
+    void updateByDomain(Token domain) {
+        this.refreshToken = domain.getRefreshToken();
+        this.regDateTime = domain.getRegDateTime();
+        this.userAgent = domain.getUserAgent();
     }
 }

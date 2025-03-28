@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class TokenPersistenceAdapter implements TokenStoragePort {
 
-    private final TokenMapper tokenCacheMapper;
+    private final TokenMapper tokenMapper;
     private final TokenRepository tokenRepository;
 
     @Override
     public Token findByEmailAndUserAgent(String email, String userAgent) {
         return tokenRepository.findByEmailAndUserAgent(email, userAgent)
-            .map(tokenCacheMapper::toDomain)
+            .map(tokenMapper::toDomain)
             .orElse(null);
     }
 
@@ -28,7 +28,7 @@ class TokenPersistenceAdapter implements TokenStoragePort {
                 existingEntity.updateByDomain(token);
                 return existingEntity;
             })
-            .orElseGet(() -> tokenCacheMapper.toEntity(token));
+            .orElseGet(() -> tokenMapper.toEntity(token));
         tokenRepository.save(entity);
     }
 
@@ -40,7 +40,7 @@ class TokenPersistenceAdapter implements TokenStoragePort {
 
     @Override
     @Transactional // for test @Transactional
-    public void updateToken(Token tokenCache) {
-        tokenRepository.updateToken(tokenCacheMapper.toEntity(tokenCache));
+    public void updateToken(Token token) {
+        tokenRepository.updateToken(tokenMapper.toEntity(token));
     }
 }
