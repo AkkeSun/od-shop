@@ -49,8 +49,8 @@ class AccountPersistenceAdapterTest extends IntegrationTestSupport {
                 .userTel("userTel")
                 .address("address")
                 .role(Role.ROLE_SELLER)
-                .regDateTime(LocalDateTime.now())
-                .regDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+                .regDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .regDate("20210101")
                 .build();
             AccountEntity savedEntity = accountRepository.save(entity);
 
@@ -99,8 +99,8 @@ class AccountPersistenceAdapterTest extends IntegrationTestSupport {
                 .userTel("userTel")
                 .address("address")
                 .role(Role.ROLE_SELLER)
-                .regDateTime(LocalDateTime.now())
-                .regDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+                .regDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .regDate("20210101")
                 .build();
             AccountEntity savedEntity = accountRepository.save(entity);
 
@@ -227,8 +227,8 @@ class AccountPersistenceAdapterTest extends IntegrationTestSupport {
                 .userTel("userTel")
                 .address("address")
                 .role(Role.ROLE_SELLER)
-                .regDateTime(LocalDateTime.now())
-                .regDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+                .regDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .regDate("20210101")
                 .build();
             AccountEntity savedEntity = accountRepository.save(entity);
 
@@ -240,8 +240,8 @@ class AccountPersistenceAdapterTest extends IntegrationTestSupport {
                 .userTel("updateUserTel")
                 .address("updateAddress")
                 .role(savedEntity.getRole())
-                .regDateTime(savedEntity.getRegDateTime())
-                .regDate(savedEntity.getRegDate())
+                .regDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .regDate("20210101")
                 .build();
 
             // when
