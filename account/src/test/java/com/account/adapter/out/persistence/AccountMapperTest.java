@@ -1,15 +1,18 @@
 package com.account.adapter.out.persistence;
 
+import com.account.IntegrationTestSupport;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-class AccountMapperTest {
+class AccountMapperTest extends IntegrationTestSupport {
 
-    private AccountMapper mapper = new AccountMapper();
+    @Autowired
+    AccountMapper mapper;
 
     @Nested
     @DisplayName("[toDomain] entity를 domain 으로 변환하는 메소드")
@@ -73,7 +76,7 @@ class AccountMapperTest {
             // then
             assert entity.getId().equals(domain.getId());
             assert entity.getEmail().equals(domain.getEmail());
-            assert entity.getPassword().equals(domain.getPassword());
+            assert entity.getPassword().equals(aesUtil.encryptText(domain.getPassword()));
             assert entity.getUsername().equals(domain.getUsername());
             assert entity.getUserTel().equals(domain.getUserTel());
             assert entity.getAddress().equals(domain.getAddress());

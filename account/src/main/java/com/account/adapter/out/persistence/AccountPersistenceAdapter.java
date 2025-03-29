@@ -5,6 +5,7 @@ import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUN
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.domain.model.Account;
 import com.account.infrastructure.exception.CustomNotFoundException;
+import com.account.infrastructure.util.AesUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class AccountPersistenceAdapter implements AccountStoragePort {
 
+    private final AesUtil aesUtil;
     private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;
 
@@ -25,7 +27,8 @@ class AccountPersistenceAdapter implements AccountStoragePort {
 
     @Override
     public Account findByEmailAndPassword(String email, String password) {
-        AccountEntity entity = accountRepository.findByEmailAndPassword(email, password)
+        AccountEntity entity = accountRepository.findByEmailAndPassword(email,
+                aesUtil.encryptText(password))
             .orElseThrow(() -> new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO));
         return accountMapper.toDomain(entity);
     }

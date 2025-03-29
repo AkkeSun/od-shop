@@ -39,11 +39,11 @@ class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
         Token savedToken = cachePort.findTokenByEmailAndUserAgent(email, userAgent);
 
         if (ObjectUtils.isEmpty(savedToken)) {
-            log.info("[Token cache notfound] {} - {}", email, userAgent);
+            log.info("[token cache notfound] {} - {}", email, userAgent);
             savedToken = tokenStoragePort.findByEmailAndUserAgent(email, userAgent);
         }
         if (ObjectUtils.isEmpty(savedToken) || savedToken.isDifferentRefreshToken(refreshToken)) {
-            log.info("[Invalid token] {} - {}", email, userAgent);
+            log.info("[invalid refresh token] {} - {}", email, userAgent);
             throw new CustomAuthenticationException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
 

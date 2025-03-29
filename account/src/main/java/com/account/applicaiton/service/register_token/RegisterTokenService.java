@@ -12,7 +12,6 @@ import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.LoginLog;
 import com.account.domain.model.Token;
-import com.account.infrastructure.util.AesUtil;
 import com.account.infrastructure.util.JwtUtil;
 import com.account.infrastructure.util.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class RegisterTokenService implements RegisterTokenUseCase {
 
-    private final AesUtil aesUtil;
     private final JwtUtil jwtUtil;
     private final CachePort cachePort;
     private final UserAgentUtil userAgentUtil;
@@ -34,8 +32,8 @@ class RegisterTokenService implements RegisterTokenUseCase {
 
     @Override
     public RegisterTokenServiceResponse registerToken(RegisterTokenCommand command) {
-        Account account = accountStoragePort.findByEmailAndPassword(
-            command.email(), aesUtil.encryptText(command.password()));
+        Account account = accountStoragePort.findByEmailAndPassword(command.email(),
+            command.password());
 
         String accessToken = jwtUtil.createAccessToken(account);
         String refreshToken = jwtUtil.createRefreshToken(command.email());

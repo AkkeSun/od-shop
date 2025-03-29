@@ -13,7 +13,6 @@ import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.domain.model.Token;
 import com.account.infrastructure.exception.CustomBusinessException;
-import com.account.infrastructure.util.AesUtil;
 import com.account.infrastructure.util.JwtUtil;
 import com.account.infrastructure.util.UserAgentUtil;
 import java.time.LocalDateTime;
@@ -28,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class RegisterAccountService implements RegisterAccountUseCase {
 
-    private final AesUtil aesUtil;
     private final JwtUtil jwtUtil;
     private final CachePort cachePort;
     private final UserAgentUtil userAgentUtil;
@@ -43,7 +41,7 @@ class RegisterAccountService implements RegisterAccountUseCase {
 
         Account account = Account.builder()
             .email(command.email())
-            .password(aesUtil.encryptText(command.password()))
+            .password(command.password())
             .username(command.username())
             .userTel(command.userTel())
             .address(command.address())

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,11 @@ class AccountPersistenceAdapterTest extends IntegrationTestSupport {
     @AfterEach
     void tearDown() {
         accountRepository.deleteAll();
+    }
+
+    @BeforeEach
+    void setup() {
+        circuitBreakerRegistry.circuitBreaker("kafka").reset();
     }
 
     @Nested
@@ -88,7 +94,7 @@ class AccountPersistenceAdapterTest extends IntegrationTestSupport {
             // given
             AccountEntity entity = AccountEntity.builder()
                 .email("email")
-                .password("password")
+                .password(aesUtil.encryptText("password"))
                 .username("username")
                 .userTel("userTel")
                 .address("address")
@@ -100,12 +106,12 @@ class AccountPersistenceAdapterTest extends IntegrationTestSupport {
 
             // when
             Account account = adapter.findByEmailAndPassword(savedEntity.getEmail(),
-                savedEntity.getPassword());
+                "password");
 
             // then
             assert account.getId().equals(savedEntity.getId());
             assert account.getEmail().equals(savedEntity.getEmail());
-            assert account.getPassword().equals(savedEntity.getPassword());
+            assert account.getPassword().equals(aesUtil.decryptText(savedEntity.getPassword()));
             assert account.getUsername().equals(savedEntity.getUsername());
             assert account.getUserTel().equals(savedEntity.getUserTel());
             assert account.getAddress().equals(savedEntity.getAddress());

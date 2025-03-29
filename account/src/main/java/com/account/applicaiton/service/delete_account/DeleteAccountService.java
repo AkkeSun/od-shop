@@ -32,7 +32,7 @@ class DeleteAccountService implements DeleteAccountUseCase {
 
         String email = jwtUtil.getEmail(authentication);
 
-        if (accountStoragePort.existsByEmail(email)) {
+        if (!accountStoragePort.existsByEmail(email)) {
             throw new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO);
         }
 

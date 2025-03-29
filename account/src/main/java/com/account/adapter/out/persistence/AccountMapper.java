@@ -1,16 +1,21 @@
 package com.account.adapter.out.persistence;
 
 import com.account.domain.model.Account;
+import com.account.infrastructure.util.AesUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 class AccountMapper {
+
+    private final AesUtil aesUtil;
 
     public Account toDomain(AccountEntity entity) {
         return Account.builder()
             .id(entity.getId())
             .email(entity.getEmail())
-            .password(entity.getPassword())
+            .password(aesUtil.decryptText(entity.getPassword()))
             .username(entity.getUsername())
             .userTel(entity.getUserTel())
             .address(entity.getAddress())
@@ -24,7 +29,7 @@ class AccountMapper {
         return AccountEntity.builder()
             .id(domain.getId())
             .email(domain.getEmail())
-            .password(domain.getPassword())
+            .password(aesUtil.encryptText(domain.getPassword()))
             .username(domain.getUsername())
             .userTel(domain.getUserTel())
             .address(domain.getAddress())

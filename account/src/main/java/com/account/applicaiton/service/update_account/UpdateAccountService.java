@@ -9,7 +9,6 @@ import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.domain.model.Account;
 import com.account.domain.model.AccountHistory;
-import com.account.infrastructure.util.AesUtil;
 import com.account.infrastructure.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 class UpdateAccountService implements UpdateAccountUseCase {
 
     private final JwtUtil jwtUtil;
-    private final AesUtil aesUtil;
     private final AccountStoragePort accountStoragePort;
     private final MessageProducerPort messageProducerPort;
 
@@ -39,7 +37,7 @@ class UpdateAccountService implements UpdateAccountUseCase {
         }
         if (command.isPasswordUpdateRequired(account.getPassword())) {
             updateList.add("password");
-            account.updatePassword(aesUtil.encryptText(command.password()));
+            account.updatePassword(command.password());
         }
         if (command.isUserTelUpdateRequired(account.getUserTel())) {
             updateList.add("userTel");
