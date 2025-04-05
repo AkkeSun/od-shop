@@ -11,4 +11,8 @@ public interface LogStoragePort {
     void registerDlqLog(DlqLog dlqLog);
 
     void registerLoginLog(LoginLog loginLog);
+
+    void deleteLoginLog(String regDate);
+
+    void deleteHistoryLog(String regDate);
 }

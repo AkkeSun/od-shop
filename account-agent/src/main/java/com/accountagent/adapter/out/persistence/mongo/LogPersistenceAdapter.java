@@ -30,4 +30,14 @@ class LogPersistenceAdapter implements LogStoragePort {
     public void registerLoginLog(LoginLog loginLog) {
         mongoTemplate.save(LoginLogMapper.toDocument(loginLog), "login_" + getCurrentDate());
     }
+
+    @Override
+    public void deleteLoginLog(String regDate) {
+        mongoTemplate.dropCollection("login_" + regDate);
+    }
+
+    @Override
+    public void deleteHistoryLog(String regDate) {
+        mongoTemplate.dropCollection("history_" + regDate);
+    }
 }
