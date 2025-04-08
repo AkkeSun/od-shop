@@ -26,7 +26,7 @@ spring:
       timeout: 3000
 
 server:
-  port: 8081
+  port: 8080
   shutdown: graceful
 
 jwt:
