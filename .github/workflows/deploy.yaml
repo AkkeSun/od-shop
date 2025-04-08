@@ -68,4 +68,4 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           cd account
-          docker buildx build --platform linux/amd64 -t akkessun/account-api:${IMAGE_TAG} . --push
+          docker buildx build --platform linux/arm64 -t akkessun/account-api:${IMAGE_TAG} . --push
