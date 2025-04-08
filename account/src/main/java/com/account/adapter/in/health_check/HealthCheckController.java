@@ -8,7 +8,7 @@ class HealthCheckController {
 
     @GetMapping("/startup")
     public String startUp() {
-        return "startup";
+        return "startup!";
     }
 
     @GetMapping("/readiness")
