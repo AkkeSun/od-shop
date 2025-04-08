@@ -50,6 +50,7 @@ public class SecurityConfig {
                     .requestMatchers("/test/**").permitAll()
                     .requestMatchers("/auth/**").permitAll()
                     .requestMatchers("/docs/**").permitAll()
+                    .requestMatchers("/actuator/**").permitAll()
                     .anyRequest().authenticated();
             })
 
