@@ -2,31 +2,36 @@ package com.account.applicaiton.service.delete_account;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.account.IntegrationTestSupport;
-import com.account.applicaiton.port.out.AccountStoragePort;
-import com.account.domain.model.Account;
-import com.account.domain.model.Role;
+import com.account.fakeClass.FakeAccountStorageClass;
+import com.account.fakeClass.FakeCachePortClass;
+import com.account.fakeClass.FakeJwtUtilClass;
+import com.account.fakeClass.FakeMessageProducerPortClass;
+import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.exception.ErrorCode;
-import com.account.infrastructure.util.AesUtil;
-import com.account.infrastructure.util.JwtUtil;
-import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 
-class DeleteAccountServiceTest extends IntegrationTestSupport {
+@ExtendWith(OutputCaptureExtension.class)
+class DeleteAccountServiceTest {
 
-    @Autowired
-    JwtUtil jwtUtil;
-    @Autowired
-    AesUtil aesUtil;
-    @Autowired
-    AccountStoragePort accountStoragePort;
-    @Autowired
     DeleteAccountService service;
+
+    @BeforeEach
+    void setup() {
+        service = new DeleteAccountService(
+            new FakeJwtUtilClass(),
+            new FakeCachePortClass(),
+            new FakeTokenStoragePortClass(),
+            new FakeAccountStorageClass(),
+            new FakeMessageProducerPortClass()
+        );
+    }
 
     @Nested
     @DisplayName("[deleteAccount] 사용자 정보를 삭제하는 메소드")
@@ -34,49 +39,28 @@ class DeleteAccountServiceTest extends IntegrationTestSupport {
 
         @Test
         @DisplayName("[success] 조회된 사용자 정보가 있다면 정보를 삭제하고 메시지를 전송하는지 확인한다.")
-        void success(CapturedOutput output) throws InterruptedException {
+        void success(CapturedOutput output) {
             // given
-            Account account = Account.builder()
-                .email("od@test.com")
-                .username("od")
-                .regDateTime(LocalDateTime.now())
-                .regDate("20240101")
-                .userTel("01012341234")
-                .role(Role.ROLE_CUSTOMER)
-                .password(aesUtil.encryptText("1234"))
-                .build();
-            Account savedAccount = accountStoragePort.register(account);
-            String authentication = jwtUtil.createAccessToken(savedAccount);
+            String authentication = "valid token";
 
             // when
             DeleteAccountServiceResponse response = service.deleteAccount(authentication);
-            boolean existsByEmail = accountStoragePort.existsByEmail(account.getEmail());
-            Thread.sleep(1000);
 
             // then
-            assert !existsByEmail;
             assert response.result().equals("Y");
+            assert response.id() == 1L;
+            assert output.toString().contains("FakeAccountStorageClass deleteById");
+            assert output.toString().contains("FakeTokenStoragePortClass deleteByEmail");
+            assert output.toString().contains("FakeCachePortClass deleteTokenByEmail");
             assert output.toString().contains("[delete-account] ==>");
             assert output.toString().contains("[account-history] ==>");
-
-            // clean up
-            accountStoragePort.deleteById(savedAccount.getId());
         }
 
         @Test
         @DisplayName("[error] 조회된 사용자 정보가 없다면 예외를 응답하는지 확인한다.")
         void error1() {
             // given
-            Account account = Account.builder()
-                .email("od@test.com")
-                .username("od")
-                .regDateTime(LocalDateTime.now())
-                .regDate("20240101")
-                .userTel("01012341234")
-                .role(Role.ROLE_CUSTOMER)
-                .password(aesUtil.encryptText("1234"))
-                .build();
-            String authentication = jwtUtil.createAccessToken(account);
+            String authentication = "error";
 
             // when
             CustomNotFoundException exception = assertThrows(CustomNotFoundException.class,
