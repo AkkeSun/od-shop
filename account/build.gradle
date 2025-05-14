@@ -65,6 +65,8 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'it.ozimov:embedded-redis:0.7.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 test {
