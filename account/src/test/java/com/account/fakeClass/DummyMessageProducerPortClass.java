@@ -4,7 +4,7 @@ import com.account.applicaiton.port.out.MessageProducerPort;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FakeMessageProducerPortClass implements MessageProducerPort {
+public class DummyMessageProducerPortClass implements MessageProducerPort {
 
     @Override
     public void sendMessage(String topic, String message) {

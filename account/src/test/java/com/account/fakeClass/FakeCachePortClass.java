@@ -1,15 +1,19 @@
 package com.account.fakeClass;
 
 import com.account.applicaiton.port.out.CachePort;
-import com.account.domain.model.Role;
 import com.account.domain.model.Token;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FakeCachePortClass implements CachePort {
 
+    public List<Token> tokenList = new ArrayList<>();
+
     @Override
     public void registerToken(Token token) {
+        tokenList.add(token);
         log.info("FakeCachePortClass registerToken");
     }
 
@@ -20,17 +24,10 @@ public class FakeCachePortClass implements CachePort {
 
     @Override
     public Token findTokenByEmailAndUserAgent(String email, String userAgent) {
-        if (!email.equals("success")) {
-            return null;
-        }
-        return Token.builder()
-            .id(1L)
-            .accountId(1L)
-            .email(email)
-            .refreshToken("valid refresh token")
-            .userAgent(userAgent)
-            .role(Role.ROLE_CUSTOMER.toString())
-            .regDateTime(null)
-            .build();
+        List<Token> list = tokenList.stream()
+            .filter(token -> token.getEmail().equals(email))
+            .filter(token -> token.getUserAgent().equals(userAgent))
+            .toList();
+        return list.isEmpty() ? null : list.getFirst();
     }
 }

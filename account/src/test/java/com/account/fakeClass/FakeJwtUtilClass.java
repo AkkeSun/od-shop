@@ -8,12 +8,12 @@ public class FakeJwtUtilClass implements JwtUtil {
 
     @Override
     public String createAccessToken(Account account) {
-        return "valid token";
+        return "valid token - " + account.getEmail();
     }
 
     @Override
     public String createRefreshToken(String email) {
-        return "valid refresh token";
+        return "valid refresh token - " + email;
     }
 
     @Override
@@ -23,11 +23,9 @@ public class FakeJwtUtilClass implements JwtUtil {
 
     @Override
     public String getEmail(String token) {
-        if (token.equals("valid token") || token.equals("valid refresh token")) {
-            return "success";
-        }
-        if (token.equals("valid refresh token2")) {
-            return "success2";
+        if (validateTokenExceptExpiration(token)) {
+            return token.replace("valid token - ", "")
+                .replace("valid refresh token - ", "");
         }
         return "error";
     }
