@@ -1,7 +1,10 @@
 package com.account.applicaiton.service.find_account;
 
+import com.account.domain.model.Account;
+import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -10,13 +13,21 @@ import org.junit.jupiter.api.Test;
 class FindAccountServiceTest {
 
     FindAccountService service;
+    FakeJwtUtilClass fakeJwtUtilClass;
+    FakeAccountStorageClass fakeAccountStorageClass;
+
+    FindAccountServiceTest() {
+        fakeJwtUtilClass = new FakeJwtUtilClass();
+        fakeAccountStorageClass = new FakeAccountStorageClass();
+        service = new FindAccountService(
+            fakeJwtUtilClass,
+            fakeAccountStorageClass
+        );
+    }
 
     @BeforeEach
     void setup() {
-        service = new FindAccountService(
-            new FakeJwtUtilClass(),
-            new FakeAccountStorageClass()
-        );
+        fakeAccountStorageClass.accountList.clear();
     }
 
     @Nested
@@ -28,19 +39,29 @@ class FindAccountServiceTest {
         void success() {
 
             // given
-            String authentication = "valid token";
+            Account account = Account.builder()
+                .id(1L)
+                .email("od@test.com")
+                .username("od")
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .regDate("20240101")
+                .userTel("01012341234")
+                .role(Role.ROLE_CUSTOMER)
+                .password("1234")
+                .build();
+            fakeAccountStorageClass.register(account);
+            String authentication = fakeJwtUtilClass.createAccessToken(account);
 
             // when
             FindAccountServiceResponse response = service.findAccountInfo(authentication);
 
             // then
-            assert response.id().equals(1L);
-            assert response.email().equals("email");
-            assert response.username().equals("username");
-            assert response.userTel().equals("userTel");
-            assert response.address().equals("address");
-            assert response.role().equals("ROLE_SELLER");
-            assert response.regDate().equals("20231010");
+            assert response.id().equals(account.getId());
+            assert response.email().equals(account.getEmail());
+            assert response.username().equals(account.getUsername());
+            assert response.userTel().equals(account.getUserTel());
+            assert response.role().equals(account.getRole().toString());
+            assert response.regDate().equals(account.getRegDate());
         }
     }
 }

@@ -1,9 +1,12 @@
 package com.account.applicaiton.service.update_account;
 
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;
+import com.account.domain.model.Account;
+import com.account.domain.model.Role;
+import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
-import com.account.fakeClass.FakeMessageProducerPortClass;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,14 +19,25 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 class UpdateAccountServiceTest {
 
     UpdateAccountService updateAccountService;
+    FakeJwtUtilClass fakeJwtUtilClass;
+    FakeAccountStorageClass fakeAccountStorageClass;
+    DummyMessageProducerPortClass dummyMessageProducerPortClass;
+
+    UpdateAccountServiceTest() {
+        fakeJwtUtilClass = new FakeJwtUtilClass();
+        fakeAccountStorageClass = new FakeAccountStorageClass();
+        dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
+
+        updateAccountService = new UpdateAccountService(
+            fakeJwtUtilClass,
+            fakeAccountStorageClass,
+            dummyMessageProducerPortClass
+        );
+    }
 
     @BeforeEach
     void setup() {
-        updateAccountService = new UpdateAccountService(
-            new FakeJwtUtilClass(),
-            new FakeAccountStorageClass(),
-            new FakeMessageProducerPortClass()
-        );
+        fakeAccountStorageClass.accountList.clear();
     }
 
     @Nested
@@ -34,8 +48,19 @@ class UpdateAccountServiceTest {
         @DisplayName("[success] 저장된 사용자 정보와 입력받은 사용자 정보가 다른 경우 사용자 정보를 수정하고 메시지를 발송한 후 수정된 정보를 반환한다.")
         void success(CapturedOutput output) {
             // given
+            Account account = Account.builder()
+                .id(1L)
+                .email("od@test.com")
+                .username("od")
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .regDate("20240101")
+                .userTel("01012341234")
+                .role(Role.ROLE_CUSTOMER)
+                .password("1234")
+                .build();
+            fakeAccountStorageClass.register(account);
             UpdateAccountCommand command = UpdateAccountCommand.builder()
-                .accessToken("valid token")
+                .accessToken("valid token - " + account.getEmail())
                 .username("updateAccount.username")
                 .password("updateAccount.password")
                 .userTel("updateAccount.userTel")
@@ -59,12 +84,25 @@ class UpdateAccountServiceTest {
         @DisplayName("[success] 저장된 사용자 정보와 입력받은 사용자 정보가 같은 경우 사용자 정보를 수정하지 않고 응답값을 반환한다.")
         void success2(CapturedOutput output) {
             // given
-            UpdateAccountCommand command = UpdateAccountCommand.builder()
-                .accessToken("valid token")
-                .username("username")
-                .password("password")
-                .userTel("userTel")
+            Account account = Account.builder()
+                .id(1L)
+                .email("od@test.com")
+                .password("1234")
+                .username("od")
                 .address("address")
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .regDate("20240101")
+                .userTel("01012341234")
+                .role(Role.ROLE_CUSTOMER)
+                .password("1234")
+                .build();
+            fakeAccountStorageClass.register(account);
+            UpdateAccountCommand command = UpdateAccountCommand.builder()
+                .accessToken("valid token - " + account.getEmail())
+                .username(account.getUsername())
+                .password(account.getPassword())
+                .userTel(account.getUserTel())
+                .address(account.getAddress())
                 .build();
 
             // when

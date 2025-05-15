@@ -2,13 +2,16 @@ package com.account.applicaiton.service.delete_account;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.account.domain.model.Account;
+import com.account.domain.model.Role;
+import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeCachePortClass;
 import com.account.fakeClass.FakeJwtUtilClass;
-import com.account.fakeClass.FakeMessageProducerPortClass;
 import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.exception.ErrorCode;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,16 +24,30 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 class DeleteAccountServiceTest {
 
     DeleteAccountService service;
+    FakeCachePortClass fakeCachePortClass;
+    FakeTokenStoragePortClass fakeTokenStoragePortClass;
+    FakeAccountStorageClass fakeAccountStorageClass;
+    FakeJwtUtilClass fakeJwtUtilClass;
+    DummyMessageProducerPortClass dummyMessageProducerPortClass;
 
+    DeleteAccountServiceTest() {
+        fakeCachePortClass = new FakeCachePortClass();
+        fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
+        fakeAccountStorageClass = new FakeAccountStorageClass();
+        fakeJwtUtilClass = new FakeJwtUtilClass();
+        dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
+
+        service = new DeleteAccountService(
+            fakeJwtUtilClass,
+            fakeCachePortClass,
+            fakeTokenStoragePortClass,
+            fakeAccountStorageClass,
+            dummyMessageProducerPortClass
+        );
+    }
     @BeforeEach
     void setup() {
-        service = new DeleteAccountService(
-            new FakeJwtUtilClass(),
-            new FakeCachePortClass(),
-            new FakeTokenStoragePortClass(),
-            new FakeAccountStorageClass(),
-            new FakeMessageProducerPortClass()
-        );
+        fakeAccountStorageClass.accountList.clear();
     }
 
     @Nested
@@ -41,7 +58,18 @@ class DeleteAccountServiceTest {
         @DisplayName("[success] 조회된 사용자 정보가 있다면 정보를 삭제하고 메시지를 전송하는지 확인한다.")
         void success(CapturedOutput output) {
             // given
-            String authentication = "valid token";
+            Account account = Account.builder()
+                .id(1L)
+                .email("od@test.com")
+                .username("od")
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .regDate("20240101")
+                .userTel("01012341234")
+                .role(Role.ROLE_CUSTOMER)
+                .password("1234")
+                .build();
+            fakeAccountStorageClass.register(account);
+            String authentication = fakeJwtUtilClass.createAccessToken(account);
 
             // when
             DeleteAccountServiceResponse response = service.deleteAccount(authentication);

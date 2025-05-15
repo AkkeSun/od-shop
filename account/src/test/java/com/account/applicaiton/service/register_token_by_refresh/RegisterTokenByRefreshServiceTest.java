@@ -2,12 +2,17 @@ package com.account.applicaiton.service.register_token_by_refresh;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.account.domain.model.Account;
+import com.account.domain.model.Role;
+import com.account.domain.model.Token;
+import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeCachePortClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeTokenStoragePortClass;
-import com.account.fakeClass.FakeUserAgentUtilClass;
+import com.account.fakeClass.StubUserAgentUtilClass;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.ErrorCode;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,15 +25,42 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 class RegisterTokenByRefreshServiceTest {
 
     RegisterTokenByRefreshService service;
+    FakeJwtUtilClass fakeJwtUtilClass;
+    FakeCachePortClass fakeCachePortClass;
+    StubUserAgentUtilClass fakeUserAgentUtilClass;
+    FakeTokenStoragePortClass fakeTokenStoragePortClass;
+    FakeAccountStorageClass fakeAccountStorageClass;
+
+    RegisterTokenByRefreshServiceTest() {
+        fakeJwtUtilClass = new FakeJwtUtilClass();
+        fakeCachePortClass = new FakeCachePortClass();
+        fakeUserAgentUtilClass = new StubUserAgentUtilClass();
+        fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
+        fakeAccountStorageClass = new FakeAccountStorageClass();
+
+        service = new RegisterTokenByRefreshService(
+            fakeJwtUtilClass,
+            fakeCachePortClass,
+            fakeUserAgentUtilClass,
+            fakeTokenStoragePortClass
+        );
+    }
 
     @BeforeEach
     void setup() {
-        service = new RegisterTokenByRefreshService(
-            new FakeJwtUtilClass(),
-            new FakeCachePortClass(),
-            new FakeUserAgentUtilClass(),
-            new FakeTokenStoragePortClass()
-        );
+        Account account = Account.builder()
+            .id(1L)
+            .email("od@test.com")
+            .username("od")
+            .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+            .regDate("20240101")
+            .userTel("01012341234")
+            .role(Role.ROLE_CUSTOMER)
+            .password("1234")
+            .build();
+        fakeAccountStorageClass.register(account);
+        fakeCachePortClass.tokenList.clear();
+        fakeTokenStoragePortClass.tokenList.clear();
     }
 
     @Nested
@@ -39,15 +71,23 @@ class RegisterTokenByRefreshServiceTest {
         @DisplayName("[success] 리프레시 토큰이 캐시에 저장되어 있고 유효 하다면 인증 토큰을 갱신한 후 응답한다.")
         void success1(CapturedOutput output) {
             // given
-            String refreshToken = "valid refresh token";
+            String refreshToken = "valid refresh token - od@test.com";
+            Token token = Token.builder()
+                .accountId(1L)
+                .email("od@test.com")
+                .userAgent(fakeUserAgentUtilClass.getUserAgent())
+                .refreshToken(refreshToken)
+                .role(Role.ROLE_CUSTOMER.toString())
+                .build();
+            fakeCachePortClass.registerToken(token);
 
             // when
             RegisterTokenByRefreshServiceResponse serviceResponse = service
                 .registerTokenByRefresh(refreshToken);
 
             // then
-            assert serviceResponse.accessToken().equals("valid token");
-            assert serviceResponse.refreshToken().equals("valid refresh token");
+            assert serviceResponse.accessToken().equals("valid token - od@test.com");
+            assert serviceResponse.refreshToken().equals("valid refresh token - od@test.com");
             assert output.toString().contains("FakeCachePortClass registerToken");
             assert output.toString().contains("FakeTokenStoragePortClass updateToken");
         }
@@ -57,7 +97,15 @@ class RegisterTokenByRefreshServiceTest {
         @DisplayName("[success] 리프레시 토큰이 캐시에 저장되어 있지 않고 db 에만 저장되어 있고 유효 하다면 인증 토큰을 갱신한 후 응답한다.")
         void success2(CapturedOutput output) {
             // given
-            String refreshToken = "valid refresh token2";
+            String refreshToken = "valid refresh token - od@test.com";
+            Token token = Token.builder()
+                .accountId(1L)
+                .email("od@test.com")
+                .userAgent(fakeUserAgentUtilClass.getUserAgent())
+                .refreshToken(refreshToken)
+                .role(Role.ROLE_CUSTOMER.toString())
+                .build();
+            fakeTokenStoragePortClass.registerToken(token);
 
             // when
             RegisterTokenByRefreshServiceResponse serviceResponse = service
@@ -76,7 +124,15 @@ class RegisterTokenByRefreshServiceTest {
         @DisplayName("[error] 리프레시 토큰이 저장된 토큰과 다르다면 CustomAuthenticationException 을 응답한다.")
         void error4(CapturedOutput output) {
             // given
-            String refreshToken = "valid refresh token3";
+            String refreshToken = "valid refresh token - od@test.com";
+            Token token = Token.builder()
+                .accountId(1L)
+                .email("od@test.com")
+                .userAgent(fakeUserAgentUtilClass.getUserAgent())
+                .refreshToken("test")
+                .role(Role.ROLE_CUSTOMER.toString())
+                .build();
+            fakeCachePortClass.registerToken(token);
 
             // when
             CustomAuthenticationException exception = assertThrows(

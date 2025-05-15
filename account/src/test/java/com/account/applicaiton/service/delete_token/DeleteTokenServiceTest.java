@@ -1,9 +1,12 @@
 package com.account.applicaiton.service.delete_token;
 
+import com.account.domain.model.Account;
+import com.account.domain.model.Role;
+import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeCachePortClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeTokenStoragePortClass;
-import org.junit.jupiter.api.BeforeEach;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,13 +18,20 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 class DeleteTokenServiceTest {
 
     DeleteTokenService service;
+    FakeJwtUtilClass fakeJwtUtilClass;
+    FakeCachePortClass fakeCachePortClass;
+    FakeTokenStoragePortClass fakeTokenStoragePortClass;
+    FakeAccountStorageClass fakeAccountStorageClass;
 
-    @BeforeEach
-    void setup() {
+    DeleteTokenServiceTest() {
+        fakeJwtUtilClass = new FakeJwtUtilClass();
+        fakeCachePortClass = new FakeCachePortClass();
+        fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
+        fakeAccountStorageClass = new FakeAccountStorageClass();
         service = new DeleteTokenService(
-            new FakeJwtUtilClass(),
-            new FakeCachePortClass(),
-            new FakeTokenStoragePortClass()
+            fakeJwtUtilClass,
+            fakeCachePortClass,
+            fakeTokenStoragePortClass
         );
     }
 
@@ -33,7 +43,18 @@ class DeleteTokenServiceTest {
         @DisplayName("[success] 유효한 인증 토큰 이라면 토큰을 삭제하는지 확인한다.")
         void success(CapturedOutput output) {
             // given
-            String authentication = "valid token";
+            Account account = Account.builder()
+                .id(1L)
+                .email("od@test.com")
+                .username("od")
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .regDate("20240101")
+                .userTel("01012341234")
+                .role(Role.ROLE_CUSTOMER)
+                .password("1234")
+                .build();
+            fakeAccountStorageClass.register(account);
+            String authentication = "valid token - " + account.getEmail();
 
             // when
             DeleteTokenServiceResponse result = service.deleteToken(authentication);
