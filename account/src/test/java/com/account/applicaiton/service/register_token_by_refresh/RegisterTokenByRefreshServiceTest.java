@@ -112,8 +112,8 @@ class RegisterTokenByRefreshServiceTest {
                 .registerTokenByRefresh(refreshToken);
 
             // then
-            assert serviceResponse.accessToken().equals("valid token");
-            assert serviceResponse.refreshToken().equals("valid refresh token");
+            assert serviceResponse.accessToken().equals("valid token - od@test.com");
+            assert serviceResponse.refreshToken().equals("valid refresh token - od@test.com");
             assert output.toString().contains("FakeCachePortClass registerToken");
             assert output.toString().contains("FakeTokenStoragePortClass updateToken");
             assert output.toString().contains("[token cache notfound]");
