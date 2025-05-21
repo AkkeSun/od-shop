@@ -3,7 +3,7 @@ package com.account.adapter.in.register_token_by_refresh;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -41,7 +41,7 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
         ResultMatcher status, String docIdentifier, String responseSchema,
         FieldDescriptor... responseFields) throws Exception {
 
-        mockMvc.perform(post("/auth/refresh")
+        mockMvc.perform(put("/auth")
                 .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())

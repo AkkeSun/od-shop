@@ -15,7 +15,7 @@ class RegisterTokenController {
 
     private final RegisterTokenUseCase registerTokenUseCase;
 
-    @PostMapping("/auth/login")
+    @PostMapping("/auth")
     ApiResponse<RegisterTokenResponse> registerToken(
         @RequestBody @Valid RegisterTokenRequest request) {
         RegisterTokenServiceResponse serviceResponse = registerTokenUseCase

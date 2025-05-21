@@ -5,7 +5,7 @@ import com.account.applicaiton.service.register_token_by_refresh.RegisterTokenBy
 import com.account.infrastructure.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +15,7 @@ class RegisterTokenByRefreshController {
 
     private final RegisterTokenByRefreshUseCase registerTokenByRefreshUseCase;
 
-    @PostMapping("/auth/refresh")
+    @PutMapping("/auth")
     ApiResponse<RegisterTokenByRefreshResponse> registerToken(
         @RequestBody @Valid RegisterTokenByRefreshRequest request) {
         RegisterTokenByRefreshServiceResponse serviceResponse = registerTokenByRefreshUseCase

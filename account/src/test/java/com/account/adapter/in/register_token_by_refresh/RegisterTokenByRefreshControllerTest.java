@@ -1,14 +1,13 @@
 package com.account.adapter.in.register_token_by_refresh;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.account.ControllerTestSupport;
-import com.account.adapter.in.register_token_by_refresh.RegisterTokenByRefreshRequest;
 import com.account.applicaiton.service.register_token_by_refresh.RegisterTokenByRefreshServiceResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -41,7 +40,7 @@ class RegisterTokenByRefreshControllerTest extends ControllerTestSupport {
                 request.getRefreshToken())).willReturn(response);
 
             // when
-            ResultActions actions = mockMvc.perform(post("/auth/refresh")
+            ResultActions actions = mockMvc.perform(put("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
             );
@@ -66,7 +65,7 @@ class RegisterTokenByRefreshControllerTest extends ControllerTestSupport {
                 .build();
 
             // when
-            ResultActions actions = mockMvc.perform(post("/auth/refresh")
+            ResultActions actions = mockMvc.perform(put("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
             );
@@ -91,7 +90,7 @@ class RegisterTokenByRefreshControllerTest extends ControllerTestSupport {
                 .build();
 
             // when
-            ResultActions actions = mockMvc.perform(post("/auth/refresh")
+            ResultActions actions = mockMvc.perform(put("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
             );

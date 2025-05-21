@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.account.ControllerTestSupport;
-import com.account.adapter.in.register_token.RegisterTokenRequest;
 import com.account.applicaiton.service.register_token.RegisterTokenServiceResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -40,7 +39,7 @@ class RegisterTokenControllerTest extends ControllerTestSupport {
                 .willReturn(response);
 
             // when
-            ResultActions actions = mockMvc.perform(post("/auth/login")
+            ResultActions actions = mockMvc.perform(post("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
             );
@@ -66,7 +65,7 @@ class RegisterTokenControllerTest extends ControllerTestSupport {
                 .build();
 
             // when
-            ResultActions actions = mockMvc.perform(post("/auth/login")
+            ResultActions actions = mockMvc.perform(post("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
             );
@@ -90,7 +89,7 @@ class RegisterTokenControllerTest extends ControllerTestSupport {
                 .build();
 
             // when
-            ResultActions actions = mockMvc.perform(post("/auth/login")
+            ResultActions actions = mockMvc.perform(post("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
             );
@@ -115,7 +114,7 @@ class RegisterTokenControllerTest extends ControllerTestSupport {
                 .build();
 
             // when
-            ResultActions actions = mockMvc.perform(post("/auth/login")
+            ResultActions actions = mockMvc.perform(post("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
             );
@@ -140,7 +139,7 @@ class RegisterTokenControllerTest extends ControllerTestSupport {
                 .build();
 
             // when
-            ResultActions actions = mockMvc.perform(post("/auth/login")
+            ResultActions actions = mockMvc.perform(post("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
             );

@@ -41,7 +41,7 @@ class RegisterTokenDocsTest extends RestDocsSupport {
         ResultMatcher status, String docIdentifier, String responseSchema,
         FieldDescriptor... responseFields) throws Exception {
 
-        mockMvc.perform(post("/auth/login")
+        mockMvc.perform(post("/auth")
                 .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
