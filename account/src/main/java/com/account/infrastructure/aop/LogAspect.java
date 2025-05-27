@@ -29,6 +29,10 @@ public class LogAspect {
     private void controllerMethods() {
     }
 
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.ExceptionHandler))")
+    private void controllerAdviceMethods() {
+    }
+
     @Around("controllerMethods()")
     public Object controllerLog(ProceedingJoinPoint joinPoint) throws Throwable {
         String httpMethod = request.getMethod();
@@ -57,6 +61,13 @@ public class LogAspect {
         Object result = joinPoint.proceed();
         log.info("[{} {}] response - {}", httpMethod, path, result);
 
+        return result;
+    }
+
+    @Around("controllerAdviceMethods()")
+    public Object controllerAdvieLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        Object result = joinPoint.proceed();
+        log.info("[{} {}] response - {}", request.getMethod(), request.getRequestURI(), result);
         return result;
     }
 
