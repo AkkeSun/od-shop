@@ -14,7 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.account.RestDocsSupport;
-import com.account.adapter.in.delete_token.DeleteTokenController;
 import com.account.applicaiton.port.in.DeleteTokenUseCase;
 import com.account.applicaiton.service.delete_token.DeleteTokenServiceResponse;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
@@ -44,7 +43,7 @@ class DeleteTokenDocsTest extends RestDocsSupport {
         ResultMatcher status, String docIdentifier, String responseSchema,
         FieldDescriptor... responseFields) throws Exception {
 
-        mockMvc.perform(delete("/auth/logout")
+        mockMvc.perform(delete("/auth")
                 .header("Authorization", accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())

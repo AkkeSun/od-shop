@@ -34,7 +34,7 @@ class DeleteTokenControllerTest extends ControllerTestSupport {
             given(deleteTokenUseCase.deleteToken(any())).willReturn(response);
 
             // when
-            ResultActions actions = mockMvc.perform(delete("/auth/logout")
+            ResultActions actions = mockMvc.perform(delete("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString("test"))
             );

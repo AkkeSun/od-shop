@@ -14,7 +14,7 @@ class DeleteTokenController {
 
     private final DeleteTokenUseCase deleteTokenUseCase;
 
-    @DeleteMapping("/auth/logout")
+    @DeleteMapping("/auth")
     ApiResponse<DeleteTokenResponse> deleteToken(
         @RequestHeader(name = "Authorization", required = false) String accessToken) {
         DeleteTokenServiceResponse serviceResponse = deleteTokenUseCase.deleteToken(accessToken);
