@@ -8,11 +8,10 @@ import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.util.AesUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-class AccountPersistenceAdapter implements AccountStoragePort {
+class AccountStorageAdapter implements AccountStoragePort {
 
     private final AesUtil aesUtil;
     private final AccountMapper accountMapper;
@@ -51,7 +50,6 @@ class AccountPersistenceAdapter implements AccountStoragePort {
     }
 
     @Override
-    @Transactional // for test
     public void update(Account account) {
         accountRepository.update(accountMapper.toEntity(account));
     }

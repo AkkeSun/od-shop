@@ -4,11 +4,10 @@ import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-class TokenPersistenceAdapter implements TokenStoragePort {
+class TokenStorageAdapter implements TokenStoragePort {
 
     private final TokenMapper tokenMapper;
     private final TokenRepository tokenRepository;
@@ -21,7 +20,6 @@ class TokenPersistenceAdapter implements TokenStoragePort {
     }
 
     @Override
-    @Transactional // for test @Transactional
     public void registerToken(Token token) {
         TokenEntity entity = tokenRepository.findByEmail(token.getEmail())
             .map(existingEntity -> {
@@ -39,7 +37,6 @@ class TokenPersistenceAdapter implements TokenStoragePort {
     }
 
     @Override
-    @Transactional // for test @Transactional
     public void updateToken(Token token) {
         tokenRepository.updateToken(tokenMapper.toEntity(token));
     }
