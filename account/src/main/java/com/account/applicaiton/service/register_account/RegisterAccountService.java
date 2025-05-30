@@ -7,7 +7,7 @@ import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.applicaiton.port.out.AccountStoragePort;
-import com.account.applicaiton.port.out.CachePort;
+import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
@@ -28,8 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 class RegisterAccountService implements RegisterAccountUseCase {
 
     private final JwtUtil jwtUtil;
-    private final CachePort cachePort;
     private final UserAgentUtil userAgentUtil;
+    private final RedisStoragePort redisStoragePort;
     private final TokenStoragePort tokenStoragePort;
     private final AccountStoragePort accountStoragePort;
 
@@ -63,7 +63,7 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .role(command.role())
             .build();
 
-        cachePort.registerToken(token);
+        redisStoragePort.registerToken(token);
         tokenStoragePort.registerToken(token);
 
         return RegisterAccountServiceResponse.builder()

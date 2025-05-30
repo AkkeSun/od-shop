@@ -3,7 +3,7 @@ package com.account.applicaiton.service.register_token_by_refresh;
 import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 
 import com.account.applicaiton.port.in.RegisterTokenByRefreshUseCase;
-import com.account.applicaiton.port.out.CachePort;
+import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.Token;
@@ -24,8 +24,8 @@ import org.springframework.util.ObjectUtils;
 class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
 
     private final JwtUtil jwtUtil;
-    private final CachePort cachePort;
     private final UserAgentUtil userAgentUtil;
+    private final RedisStoragePort redisStoragePort;
     private final TokenStoragePort tokenStoragePort;
 
     @Override
@@ -36,7 +36,7 @@ class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
 
         String email = jwtUtil.getEmail(refreshToken);
         String userAgent = userAgentUtil.getUserAgent();
-        Token savedToken = cachePort.findTokenByEmailAndUserAgent(email, userAgent);
+        Token savedToken = redisStoragePort.findTokenByEmailAndUserAgent(email, userAgent);
 
         if (ObjectUtils.isEmpty(savedToken)) {
             log.info("[token cache notfound] {} - {}", email, userAgent);
@@ -54,7 +54,7 @@ class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
         savedToken.updateRefreshToken(newRefreshToken);
         savedToken.updateRegTime(getCurrentDateTime());
 
-        cachePort.registerToken(savedToken);
+        redisStoragePort.registerToken(savedToken);
         tokenStoragePort.updateToken(savedToken);
 
         return RegisterTokenByRefreshServiceResponse.builder()

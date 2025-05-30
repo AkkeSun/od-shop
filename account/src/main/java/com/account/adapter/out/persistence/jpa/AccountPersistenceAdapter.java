@@ -1,4 +1,4 @@
-package com.account.adapter.out.persistence;
+package com.account.adapter.out.persistence.jpa;
 
 import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
 

@@ -1,4 +1,4 @@
-package com.account.adapter.out.persistence;
+package com.account.adapter.out.persistence.jpa;
 
 import com.account.domain.model.Token;
 import jakarta.persistence.Column;

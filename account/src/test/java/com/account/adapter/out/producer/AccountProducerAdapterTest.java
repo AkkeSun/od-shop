@@ -5,7 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.account.IntegrationTestSupport;
-import com.account.applicaiton.port.out.CachePort;
+import com.account.applicaiton.port.out.RedisStoragePort;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +28,7 @@ class AccountProducerAdapterTest extends IntegrationTestSupport {
     @Autowired
     RedisTemplate<String, String> redisTemplate;
     @Autowired
-    CachePort cachePort;
+    RedisStoragePort cachePort;
 
     @Nested
     @DisplayName("[send] 카프카로 메시지를 전송하는 메소드")

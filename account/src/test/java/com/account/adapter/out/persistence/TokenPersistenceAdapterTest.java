@@ -1,6 +1,9 @@
 package com.account.adapter.out.persistence;
 
 import com.account.IntegrationTestSupport;
+import com.account.adapter.out.persistence.jpa.TokenEntity;
+import com.account.adapter.out.persistence.jpa.TokenPersistenceAdapter;
+import com.account.adapter.out.persistence.jpa.TokenRepository;
 import com.account.domain.model.Token;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

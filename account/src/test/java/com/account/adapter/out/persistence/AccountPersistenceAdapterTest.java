@@ -3,6 +3,9 @@ package com.account.adapter.out.persistence;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.account.IntegrationTestSupport;
+import com.account.adapter.out.persistence.jpa.AccountEntity;
+import com.account.adapter.out.persistence.jpa.AccountPersistenceAdapter;
+import com.account.adapter.out.persistence.jpa.AccountRepository;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.infrastructure.exception.CustomNotFoundException;

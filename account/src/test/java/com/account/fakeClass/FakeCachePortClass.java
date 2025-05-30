@@ -1,13 +1,13 @@
 package com.account.fakeClass;
 
-import com.account.applicaiton.port.out.CachePort;
+import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.domain.model.Token;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FakeCachePortClass implements CachePort {
+public class FakeCachePortClass implements RedisStoragePort {
 
     public List<Token> tokenList = new ArrayList<>();
 

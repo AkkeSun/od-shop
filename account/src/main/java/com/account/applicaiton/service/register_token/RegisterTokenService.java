@@ -6,8 +6,8 @@ import static com.account.infrastructure.util.JsonUtil.toJsonString;
 import com.account.applicaiton.port.in.RegisterTokenUseCase;
 import com.account.applicaiton.port.in.command.RegisterTokenCommand;
 import com.account.applicaiton.port.out.AccountStoragePort;
-import com.account.applicaiton.port.out.CachePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
+import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.LoginLog;
@@ -24,8 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 class RegisterTokenService implements RegisterTokenUseCase {
 
     private final JwtUtil jwtUtil;
-    private final CachePort cachePort;
     private final UserAgentUtil userAgentUtil;
+    private final RedisStoragePort redisStoragePort;
     private final TokenStoragePort tokenStoragePort;
     private final AccountStoragePort accountStoragePort;
     private final MessageProducerPort messageProducerPort;
@@ -46,7 +46,7 @@ class RegisterTokenService implements RegisterTokenUseCase {
             .role(account.getRole().name())
             .build();
 
-        cachePort.registerToken(token);
+        redisStoragePort.registerToken(token);
         tokenStoragePort.registerToken(token);
 
         LoginLog loginLog = LoginLog.builder()

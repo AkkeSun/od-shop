@@ -1,9 +1,9 @@
-package com.account.adapter.out.cache;
+package com.account.adapter.out.persistence.redis;
 
 import static com.account.infrastructure.util.JsonUtil.parseJson;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
-import com.account.applicaiton.port.out.CachePort;
+import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.domain.model.Token;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.ArrayList;
@@ -20,13 +20,13 @@ import org.springframework.util.StringUtils;
 
 @Slf4j
 @Component
-class RedisCacheAdapter implements CachePort {
+class RedisStorageAdapter implements RedisStoragePort {
 
     private final long validTime;
     private final String tokenCacheKey;
     private final RedisTemplate<String, String> redisTemplate;
 
-    RedisCacheAdapter(RedisTemplate<String, String> redisTemplate,
+    RedisStorageAdapter(RedisTemplate<String, String> redisTemplate,
         @Value("${jwt.token.refresh-valid-time}") long validTime) {
         this.redisTemplate = redisTemplate;
         this.validTime = validTime;

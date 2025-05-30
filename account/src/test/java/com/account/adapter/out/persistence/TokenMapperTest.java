@@ -1,5 +1,7 @@
 package com.account.adapter.out.persistence;
 
+import com.account.adapter.out.persistence.jpa.TokenEntity;
+import com.account.adapter.out.persistence.jpa.TokenMapper;
 import com.account.domain.model.Token;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
