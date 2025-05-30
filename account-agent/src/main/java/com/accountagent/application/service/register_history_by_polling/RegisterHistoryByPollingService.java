@@ -18,7 +18,6 @@ class RegisterHistoryByPollingService implements RegisterHistoryByPollingUseCase
     private final LogStoragePort logStoragePort;
 
     @Override
-    // TODO: 분산락
     public void registerHistory() {
         Map<String, AccountHistory> hostoryMap = cachePort.findAllAccountHistory();
         if (hostoryMap.isEmpty()) {
