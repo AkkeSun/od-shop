@@ -5,8 +5,8 @@ import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeCachePortClass;
 import com.account.fakeClass.FakeJwtUtilClass;
+import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
 import java.time.LocalDateTime;
@@ -23,7 +23,7 @@ class RegisterTokenServiceTest {
 
     RegisterTokenService service;
     FakeJwtUtilClass fakeJwtUtilClass;
-    FakeCachePortClass fakeCachePortClass;
+    FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass fakeUserAgentUtilClass;
     FakeTokenStoragePortClass fakeTokenStoragePortClass;
     DummyMessageProducerPortClass dummyMessageProducerPortClass;
@@ -31,7 +31,7 @@ class RegisterTokenServiceTest {
 
     RegisterTokenServiceTest() {
         fakeJwtUtilClass = new FakeJwtUtilClass();
-        fakeCachePortClass = new FakeCachePortClass();
+        fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         fakeUserAgentUtilClass = new StubUserAgentUtilClass();
         fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
@@ -39,8 +39,8 @@ class RegisterTokenServiceTest {
 
         service = new RegisterTokenService(
             fakeJwtUtilClass,
-            fakeCachePortClass,
             fakeUserAgentUtilClass,
+            fakeRedisStoragePortClass,
             fakeTokenStoragePortClass,
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
@@ -49,13 +49,13 @@ class RegisterTokenServiceTest {
 
     @BeforeEach
     void setup() {
-        fakeCachePortClass.tokenList.clear();
+        fakeRedisStoragePortClass.tokenList.clear();
     }
 
     @Nested
     @DisplayName("[registerToken] 토큰을 등록하는 메소드")
     class Describe_registerToken {
-        
+
         @Test
         @DisplayName("[success] 토큰을 발급 및 저장하고 로그인 로그 메시지를 발송한 후 성공 메시지를 응답한다.")
         void success(CapturedOutput output) {

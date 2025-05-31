@@ -6,8 +6,8 @@ import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeCachePortClass;
 import com.account.fakeClass.FakeJwtUtilClass;
+import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.exception.ErrorCode;
@@ -24,14 +24,14 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 class DeleteAccountServiceTest {
 
     DeleteAccountService service;
-    FakeCachePortClass fakeCachePortClass;
+    FakeRedisStoragePortClass fakeCachePortClass;
     FakeTokenStoragePortClass fakeTokenStoragePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
     FakeJwtUtilClass fakeJwtUtilClass;
     DummyMessageProducerPortClass dummyMessageProducerPortClass;
 
     DeleteAccountServiceTest() {
-        fakeCachePortClass = new FakeCachePortClass();
+        fakeCachePortClass = new FakeRedisStoragePortClass();
         fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         fakeJwtUtilClass = new FakeJwtUtilClass();
@@ -45,6 +45,7 @@ class DeleteAccountServiceTest {
             dummyMessageProducerPortClass
         );
     }
+
     @BeforeEach
     void setup() {
         fakeAccountStorageClass.accountList.clear();

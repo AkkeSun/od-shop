@@ -6,8 +6,8 @@ import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.domain.model.Token;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeCachePortClass;
 import com.account.fakeClass.FakeJwtUtilClass;
+import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
 import com.account.infrastructure.exception.CustomAuthenticationException;
@@ -26,22 +26,22 @@ class RegisterTokenByRefreshServiceTest {
 
     RegisterTokenByRefreshService service;
     FakeJwtUtilClass fakeJwtUtilClass;
-    FakeCachePortClass fakeCachePortClass;
+    FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass fakeUserAgentUtilClass;
     FakeTokenStoragePortClass fakeTokenStoragePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     RegisterTokenByRefreshServiceTest() {
         fakeJwtUtilClass = new FakeJwtUtilClass();
-        fakeCachePortClass = new FakeCachePortClass();
+        fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         fakeUserAgentUtilClass = new StubUserAgentUtilClass();
         fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
         service = new RegisterTokenByRefreshService(
             fakeJwtUtilClass,
-            fakeCachePortClass,
             fakeUserAgentUtilClass,
+            fakeRedisStoragePortClass,
             fakeTokenStoragePortClass
         );
     }
@@ -59,7 +59,7 @@ class RegisterTokenByRefreshServiceTest {
             .password("1234")
             .build();
         fakeAccountStorageClass.register(account);
-        fakeCachePortClass.tokenList.clear();
+        fakeRedisStoragePortClass.tokenList.clear();
         fakeTokenStoragePortClass.tokenList.clear();
     }
 
@@ -79,7 +79,7 @@ class RegisterTokenByRefreshServiceTest {
                 .refreshToken(refreshToken)
                 .role(Role.ROLE_CUSTOMER.toString())
                 .build();
-            fakeCachePortClass.registerToken(token);
+            fakeRedisStoragePortClass.registerToken(token);
 
             // when
             RegisterTokenByRefreshServiceResponse serviceResponse = service
@@ -132,7 +132,7 @@ class RegisterTokenByRefreshServiceTest {
                 .refreshToken("test")
                 .role(Role.ROLE_CUSTOMER.toString())
                 .build();
-            fakeCachePortClass.registerToken(token);
+            fakeRedisStoragePortClass.registerToken(token);
 
             // when
             CustomAuthenticationException exception = assertThrows(

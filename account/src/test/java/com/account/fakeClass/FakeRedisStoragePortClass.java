@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FakeCachePortClass implements RedisStoragePort {
+public class FakeRedisStoragePortClass implements RedisStoragePort {
 
     public List<Token> tokenList = new ArrayList<>();
 

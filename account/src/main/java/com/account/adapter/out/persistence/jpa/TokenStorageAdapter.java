@@ -2,6 +2,7 @@ package com.account.adapter.out.persistence.jpa;
 
 import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Token;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ class TokenStorageAdapter implements TokenStoragePort {
     }
 
     @Override
+    @Transactional
     public void updateToken(Token token) {
         tokenRepository.updateToken(tokenMapper.toEntity(token));
     }

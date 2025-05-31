@@ -1,10 +1,9 @@
-package com.account.adapter.out.cache;
+package com.account.adapter.out.persistence.redis;
 
 import static com.account.infrastructure.util.JsonUtil.parseJson;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.IntegrationTestSupport;
-import com.account.adapter.out.persistence.redis.RedisCacheAdapter;
 import com.account.domain.model.Token;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +14,10 @@ import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.data.redis.core.RedisTemplate;
 
 
-class RedisCacheAdapterTest extends IntegrationTestSupport {
+class RedisStorageAdapterTest extends IntegrationTestSupport {
 
     @Autowired
-    RedisCacheAdapter adapter;
+    RedisStorageAdapter adapter;
 
     @Autowired
     RedisTemplate<String, String> redisTemplate;

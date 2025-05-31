@@ -7,8 +7,8 @@ import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeCachePortClass;
 import com.account.fakeClass.FakeJwtUtilClass;
+import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
 import com.account.infrastructure.exception.CustomBusinessException;
@@ -27,22 +27,22 @@ class RegisterAccountServiceTest {
 
     RegisterAccountService service;
     FakeJwtUtilClass fakeJwtUtilClass;
-    FakeCachePortClass fakeCachePortClass;
+    FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass stubUserAgentUtilClass;
     FakeTokenStoragePortClass fakeTokenStoragePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     RegisterAccountServiceTest() {
         fakeJwtUtilClass = new FakeJwtUtilClass();
-        fakeCachePortClass = new FakeCachePortClass();
+        fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         stubUserAgentUtilClass = new StubUserAgentUtilClass();
         fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
         service = new RegisterAccountService(
             fakeJwtUtilClass,
-            fakeCachePortClass,
             stubUserAgentUtilClass,
+            fakeRedisStoragePortClass,
             fakeTokenStoragePortClass,
             fakeAccountStorageClass
         );

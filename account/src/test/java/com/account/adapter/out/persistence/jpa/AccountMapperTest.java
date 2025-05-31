@@ -1,8 +1,6 @@
-package com.account.adapter.out.persistence;
+package com.account.adapter.out.persistence.jpa;
 
 import com.account.IntegrationTestSupport;
-import com.account.adapter.out.persistence.jpa.AccountEntity;
-import com.account.adapter.out.persistence.jpa.AccountMapper;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import java.time.LocalDateTime;

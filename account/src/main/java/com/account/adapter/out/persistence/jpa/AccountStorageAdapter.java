@@ -6,6 +6,7 @@ import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.domain.model.Account;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.util.AesUtil;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -50,6 +51,7 @@ class AccountStorageAdapter implements AccountStoragePort {
     }
 
     @Override
+    @Transactional
     public void update(Account account) {
         accountRepository.update(accountMapper.toEntity(account));
     }

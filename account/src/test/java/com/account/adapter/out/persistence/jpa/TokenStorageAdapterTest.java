@@ -1,9 +1,6 @@
-package com.account.adapter.out.persistence;
+package com.account.adapter.out.persistence.jpa;
 
 import com.account.IntegrationTestSupport;
-import com.account.adapter.out.persistence.jpa.TokenEntity;
-import com.account.adapter.out.persistence.jpa.TokenPersistenceAdapter;
-import com.account.adapter.out.persistence.jpa.TokenRepository;
 import com.account.domain.model.Token;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,10 +9,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class TokenPersistenceAdapterTest extends IntegrationTestSupport {
+class TokenStorageAdapterTest extends IntegrationTestSupport {
 
     @Autowired
-    private TokenPersistenceAdapter adapter;
+    private TokenStorageAdapter adapter;
     @Autowired
     private TokenRepository tokenRepository;
 

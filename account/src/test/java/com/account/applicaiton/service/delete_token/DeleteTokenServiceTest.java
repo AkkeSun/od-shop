@@ -3,8 +3,8 @@ package com.account.applicaiton.service.delete_token;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeCachePortClass;
 import com.account.fakeClass.FakeJwtUtilClass;
+import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.FakeTokenStoragePortClass;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
@@ -19,13 +19,13 @@ class DeleteTokenServiceTest {
 
     DeleteTokenService service;
     FakeJwtUtilClass fakeJwtUtilClass;
-    FakeCachePortClass fakeCachePortClass;
+    FakeRedisStoragePortClass fakeCachePortClass;
     FakeTokenStoragePortClass fakeTokenStoragePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     DeleteTokenServiceTest() {
         fakeJwtUtilClass = new FakeJwtUtilClass();
-        fakeCachePortClass = new FakeCachePortClass();
+        fakeCachePortClass = new FakeRedisStoragePortClass();
         fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         service = new DeleteTokenService(

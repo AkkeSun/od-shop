@@ -1,11 +1,8 @@
-package com.account.adapter.out.persistence;
+package com.account.adapter.out.persistence.jpa;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.account.IntegrationTestSupport;
-import com.account.adapter.out.persistence.jpa.AccountEntity;
-import com.account.adapter.out.persistence.jpa.AccountPersistenceAdapter;
-import com.account.adapter.out.persistence.jpa.AccountRepository;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.infrastructure.exception.CustomNotFoundException;
@@ -20,10 +17,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class AccountPersistenceAdapterTest extends IntegrationTestSupport {
+class AccountStorageAdapterTest extends IntegrationTestSupport {
 
     @Autowired
-    AccountPersistenceAdapter adapter;
+    AccountStorageAdapter adapter;
     @Autowired
     AccountRepository accountRepository;
 
