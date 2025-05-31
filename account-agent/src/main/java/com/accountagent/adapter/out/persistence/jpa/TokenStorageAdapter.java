@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class TokenStoragePersistenceAdapter implements TokenStoragePort {
+class TokenStorageAdapter implements TokenStoragePort {
 
 
     private final TokenRepository tokenRepository;

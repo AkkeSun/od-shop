@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class LogPersistenceAdapter implements LogStoragePort {
+class LogStorageAdapter implements LogStoragePort {
 
     private final MongoTemplate mongoTemplate;
 
