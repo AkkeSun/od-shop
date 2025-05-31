@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.account.ControllerTestSupport;
 import com.account.applicaiton.service.delete_account.DeleteAccountServiceResponse;
+import com.account.domain.model.Account;
 import com.account.infrastructure.exception.ErrorResponse;
 import com.account.infrastructure.response.ApiResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +38,7 @@ class DeleteAccountControllerTest extends ControllerTestSupport {
                 .id(10L)
                 .result("Y")
                 .build();
-            given(deleteAccountUseCase.deleteAccount(accessToken))
+            given(deleteAccountUseCase.deleteAccount(new Account()))
                 .willReturn(response);
 
             // when

@@ -1,5 +1,6 @@
 package com.account.domain.model;
 
+import io.jsonwebtoken.Claims;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,5 +56,13 @@ public class Account {
 
     public void updateAddress(String address) {
         this.address = address;
+    }
+
+    public static Account of(Claims claims) {
+        return Account.builder()
+            .email(claims.getSubject())
+            .id(Long.valueOf(claims.get("accountId").toString()))
+            .role(Role.valueOf(claims.get("role").toString()))
+            .build();
     }
 }
