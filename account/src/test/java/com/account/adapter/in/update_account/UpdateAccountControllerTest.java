@@ -1,6 +1,7 @@
 package com.account.adapter.in.update_account;
 
 import static com.account.infrastructure.exception.ErrorCode.INVALID_ACCESS_TOKEN;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -38,7 +39,7 @@ class UpdateAccountControllerTest extends ControllerTestSupport {
                 .updateYn("Y")
                 .updateList(Collections.singletonList("username"))
                 .build();
-            given(updateAccountUseCase.updateAccount(request.toCommand(1L)))
+            given(updateAccountUseCase.updateAccount(any()))
                 .willReturn(response);
 
             // when

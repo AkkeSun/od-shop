@@ -73,7 +73,7 @@ class DeleteAccountServiceTest {
             String authentication = fakeJwtUtilClass.createAccessToken(account);
 
             // when
-            DeleteAccountServiceResponse response = service.deleteAccount(new Account());
+            DeleteAccountServiceResponse response = service.deleteAccount(account);
 
             // then
             assert response.result().equals("Y");

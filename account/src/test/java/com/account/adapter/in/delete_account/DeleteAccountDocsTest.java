@@ -17,7 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.service.delete_account.DeleteAccountServiceResponse;
-import com.account.domain.model.Account;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.exception.ErrorCode;
@@ -84,7 +83,7 @@ class DeleteAccountDocsTest extends RestDocsSupport {
                 .id(10L)
                 .result("Y")
                 .build();
-            given(deleteAccountUseCase.deleteAccount(new Account()))
+            given(deleteAccountUseCase.deleteAccount(any()))
                 .willReturn(response);
 
             // when // then

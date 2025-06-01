@@ -62,7 +62,7 @@ class UpdateAccountDocsTest extends RestDocsSupport {
                 .updateYn("Y")
                 .updateList(Collections.singletonList("username"))
                 .build();
-            given(updateAccountUseCase.updateAccount(request.toCommand(1L)))
+            given(updateAccountUseCase.updateAccount(any()))
                 .willReturn(response);
 
             // when // then
@@ -183,7 +183,7 @@ class UpdateAccountDocsTest extends RestDocsSupport {
                 .address("서울시 강남구")
                 .build();
             String accessToken = "access-token-2";
-            given(updateAccountUseCase.updateAccount(request.toCommand(1L)))
+            given(updateAccountUseCase.updateAccount(any()))
                 .willThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_ACCOUNT_INFO));
 
             // when // then

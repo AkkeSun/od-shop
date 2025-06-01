@@ -2,6 +2,7 @@ package com.account.adapter.in.find_account;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.headerWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -15,7 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.FindAccountInfoUseCase;
 import com.account.applicaiton.service.find_account.FindAccountServiceResponse;
-import com.account.domain.model.Account;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.exception.ErrorCode;
@@ -86,7 +86,7 @@ class FindAccountDocsTest extends RestDocsSupport {
                 .role("ROLE_CUSTOMER")
                 .regDate("20241212")
                 .build();
-            given(findAccountInfoUseCase.findAccountInfo(new Account())).willReturn(response);
+            given(findAccountInfoUseCase.findAccountInfo(any())).willReturn(response);
 
             // when then
             performPatchAndDocument(authorization,
@@ -121,7 +121,7 @@ class FindAccountDocsTest extends RestDocsSupport {
         void error() throws Exception {
             // given
             String authorization = "Bearer invalid-token";
-            given(findAccountInfoUseCase.findAccountInfo(new Account())).willThrow(
+            given(findAccountInfoUseCase.findAccountInfo(any())).willThrow(
                 new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
 
             // when // then
@@ -147,7 +147,7 @@ class FindAccountDocsTest extends RestDocsSupport {
         void error2() throws Exception {
             // given
             String authorization = "Bearer test-success-token";
-            given(findAccountInfoUseCase.findAccountInfo(new Account())).willThrow(
+            given(findAccountInfoUseCase.findAccountInfo(any())).willThrow(
                 new CustomNotFoundException(ErrorCode.DoesNotExist_ACCOUNT_INFO));
 
             // when // then
