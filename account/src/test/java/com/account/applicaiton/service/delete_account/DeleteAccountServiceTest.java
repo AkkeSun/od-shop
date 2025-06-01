@@ -73,7 +73,7 @@ class DeleteAccountServiceTest {
             String authentication = fakeJwtUtilClass.createAccessToken(account);
 
             // when
-            DeleteAccountServiceResponse response = service.deleteAccount(authentication);
+            DeleteAccountServiceResponse response = service.deleteAccount(new Account());
 
             // then
             assert response.result().equals("Y");
@@ -93,7 +93,7 @@ class DeleteAccountServiceTest {
 
             // when
             CustomNotFoundException exception = assertThrows(CustomNotFoundException.class,
-                () -> service.deleteAccount(authentication));
+                () -> service.deleteAccount(new Account()));
 
             // then
             assert exception.getErrorCode().equals(ErrorCode.DoesNotExist_ACCOUNT_INFO);

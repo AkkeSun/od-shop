@@ -3,7 +3,6 @@ package com.account.adapter.in.update_account;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;
-import com.account.adapter.in.update_account.UpdateAccountRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,10 +24,10 @@ class UpdateAccountRequestTest {
                 .userTel("01012341234")
                 .address("서울특별시 송파구")
                 .build();
-            String accessToken = "test-access-token";
+            Long accountId = 1L;
 
             // when
-            UpdateAccountCommand command = request.toCommand(accessToken);
+            UpdateAccountCommand command = request.toCommand(accountId);
 
             // then
             assertThat(command.password()).isEqualTo(request.getPassword());
@@ -36,7 +35,7 @@ class UpdateAccountRequestTest {
             assertThat(command.username()).isEqualTo(request.getUsername());
             assertThat(command.userTel()).isEqualTo(request.getUserTel());
             assertThat(command.address()).isEqualTo(request.getAddress());
-            assertThat(command.accessToken()).isEqualTo(accessToken);
+            assertThat(command.accountId().equals(accountId));
         }
     }
 }

@@ -27,8 +27,7 @@ class UpdateAccountService implements UpdateAccountUseCase {
 
     @Override
     public UpdateAccountServiceResponse updateAccount(UpdateAccountCommand command) {
-        Long accountId = jwtUtil.getAccountId(command.accessToken());
-        Account account = accountStoragePort.findById(accountId);
+        Account account = accountStoragePort.findById(command.accountId());
 
         List<String> updateList = new ArrayList<>();
         if (command.isUsernameUpdateRequired(account.getUsername())) {
@@ -55,7 +54,7 @@ class UpdateAccountService implements UpdateAccountUseCase {
                 .build();
         }
 
-        AccountHistory history = createAccountHistoryForUpdate(accountId,
+        AccountHistory history = createAccountHistoryForUpdate(command.accountId(),
             String.join(",", updateList));
 
         accountStoragePort.update(account);

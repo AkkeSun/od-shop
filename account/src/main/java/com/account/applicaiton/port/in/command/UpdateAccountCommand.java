@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 
 @Builder
 public record UpdateAccountCommand(
-    String accessToken,
+    Long accountId,
     String password,
     String passwordCheck,
     String username,

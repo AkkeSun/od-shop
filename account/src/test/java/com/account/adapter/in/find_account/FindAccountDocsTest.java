@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.FindAccountInfoUseCase;
 import com.account.applicaiton.service.find_account.FindAccountServiceResponse;
+import com.account.domain.model.Account;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.exception.ErrorCode;
@@ -85,7 +86,7 @@ class FindAccountDocsTest extends RestDocsSupport {
                 .role("ROLE_CUSTOMER")
                 .regDate("20241212")
                 .build();
-            given(findAccountInfoUseCase.findAccountInfo(authorization)).willReturn(response);
+            given(findAccountInfoUseCase.findAccountInfo(new Account())).willReturn(response);
 
             // when then
             performPatchAndDocument(authorization,
@@ -120,7 +121,7 @@ class FindAccountDocsTest extends RestDocsSupport {
         void error() throws Exception {
             // given
             String authorization = "Bearer invalid-token";
-            given(findAccountInfoUseCase.findAccountInfo(authorization)).willThrow(
+            given(findAccountInfoUseCase.findAccountInfo(new Account())).willThrow(
                 new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
 
             // when // then
@@ -146,7 +147,7 @@ class FindAccountDocsTest extends RestDocsSupport {
         void error2() throws Exception {
             // given
             String authorization = "Bearer test-success-token";
-            given(findAccountInfoUseCase.findAccountInfo(authorization)).willThrow(
+            given(findAccountInfoUseCase.findAccountInfo(new Account())).willThrow(
                 new CustomNotFoundException(ErrorCode.DoesNotExist_ACCOUNT_INFO));
 
             // when // then

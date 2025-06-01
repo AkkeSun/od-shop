@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.account.ControllerTestSupport;
 import com.account.applicaiton.service.find_account.FindAccountServiceResponse;
+import com.account.domain.model.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,7 @@ class FindAccountControllerTest extends ControllerTestSupport {
                 .email("test@google.com")
                 .role("ROLE_CUSTOMER")
                 .build();
-            given(findAccountInfoUseCase.findAccountInfo(authorization)).willReturn(response);
+            given(findAccountInfoUseCase.findAccountInfo(new Account())).willReturn(response);
 
             // when
             ResultActions actions = mockMvc.perform(get("/accounts")

@@ -15,18 +15,17 @@ class FindAccountService implements FindAccountInfoUseCase {
     private final AccountStoragePort accountStoragePort;
 
     @Override
-    public FindAccountServiceResponse findAccountInfo(String authorization) {
-        Long accountId = jwtUtil.getAccountId(authorization);
-        Account account = accountStoragePort.findById(accountId);
+    public FindAccountServiceResponse findAccountInfo(Account account) {
+        Account savedAccount = accountStoragePort.findById(account.getId());
 
         return FindAccountServiceResponse.builder()
-            .id(account.getId())
-            .email(account.getEmail())
-            .username(account.getUsername())
-            .userTel(account.getUserTel())
-            .address(account.getAddress())
-            .role(account.getRole().toString())
-            .regDate(account.getRegDate())
+            .id(savedAccount.getId())
+            .email(savedAccount.getEmail())
+            .username(savedAccount.getUsername())
+            .userTel(savedAccount.getUserTel())
+            .address(savedAccount.getAddress())
+            .role(savedAccount.getRole().toString())
+            .regDate(savedAccount.getRegDate())
             .build();
     }
 }

@@ -53,7 +53,7 @@ class FindAccountServiceTest {
             String authentication = fakeJwtUtilClass.createAccessToken(account);
 
             // when
-            FindAccountServiceResponse response = service.findAccountInfo(authentication);
+            FindAccountServiceResponse response = service.findAccountInfo(account);
 
             // then
             assert response.id().equals(account.getId());

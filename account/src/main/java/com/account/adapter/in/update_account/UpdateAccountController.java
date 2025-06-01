@@ -2,13 +2,14 @@ package com.account.adapter.in.update_account;
 
 import com.account.applicaiton.port.in.UpdateAccountUseCase;
 import com.account.applicaiton.service.update_account.UpdateAccountServiceResponse;
+import com.account.domain.model.Account;
+import com.account.infrastructure.resolver.LoginAccount;
 import com.account.infrastructure.response.ApiResponse;
 import com.account.infrastructure.validation.ValidationSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,9 +21,9 @@ class UpdateAccountController {
     @PutMapping("/accounts")
     ApiResponse<UpdateAccountResponse> updateAccount(
         @RequestBody @Validated(ValidationSequence.class) UpdateAccountRequest request,
-        @RequestHeader(name = "Authorization", required = false) String authorization) {
+        @LoginAccount Account account) {
         UpdateAccountServiceResponse serviceResponse = updateAccountUseCase
-            .updateAccount(request.toCommand(authorization));
+            .updateAccount(request.toCommand(account.getId()));
 
         return ApiResponse.ok(new UpdateAccountResponse().of(serviceResponse));
     }

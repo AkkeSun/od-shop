@@ -38,7 +38,7 @@ class UpdateAccountControllerTest extends ControllerTestSupport {
                 .updateYn("Y")
                 .updateList(Collections.singletonList("username"))
                 .build();
-            given(updateAccountUseCase.updateAccount(request.toCommand(accessToken)))
+            given(updateAccountUseCase.updateAccount(request.toCommand(1L)))
                 .willReturn(response);
 
             // when

@@ -60,7 +60,7 @@ class UpdateAccountServiceTest {
                 .build();
             fakeAccountStorageClass.register(account);
             UpdateAccountCommand command = UpdateAccountCommand.builder()
-                .accessToken("valid token - " + account.getEmail())
+                .accountId(1L)
                 .username("updateAccount.username")
                 .password("updateAccount.password")
                 .userTel("updateAccount.userTel")
@@ -98,7 +98,7 @@ class UpdateAccountServiceTest {
                 .build();
             fakeAccountStorageClass.register(account);
             UpdateAccountCommand command = UpdateAccountCommand.builder()
-                .accessToken("valid token - " + account.getEmail())
+                .accountId(1L)
                 .username(account.getUsername())
                 .password(account.getPassword())
                 .userTel(account.getUserTel())

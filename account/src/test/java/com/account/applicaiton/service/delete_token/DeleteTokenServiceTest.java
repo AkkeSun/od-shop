@@ -57,7 +57,7 @@ class DeleteTokenServiceTest {
             String authentication = "valid token - " + account.getEmail();
 
             // when
-            DeleteTokenServiceResponse result = service.deleteToken(authentication);
+            DeleteTokenServiceResponse result = service.deleteToken(account);
 
             // then
             assert result.result().equals("Y");

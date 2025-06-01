@@ -9,6 +9,7 @@ import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.applicaiton.port.out.TokenStoragePort;
+import com.account.domain.model.Account;
 import com.account.domain.model.AccountHistory;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.util.JwtUtil;
@@ -28,26 +29,23 @@ class DeleteAccountService implements DeleteAccountUseCase {
     private final MessageProducerPort messageProducerPort;
 
     @Override
-    public DeleteAccountServiceResponse deleteAccount(String authentication) {
+    public DeleteAccountServiceResponse deleteAccount(Account account) {
 
-        String email = jwtUtil.getEmail(authentication);
-
-        if (!accountStoragePort.existsByEmail(email)) {
+        if (!accountStoragePort.existsByEmail(account.getEmail())) {
             throw new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO);
         }
 
-        Long accountId = jwtUtil.getAccountId(authentication);
-        AccountHistory history = createAccountHistoryForDelete(accountId);
+        AccountHistory history = createAccountHistoryForDelete(account.getId());
 
-        accountStoragePort.deleteById(accountId);
-        tokenStoragePort.deleteByEmail(email);
-        redisStoragePort.deleteTokenByEmail(email);
+        accountStoragePort.deleteById(account.getId());
+        tokenStoragePort.deleteByEmail(account.getEmail());
+        redisStoragePort.deleteTokenByEmail(account.getEmail());
 
-        messageProducerPort.sendMessage("delete-account", String.valueOf(accountId));
+        messageProducerPort.sendMessage("delete-account", String.valueOf(account.getId()));
         messageProducerPort.sendMessage("account-history", toJsonString(history));
 
         return DeleteAccountServiceResponse.builder()
-            .id(accountId)
+            .id(account.getId())
             .result("Y")
             .build();
     }

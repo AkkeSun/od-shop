@@ -40,9 +40,9 @@ class UpdateAccountRequest {
         this.address = address;
     }
 
-    UpdateAccountCommand toCommand(String accessToken) {
+    UpdateAccountCommand toCommand(Long accountId) {
         return UpdateAccountCommand.builder()
-            .accessToken(accessToken)
+            .accountId(accountId)
             .password(password)
             .passwordCheck(passwordCheck)
             .username(username)
