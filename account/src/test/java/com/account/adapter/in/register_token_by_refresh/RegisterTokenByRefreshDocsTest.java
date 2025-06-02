@@ -53,7 +53,7 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
                         .tag("Token")
                         .summary("인증 토큰 갱신 API")
                         .description("리프래시 토큰으로 인증 토큰을 갱신하는 API 입니다. <br> "
-                            + "리프레시 토큰을 발급받은 기기와 다른 기기에서 시도하거 리프레시토큰이 만료된 경우 갱신에 실패합니다.")
+                            + "리프레시 토큰을 발급받은 기기와 다른 기기에서 시도하거나 리프레시토큰이 만료된 경우 갱신에 실패합니다.")
                         .requestFields(
                             fieldWithPath("refreshToken").type(JsonFieldType.STRING)
                                 .description("리프레시 토큰")

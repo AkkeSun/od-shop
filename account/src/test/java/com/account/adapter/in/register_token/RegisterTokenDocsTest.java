@@ -52,7 +52,8 @@ class RegisterTokenDocsTest extends RestDocsSupport {
                     resource(ResourceSnippetParameters.builder()
                         .tag("Token")
                         .summary("인증 토큰 발급 API")
-                        .description("이메일과 비밀번호로 인증 토큰을 발급하는 API 입니다.")
+                        .description("이메일과 비밀번호로 인증 토큰을 발급하는 API 입니다. <br>"
+                            + "인증토큰 유효기간은 10분 이며 리프레시 토큰 유효기간은 3일 입니다.")
                         .requestFields(
                             fieldWithPath("email").type(JsonFieldType.STRING)
                                 .description("이메일"),
