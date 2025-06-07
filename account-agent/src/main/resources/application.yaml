@@ -12,6 +12,7 @@ spring:
       hibernate:
         format_sql: false
         dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
 
   datasource:
     url: jdbc:mysql://140.245.70.130:3306/account?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
