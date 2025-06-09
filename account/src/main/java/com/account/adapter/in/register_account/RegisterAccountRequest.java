@@ -1,8 +1,6 @@
 package com.account.adapter.in.register_account;
 
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
-import com.account.domain.model.Role;
-import com.account.infrastructure.exception.CustomValidationException;
 import com.account.infrastructure.validation.ValidPassword;
 import com.account.infrastructure.validation.ValidRole;
 import com.account.infrastructure.validation.ValidUserTel;
@@ -13,11 +11,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import java.util.regex.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.util.StringUtils;
 
 @Getter
 @NoArgsConstructor
@@ -58,19 +54,6 @@ class RegisterAccountRequest {
         this.userTel = userTel;
         this.address = address;
         this.role = role;
-    }
-
-    void validation() {
-        if (!password.equals(passwordCheck)) {
-            throw new CustomValidationException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-        }
-        if (!role.equals(Role.ROLE_CUSTOMER.name()) && !role.equals(Role.ROLE_SELLER.name())) {
-            throw new CustomValidationException("유효하지 않은 권한 입니다.");
-        }
-        if (StringUtils.hasText(userTel) &&
-            !Pattern.compile("^01[016789]\\d{7,8}$").matcher(userTel).matches()) {
-            throw new CustomValidationException("올바른 전화번호 형식이 아닙니다.");
-        }
     }
 
     RegisterAccountCommand toCommand() {
