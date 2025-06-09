@@ -9,7 +9,6 @@ import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.domain.model.Account;
 import com.account.domain.model.AccountHistory;
-import com.account.infrastructure.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class UpdateAccountService implements UpdateAccountUseCase {
 
-    private final JwtUtil jwtUtil;
     private final AccountStoragePort accountStoragePort;
     private final MessageProducerPort messageProducerPort;
 
@@ -60,9 +58,6 @@ class UpdateAccountService implements UpdateAccountUseCase {
         accountStoragePort.update(account);
         messageProducerPort.sendMessage("account-history", toJsonString(history));
 
-        return UpdateAccountServiceResponse.builder()
-            .updateYn("Y")
-            .updateList(updateList)
-            .build();
+        return UpdateAccountServiceResponse.ofSuccess(updateList);
     }
 }

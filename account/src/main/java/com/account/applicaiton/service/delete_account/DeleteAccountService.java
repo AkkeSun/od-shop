@@ -44,9 +44,6 @@ class DeleteAccountService implements DeleteAccountUseCase {
         messageProducerPort.sendMessage("delete-account", String.valueOf(account.getId()));
         messageProducerPort.sendMessage("account-history", toJsonString(history));
 
-        return DeleteAccountServiceResponse.builder()
-            .id(account.getId())
-            .result("Y")
-            .build();
+        return DeleteAccountServiceResponse.ofSuccess(account);
     }
 }

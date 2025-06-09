@@ -17,15 +17,6 @@ class FindAccountService implements FindAccountInfoUseCase {
     @Override
     public FindAccountServiceResponse findAccountInfo(Account account) {
         Account savedAccount = accountStoragePort.findById(account.getId());
-
-        return FindAccountServiceResponse.builder()
-            .id(savedAccount.getId())
-            .email(savedAccount.getEmail())
-            .username(savedAccount.getUsername())
-            .userTel(savedAccount.getUserTel())
-            .address(savedAccount.getAddress())
-            .role(savedAccount.getRole().toString())
-            .regDate(savedAccount.getRegDate())
-            .build();
+        return FindAccountServiceResponse.of(savedAccount);
     }
 }

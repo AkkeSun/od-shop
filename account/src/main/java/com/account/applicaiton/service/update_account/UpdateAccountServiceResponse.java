@@ -9,4 +9,10 @@ public record UpdateAccountServiceResponse(
     List<String> updateList
 ) {
 
+    public static UpdateAccountServiceResponse ofSuccess(List<String> updateList) {
+        return UpdateAccountServiceResponse.builder()
+            .updateYn("Y")
+            .updateList(updateList)
+            .build();
+    }
 }

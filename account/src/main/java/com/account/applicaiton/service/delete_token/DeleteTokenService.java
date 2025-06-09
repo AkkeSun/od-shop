@@ -24,8 +24,6 @@ class DeleteTokenService implements DeleteTokenUseCase {
         tokenStoragePort.deleteByEmail(account.getEmail());
 
         log.info("[Delete token] {}", account.getEmail());
-        return DeleteTokenServiceResponse.builder()
-            .result("Y")
-            .build();
+        return DeleteTokenServiceResponse.ofSuccess();
     }
 }
