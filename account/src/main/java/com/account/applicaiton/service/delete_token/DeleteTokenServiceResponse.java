@@ -7,4 +7,9 @@ public record DeleteTokenServiceResponse(
     String result
 ) {
 
+    public static DeleteTokenServiceResponse ofSuccess() {
+        return DeleteTokenServiceResponse.builder()
+            .result("Y")
+            .build();
+    }
 }
