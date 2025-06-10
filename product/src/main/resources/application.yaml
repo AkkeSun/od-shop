@@ -1,0 +1,94 @@
+spring:
+  application:
+    name: product-service
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+  datasource:
+    shard1:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: akkessun
+      password: sunyang2ek+
+      url: jdbc:mysql://140.245.70.130:3306/product1?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      hikari:
+        maximum-pool-size=30
+        minimum-idle=10
+        connection-timeout=100000
+    shard2:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: akkessun
+      password: sunyang2ek+
+      url: jdbc:mysql://140.245.70.130:3306/product2?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      hikari:
+        maximum-pool-size=30
+        minimum-idle=10
+        connection-timeout=100000
+
+  data:
+    redis:
+      host: 140.245.70.130
+      port: 6379
+      timeout: 3000
+
+  elasticsearch:
+    username: elastic
+    password: 1234
+    uris: localhost:9200
+
+server:
+  port: 8082
+  shutdown: graceful
+
+jwt:
+  token:
+    secret-key: hello-jwt
+
+kafka:
+  host: 152.67.206.159:9092
+  topic:
+    product-search-keyword: product-search-keyword-topic
+    update-quantity: product-update-quantity-topic
+    register-review: product-review-cnt-topic
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      redis:
+        slidingWindowSize: 1
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+      kafka:
+        slidingWindowSize: 5
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+    instances:
+      redis:
+        base-config: redis
+      kafka:
+        base-config: kafka
+
+
+service-constant:
+  aes:
+    secret-key: testKey
+  snowflake:
+    dataCenterId: 0
+    workerId: 1
+  product:
+    search-page-size: 100
+    response-page-size: 10
+
