@@ -58,7 +58,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
     // langChain
-    implementation 'dev.langchain4j:langchain4j-chroma:0.36.0'
     implementation 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2:0.36.0'
 
     // 분산락
@@ -101,12 +100,12 @@ openapi3 {
 tasks.register('copyOasToSwagger', DefaultTask) {
     doLast {
         def openapi3File = file("src/main/resources/static/docs/product-api.yaml")
-        def securitySchemesContent = "  securitySchemes:\n" +                                \
-                                                                    "    APIKey:\n" +                                \
-                                                                    "      type: apiKey\n" +                                \
-                                                                    "      name: Authorization\n" +                                \
-                                                                    "      in: header\n" +                               \
-                                                                    "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +                                  \
+                                                                      "    APIKey:\n" +                                  \
+                                                                      "      type: apiKey\n" +                                  \
+                                                                      "      name: Authorization\n" +                                  \
+                                                                      "      in: header\n" +                                 \
+                                                                      "security:\n" +
                 "  - APIKey: []"
 
         if (openapi3File.exists()) {
