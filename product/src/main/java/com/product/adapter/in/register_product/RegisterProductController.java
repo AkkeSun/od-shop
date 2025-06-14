@@ -25,6 +25,6 @@ class RegisterProductController {
 
         RegisterProductServiceResponse serviceResponse = registerProductUseCase
             .registerProduct(request.toCommand(account));
-        return ApiResponse.ok(new RegisterProductResponse().of(serviceResponse));
+        return ApiResponse.ok(RegisterProductResponse.of(serviceResponse));
     }
 }

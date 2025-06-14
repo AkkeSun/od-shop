@@ -43,12 +43,12 @@ class RegisterProductRequest {
     @Size(max = 50, message = "상품 설명 이미지는 50자 이하여야 합니다", groups = SizeGroups.class)
     private String descriptionImgUrl;
 
-    @NotNull(message = "상품 옵션은 필수값 입니다.", groups = NotBlankGroups.class)
+    @NotNull(message = "상품 옵션은 필수값 입니다", groups = NotBlankGroups.class)
     private Set<String> productOption;
 
-    @NotNull(message = "키워드는 필수값 입니다.", groups = NotBlankGroups.class)
+    @NotNull(message = "키워드는 필수값 입니다", groups = NotBlankGroups.class)
     private Set<String> keywords;
-    
+
     @Builder
     public RegisterProductRequest(String category, String descriptionImgUrl, Set<String> keywords,
         long price, String productImgUrl, String productName, Set<String> productOption,
