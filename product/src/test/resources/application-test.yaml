@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    generate-ddl: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  datasource:
+    shard1:
+      driver-class-name: org.h2.Driver
+      username: sa
+      password:
+      url: jdbc:h2:mem:product1;MODE=MySQL
+    shard2:
+      driver-class-name: org.h2.Driver
+      username: sa
+      password:
+      url: jdbc:h2:mem:product2;MODE=MySQL
