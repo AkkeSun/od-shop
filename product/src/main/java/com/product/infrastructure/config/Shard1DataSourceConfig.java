@@ -1,8 +1,11 @@
 package com.product.infrastructure.config;
 
 import jakarta.persistence.EntityManagerFactory;
+import java.util.HashMap;
+import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -23,6 +26,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     transactionManagerRef = "primaryTransactionManager"
 )
 public class Shard1DataSourceConfig {
+
+    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String ddlAuto;
 
     @Bean
     @Primary
@@ -47,10 +53,16 @@ public class Shard1DataSourceConfig {
         EntityManagerFactoryBuilder builder,
         @Qualifier("primaryDataSource") DataSource dataSource
     ) {
+        Map<String, Object> props = new HashMap<>();
+        props.put("hibernate.hbm2ddl.auto", ddlAuto);
+        props.put("hibernate.physical_naming_strategy",
+            "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl");
+
         return builder
             .dataSource(dataSource)
             .packages("com.product.adapter.out.persistence.jpa.shard1")
             .persistenceUnit("primaryEntityManager")
+            .properties(props)
             .build();
     }
 
