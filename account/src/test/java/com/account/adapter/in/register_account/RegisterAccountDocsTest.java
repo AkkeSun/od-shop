@@ -14,8 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.service.register_account.RegisterAccountServiceResponse;
-import com.account.adapter.in.register_account.RegisterAccountController;
-import com.account.adapter.in.register_account.RegisterAccountRequest;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
@@ -62,9 +60,9 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isOk(),
-                "[registerAccount] SUCCESS",
-                "[RESPONSE] register-account",
+            performDocument(request, status().isOk(),
+                "[register-account] success",
+                "[response] register-account",
                 fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
                     .description("상태 코드"),
                 fieldWithPath("message").type(JsonFieldType.STRING)
@@ -98,20 +96,8 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isBadRequest(),
-                "[registerAccount] 이메일 미입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().isBadRequest(),
+                "[register-account] 이메일 미입력");
         }
 
         @Test
@@ -135,20 +121,8 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isBadRequest(),
-                "[registerAccount] 비밀번호 미입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().isBadRequest(),
+                "[register-account] 비밀번호 미입력");
         }
 
         @Test
@@ -172,20 +146,8 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isBadRequest(),
-                "[registerAccount] 비밀번호 확인 미입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().isBadRequest(),
+                "[register-account] 비밀번호 확인 미입력");
         }
 
         @Test
@@ -209,20 +171,8 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isBadRequest(),
-                "[registerAccount] 권한 미입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().isBadRequest(),
+                "[register-account] 권한 미입력");
         }
 
         @Test
@@ -246,20 +196,8 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isBadRequest(),
-                "[registerAccount] 비밀번호와 비밀번호 확인 미일치",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().isBadRequest(),
+                "[register-account] 비밀번호와 비밀번호 확인 미일치");
         }
 
         @Test
@@ -283,20 +221,8 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isBadRequest(),
-                "[registerAccount] 유효하지 않는 권한 입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().isBadRequest(),
+                "[register-account] 유효하지 않는 권한 입력");
         }
 
         @Test
@@ -320,23 +246,11 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isBadRequest(),
-                "[registerAccount] 유효하지 않는 전화번호 패턴 입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().isBadRequest(),
+                "[register-account] 유효하지 않는 전화번호 패턴 입력");
         }
 
-        private void performPatchAndDocument(RegisterAccountRequest request,
+        private void performDocument(RegisterAccountRequest request,
             ResultMatcher status, String docIdentifier, String responseSchema,
             FieldDescriptor... responseFields) throws Exception {
 
@@ -354,7 +268,7 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                             .description("사용자를 등록하는 API 입니다.")
                             .requestFields(
                                 fieldWithPath("email").type(JsonFieldType.STRING)
-                                    .description("이메일 (50)"),
+                                    .description("이메일 (50자 미만)"),
                                 fieldWithPath("password").type(JsonFieldType.STRING)
                                     .description("비밀번호"),
                                 fieldWithPath("passwordCheck").type(JsonFieldType.STRING)
@@ -362,14 +276,14 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                                 fieldWithPath("role").type(JsonFieldType.STRING)
                                     .description("권한 (ROLE_CUSTOMER, ROLE_SELLER)"),
                                 fieldWithPath("username").type(JsonFieldType.STRING)
-                                    .description("이름 (10)").optional(),
+                                    .description("이름 (10자 미만)").optional(),
                                 fieldWithPath("userTel").type(JsonFieldType.STRING)
                                     .description("전화번호 (01012341234 패턴)").optional(),
                                 fieldWithPath("address").type(JsonFieldType.STRING)
-                                    .description("주소 (100)").optional()
+                                    .description("주소 (100자 미만)").optional()
                             )
                             .responseFields(responseFields)
-                            .requestSchema(Schema.schema("[REQUEST] register-account"))
+                            .requestSchema(Schema.schema("[request] register-account"))
                             .responseSchema(Schema.schema(responseSchema))
                             .build()
                         )
@@ -377,5 +291,21 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 );
         }
 
+        private void performErrorDocument(RegisterAccountRequest request, ResultMatcher status,
+            String identifier) throws Exception {
+
+            performDocument(request, status, identifier, "[response] error",
+                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
+                    .description("상태 코드"),
+                fieldWithPath("message").type(JsonFieldType.STRING)
+                    .description("상태 메시지"),
+                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                    .description("응답 데이터"),
+                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
+                    .description("에러 코드"),
+                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
+                    .description("에러 메시지")
+            );
+        }
     }
 }

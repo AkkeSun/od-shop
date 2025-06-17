@@ -37,38 +37,6 @@ class RegisterTokenDocsTest extends RestDocsSupport {
         return new RegisterTokenController(registerTokenUseCase);
     }
 
-    private void performPatchAndDocument(RegisterTokenRequest request,
-        ResultMatcher status, String docIdentifier, String responseSchema,
-        FieldDescriptor... responseFields) throws Exception {
-
-        mockMvc.perform(post("/auth")
-                .content(objectMapper.writeValueAsString(request))
-                .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status)
-            .andDo(MockMvcRestDocumentationWrapper.document(docIdentifier,
-                    preprocessRequest(prettyPrint()),
-                    preprocessResponse(prettyPrint()),
-                    resource(ResourceSnippetParameters.builder()
-                        .tag("Token")
-                        .summary("인증 토큰 발급 API")
-                        .description("이메일과 비밀번호로 인증 토큰을 발급하는 API 입니다. <br>"
-                            + "인증토큰 유효기간은 10분 이며 리프레시 토큰 유효기간은 3일 입니다.")
-                        .requestFields(
-                            fieldWithPath("email").type(JsonFieldType.STRING)
-                                .description("이메일"),
-                            fieldWithPath("password").type(JsonFieldType.STRING)
-                                .description("비밀번호")
-                        )
-                        .responseFields(responseFields)
-                        .requestSchema(Schema.schema("[REQUEST] register-token"))
-                        .responseSchema(Schema.schema(responseSchema))
-                        .build()
-                    )
-                )
-            );
-    }
-
     @Nested
     @DisplayName("[registerToken] 사용자 토큰을 등록하는 API")
     class Describe_RegisterToken {
@@ -89,9 +57,9 @@ class RegisterTokenDocsTest extends RestDocsSupport {
                 .willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isOk(),
-                "[registerToken] SUCCESS",
-                "[RESPONSE] register-token",
+            performDocument(request, status().isOk(),
+                "[register-token] success",
+                "[response] register-token",
                 fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
                     .description("상태 코드"),
                 fieldWithPath("message").type(JsonFieldType.STRING)
@@ -116,20 +84,8 @@ class RegisterTokenDocsTest extends RestDocsSupport {
                 .build();
 
             // when // then
-            performPatchAndDocument(request, status().is4xxClientError(),
-                "[registerToken] 이메일 미입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().is4xxClientError(),
+                "[register-token] 이메일 미입력");
         }
 
         @Test
@@ -142,20 +98,8 @@ class RegisterTokenDocsTest extends RestDocsSupport {
                 .build();
 
             // when // then
-            performPatchAndDocument(request, status().is4xxClientError(),
-                "[registerToken] 비밀번호 미입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().is4xxClientError(),
+                "[register-token] 비밀번호 미입력");
         }
 
         @Test
@@ -170,21 +114,58 @@ class RegisterTokenDocsTest extends RestDocsSupport {
                 .willThrow(new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO));
 
             // when // then
-            performPatchAndDocument(request, status().is4xxClientError(),
-                "[registerToken] 조회된 사용자 정보 없음",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
+            performErrorDocument(request, status().is4xxClientError(),
+                "[register-token] 조회된 사용자 정보 없음");
         }
+    }
+
+    private void performDocument(RegisterTokenRequest request,
+        ResultMatcher status, String docIdentifier, String responseSchema,
+        FieldDescriptor... responseFields) throws Exception {
+
+        mockMvc.perform(post("/auth")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status)
+            .andDo(MockMvcRestDocumentationWrapper.document(docIdentifier,
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(ResourceSnippetParameters.builder()
+                        .tag("Token")
+                        .summary("인증 토큰 발급 API")
+                        .description("이메일과 비밀번호로 인증 토큰을 발급하는 API 입니다. <br>"
+                            + "인증토큰 유효기간은 10분 이며 리프레시 토큰 유효기간은 3일 입니다.")
+                        .requestFields(
+                            fieldWithPath("email").type(JsonFieldType.STRING)
+                                .description("이메일"),
+                            fieldWithPath("password").type(JsonFieldType.STRING)
+                                .description("비밀번호")
+                        )
+                        .responseFields(responseFields)
+                        .requestSchema(Schema.schema("[request] register-token"))
+                        .responseSchema(Schema.schema(responseSchema))
+                        .build()
+                    )
+                )
+            );
+    }
+
+    private void performErrorDocument(RegisterTokenRequest request, ResultMatcher status,
+        String identifier) throws Exception {
+
+        performDocument(request, status, identifier, "[response] error",
+            fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
+                .description("상태 코드"),
+            fieldWithPath("message").type(JsonFieldType.STRING)
+                .description("상태 메시지"),
+            fieldWithPath("data").type(JsonFieldType.OBJECT)
+                .description("응답 데이터"),
+            fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
+                .description("에러 코드"),
+            fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
+                .description("에러 메시지")
+        );
     }
 
 }

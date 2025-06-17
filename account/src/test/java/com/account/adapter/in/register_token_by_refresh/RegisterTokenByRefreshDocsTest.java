@@ -37,36 +37,6 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
         return new RegisterTokenByRefreshController(registerTokenByRefreshUseCase);
     }
 
-    private void performPatchAndDocument(RegisterTokenByRefreshRequest request,
-        ResultMatcher status, String docIdentifier, String responseSchema,
-        FieldDescriptor... responseFields) throws Exception {
-
-        mockMvc.perform(put("/auth")
-                .content(objectMapper.writeValueAsString(request))
-                .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status)
-            .andDo(MockMvcRestDocumentationWrapper.document(docIdentifier,
-                    preprocessRequest(prettyPrint()),
-                    preprocessResponse(prettyPrint()),
-                    resource(ResourceSnippetParameters.builder()
-                        .tag("Token")
-                        .summary("인증 토큰 갱신 API")
-                        .description("리프래시 토큰으로 인증 토큰을 갱신하는 API 입니다. <br> "
-                            + "리프레시 토큰을 발급받은 기기와 다른 기기에서 시도하거나 리프레시토큰이 만료된 경우 갱신에 실패합니다.")
-                        .requestFields(
-                            fieldWithPath("refreshToken").type(JsonFieldType.STRING)
-                                .description("리프레시 토큰")
-                        )
-                        .responseFields(responseFields)
-                        .requestSchema(Schema.schema("[REQUEST] register-token-by-refresh"))
-                        .responseSchema(Schema.schema(responseSchema))
-                        .build()
-                    )
-                )
-            );
-    }
-
     @Nested
     @DisplayName("[registerToken] 리프래시 토큰을 통해 사용자 토큰을 갱신하는 API")
     class Describe_registerToken {
@@ -88,9 +58,9 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
                 request.getRefreshToken())).willReturn(response);
 
             // when // then
-            performPatchAndDocument(request, status().isOk(),
-                "[registerTokenByRefresh] SUCCESS",
-                "[RESPONSE] register-token",
+            performDocument(request, status().isOk(),
+                "[refresh-token] success",
+                "[response] register-token",
                 fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
                     .description("상태 코드"),
                 fieldWithPath("message").type(JsonFieldType.STRING)
@@ -113,19 +83,8 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
                 .build();
 
             // when // then
-            performPatchAndDocument(request, status().isBadRequest(),
-                "[registerTokenByRefresh] 리프레시 토큰 누락",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지"));
+            performErrorDocument(request, status().isBadRequest(),
+                "[refresh-token] 리프레시 토큰 미입력");
         }
 
         @Test
@@ -141,19 +100,55 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
                 .willThrow(new CustomAuthenticationException(ErrorCode.INVALID_REFRESH_TOKEN));
 
             // when // then
-            performPatchAndDocument(request, status().isUnauthorized(),
-                "[registerTokenByRefresh] 유효하지 않은 리프레시 토큰 입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지"));
+            performErrorDocument(request, status().isUnauthorized(),
+                "[refresh-token] 유효하지 않은 리프레시 토큰 입력");
         }
+    }
+
+    private void performDocument(RegisterTokenByRefreshRequest request,
+        ResultMatcher status, String docIdentifier, String responseSchema,
+        FieldDescriptor... responseFields) throws Exception {
+
+        mockMvc.perform(put("/auth")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status)
+            .andDo(MockMvcRestDocumentationWrapper.document(docIdentifier,
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(ResourceSnippetParameters.builder()
+                        .tag("Token")
+                        .summary("인증 토큰 갱신 API")
+                        .description("리프래시 토큰으로 인증 토큰을 갱신하는 API 입니다. <br> "
+                            + "리프레시 토큰을 발급받은 기기와 다른 기기에서 시도하거나 리프레시토큰이 만료된 경우 갱신에 실패합니다.")
+                        .requestFields(
+                            fieldWithPath("refreshToken").type(JsonFieldType.STRING)
+                                .description("리프레시 토큰")
+                        )
+                        .responseFields(responseFields)
+                        .requestSchema(Schema.schema("[request] refresh-token"))
+                        .responseSchema(Schema.schema(responseSchema))
+                        .build()
+                    )
+                )
+            );
+    }
+
+    private void performErrorDocument(RegisterTokenByRefreshRequest request, ResultMatcher status,
+        String identifier) throws Exception {
+
+        performDocument(request, status, identifier, "[response] error",
+            fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
+                .description("상태 코드"),
+            fieldWithPath("message").type(JsonFieldType.STRING)
+                .description("상태 메시지"),
+            fieldWithPath("data").type(JsonFieldType.OBJECT)
+                .description("응답 데이터"),
+            fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
+                .description("에러 코드"),
+            fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
+                .description("에러 메시지")
+        );
     }
 }

@@ -39,7 +39,39 @@ class DeleteTokenDocsTest extends RestDocsSupport {
         return new DeleteTokenController(deleteTokenUseCase);
     }
 
-    private void performPatchAndDocument(String accessToken,
+    @Nested
+    @WithAnonymousUser
+    @DisplayName("[deleteToken] 토큰을 삭제하는 API")
+    class Describe_deleteToken {
+
+        @Test
+        @DisplayName("[success] API 를 호출했을 때 200 코드와 성공 메시지를 응답한다.")
+        void success() throws Exception {
+
+            // given
+            String accessToken = "test-access-token";
+            DeleteTokenServiceResponse response = DeleteTokenServiceResponse.builder()
+                .result("Y")
+                .build();
+            given(deleteTokenUseCase.deleteToken(any())).willReturn(response);
+
+            // when
+            performDocument(accessToken, status().isOk(),
+                "[deleteToken] success",
+                "[response] delete-token",
+                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
+                    .description("상태 코드"),
+                fieldWithPath("message").type(JsonFieldType.STRING)
+                    .description("상태 메시지"),
+                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                    .description("응답 데이터"),
+                fieldWithPath("data.result").type(JsonFieldType.STRING)
+                    .description("결과")
+            );
+        }
+    }
+
+    private void performDocument(String accessToken,
         ResultMatcher status, String docIdentifier, String responseSchema,
         FieldDescriptor... responseFields) throws Exception {
 
@@ -66,37 +98,5 @@ class DeleteTokenDocsTest extends RestDocsSupport {
                     )
                 )
             );
-    }
-
-    @Nested
-    @WithAnonymousUser
-    @DisplayName("[deleteToken] 토큰을 삭제하는 API")
-    class Describe_deleteToken {
-
-        @Test
-        @DisplayName("[success] API 를 호출했을 때 200 코드와 성공 메시지를 응답한다.")
-        void success() throws Exception {
-
-            // given
-            String accessToken = "test-access-token";
-            DeleteTokenServiceResponse response = DeleteTokenServiceResponse.builder()
-                .result("Y")
-                .build();
-            given(deleteTokenUseCase.deleteToken(any())).willReturn(response);
-
-            // when
-            performPatchAndDocument(accessToken, status().isOk(),
-                "[deleteToken] 토큰 삭제 성공",
-                "[RESPONSE] SUCCESS",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.result").type(JsonFieldType.STRING)
-                    .description("결과")
-            );
-        }
     }
 }

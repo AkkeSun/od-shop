@@ -40,7 +40,69 @@ class DeleteAccountDocsTest extends RestDocsSupport {
         return new DeleteAccountController(deleteAccountUseCase);
     }
 
-    private void performPatchAndDocument(String accessToken,
+    @Nested
+    @DisplayName("[deleteAccount] 사용자 정보를 삭제하는 API")
+    class Describe_deleteAccount {
+
+        @Test
+        @DisplayName("[success] 권한 정보가 있는 사용자가 API 를 요청한 경우 200 코드와 성공 메시지를 응답한다.")
+        void success() throws Exception {
+            // given
+            String accessToken = "test-access-token";
+            DeleteAccountServiceResponse response = DeleteAccountServiceResponse.builder()
+                .id(10L)
+                .result("Y")
+                .build();
+            given(deleteAccountUseCase.deleteAccount(any()))
+                .willReturn(response);
+
+            // when // then
+            performDocument(accessToken, status().isOk(),
+                "[deleteAccount] success",
+                "[response] delete-account",
+                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
+                    .description("상태 코드"),
+                fieldWithPath("message").type(JsonFieldType.STRING)
+                    .description("상태 메시지"),
+                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                    .description("응답 데이터"),
+                fieldWithPath("data.id").type(JsonFieldType.NUMBER)
+                    .description("사용자 아이디"),
+                fieldWithPath("data.result").type(JsonFieldType.STRING)
+                    .description("삭제 유무")
+            );
+        }
+
+
+        @Test
+        @DisplayName("[success] 권한 정보가 없는 사용자가 API 를 호출한 경우 401 코드와 에러 메시지를 응답한다.")
+        void error() throws Exception {
+            // given
+            String authorization = "Bearer invalid-token";
+            given(deleteAccountUseCase.deleteAccount(any())).willThrow(
+                new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
+
+            // when // then
+            performErrorDocument(authorization, status().is4xxClientError(),
+                "[deleteAccount] 유효하지 않은 토큰 입력");
+        }
+
+
+        @Test
+        @DisplayName("[error] 조회된 사용자 정보가 없는 경우 404 코드와 오류 메시지를 응답한다.")
+        void error1() throws Exception {
+            // given
+            String accessToken = "test-access-token";
+            given(deleteAccountUseCase.deleteAccount(any()))
+                .willThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_ACCOUNT_INFO));
+
+            // when // then
+            performErrorDocument(accessToken, status().isNotFound(),
+                "[deleteAccount] 조회된 사용자 정보 없음");
+        }
+    }
+
+    private void performDocument(String accessToken,
         ResultMatcher status, String docIdentifier, String responseSchema,
         FieldDescriptor... responseFields) throws Exception {
 
@@ -70,91 +132,20 @@ class DeleteAccountDocsTest extends RestDocsSupport {
             );
     }
 
-    @Nested
-    @DisplayName("[deleteAccount] 사용자 정보를 삭제하는 API")
-    class Describe_deleteAccount {
+    private void performErrorDocument(String accessToke, ResultMatcher status, String identifier)
+        throws Exception {
 
-        @Test
-        @DisplayName("[success] 권한 정보가 있는 사용자가 API 를 요청한 경우 200 코드와 성공 메시지를 응답한다.")
-        void success() throws Exception {
-            // given
-            String accessToken = "test-access-token";
-            DeleteAccountServiceResponse response = DeleteAccountServiceResponse.builder()
-                .id(10L)
-                .result("Y")
-                .build();
-            given(deleteAccountUseCase.deleteAccount(any()))
-                .willReturn(response);
-
-            // when // then
-            performPatchAndDocument(accessToken, status().isOk(),
-                "[deleteAccount] SUCCESS",
-                "[RESPONSE] delete-account",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.id").type(JsonFieldType.NUMBER)
-                    .description("사용자 아이디"),
-                fieldWithPath("data.result").type(JsonFieldType.STRING)
-                    .description("삭제 유무")
-            );
-        }
-
-
-        @Test
-        @DisplayName("[success] 권한 정보가 없는 사용자가 API 를 호출한 경우 401 코드와 에러 메시지를 응답한다.")
-        void error() throws Exception {
-            // given
-            String authorization = "Bearer invalid-token";
-            given(deleteAccountUseCase.deleteAccount(any())).willThrow(
-                new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
-
-            // when // then
-            performPatchAndDocument(authorization,
-                status().isUnauthorized(),
-                "[deleteAccount] 유효하지 않은 토큰 입력",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
-        }
-
-
-        @Test
-        @DisplayName("[error] 조회된 사용자 정보가 없는 경우 404 코드와 오류 메시지를 응답한다.")
-        void error1() throws Exception {
-            // given
-            String accessToken = "test-access-token";
-            given(deleteAccountUseCase.deleteAccount(any()))
-                .willThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_ACCOUNT_INFO));
-
-            // when // then
-            performPatchAndDocument(accessToken,
-                status().isNotFound(),
-                "[deleteAccount] 조회된 사용자 정보 없음",
-                "[RESPONSE] ERROR",
-                fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
-                    .description("상태 코드"),
-                fieldWithPath("message").type(JsonFieldType.STRING)
-                    .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.OBJECT)
-                    .description("응답 데이터"),
-                fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
-                    .description("에러 코드"),
-                fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
-                    .description("에러 메시지")
-            );
-        }
+        performDocument(accessToke, status, identifier, "[response] error",
+            fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
+                .description("상태 코드"),
+            fieldWithPath("message").type(JsonFieldType.STRING)
+                .description("상태 메시지"),
+            fieldWithPath("data").type(JsonFieldType.OBJECT)
+                .description("응답 데이터"),
+            fieldWithPath("data.errorCode").type(JsonFieldType.NUMBER)
+                .description("에러 코드"),
+            fieldWithPath("data.errorMessage").type(JsonFieldType.STRING)
+                .description("에러 메시지")
+        );
     }
 }
