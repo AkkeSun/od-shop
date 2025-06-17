@@ -37,4 +37,11 @@ class ProductStorageAdapter implements ProductStoragePort {
             shard2Adapter.deleteById(productId);
         }
     }
+
+    @NewSpan
+    @Override
+    public Product findById(Long productId) {
+        return ShardKeyUtil.isShard1(productId) ? shard1Adapter.findById(productId)
+            : shard2Adapter.findById(productId);
+    }
 }

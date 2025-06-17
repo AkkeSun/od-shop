@@ -7,4 +7,6 @@ public interface ProductStoragePort {
     void register(Product product);
 
     void deleteById(Long productId);
+
+    Product findById(Long productId);
 }
