@@ -33,14 +33,14 @@ class RegisterProductRequestTest {
             RegisterProductCommand command = request.toCommand(Account.builder().build());
 
             // then
-            assert command.productName().equals(request.getProductName());
-            assert command.category().equals(request.getCategory());
-            assert command.price() == request.getPrice();
-            assert command.quantity() == request.getQuantity();
-            assert command.productImgUrl().equals(request.getProductImgUrl());
-            assert command.descriptionImgUrl().equals(request.getDescriptionImgUrl());
-            assert command.productOption().equals(request.getProductOption());
-            assert command.keywords().equals(request.getKeywords());
+            assert command.productName().equals(request.productName());
+            assert command.category().equals(request.category());
+            assert command.price() == request.price();
+            assert command.quantity() == request.quantity();
+            assert command.productImgUrl().equals(request.productImgUrl());
+            assert command.descriptionImgUrl().equals(request.descriptionImgUrl());
+            assert command.productOption().equals(request.productOption());
+            assert command.keywords().equals(request.keywords());
         }
     }
 }

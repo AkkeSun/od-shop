@@ -46,14 +46,14 @@ class RegisterProductControllerTest extends ControllerTestSupport {
             RegisterProductServiceResponse response = RegisterProductServiceResponse.builder()
                 .productId(12345L)
                 .sellerEmail("od@test.com")
-                .productName(request.getProductName())
-                .productImgUrl(request.getProductImgUrl())
-                .descriptionImgUrl(request.getDescriptionImgUrl())
-                .price(request.getPrice())
-                .quantity(request.getQuantity())
-                .category(Category.valueOf(request.getCategory()))
-                .keywords(request.getKeywords())
-                .productOption(request.getProductOption())
+                .productName(request.productName())
+                .productImgUrl(request.productImgUrl())
+                .descriptionImgUrl(request.descriptionImgUrl())
+                .price(request.price())
+                .quantity(request.quantity())
+                .category(Category.valueOf(request.category()))
+                .keywords(request.keywords())
+                .productOption(request.productOption())
                 .build();
             String authorization = "testToken";
             given(registerProductUseCase.registerProduct(any())).willReturn(response);
@@ -87,7 +87,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
         @DisplayName("[error] 인증받지 않은 사용자가 API 를 요청 했을 때 401코드와 에러 메시지를 응답한다.")
         void error() throws Exception {
             // given
-            RegisterProductRequest request = new RegisterProductRequest();
+            RegisterProductRequest request = RegisterProductRequest.builder().build();
             String authorization = "testToken";
 
             // when
@@ -115,7 +115,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
         @DisplayName("[error] 상품 등록 권한이 없는 사용자가 API 를 요청 했을 때 403코드와 에러 메시지를 응답한다.")
         void error2() throws Exception {
             // given
-            RegisterProductRequest request = new RegisterProductRequest();
+            RegisterProductRequest request = RegisterProductRequest.builder().build();
             String authorization = "testToken";
 
             // when
