@@ -21,4 +21,11 @@ public class FakeProductStoragePort implements ProductStoragePort {
             .findFirst()
             .ifPresent(database::remove);
     }
+
+    @Override
+    public Product findById(Long productId) {
+        return database.stream()
+            .filter(product -> product.getId().equals(productId))
+            .findFirst().get();
+    }
 }

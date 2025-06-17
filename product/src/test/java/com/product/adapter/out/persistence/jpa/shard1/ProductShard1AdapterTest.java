@@ -1,8 +1,12 @@
 package com.product.adapter.out.persistence.jpa.shard1;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.product.IntegrationTestSupport;
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
+import com.product.infrastructure.exception.CustomNotFoundException;
+import com.product.infrastructure.exception.ErrorCode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -125,6 +129,72 @@ class ProductShard1AdapterTest extends IntegrationTestSupport {
             // then
             assert !productRepository.existsById(product.getId());
             assert !metricRepository.existsById(product.getId());
+        }
+    }
+
+    @Nested
+    @DisplayName("[findById] 아이디로 상품을 조회하는 메소드")
+    class Describe_findById {
+
+        @Test
+        @DisplayName("[success] 조회된 상품이 존재한다면 상품을 반환한다.")
+        void success() {
+            // given
+            Product product = Product.builder()
+                .id(snowflakeGenerator.nextId())
+                .sellerId(1L)
+                .sellerEmail("test@gmail.com")
+                .productName("Test Product")
+                .productImgUrl("http://example.com/product.jpg")
+                .descriptionImgUrl("http://example.com/description.jpg")
+                .productOption(Set.of("Option1", "Option2"))
+                .keywords(Set.of("keyword1", "keyword2"))
+                .price(10000L)
+                .quantity(100L)
+                .category(Category.ELECTRONICS)
+                .regDate(LocalDate.of(2025, 5, 1))
+                .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
+                .salesCount(0L)
+                .reviewCount(0L)
+                .hitCount(0L)
+                .reviewScore(0.0)
+                .totalScore(0.0)
+                .needsEsUpdate(false)
+                .build();
+            adapter.register(product);
+
+            // when
+            Product result = adapter.findById(product.getId());
+
+            // then
+            assert result.getId().equals(product.getId());
+            assert result.getSellerId().equals(product.getSellerId());
+            assert result.getProductName().equals(product.getProductName());
+            assert result.getProductImgUrl().equals(product.getProductImgUrl());
+            assert result.getDescriptionImgUrl().equals(product.getDescriptionImgUrl());
+            assert result.getProductOption().equals(product.getProductOption());
+            assert result.getKeywords().equals(product.getKeywords());
+            assert result.getCategory().equals(product.getCategory());
+            assert result.getPrice() == product.getPrice();
+            assert result.getQuantity() == product.getQuantity();
+            assert result.getRegDate().equals(product.getRegDate());
+            assert result.getRegDateTime().equals(product.getRegDateTime());
+        }
+
+        @Test
+        @DisplayName("[error] 조회된 상품이 존재하지 않는다면 예외를 발생시킨다.")
+        void error() {
+            // given
+            Long productId = -1L;
+
+            // when
+            CustomNotFoundException result = assertThrows(
+                CustomNotFoundException.class, () -> {
+                    adapter.findById(productId);
+                });
+
+            // then
+            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
         }
     }
 }

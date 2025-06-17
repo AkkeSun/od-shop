@@ -47,7 +47,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
     class Describe_registerProduct {
 
         @Test
-        @DisplayName("[success] 판매 권한을 가진 사용자가 필수값을 모두 입력하여 API 를 요청 했을 때 200코드와 성공 메시지를 응답한다.")
+        @DisplayName("[success] 필수값을 모두 입력하여 API 를 요청 했을 때 200코드와 성공 메시지를 응답한다.")
         void success() throws Exception {
 
             // given
@@ -407,15 +407,22 @@ public class RegisterProductDocsTest extends RestDocsSupport {
     }
 
     private void performAndDocument(RegisterProductRequest request, String authorization,
-        ResultMatcher status,  String docIdentifier, String responseSchema, FieldDescriptor... responseFields)
+        ResultMatcher status, String docIdentifier, String responseSchema,
+        FieldDescriptor... responseFields)
         throws Exception {
 
-        JsonFieldType productNameType = request.productName() == null? JsonFieldType.NULL : JsonFieldType.STRING;
-        JsonFieldType categoryType = request.category() == null? JsonFieldType.NULL : JsonFieldType.STRING;
-        JsonFieldType productImgUrlType = request.productImgUrl() == null? JsonFieldType.NULL : JsonFieldType.STRING;
-        JsonFieldType descriptionImgUrlType = request.descriptionImgUrl() == null? JsonFieldType.NULL : JsonFieldType.STRING;
-        JsonFieldType productOptionType = request.productOption() == null? JsonFieldType.NULL : JsonFieldType.ARRAY;
-        JsonFieldType keywordsType = request.keywords() == null? JsonFieldType.NULL : JsonFieldType.ARRAY;
+        JsonFieldType productNameType =
+            request.productName() == null ? JsonFieldType.NULL : JsonFieldType.STRING;
+        JsonFieldType categoryType =
+            request.category() == null ? JsonFieldType.NULL : JsonFieldType.STRING;
+        JsonFieldType productImgUrlType =
+            request.productImgUrl() == null ? JsonFieldType.NULL : JsonFieldType.STRING;
+        JsonFieldType descriptionImgUrlType =
+            request.descriptionImgUrl() == null ? JsonFieldType.NULL : JsonFieldType.STRING;
+        JsonFieldType productOptionType =
+            request.productOption() == null ? JsonFieldType.NULL : JsonFieldType.ARRAY;
+        JsonFieldType keywordsType =
+            request.keywords() == null ? JsonFieldType.NULL : JsonFieldType.ARRAY;
 
         mockMvc.perform(post("/products")
                 .contentType(MediaType.APPLICATION_JSON)

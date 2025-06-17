@@ -5,7 +5,6 @@ import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeJwtUtilClass;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,17 +18,14 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 class UpdateAccountServiceTest {
 
     UpdateAccountService updateAccountService;
-    FakeJwtUtilClass fakeJwtUtilClass;
     FakeAccountStorageClass fakeAccountStorageClass;
     DummyMessageProducerPortClass dummyMessageProducerPortClass;
 
     UpdateAccountServiceTest() {
-        fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
 
         updateAccountService = new UpdateAccountService(
-            fakeJwtUtilClass,
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
         );
