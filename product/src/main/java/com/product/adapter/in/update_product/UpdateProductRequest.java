@@ -40,7 +40,6 @@ record UpdateProductRequest(
             .productOption(productOption)
             .keywords(keywords)
             .price(price)
-            .quantity(quantity)
             .build();
     }
 

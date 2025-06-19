@@ -13,8 +13,7 @@ public record UpdateProductCommand(
     String descriptionImgUrl,
     Set<String> productOption,
     Set<String> keywords,
-    long price,
-    long quantity
+    long price
 ) {
 
 }

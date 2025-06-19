@@ -137,10 +137,6 @@ public class Product {
             this.price = command.price();
             updateList.add("price");
         }
-        if (command.quantity() >= 0) {
-            this.quantity = command.quantity();
-            updateList.add("quantity");
-        }
         this.updateDateTime = LocalDateTime.now();
         this.needsEsUpdate = true;
         return updateList;

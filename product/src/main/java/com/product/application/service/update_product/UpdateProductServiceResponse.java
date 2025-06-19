@@ -15,7 +15,6 @@ public record UpdateProductServiceResponse(
     Set<String> keywords,
     Set<String> productOption,
     long price,
-    long quantity,
     Category category
 ) {
 
@@ -29,7 +28,6 @@ public record UpdateProductServiceResponse(
             .keywords(product.getKeywords())
             .productOption(product.getProductOption())
             .price(product.getPrice())
-            .quantity(product.getQuantity())
             .category(product.getCategory())
             .build();
     }
