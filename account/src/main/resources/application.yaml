@@ -15,7 +15,7 @@ spring:
     open-in-view: false
 
   datasource:
-    url: jdbc:mysql://140.245.70.130:3306/account?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://140.245.70.130:3306/account?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: akkessun
     password: sunyang2ek+
     driver-class-name: com.mysql.cj.jdbc.Driver
