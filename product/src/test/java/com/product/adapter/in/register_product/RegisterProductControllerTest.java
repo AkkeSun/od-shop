@@ -21,7 +21,8 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.ResultActions;
 
-class RegisterProductControllerTest extends ControllerTestSupport {
+class
+RegisterProductControllerTest extends ControllerTestSupport {
 
     @Nested
     @DisplayName("[registerProduct] 상품을 등록하는 API")

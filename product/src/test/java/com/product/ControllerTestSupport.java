@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.product.application.port.in.DeleteProductUseCase;
 import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.in.RegisterProductUseCase;
+import com.product.application.port.in.UpdateProductUseCase;
 import com.product.infrastructure.config.SecurityConfig;
 import com.product.infrastructure.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +36,7 @@ public class ControllerTestSupport {
 
     @MockBean
     protected DeleteProductUseCase deleteProductUseCase;
+
+    @MockBean
+    protected UpdateProductUseCase updateProductUseCase;
 }
