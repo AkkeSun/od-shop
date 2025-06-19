@@ -1,8 +1,12 @@
 package com.product.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.product.application.port.in.command.RegisterProductCommand;
+import com.product.application.port.in.command.UpdateProductCommand;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
@@ -99,5 +103,46 @@ public class Product {
                 """,
             productName, category, price, keywordsString
         );
+    }
+
+    @JsonIgnore
+    public boolean isSeller(Long accountId) {
+        return this.sellerId.equals(accountId);
+    }
+
+    @JsonIgnore
+    public List<String> update(UpdateProductCommand command) {
+        List<String> updateList = new ArrayList<>();
+        if (command.productName() != null) {
+            this.productName = command.productName();
+            updateList.add("productName");
+        }
+        if (command.productImgUrl() != null) {
+            this.productImgUrl = command.productImgUrl();
+            updateList.add("productImgUrl");
+        }
+        if (command.descriptionImgUrl() != null) {
+            this.descriptionImgUrl = command.descriptionImgUrl();
+            updateList.add("descriptionImgUrl");
+        }
+        if (command.productOption() != null) {
+            this.productOption = command.productOption();
+            updateList.add("productOption");
+        }
+        if (command.keywords() != null) {
+            this.keywords = command.keywords();
+            updateList.add("keywords");
+        }
+        if (command.price() > 0) {
+            this.price = command.price();
+            updateList.add("price");
+        }
+        if (command.quantity() >= 0) {
+            this.quantity = command.quantity();
+            updateList.add("quantity");
+        }
+        this.updateDateTime = LocalDateTime.now();
+        this.needsEsUpdate = true;
+        return updateList;
     }
 }

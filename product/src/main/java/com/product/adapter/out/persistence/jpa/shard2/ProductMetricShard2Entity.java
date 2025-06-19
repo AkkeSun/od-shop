@@ -84,7 +84,7 @@ class ProductMetricShard2Entity {
             .totalScore(product.getTotalScore())
             .needsEsUpdate(product.isNeedsEsUpdate())
             .regDate(product.getRegDate())
-            .regDateTime(product.getUpdateDateTime())
+            .regDateTime(product.getRegDateTime())
             .updateTime(product.getUpdateDateTime())
             .build();
     }
