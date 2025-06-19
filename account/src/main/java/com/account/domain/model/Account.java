@@ -1,12 +1,14 @@
 package com.account.domain.model;
 
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.Claims;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 @Getter
 @NoArgsConstructor
@@ -52,24 +54,45 @@ public class Account {
             .build();
     }
 
+    @JsonIgnore
     public List<String> update(UpdateAccountCommand command) {
         List<String> updateList = new java.util.ArrayList<>();
-        if (command.isUsernameUpdateRequired(this.username)) {
+        if (isUsernameUpdateRequired(command.username())) {
             updateList.add("username");
             this.username = command.username();
         }
-        if (command.isPasswordUpdateRequired(this.password)) {
+        if (isPasswordUpdateRequired(command.password())) {
             updateList.add("password");
             this.password = command.password();
         }
-        if (command.isUserTelUpdateRequired(this.userTel)) {
+        if (isUserTelUpdateRequired(command.userTel())) {
             updateList.add("userTel");
             this.userTel = command.userTel();
         }
-        if (command.isAddressUpdateRequired(this.address)) {
+        if (isAddressUpdateRequired(command.address())) {
             updateList.add("address");
             this.address = command.address();
         }
         return updateList;
+    }
+
+    @JsonIgnore
+    private boolean isUsernameUpdateRequired(String newUsername) {
+        return StringUtils.hasText(newUsername) && !newUsername.equals(this.username);
+    }
+
+    @JsonIgnore
+    private boolean isPasswordUpdateRequired(String newPassword) {
+        return StringUtils.hasText(newPassword) && !newPassword.equals(this.password);
+    }
+
+    @JsonIgnore
+    private boolean isUserTelUpdateRequired(String newUserTel) {
+        return StringUtils.hasText(newUserTel) && !newUserTel.equals(this.userTel);
+    }
+
+    @JsonIgnore
+    private boolean isAddressUpdateRequired(String newAddress) {
+        return StringUtils.hasText(newAddress) && !newAddress.equals(this.address);
     }
 }
