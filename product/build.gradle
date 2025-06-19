@@ -63,6 +63,9 @@ dependencies {
     // 분산락
     implementation 'org.redisson:redisson-spring-boot-starter:3.17.4'
 
+    // redis test
+    testImplementation 'it.ozimov:embedded-redis:0.7.2'
+
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation 'mysql:mysql-connector-java:8.0.33'
     compileOnly 'org.projectlombok:lombok'
@@ -72,6 +75,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 test {
