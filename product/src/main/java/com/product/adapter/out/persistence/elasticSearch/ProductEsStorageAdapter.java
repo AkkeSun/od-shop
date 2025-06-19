@@ -17,4 +17,10 @@ class ProductEsStorageAdapter implements ProductEsStoragePort {
     public void register(Product product, float[] embedding) {
         repository.save(ProductEsDocument.of(product, embedding));
     }
+
+    @NewSpan
+    @Override
+    public void deleteById(Long productId) {
+        repository.deleteById(productId);
+    }
 }

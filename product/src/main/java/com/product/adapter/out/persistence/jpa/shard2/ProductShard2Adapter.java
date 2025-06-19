@@ -5,6 +5,7 @@ import static com.product.infrastructure.exception.ErrorCode.DoesNotExist_PROUCT
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomNotFoundException;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +32,14 @@ public class ProductShard2Adapter implements ProductStoragePort {
     }
 
     @Override
+    public void softDeleteById(Long productId, LocalDateTime deleteAt) {
+        metricRepository.deleteById(productId);
+        productRepository.softDeleteById(productId, deleteAt);
+    }
+
+    @Override
     public Product findById(Long productId) {
-        ProductShard2Entity entity = productRepository.findById(productId)
+        ProductShard2Entity entity = productRepository.findByIdAndDeleteYn(productId, "N")
             .orElseThrow(() -> new CustomNotFoundException(DoesNotExist_PROUCT_INFO));
         return entity.toDomain();
     }

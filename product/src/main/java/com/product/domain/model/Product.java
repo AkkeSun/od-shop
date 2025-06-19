@@ -23,6 +23,7 @@ public class Product {
     private long price;
     private long quantity;
     private Category category;
+    private String deleteYn;
     private LocalDate regDate;
     private LocalDateTime regDateTime;
     private LocalDateTime updateDateTime;
@@ -40,7 +41,7 @@ public class Product {
         boolean needsEsUpdate, long price, Long id, String productImgUrl, String productName,
         Set<String> productOption, long quantity, LocalDate regDate, LocalDateTime regDateTime,
         long reviewCount, double reviewScore, long salesCount, String sellerEmail, Long sellerId,
-        double totalScore, LocalDateTime updateDateTime) {
+        String deleteYn, double totalScore, LocalDateTime updateDateTime) {
         this.category = category;
         this.descriptionImgUrl = descriptionImgUrl;
         this.hitCount = hitCount;
@@ -59,6 +60,7 @@ public class Product {
         this.salesCount = salesCount;
         this.sellerEmail = sellerEmail;
         this.sellerId = sellerId;
+        this.deleteYn = deleteYn;
         this.totalScore = totalScore;
         this.updateDateTime = updateDateTime;
     }
@@ -82,6 +84,7 @@ public class Product {
             .reviewScore(0)
             .totalScore(0)
             .category(Category.valueOf(command.category()))
+            .deleteYn("N")
             .regDate(LocalDate.now())
             .regDateTime(LocalDateTime.now())
             .build();

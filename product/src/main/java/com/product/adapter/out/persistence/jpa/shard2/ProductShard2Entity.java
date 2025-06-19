@@ -58,6 +58,9 @@ class ProductShard2Entity {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Column(name = "DELETE_YN")
+    private String deleteYn;
+
     @Column(name = "REG_DATE")
     private LocalDate regDate;
 
@@ -71,7 +74,8 @@ class ProductShard2Entity {
     ProductShard2Entity(Long id, Long sellerId,
         String sellerEmail, String productName, String productImgUrl, String productOption,
         String keyword, String descriptionImgUrl, long price, long quantity, Category category,
-        LocalDate regDate, LocalDateTime regDateTime, LocalDateTime updateDateTime) {
+        String deleteYn, LocalDate regDate, LocalDateTime regDateTime,
+        LocalDateTime updateDateTime) {
         this.id = id;
         this.sellerId = sellerId;
         this.sellerEmail = sellerEmail;
@@ -83,6 +87,7 @@ class ProductShard2Entity {
         this.price = price;
         this.quantity = quantity;
         this.category = category;
+        this.deleteYn = deleteYn;
         this.regDate = regDate;
         this.regDateTime = regDateTime;
         this.updateDateTime = updateDateTime;
@@ -101,6 +106,7 @@ class ProductShard2Entity {
             .price(domain.getPrice())
             .quantity(domain.getQuantity())
             .category(domain.getCategory())
+            .deleteYn(domain.getDeleteYn())
             .regDate(domain.getRegDate())
             .regDateTime(domain.getRegDateTime())
             .updateDateTime(domain.getUpdateDateTime())
@@ -120,6 +126,7 @@ class ProductShard2Entity {
             .price(price)
             .quantity(quantity)
             .category(category)
+            .deleteYn(deleteYn)
             .regDate(regDate)
             .regDateTime(regDateTime)
             .updateDateTime(updateDateTime)

@@ -5,4 +5,6 @@ import com.product.domain.model.Product;
 public interface ProductEsStoragePort {
 
     void register(Product product, float[] embedding);
+
+    void deleteById(Long productId);
 }

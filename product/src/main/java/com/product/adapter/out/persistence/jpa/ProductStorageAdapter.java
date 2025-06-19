@@ -6,6 +6,7 @@ import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.infrastructure.util.ShardKeyUtil;
 import io.micrometer.tracing.annotation.NewSpan;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,15 @@ class ProductStorageAdapter implements ProductStoragePort {
             shard1Adapter.deleteById(productId);
         } else {
             shard2Adapter.deleteById(productId);
+        }
+    }
+
+    @Override
+    public void softDeleteById(Long productId, LocalDateTime deleteAt) {
+        if (ShardKeyUtil.isShard1(productId)) {
+            shard1Adapter.softDeleteById(productId, deleteAt);
+        } else {
+            shard2Adapter.softDeleteById(productId, deleteAt);
         }
     }
 
