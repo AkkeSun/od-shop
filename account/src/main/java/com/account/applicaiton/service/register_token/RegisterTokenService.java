@@ -15,6 +15,7 @@ import com.account.domain.model.Token;
 import com.account.infrastructure.util.JwtUtil;
 import com.account.infrastructure.util.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class RegisterTokenService implements RegisterTokenUseCase {
 
+    @Value("${kafka.topic.login}")
+    private String loginTopic;
     private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
@@ -55,7 +58,7 @@ class RegisterTokenService implements RegisterTokenUseCase {
             .loginDateTime(getCurrentDateTime())
             .build();
 
-        messageProducerPort.sendMessage("account-login", toJsonString(loginLog));
+        messageProducerPort.sendMessage(loginTopic, toJsonString(loginLog));
 
         return RegisterTokenServiceResponse.builder()
             .accessToken(accessToken)

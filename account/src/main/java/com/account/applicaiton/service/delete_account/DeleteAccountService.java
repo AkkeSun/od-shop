@@ -14,6 +14,7 @@ import com.account.domain.model.AccountHistory;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class DeleteAccountService implements DeleteAccountUseCase {
 
+    @Value("${kafka.topic.history}")
+    private String historyTopic;
+    @Value("${kafka.topic.delete}")
+    private String deleteTopic;
     private final JwtUtil jwtUtil;
     private final RedisStoragePort redisStoragePort;
     private final TokenStoragePort tokenStoragePort;
@@ -41,8 +46,8 @@ class DeleteAccountService implements DeleteAccountUseCase {
         tokenStoragePort.deleteByEmail(account.getEmail());
         redisStoragePort.deleteTokenByEmail(account.getEmail());
 
-        messageProducerPort.sendMessage("delete-account", String.valueOf(account.getId()));
-        messageProducerPort.sendMessage("account-history", toJsonString(history));
+        messageProducerPort.sendMessage(deleteTopic, String.valueOf(account.getId()));
+        messageProducerPort.sendMessage(historyTopic, toJsonString(history));
 
         return DeleteAccountServiceResponse.ofSuccess(account);
     }
