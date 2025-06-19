@@ -29,7 +29,7 @@ class DeleteProductService implements DeleteProductUseCase {
     @Override
     public DeleteProductServiceResponse deleteProduct(Long productId, Account account) {
         Product product = productStoragePort.findById(productId);
-        if(!product.getSellerId().equals(account.id())){
+        if (!product.isSeller(account.id())) {
             throw new CustomAuthorizationException(ErrorCode.ACCESS_DENIED);
         }
 
