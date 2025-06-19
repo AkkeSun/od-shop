@@ -35,27 +35,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 상품 아이디가 shard1에 해당하면 shard1에 상품 정보를 저장한다.")
         void success1() {
             // given
-            Product product = Product.builder()
-                .id(getProductId(true))
-                .sellerId(1L)
-                .sellerEmail("test@gmail.com")
-                .productName("Test Product")
-                .productImgUrl("http://example.com/product.jpg")
-                .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
-                .keywords(Set.of("keyword1", "keyword2"))
-                .price(10000L)
-                .quantity(100L)
-                .category(Category.ELECTRONICS)
-                .regDate(LocalDate.of(2025, 5, 1))
-                .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
-                .salesCount(0L)
-                .reviewCount(0L)
-                .hitCount(0L)
-                .reviewScore(0.0)
-                .totalScore(0.0)
-                .needsEsUpdate(false)
-                .build();
+            Product product = getProduct(true);
 
             // when
             adapter.register(product);
@@ -83,27 +63,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 상품 아이디가 shard2에 해당하면 shard2에 상품 정보를 저장한다.")
         void success2() {
             // given
-            Product product = Product.builder()
-                .id(getProductId(false))
-                .sellerId(1L)
-                .sellerEmail("test@gmail.com")
-                .productName("Test Product")
-                .productImgUrl("http://example.com/product.jpg")
-                .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
-                .keywords(Set.of("keyword1", "keyword2"))
-                .price(10000L)
-                .quantity(100L)
-                .category(Category.ELECTRONICS)
-                .regDate(LocalDate.of(2025, 5, 1))
-                .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
-                .salesCount(0L)
-                .reviewCount(0L)
-                .hitCount(0L)
-                .reviewScore(0.0)
-                .totalScore(0.0)
-                .needsEsUpdate(false)
-                .build();
+            Product product = getProduct(false);
 
             // when
             adapter.register(product);
@@ -136,27 +96,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 상품 아이디가 shard1에 해당하면 shard1에 상품 정보를 삭제한다.")
         void success1() {
             // given
-            Product product = Product.builder()
-                .id(getProductId(true))
-                .sellerId(1L)
-                .sellerEmail("test@gmail.com")
-                .productName("Test Product")
-                .productImgUrl("http://example.com/product.jpg")
-                .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
-                .keywords(Set.of("keyword1", "keyword2"))
-                .price(10000L)
-                .quantity(100L)
-                .category(Category.ELECTRONICS)
-                .regDate(LocalDate.of(2025, 5, 1))
-                .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
-                .salesCount(0L)
-                .reviewCount(0L)
-                .hitCount(0L)
-                .reviewScore(0.0)
-                .totalScore(0.0)
-                .needsEsUpdate(false)
-                .build();
+            Product product = getProduct(true);
             adapter.register(product);
             Product savedProduct = shard1Adapter.findById(product.getId());
             assert savedProduct != null;
@@ -174,27 +114,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 상품 아이디가 shard2에 해당하면 shard2에 상품 정보를 삭제한다.")
         void success2() {
             // given
-            Product product = Product.builder()
-                .id(getProductId(false))
-                .sellerId(1L)
-                .sellerEmail("test@gmail.com")
-                .productName("Test Product")
-                .productImgUrl("http://example.com/product.jpg")
-                .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
-                .keywords(Set.of("keyword1", "keyword2"))
-                .price(10000L)
-                .quantity(100L)
-                .category(Category.ELECTRONICS)
-                .regDate(LocalDate.of(2025, 5, 1))
-                .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
-                .salesCount(0L)
-                .reviewCount(0L)
-                .hitCount(0L)
-                .reviewScore(0.0)
-                .totalScore(0.0)
-                .needsEsUpdate(false)
-                .build();
+            Product product = getProduct(false);
             adapter.register(product);
             Product savedProduct = shard2Adapter.findById(product.getId());
             assert savedProduct != null;
@@ -216,27 +136,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             @DisplayName("[success] 상품 아이디가 shard1에 해당하면 shard1에서 상품을 조회한다.")
             void success1() {
                 // given
-                Product product = Product.builder()
-                    .id(getProductId(true))
-                    .sellerId(1L)
-                    .sellerEmail("test@gmail.com")
-                    .productName("Test Product")
-                    .productImgUrl("http://example.com/product.jpg")
-                    .descriptionImgUrl("http://example.com/description.jpg")
-                    .productOption(Set.of("Option1", "Option2"))
-                    .keywords(Set.of("keyword1", "keyword2"))
-                    .price(10000L)
-                    .quantity(100L)
-                    .category(Category.ELECTRONICS)
-                    .regDate(LocalDate.of(2025, 5, 1))
-                    .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
-                    .salesCount(0L)
-                    .reviewCount(0L)
-                    .hitCount(0L)
-                    .reviewScore(0.0)
-                    .totalScore(0.0)
-                    .needsEsUpdate(false)
-                    .build();
+                Product product = getProduct(true);
                 shard1Adapter.register(product);
 
                 // when
@@ -264,27 +164,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             @DisplayName("[success] 상품 아이디가 shard2에 해당하면 shard2에서 상품을 조회한다.")
             void success2() {
                 // given
-                Product product = Product.builder()
-                    .id(getProductId(false))
-                    .sellerId(1L)
-                    .sellerEmail("test@gmail.com")
-                    .productName("Test Product")
-                    .productImgUrl("http://example.com/product.jpg")
-                    .descriptionImgUrl("http://example.com/description.jpg")
-                    .productOption(Set.of("Option1", "Option2"))
-                    .keywords(Set.of("keyword1", "keyword2"))
-                    .price(10000L)
-                    .quantity(100L)
-                    .category(Category.ELECTRONICS)
-                    .regDate(LocalDate.of(2025, 5, 1))
-                    .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
-                    .salesCount(0L)
-                    .reviewCount(0L)
-                    .hitCount(0L)
-                    .reviewScore(0.0)
-                    .totalScore(0.0)
-                    .needsEsUpdate(false)
-                    .build();
+                Product product = getProduct(false);
                 shard2Adapter.register(product);
 
                 // when
@@ -308,23 +188,84 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                 shard2Adapter.deleteById(product.getId());
             }
         }
+
+        @Nested
+        @DisplayName("[softDeleteById] 상품을 소프트 삭제하는 메소드")
+        class Describe_softDeleteById {
+
+            @Test
+            @DisplayName("[success] 상품 아이디가 shard1에 해당하면 shard1에 상품 정보를 삭제한다.")
+            void success1() {
+                // given
+                Product product = getProduct(true);
+                adapter.register(product);
+
+                // when
+                adapter.softDeleteById(product.getId(), LocalDateTime.now());
+                CustomNotFoundException result = assertThrows(
+                    CustomNotFoundException.class, () -> adapter.findById(product.getId()));
+
+                // then
+                assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+            }
+
+            @Test
+            @DisplayName("[success] 상품 아이디가 shard2에 해당하면 shard2에 상품 정보를 삭제한다.")
+            void success2() {
+                // given
+                Product product = getProduct(false);
+                adapter.register(product);
+
+                // when
+                adapter.softDeleteById(product.getId(), LocalDateTime.now());
+                CustomNotFoundException result = assertThrows(
+                    CustomNotFoundException.class, () -> adapter.findById(product.getId()));
+
+                // then
+                assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+            }
+        }
     }
 
-    private Long getProductId(boolean isShard1) {
+    private Product getProduct(boolean isShard1) {
+        long productId;
         if (isShard1) {
             while (true) {
-                Long productId = snowflakeGenerator.nextId();
+                productId = snowflakeGenerator.nextId();
                 if (ShardKeyUtil.isShard1(productId)) {
-                    return productId;
+                    break;
+                }
+            }
+        } else {
+            while (true) {
+                productId = snowflakeGenerator.nextId();
+                if (!ShardKeyUtil.isShard1(productId)) {
+                    break;
                 }
             }
         }
 
-        while (true) {
-            Long productId = snowflakeGenerator.nextId();
-            if (!ShardKeyUtil.isShard1(productId)) {
-                return productId;
-            }
-        }
+        return Product.builder()
+            .id(productId)
+            .sellerId(1L)
+            .sellerEmail("test@gmail.com")
+            .productName("Test Product")
+            .productImgUrl("http://example.com/product.jpg")
+            .descriptionImgUrl("http://example.com/description.jpg")
+            .productOption(Set.of("Option1", "Option2"))
+            .keywords(Set.of("keyword1", "keyword2"))
+            .price(10000L)
+            .quantity(100L)
+            .category(Category.ELECTRONICS)
+            .regDate(LocalDate.of(2025, 5, 1))
+            .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
+            .salesCount(0L)
+            .reviewCount(0L)
+            .hitCount(0L)
+            .reviewScore(0.0)
+            .totalScore(0.0)
+            .deleteYn("N")
+            .needsEsUpdate(false)
+            .build();
     }
 }

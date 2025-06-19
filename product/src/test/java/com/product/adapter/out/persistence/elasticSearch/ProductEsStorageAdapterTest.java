@@ -28,27 +28,7 @@ class ProductEsStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 상품이 잘 등록되는지 확인한다.")
         void success() {
             // given
-            Product product = Product.builder()
-                .id(snowflakeGenerator.nextId())
-                .sellerId(1L)
-                .sellerEmail("test@gmail.com")
-                .productName("Test Product")
-                .productImgUrl("http://example.com/product.jpg")
-                .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
-                .keywords(Set.of("keyword1", "keyword2"))
-                .price(10000L)
-                .quantity(100L)
-                .category(Category.ELECTRONICS)
-                .regDate(LocalDate.of(2025, 5, 1))
-                .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
-                .salesCount(0L)
-                .reviewCount(0L)
-                .hitCount(0L)
-                .reviewScore(0.0)
-                .totalScore(0.0)
-                .needsEsUpdate(false)
-                .build();
+            Product product = getProduct();
             float[] embedding = embeddingUtil.embedToFloatArray(product.getEmbeddingDocument());
 
             // when
@@ -74,5 +54,51 @@ class ProductEsStorageAdapterTest extends IntegrationTestSupport {
             // clean
             repository.deleteById(product.getId());
         }
+
+        @Nested
+        @DisplayName("[deleteById] 상품을 삭제하는 메소드")
+        class Describe_deleteById {
+
+            @Test
+            @DisplayName("[success] 상품이 잘 삭제되는지 확인한다.")
+            void success() {
+                // given
+                Product product = getProduct();
+                float[] embedding = embeddingUtil.embedToFloatArray(product.getEmbeddingDocument());
+                adapter.register(product, embedding);
+                repository.findById(product.getId()).orElseThrow();
+                
+                // when
+                adapter.deleteById(product.getId());
+
+                // then
+                assert repository.findById(product.getId()).isEmpty();
+            }
+        }
+    }
+
+    private Product getProduct() {
+        return Product.builder()
+            .id(snowflakeGenerator.nextId())
+            .sellerId(1L)
+            .sellerEmail("test@gmail.com")
+            .productName("Test Product")
+            .productImgUrl("http://example.com/product.jpg")
+            .descriptionImgUrl("http://example.com/description.jpg")
+            .productOption(Set.of("Option1", "Option2"))
+            .keywords(Set.of("keyword1", "keyword2"))
+            .price(10000L)
+            .quantity(100L)
+            .category(Category.ELECTRONICS)
+            .regDate(LocalDate.of(2025, 5, 1))
+            .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
+            .salesCount(0L)
+            .reviewCount(0L)
+            .hitCount(0L)
+            .reviewScore(0.0)
+            .totalScore(0.0)
+            .deleteYn("N")
+            .needsEsUpdate(false)
+            .build();
     }
 }

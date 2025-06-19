@@ -16,4 +16,9 @@ public class FakeProductEsStoragePort implements ProductEsStoragePort {
         }
         database.add(product);
     }
+
+    @Override
+    public void deleteById(Long productId) {
+        database.removeIf(product -> product.getId().equals(productId));
+    }
 }

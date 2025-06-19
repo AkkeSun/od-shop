@@ -51,6 +51,7 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .salesCount(0L)
                 .reviewCount(0L)
                 .hitCount(0L)
+                .deleteYn("N")
                 .reviewScore(0.0)
                 .totalScore(0.0)
                 .needsEsUpdate(false)
@@ -114,6 +115,7 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .hitCount(0L)
                 .reviewScore(0.0)
                 .totalScore(0.0)
+                .deleteYn("N")
                 .needsEsUpdate(false)
                 .build();
             adapter.register(product);
@@ -159,6 +161,7 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .hitCount(0L)
                 .reviewScore(0.0)
                 .totalScore(0.0)
+                .deleteYn("N")
                 .needsEsUpdate(false)
                 .build();
             adapter.register(product);
@@ -195,6 +198,53 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
 
             // then
             assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+        }
+    }
+
+    @Nested
+    @DisplayName("[softDeleteById] 상품을 소프트 삭제하는 메소드")
+    class Describe_softDeleteById {
+
+        @Test
+        @DisplayName("[success] 상품 메트릭을 삭제하고 상품 정보를 소프트 삭제한다.")
+        void success() {
+            // given
+            Product product = Product.builder()
+                .id(snowflakeGenerator.nextId())
+                .sellerId(1L)
+                .sellerEmail("test@gmail.com")
+                .productName("Test Product")
+                .productImgUrl("http://example.com/product.jpg")
+                .descriptionImgUrl("http://example.com/description.jpg")
+                .productOption(Set.of("Option1", "Option2"))
+                .keywords(Set.of("keyword1", "keyword2"))
+                .price(10000L)
+                .quantity(100L)
+                .category(Category.ELECTRONICS)
+                .regDate(LocalDate.of(2025, 5, 1))
+                .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
+                .salesCount(0L)
+                .reviewCount(0L)
+                .hitCount(0L)
+                .reviewScore(0.0)
+                .totalScore(0.0)
+                .needsEsUpdate(false)
+                .deleteYn("N")
+                .build();
+            adapter.register(product);
+            LocalDateTime deleteAt = LocalDateTime.of(2025, 5, 2, 12, 0, 0);
+
+            // when
+            adapter.softDeleteById(product.getId(), deleteAt);
+            CustomNotFoundException result = assertThrows(
+                CustomNotFoundException.class, () -> adapter.findById(product.getId()));
+            ProductShard2Entity entity = productRepository.findById(product.getId()).get();
+
+            // then
+            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+            assert entity.getDeleteYn().equals("Y");
+            assert entity.getUpdateDateTime().equals(deleteAt);
+            assert metricRepository.findById(product.getId()).isEmpty();
         }
     }
 }
