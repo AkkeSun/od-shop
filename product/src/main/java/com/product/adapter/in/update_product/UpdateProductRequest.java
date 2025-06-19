@@ -13,9 +13,7 @@ import lombok.Builder;
 record UpdateProductRequest(
 
     long price,
-
-    long quantity,
-
+    
     Set<String> productOption,
 
     Set<String> keywords,
