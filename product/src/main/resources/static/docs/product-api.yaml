@@ -39,8 +39,8 @@ paths:
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품 등록 권한이 없는 사용자 요청':
                 value: |-
@@ -51,8 +51,8 @@ paths:
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품 이미지 입력 사이즈 초과':
                 value: |-
@@ -63,8 +63,8 @@ paths:
                     "quantity" : 20,
                     "productImgUrl" : "testtesttesttesttesttesttesttesttesttesttesttesttest",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 인증받지 않은 사용자 요청':
                 value: |-
@@ -75,8 +75,8 @@ paths:
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품 설명 이미지 미입력':
                 value: |-
@@ -87,8 +87,8 @@ paths:
                     "quantity" : 20,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : null,
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품명 미입력':
                 value: |-
@@ -99,8 +99,8 @@ paths:
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품 옵션 미입력':
                 value: |-
@@ -112,7 +112,7 @@ paths:
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
                     "productOption" : null,
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품 이미지 미입력':
                 value: |-
@@ -123,8 +123,8 @@ paths:
                     "quantity" : 20,
                     "productImgUrl" : null,
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 20 미만의 상품 수량 입력':
                 value: |-
@@ -135,8 +135,8 @@ paths:
                     "quantity" : 10,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품 키워드 미입력':
                 value: |-
@@ -147,7 +147,7 @@ paths:
                     "quantity" : 20,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
+                    "productOption" : [ "옵션1", "옵션2" ],
                     "keywords" : null
                   }
               '[register-product] success':
@@ -159,8 +159,8 @@ paths:
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품명 입력 사이즈 초과':
                 value: |-
@@ -171,8 +171,8 @@ paths:
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 유효하지 않은 카테고리 입력':
                 value: |-
@@ -183,8 +183,8 @@ paths:
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 상품 설명 이미지 입력 사이즈 초과':
                 value: |-
@@ -195,8 +195,8 @@ paths:
                     "quantity" : 20,
                     "productImgUrl" : null,
                     "descriptionImgUrl" : null,
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
               '[register-product] 카테고리 미입력':
                 value: |-
@@ -207,8 +207,8 @@ paths:
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
                     "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ],
-                    "keywords" : [ "키워드2", "키워드1" ]
+                    "productOption" : [ "옵션1", "옵션2" ],
+                    "keywords" : [ "키워드1", "키워드2" ]
                   }
       responses:
         "400":
@@ -325,7 +325,7 @@ paths:
                       "message" : "BAD_REQUEST",
                       "data" : {
                         "errorCode" : 1001,
-                        "errorMessage" : "상품 설명 이미지는 필수값 입니다"
+                        "errorMessage" : "상품 이미지는 필수값 입니다"
                       }
                     }
                 '[register-product] 카테고리 미입력':
@@ -389,8 +389,8 @@ paths:
                         "sellerEmail" : "od@test.com",
                         "productName" : "상품명",
                         "productImgUrl" : "상품 이미지",
-                        "keywords" : [ "키워드2", "키워드1" ],
-                        "productOption" : [ "옵션2", "옵션1" ],
+                        "keywords" : [ "키워드1", "키워드2" ],
+                        "productOption" : [ "옵션1", "옵션2" ],
                         "descriptionImgUrl" : "상품 설명",
                         "price" : 10000,
                         "quantity" : 30,
@@ -447,8 +447,8 @@ paths:
                         "productName" : "Test Product",
                         "productImgUrl" : "http://example.com/product.jpg",
                         "descriptionImgUrl" : "http://example.com/description.jpg",
-                        "keywords" : [ "Keyword2", "Keyword1" ],
-                        "productOption" : [ "Option2", "Option1" ],
+                        "keywords" : [ "Keyword1", "Keyword2" ],
+                        "productOption" : [ "Option1", "Option2" ],
                         "price" : 10000,
                         "quantity" : 30,
                         "category" : "AUTOMOTIVE",
@@ -544,8 +544,280 @@ paths:
                         "result" : true
                       }
                     }
+  '/products/{productId} ':
+    put:
+      tags:
+      - Product
+      summary: 상품 수정 API
+      description: 상품을 수정하는 API 입니다. <br><br>1. 테스트시 우측 자물쇠를 클릭하여 유효한 인증 토큰을 입력해야
+        정상 테스트가 가능합니다. (요청 헤더에 인증 토큰을 입력하여 테스트하지 않습니다) <br>2. 해당 상품의 판매자만 상품을 수정할
+        수 있습니다. <br>3. 수정이 필요한 정보만 입력해야 합니다.
+      operationId: "[update-product] "
+      parameters:
+      - name: productId
+        in: path
+        description: 상품 아이디
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: 인증 토큰
+        required: true
+        schema:
+          type: string
+        example: testToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/[request] update-product"
+            examples:
+              '[update-product] 상품 설명 이미지 입력 사이즈 초과':
+                value: |-
+                  {
+                    "price" : 10000,
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
+                    "productName" : "Updated Product",
+                    "productImgUrl" : "http://example.com/image.jpg",
+                    "descriptionImgUrl" : "testtesttesttesttesttesttesttesttesttesttesttesttest"
+                  }
+              '[update-product] success':
+                value: |-
+                  {
+                    "price" : 10000,
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
+                    "productName" : "Updated Product",
+                    "productImgUrl" : "http://example.com/image.jpg",
+                    "descriptionImgUrl" : "http://example.com/description.jpg"
+                  }
+              '[update-product] 상품 수정 권한이 없는 사용자 요청':
+                value: |-
+                  {
+                    "price" : 10000,
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
+                    "productName" : "Updated Product",
+                    "productImgUrl" : "http://example.com/image.jpg",
+                    "descriptionImgUrl" : "http://example.com/description.jpg"
+                  }
+              '[update-product] 상품 이미지 입력 사이즈 초과':
+                value: |-
+                  {
+                    "price" : 10000,
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
+                    "productName" : "Updated Product",
+                    "productImgUrl" : "testtesttesttesttesttesttesttesttesttesttesttesttest",
+                    "descriptionImgUrl" : "http://example.com/description.jpg"
+                  }
+              '[update-product] 조회된 상품 없음':
+                value: |-
+                  {
+                    "price" : 10000,
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
+                    "productName" : "Updated Product",
+                    "productImgUrl" : "http://example.com/image.jpg",
+                    "descriptionImgUrl" : "http://example.com/description.jpg"
+                  }
+              '[update-product] 인증받지 않은 사용자 요청':
+                value: |-
+                  {
+                    "price" : 10000,
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
+                    "productName" : "Updated Product",
+                    "productImgUrl" : "http://example.com/image.jpg",
+                    "descriptionImgUrl" : "http://example.com/description.jpg"
+                  }
+              '[update-product] 상품명 입력 사이즈 초과':
+                value: |-
+                  {
+                    "price" : 10000,
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
+                    "productName" : "testtesttesttesttesttesttesttesttesttesttesttesttest",
+                    "productImgUrl" : "http://example.com/image.jpg",
+                    "descriptionImgUrl" : "http://example.com/description.jpg"
+                  }
+              '[update-product] 상품 등록 권한이 없는 사용자 요청':
+                value: |-
+                  {
+                    "price" : 10000,
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
+                    "productName" : "Updated Product",
+                    "productImgUrl" : "http://example.com/image.jpg",
+                    "descriptionImgUrl" : "http://example.com/description.jpg"
+                  }
+      responses:
+        "400":
+          description: "400"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/[response] error"
+              examples:
+                '[update-product] 상품 설명 이미지 입력 사이즈 초과':
+                  value: |-
+                    {
+                      "httpStatus" : 400,
+                      "message" : "BAD_REQUEST",
+                      "data" : {
+                        "errorCode" : 1001,
+                        "errorMessage" : "상품 설명 이미지는 50자 이하여야 합니다"
+                      }
+                    }
+                '[update-product] 상품 이미지 입력 사이즈 초과':
+                  value: |-
+                    {
+                      "httpStatus" : 400,
+                      "message" : "BAD_REQUEST",
+                      "data" : {
+                        "errorCode" : 1001,
+                        "errorMessage" : "상품 이미지는 50자 이하여야 합니다"
+                      }
+                    }
+                '[update-product] 상품명 입력 사이즈 초과':
+                  value: |-
+                    {
+                      "httpStatus" : 400,
+                      "message" : "BAD_REQUEST",
+                      "data" : {
+                        "errorCode" : 1001,
+                        "errorMessage" : "상품명은 50자 이하여야 합니다"
+                      }
+                    }
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/[response] update-product"
+              examples:
+                '[update-product] success':
+                  value: |-
+                    {
+                      "httpStatus" : 200,
+                      "message" : "OK",
+                      "data" : {
+                        "productId" : 1,
+                        "sellerEmail" : "sellerEmail",
+                        "productName" : "Updated Product",
+                        "productImgUrl" : "http://example.com/image.jpg",
+                        "keywords" : [ "Keyword1", "Keyword2" ],
+                        "productOption" : [ "Option1", "Option2" ],
+                        "descriptionImgUrl" : "http://example.com/description.jpg",
+                        "price" : 10000,
+                        "category" : "TOTAL"
+                      }
+                    }
+        "403":
+          description: "403"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/[response] error"
+              examples:
+                '[update-product] 상품 수정 권한이 없는 사용자 요청':
+                  value: |-
+                    {
+                      "httpStatus" : 403,
+                      "message" : "FORBIDDEN",
+                      "data" : {
+                        "errorCode" : 5001,
+                        "errorMessage" : "접근권한이 없습니다"
+                      }
+                    }
+                '[update-product] 상품 등록 권한이 없는 사용자 요청':
+                  value: |-
+                    {
+                      "httpStatus" : 403,
+                      "message" : "FORBIDDEN",
+                      "data" : {
+                        "errorCode" : 5001,
+                        "errorMessage" : "접근권한이 없습니다"
+                      }
+                    }
+        "404":
+          description: "404"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/[response] error"
+              examples:
+                '[update-product] 조회된 상품 없음':
+                  value: |-
+                    {
+                      "httpStatus" : 404,
+                      "message" : "NOT_FOUND",
+                      "data" : {
+                        "errorCode" : 2002,
+                        "errorMessage" : "조회된 싱픔 정보가 없습니다"
+                      }
+                    }
+        "401":
+          description: "401"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/[response] error"
+              examples:
+                '[update-product] 인증받지 않은 사용자 요청':
+                  value: |-
+                    {
+                      "httpStatus" : 401,
+                      "message" : "UNAUTHORIZED",
+                      "data" : {
+                        "errorCode" : 3001,
+                        "errorMessage" : "유효한 인증 토큰이 아닙니다"
+                      }
+                    }
 components:
   schemas:
+    '[request] update-product':
+      title: "[request] update-product"
+      type: object
+      properties:
+        productOption:
+          type: array
+          description: 상품 옵션
+          nullable: true
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+        descriptionImgUrl:
+          type: string
+          description: 상품 설명 이미지 (50자 이하)
+          nullable: true
+        productImgUrl:
+          type: string
+          description: 상품 이미지 (50자 이하)
+          nullable: true
+        keywords:
+          type: array
+          description: 상품 키워드
+          nullable: true
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+        price:
+          type: number
+          description: 상품 금액
+          nullable: true
+        productName:
+          type: string
+          description: 상품명 (50자 이하)
+          nullable: true
     '[response] delete-product':
       title: "[response] delete-product"
       required:
@@ -722,6 +994,73 @@ components:
             errorCode:
               type: number
               description: 에러 코드
+          description: 응답 데이터
+        httpStatus:
+          type: number
+          description: 상태 코드
+        message:
+          type: string
+          description: 상태 메시지
+    '[response] update-product':
+      title: "[response] update-product"
+      required:
+      - data
+      - httpStatus
+      - message
+      type: object
+      properties:
+        data:
+          required:
+          - category
+          - descriptionImgUrl
+          - keywords
+          - price
+          - productId
+          - productImgUrl
+          - productName
+          - productOption
+          - sellerEmail
+          type: object
+          properties:
+            productOption:
+              type: array
+              description: 상품 옵션
+              items:
+                oneOf:
+                - type: object
+                - type: boolean
+                - type: string
+                - type: number
+            descriptionImgUrl:
+              type: string
+              description: 상품 설명 이미지 URL
+            productImgUrl:
+              type: string
+              description: 상품 이미지 URL
+            keywords:
+              type: array
+              description: 상품 키워드
+              items:
+                oneOf:
+                - type: object
+                - type: boolean
+                - type: string
+                - type: number
+            productId:
+              type: number
+              description: 수정된 상품 ID
+            price:
+              type: number
+              description: 상품 가격
+            category:
+              type: string
+              description: 상품 카테고리
+            sellerEmail:
+              type: string
+              description: 판매자 이메일
+            productName:
+              type: string
+              description: 상품명
           description: 응답 데이터
         httpStatus:
           type: number
