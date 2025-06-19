@@ -9,7 +9,6 @@ import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.domain.model.Account;
 import com.account.domain.model.AccountHistory;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,29 +29,9 @@ class UpdateAccountService implements UpdateAccountUseCase {
     public UpdateAccountServiceResponse updateAccount(UpdateAccountCommand command) {
         Account account = accountStoragePort.findById(command.accountId());
 
-        List<String> updateList = new ArrayList<>();
-        if (command.isUsernameUpdateRequired(account.getUsername())) {
-            updateList.add("username");
-            account.updateUsername(command.username());
-        }
-        if (command.isPasswordUpdateRequired(account.getPassword())) {
-            updateList.add("password");
-            account.updatePassword(command.password());
-        }
-        if (command.isUserTelUpdateRequired(account.getUserTel())) {
-            updateList.add("userTel");
-            account.updateUserTel(command.userTel());
-        }
-        if (command.isAddressUpdateRequired(account.getAddress())) {
-            updateList.add("address");
-            account.updateAddress(command.address());
-        }
-
+        List<String> updateList = account.update(command);
         if (updateList.isEmpty()) {
-            return UpdateAccountServiceResponse.builder()
-                .updateYn("N")
-                .updateList(updateList)
-                .build();
+            return UpdateAccountServiceResponse.ofFailure(updateList);
         }
 
         AccountHistory history = createAccountHistoryForUpdate(command.accountId(),

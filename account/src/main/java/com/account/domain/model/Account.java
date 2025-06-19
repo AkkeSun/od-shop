@@ -1,7 +1,9 @@
 package com.account.domain.model;
 
+import com.account.applicaiton.port.in.command.UpdateAccountCommand;
 import io.jsonwebtoken.Claims;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,27 +44,32 @@ public class Account {
         this.regDate = regDate;
     }
 
-    public void updatePassword(String password) {
-        this.password = password;
-    }
-
-    public void updateUsername(String username) {
-        this.username = username;
-    }
-
-    public void updateUserTel(String userTel) {
-        this.userTel = userTel;
-    }
-
-    public void updateAddress(String address) {
-        this.address = address;
-    }
-
     public static Account of(Claims claims) {
         return Account.builder()
             .email(claims.getSubject())
             .id(Long.valueOf(claims.get("accountId").toString()))
             .role(Role.valueOf(claims.get("role").toString()))
             .build();
+    }
+
+    public List<String> update(UpdateAccountCommand command) {
+        List<String> updateList = new java.util.ArrayList<>();
+        if (command.isUsernameUpdateRequired(this.username)) {
+            updateList.add("username");
+            this.username = command.username();
+        }
+        if (command.isPasswordUpdateRequired(this.password)) {
+            updateList.add("password");
+            this.password = command.password();
+        }
+        if (command.isUserTelUpdateRequired(this.userTel)) {
+            updateList.add("userTel");
+            this.userTel = command.userTel();
+        }
+        if (command.isAddressUpdateRequired(this.address)) {
+            updateList.add("address");
+            this.address = command.address();
+        }
+        return updateList;
     }
 }

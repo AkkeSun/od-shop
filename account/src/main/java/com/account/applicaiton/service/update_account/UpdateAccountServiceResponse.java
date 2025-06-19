@@ -15,4 +15,11 @@ public record UpdateAccountServiceResponse(
             .updateList(updateList)
             .build();
     }
+
+    public static UpdateAccountServiceResponse ofFailure(List<String> updateList) {
+        return UpdateAccountServiceResponse.builder()
+            .updateYn("N")
+            .updateList(updateList)
+            .build();
+    }
 }
