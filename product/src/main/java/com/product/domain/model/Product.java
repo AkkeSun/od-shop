@@ -11,6 +11,7 @@ import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 @Getter
 @NoArgsConstructor
@@ -113,38 +114,73 @@ public class Product {
     @JsonIgnore
     public List<String> update(UpdateProductCommand command) {
         List<String> updateList = new ArrayList<>();
-        if (command.productName() != null &&
-            !command.productName().equals(this.productName)) {
+        if (isProductNameRequired(command.productName())) {
             this.productName = command.productName();
             updateList.add("productName");
         }
-        if (command.productImgUrl() != null &&
-            !command.productImgUrl().equals(this.productImgUrl)) {
+        if (isProductImgUrlRequired(command.productImgUrl())) {
             this.productImgUrl = command.productImgUrl();
             updateList.add("productImgUrl");
         }
-        if (command.descriptionImgUrl() != null &&
-            !command.descriptionImgUrl().equals(this.descriptionImgUrl)) {
+        if (isDescriptionImgUrlRequired(command.descriptionImgUrl())) {
             this.descriptionImgUrl = command.descriptionImgUrl();
             updateList.add("descriptionImgUrl");
         }
-        if (command.productOption() != null &&
-            !command.productOption().equals(this.productOption)) {
+        if (isProductOptionRequired(command.productOption())) {
             this.productOption = command.productOption();
             updateList.add("productOption");
         }
-        if (command.keywords() != null &&
-            !command.keywords().equals(this.keywords)) {
+        if (isKeywordsRequired(command.keywords())) {
             this.keywords = command.keywords();
             updateList.add("keywords");
         }
-        if (command.price() > 0 &&
-            command.price() != this.price) {
+        if (isPriceRequired(command.price())) {
             this.price = command.price();
             updateList.add("price");
         }
+
         this.updateDateTime = LocalDateTime.now();
         this.needsEsUpdate = true;
         return updateList;
+    }
+
+    @JsonIgnore
+    private boolean isProductNameRequired(String newProductName) {
+        return StringUtils.hasText(newProductName) && !newProductName.equals(this.productName);
+    }
+
+    @JsonIgnore
+    private boolean isProductImgUrlRequired(String newProductImgUrl) {
+        return StringUtils.hasText(newProductImgUrl) && !newProductImgUrl.equals(
+            this.productImgUrl);
+    }
+
+    @JsonIgnore
+    private boolean isDescriptionImgUrlRequired(String newDescriptionImgUrl) {
+        return StringUtils.hasText(newDescriptionImgUrl) && !newDescriptionImgUrl.equals(
+            this.descriptionImgUrl);
+    }
+
+    @JsonIgnore
+    private boolean isProductOptionRequired(Set<String> newProductOption) {
+        if (newProductOption == null) {
+            return false;
+        }
+        return !(this.productOption.containsAll(newProductOption) &&
+            newProductOption.containsAll(this.productOption));
+    }
+
+    @JsonIgnore
+    private boolean isKeywordsRequired(Set<String> newKeywords) {
+        if (newKeywords == null) {
+            return false;
+        }
+        return !(this.keywords.containsAll(newKeywords) &&
+            newKeywords.containsAll(this.keywords));
+    }
+
+    @JsonIgnore
+    private boolean isPriceRequired(long newPrice) {
+        return newPrice > 0 && newPrice != this.price;
     }
 }
