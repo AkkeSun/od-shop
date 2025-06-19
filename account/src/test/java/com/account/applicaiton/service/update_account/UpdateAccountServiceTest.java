@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
 class UpdateAccountServiceTest {
@@ -29,6 +30,8 @@ class UpdateAccountServiceTest {
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
         );
+
+        ReflectionTestUtils.setField(updateAccountService, "historyTopic", "account-history");
     }
 
     @BeforeEach

@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
 class DeleteAccountServiceTest {
@@ -44,6 +45,9 @@ class DeleteAccountServiceTest {
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
         );
+
+        ReflectionTestUtils.setField(service, "historyTopic", "account-history");
+        ReflectionTestUtils.setField(service, "deleteTopic", "delete-account");
     }
 
     @BeforeEach
