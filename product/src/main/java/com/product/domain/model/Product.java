@@ -113,27 +113,33 @@ public class Product {
     @JsonIgnore
     public List<String> update(UpdateProductCommand command) {
         List<String> updateList = new ArrayList<>();
-        if (command.productName() != null) {
+        if (command.productName() != null &&
+            !command.productName().equals(this.productName)) {
             this.productName = command.productName();
             updateList.add("productName");
         }
-        if (command.productImgUrl() != null) {
+        if (command.productImgUrl() != null &&
+            !command.productImgUrl().equals(this.productImgUrl)) {
             this.productImgUrl = command.productImgUrl();
             updateList.add("productImgUrl");
         }
-        if (command.descriptionImgUrl() != null) {
+        if (command.descriptionImgUrl() != null &&
+            !command.descriptionImgUrl().equals(this.descriptionImgUrl)) {
             this.descriptionImgUrl = command.descriptionImgUrl();
             updateList.add("descriptionImgUrl");
         }
-        if (command.productOption() != null) {
+        if (command.productOption() != null &&
+            !command.productOption().equals(this.productOption)) {
             this.productOption = command.productOption();
             updateList.add("productOption");
         }
-        if (command.keywords() != null) {
+        if (command.keywords() != null &&
+            !command.keywords().equals(this.keywords)) {
             this.keywords = command.keywords();
             updateList.add("keywords");
         }
-        if (command.price() > 0) {
+        if (command.price() > 0 &&
+            command.price() != this.price) {
             this.price = command.price();
             updateList.add("price");
         }
