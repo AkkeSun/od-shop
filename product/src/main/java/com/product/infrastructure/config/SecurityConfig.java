@@ -50,8 +50,10 @@ public class SecurityConfig {
                 auth.requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                     .requestMatchers("/docs/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/products").hasRole("SELLER")
-                    .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("SELLER")
-                    .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("SELLER")
+                    .requestMatchers(HttpMethod.PUT, "/products/{productId}").hasRole("SELLER")
+                    .requestMatchers(HttpMethod.DELETE, "/products/{productId}").hasRole("SELLER")
+                    .requestMatchers(HttpMethod.POST, "/products/{productId}/comments")
+                    .hasRole("CUSTOMER")
                     .anyRequest().authenticated();
             })
 
