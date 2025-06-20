@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.product.ControllerTestSupport;
-import com.product.adapter.in.controller.register_product.RegisterProductRequest;
 import com.product.application.service.register_product.RegisterProductServiceResponse;
 import com.product.domain.model.Category;
 import com.product.infrastructure.exception.ErrorCode;
@@ -22,8 +21,7 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.ResultActions;
 
-class
-RegisterProductControllerTest extends ControllerTestSupport {
+class RegisterProductControllerTest extends ControllerTestSupport {
 
     @Nested
     @DisplayName("[registerProduct] 상품을 등록하는 API")
