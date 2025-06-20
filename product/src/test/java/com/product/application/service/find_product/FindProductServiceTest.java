@@ -2,6 +2,7 @@ package com.product.application.service.find_product;
 
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
+import com.product.fakeClass.DummyMessageProducerPort;
 import com.product.fakeClass.FakeProductStoragePort;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,15 +11,20 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 class FindProductServiceTest {
 
     private final FakeProductStoragePort productStoragePort;
+    private final DummyMessageProducerPort messageProducerPort;
     private final FindProductService service;
 
     public FindProductServiceTest() {
         this.productStoragePort = new FakeProductStoragePort();
-        this.service = new FindProductService(productStoragePort);
+        this.messageProducerPort = new DummyMessageProducerPort();
+        this.service = new FindProductService(productStoragePort, messageProducerPort);
+
+        ReflectionTestUtils.setField(service, "clickTopic", "product-click");
     }
 
     @AfterEach
