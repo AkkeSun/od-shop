@@ -1,9 +1,12 @@
 package com.product.application.service.find_product;
 
+import static com.product.infrastructure.util.JsonUtil.toJsonString;
+
 import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.out.MessageProducerPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
+import com.product.domain.model.ProductClickLog;
 import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +25,9 @@ class FindProductService implements FindProductUseCase {
     @Override
     public FindProductServiceResponse findProduct(Long productId) {
         Product product = productStoragePort.findById(productId);
-        messageProducerPort.sendMessage(clickTopic, productId.toString());
+
+        ProductClickLog productClickLog = ProductClickLog.of(productId);
+        messageProducerPort.sendMessage(clickTopic, toJsonString(productClickLog));
         return FindProductServiceResponse.of(product);
     }
 }
