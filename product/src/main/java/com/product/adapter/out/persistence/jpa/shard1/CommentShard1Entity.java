@@ -27,6 +27,9 @@ class CommentShard1Entity {
     @Column(name = "CUSTOMER_ID")
     private Long customerId;
 
+    @Column(name = "CUSTOMER_EMAIL")
+    private String customerEmail;
+
     @Column(name = "SCORE")
     private double score;
 
@@ -40,9 +43,10 @@ class CommentShard1Entity {
     private LocalDateTime regDateTime;
 
     @Builder
-    CommentShard1Entity(String comment, Long customerId, Long id, Long productId,
-        LocalDate regDate, LocalDateTime regDateTime, double score) {
+    CommentShard1Entity(String comment, String customerEmail, Long customerId, Long id,
+        Long productId, LocalDate regDate, LocalDateTime regDateTime, double score) {
         this.comment = comment;
+        this.customerEmail = customerEmail;
         this.customerId = customerId;
         this.id = id;
         this.productId = productId;
@@ -56,6 +60,7 @@ class CommentShard1Entity {
             .id(comment.id())
             .productId(comment.productId())
             .customerId(comment.customerId())
+            .customerEmail(comment.customerEmail())
             .score(comment.score())
             .comment(comment.comment())
             .regDate(comment.regDate())
