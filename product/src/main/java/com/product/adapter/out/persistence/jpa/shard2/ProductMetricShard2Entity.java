@@ -73,7 +73,7 @@ class ProductMetricShard2Entity {
         this.updateTime = updateTime;
     }
 
-    public static ProductMetricShard2Entity of(Product product) {
+    static ProductMetricShard2Entity of(Product product) {
         return ProductMetricShard2Entity.builder()
             .id(product.getId())
             .product(ProductShard2Entity.of(product))
@@ -89,7 +89,7 @@ class ProductMetricShard2Entity {
             .build();
     }
 
-    public ProductMetric toDomain() {
+    ProductMetric toDomain() {
         return ProductMetric.builder()
             .metricId(this.id)
             .product(this.product.toDomain())

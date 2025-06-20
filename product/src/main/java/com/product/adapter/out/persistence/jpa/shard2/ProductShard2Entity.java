@@ -93,7 +93,7 @@ class ProductShard2Entity {
         this.updateDateTime = updateDateTime;
     }
 
-    public static ProductShard2Entity of(Product domain) {
+    static ProductShard2Entity of(Product domain) {
         return ProductShard2Entity.builder()
             .id(domain.getId())
             .sellerId(domain.getSellerId())
@@ -113,7 +113,7 @@ class ProductShard2Entity {
             .build();
     }
 
-    public Product toDomain() {
+    Product toDomain() {
         return Product.builder()
             .id(id)
             .sellerId(sellerId)
