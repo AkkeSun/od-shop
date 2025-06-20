@@ -67,4 +67,17 @@ class CommentShard2Entity {
             .regDateTime(comment.regDateTime())
             .build();
     }
+
+    Comment toDomain() {
+        return Comment.builder()
+            .id(id)
+            .productId(productId)
+            .customerId(customerId)
+            .customerEmail(customerEmail)
+            .score(score)
+            .comment(comment)
+            .regDate(regDate)
+            .regDateTime(regDateTime)
+            .build();
+    }
 }

@@ -9,7 +9,9 @@ public enum ErrorCode {
 
     // status code 404 (2001 - 2099) : Not found error
     DoesNotExist_ACCOUNT_INFO(2001, "조회된 사용자 정보가 없습니다"),
-    DoesNotExist_PROUCT_INFO(2002, "조회된 싱픔 정보가 없습니다"),
+    DoesNotExist_PROUCT_INFO(2002, "조회된 상픔 정보가 없습니다"),
+    DoesNotExist_COMMENT_INFO(2003, "조회된 리뷰가 없습니다"),
+
 
     // status code 401 (3001 - 3099) : Unauthorized
     INVALID_ACCESS_TOKEN(3001, "유효한 인증 토큰이 아닙니다"),
@@ -23,6 +25,7 @@ public enum ErrorCode {
     Business_ES_PRODUCT_SAVE(4003, "엘라스틱서치 상품 등록중 오류가 발생했습니다"),
     Business_SAVED_REVIEW_INFO(4004, "이미 리뷰 등록을 완료 했습니다"),
     Business_DoesNotExist_UPDATE_INFO(4005, "업데이트할 정보가 없습니다"),
+
 
     // status code 403 (5001 - 5099)
     ACCESS_DENIED(5001, "접근권한이 없습니다"),
