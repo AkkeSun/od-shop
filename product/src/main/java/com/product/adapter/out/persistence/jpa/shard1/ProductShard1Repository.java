@@ -9,9 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 interface ProductShard1Repository extends JpaRepository<ProductShard1Entity, Long> {
 
     Optional<ProductShard1Entity> findByIdAndDeleteYn(Long id, String deleteYn);
-
-    @Modifying
-    @Query("delete from ProductShard1Entity p where p.id = :id")
+    
     void deleteById(Long id);
 
     @Modifying
