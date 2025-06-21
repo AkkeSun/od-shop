@@ -33,8 +33,7 @@ class TokenStorageAdapter implements TokenStoragePort {
 
     @Override
     public void deleteByEmail(String email) {
-        tokenRepository.findByEmail(email)
-            .ifPresent(tokenRepository::delete);
+        tokenRepository.deleteByEmail(email);
     }
 
     @Override
