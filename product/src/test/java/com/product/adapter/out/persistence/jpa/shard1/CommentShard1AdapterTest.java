@@ -138,4 +138,32 @@ class CommentShard1AdapterTest extends IntegrationTestSupport {
             assert entity.getRegDateTime().equals(comment.regDateTime());
         }
     }
+
+    @Nested
+    @DisplayName("[deleteByProductId] 상품 ID로 리뷰를 삭제하는 API")
+    class Describe_deleteByproductId {
+
+        @Test
+        @DisplayName("[success] 상품 ID로 리뷰를 삭제한다.")
+        void success() {
+            // given
+            Comment comment = Comment.builder()
+                .id(123L)
+                .productId(1L)
+                .customerId(10L)
+                .comment("Great product!")
+                .score(4.5)
+                .regDate(LocalDate.of(2025, 1, 1))
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .build();
+            adapter.register(comment);
+            assert repository.findById(comment.id()).isPresent();
+
+            // when
+            adapter.deleteByProductId(comment.productId());
+
+            // then
+            assert !repository.findById(comment.id()).isPresent();
+        }
+    }
 }

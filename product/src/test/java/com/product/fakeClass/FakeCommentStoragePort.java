@@ -21,4 +21,9 @@ public class FakeCommentStoragePort implements CommentStoragePort {
     public void register(Comment comment) {
         database.add(comment);
     }
+
+    @Override
+    public void deleteByProductId(Long productId) {
+        database.removeIf(comment -> comment.productId().equals(productId));
+    }
 }

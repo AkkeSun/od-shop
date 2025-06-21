@@ -3,7 +3,6 @@ package com.product.adapter.out.persistence.jpa.shard2;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.IntegrationTestSupport;
-import com.product.adapter.out.persistence.jpa.shard1.CommentShard1Adapter;
 import com.product.application.port.in.command.FindCommentListCommand;
 import com.product.domain.model.Comment;
 import com.product.infrastructure.exception.CustomNotFoundException;
@@ -20,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class CommentShard2AdapterTest extends IntegrationTestSupport {
 
     @Autowired
-    CommentShard1Adapter adapter;
+    CommentShard2Adapter adapter;
     @Autowired
     CommentShard2Repository repository;
 
@@ -137,6 +136,34 @@ class CommentShard2AdapterTest extends IntegrationTestSupport {
             assert entity.getScore() == comment.score();
             assert entity.getRegDate().equals(comment.regDate());
             assert entity.getRegDateTime().equals(comment.regDateTime());
+        }
+    }
+
+    @Nested
+    @DisplayName("[deleteByProductId] 상품 ID로 리뷰를 삭제하는 API")
+    class Describe_deleteByproductId {
+
+        @Test
+        @DisplayName("[success] 상품 ID로 리뷰를 삭제한다.")
+        void success() {
+            // given
+            Comment comment = Comment.builder()
+                .id(123L)
+                .productId(1L)
+                .customerId(10L)
+                .comment("Great product!")
+                .score(4.5)
+                .regDate(LocalDate.of(2025, 1, 1))
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .build();
+            adapter.register(comment);
+            assert repository.findById(comment.id()).isPresent();
+
+            // when
+            adapter.deleteByProductId(comment.productId());
+
+            // then
+            assert !repository.findById(comment.id()).isPresent();
         }
     }
 }

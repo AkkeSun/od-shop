@@ -1,10 +1,14 @@
 package com.product.adapter.out.persistence.jpa;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.product.IntegrationTestSupport;
 import com.product.adapter.out.persistence.jpa.shard1.CommentShard1Adapter;
 import com.product.adapter.out.persistence.jpa.shard2.CommentShard2Adapter;
 import com.product.application.port.in.command.FindCommentListCommand;
 import com.product.domain.model.Comment;
+import com.product.infrastructure.exception.CustomNotFoundException;
+import com.product.infrastructure.exception.ErrorCode;
 import com.product.infrastructure.util.ShardKeyUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -126,6 +130,62 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             assert result.customerEmail().equals(comment.customerEmail());
             assert result.regDate().equals(comment.regDate());
             assert result.regDateTime().equals(comment.regDateTime());
+        }
+    }
+
+    @Nested
+    @DisplayName("[deleteByProductId] 상품 ID로 리뷰를 삭제하는 API")
+    class Describe_deleteByproductId {
+
+        @Test
+        @DisplayName("[success] 상품 아이디가 shard1에 해당하면 shard1에서 상품 정보를 삭제한다.")
+        void success() {
+            // given
+            Comment comment = getComment(true);
+            shard1Adapter.register(comment);
+            assert shard1Adapter.findByProductId(
+                FindCommentListCommand.builder()
+                    .productId(comment.productId())
+                    .page(0)
+                    .size(10)
+                    .build()).size() == 1;
+
+            // when
+            adapter.deleteByProductId(comment.productId());
+            CustomNotFoundException result = assertThrows(CustomNotFoundException.class,
+                () -> shard1Adapter.findByProductId(FindCommentListCommand.builder()
+                    .productId(comment.productId())
+                    .page(0)
+                    .size(10)
+                    .build()));
+
+            // then
+            assert result.getErrorCode() == ErrorCode.DoesNotExist_COMMENT_INFO;
+        }
+
+        @Test
+        @DisplayName("[success] 상품 아이디가 shard2에 해당하면 shard2에서 상품 정보를 삭제한다.")
+        void success2() {
+            // given
+            Comment comment = getComment(false);
+            shard2Adapter.register(comment);
+            assert shard2Adapter.findByProductId(FindCommentListCommand.builder()
+                .productId(comment.productId())
+                .page(0)
+                .size(10)
+                .build()).size() == 1;
+
+            // when
+            adapter.deleteByProductId(comment.productId());
+            CustomNotFoundException result = assertThrows(CustomNotFoundException.class,
+                () -> shard1Adapter.findByProductId(FindCommentListCommand.builder()
+                    .productId(comment.productId())
+                    .page(0)
+                    .size(10)
+                    .build()));
+
+            // then
+            assert result.getErrorCode() == ErrorCode.DoesNotExist_COMMENT_INFO;
         }
     }
 
