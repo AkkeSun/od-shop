@@ -3,6 +3,7 @@ package com.product.application.service.delete_product;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.DeleteProductUseCase;
+import com.product.application.port.out.CommentStoragePort;
 import com.product.application.port.out.MessageProducerPort;
 import com.product.application.port.out.ProductEsStoragePort;
 import com.product.application.port.out.ProductStoragePort;
@@ -22,6 +23,7 @@ class DeleteProductService implements DeleteProductUseCase {
 
     @Value("${kafka.topic.history}")
     private String historyTopic;
+    private final CommentStoragePort commentStoragePort;
     private final ProductStoragePort productStoragePort;
     private final MessageProducerPort messageProducerPort;
     private final ProductEsStoragePort productEsStoragePort;
@@ -33,8 +35,8 @@ class DeleteProductService implements DeleteProductUseCase {
             throw new CustomAuthorizationException(ErrorCode.ACCESS_DENIED);
         }
 
-        // TODO: review 삭제
         LocalDateTime deleteAt = LocalDateTime.now();
+        commentStoragePort.deleteByProductId(productId);
         productStoragePort.softDeleteById(productId, deleteAt);
         productEsStoragePort.deleteById(productId);
 
@@ -42,7 +44,7 @@ class DeleteProductService implements DeleteProductUseCase {
         messageProducerPort.sendMessage(historyTopic, toJsonString(history));
 
         return DeleteProductServiceResponse.builder()
-                .result(true)
-                .build();
+            .result(true)
+            .build();
     }
 }

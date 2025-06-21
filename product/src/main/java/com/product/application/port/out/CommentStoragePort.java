@@ -9,4 +9,6 @@ public interface CommentStoragePort {
     List<Comment> findByProductId(FindCommentListCommand command);
 
     void register(Comment comment);
+
+    void deleteByProductId(Long productId);
 }

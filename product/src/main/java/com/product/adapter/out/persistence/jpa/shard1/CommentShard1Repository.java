@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 interface CommentShard1Repository extends JpaRepository<CommentShard1Entity, Long> {
 
     List<CommentShard1Entity> findByProductId(Long productId, Pageable pageable);
+
+    void deleteByProductId(Long productId);
 }

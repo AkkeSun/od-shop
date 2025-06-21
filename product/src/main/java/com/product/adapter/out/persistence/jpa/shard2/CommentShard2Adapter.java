@@ -35,4 +35,9 @@ public class CommentShard2Adapter implements CommentStoragePort {
     public void register(Comment comment) {
         repository.save(CommentShard2Entity.of(comment));
     }
+
+    @Override
+    public void deleteByProductId(Long productId) {
+        repository.deleteByProductId(productId);
+    }
 }

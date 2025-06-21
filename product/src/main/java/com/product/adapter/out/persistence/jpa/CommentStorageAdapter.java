@@ -33,4 +33,13 @@ class CommentStorageAdapter implements CommentStoragePort {
             shard2Adapter.register(comment);
         }
     }
+
+    @Override
+    public void deleteByProductId(Long productId) {
+        if (ShardKeyUtil.isShard1(productId)) {
+            shard1Adapter.deleteByProductId(productId);
+        } else {
+            shard2Adapter.deleteByProductId(productId);
+        }
+    }
 }
