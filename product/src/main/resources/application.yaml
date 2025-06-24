@@ -63,6 +63,7 @@ kafka:
   topic:
     history: product-history
     click: product-click
+    search: product-search
 
 resilience4j:
   circuitbreaker:
