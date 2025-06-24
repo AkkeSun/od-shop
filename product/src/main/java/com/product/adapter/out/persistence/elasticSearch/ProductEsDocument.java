@@ -3,6 +3,8 @@ package com.product.adapter.out.persistence.elasticSearch;
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,7 +72,7 @@ class ProductEsDocument {
         this.totalScore = totalScore;
     }
 
-    public static ProductEsDocument of(Product product, float[] embedding) {
+    static ProductEsDocument of(Product product, float[] embedding) {
         return ProductEsDocument.builder()
             .productId(product.getId())
             .sellerEmail(product.getSellerEmail())
@@ -84,6 +86,25 @@ class ProductEsDocument {
             .embedding(embedding)
             .category(product.getCategory())
             .regDateTime(product.getRegDateTime())
+            .build();
+    }
+
+    Product toDomain() {
+        return Product.builder()
+            .id(productId)
+            .sellerEmail(sellerEmail)
+            .productName(productName)
+            .productImgUrl(productImgUrl)
+            .price(price)
+            .keywords(Arrays.stream(keywords.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toSet()))
+            .salesCount(salesCount)
+            .reviewCount(reviewCount)
+            .totalScore(totalScore)
+            .category(category)
+            .regDateTime(regDateTime)
             .build();
     }
 }
