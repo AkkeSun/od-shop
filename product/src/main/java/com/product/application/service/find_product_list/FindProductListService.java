@@ -22,12 +22,10 @@ class FindProductListService implements FindProductListUseCase {
 
     @NewSpan
     @Override
-    public List<FindProductListServiceResponse> findProductList(FindProductListCommand command) {
+    public FindProductListServiceResponse findProductList(FindProductListCommand command) {
         messageProducerPort.sendMessage(topicName, command.query());
         List<Product> products = productEsStoragePort.findByCategoryAndKeywords(command);
 
-        return products.stream()
-            .map(FindProductListServiceResponse::of)
-            .toList();
+        return FindProductListServiceResponse.of(products, command.pageable());
     }
 }

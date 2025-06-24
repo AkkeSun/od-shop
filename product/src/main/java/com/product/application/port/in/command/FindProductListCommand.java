@@ -2,13 +2,13 @@ package com.product.application.port.in.command;
 
 import com.product.domain.model.Category;
 import lombok.Builder;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 @Builder
 public record FindProductListCommand(
     String query,
     Category category,
-    Pageable pageable
+    PageRequest pageable
 ) {
 
     public boolean isTotalCategorySearch() {
