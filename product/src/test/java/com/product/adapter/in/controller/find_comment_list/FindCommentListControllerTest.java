@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.product.ControllerTestSupport;
 import com.product.application.service.find_comment_list.FindCommentListServiceResponse;
+import com.product.application.service.find_comment_list.FindCommentListServiceResponse.FindCommentListServiceResponseItem;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -28,16 +29,15 @@ class FindCommentListControllerTest extends ControllerTestSupport {
             // given
             Long productId = 1L;
             when(findCommentListUseCase.findCommentList(any()))
-                .thenReturn(List.of(
-                    FindCommentListServiceResponse.builder()
-                        .customerEmail("email1")
-                        .comment("Great product!")
-                        .build(),
-                    FindCommentListServiceResponse.builder()
-                        .customerEmail("email2")
-                        .comment("Not bad.")
-                        .build()
-                ));
+                .thenReturn(FindCommentListServiceResponse.builder()
+                    .page(0)
+                    .size(10)
+                    .commentCount(1)
+                    .comments(List.of(FindCommentListServiceResponseItem.builder()
+                        .comment("좋아요")
+                        .customerEmail("test")
+                        .build()))
+                    .build());
 
             // when
             ResultActions actions = mockMvc.perform(

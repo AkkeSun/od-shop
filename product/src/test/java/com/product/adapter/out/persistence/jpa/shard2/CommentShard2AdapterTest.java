@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 class CommentShard2AdapterTest extends IntegrationTestSupport {
 
@@ -34,8 +35,7 @@ class CommentShard2AdapterTest extends IntegrationTestSupport {
             // given
             FindCommentListCommand command = FindCommentListCommand.builder()
                 .productId(2L)
-                .page(0)
-                .size(10)
+                .pageable(PageRequest.of(0, 10))
                 .build();
 
             // when
@@ -51,8 +51,7 @@ class CommentShard2AdapterTest extends IntegrationTestSupport {
             // given
             FindCommentListCommand command = FindCommentListCommand.builder()
                 .productId(1L)
-                .page(0)
-                .size(10)
+                .pageable(PageRequest.of(0, 10))
                 .build();
             CommentShard2Entity entity1 = repository.save(CommentShard2Entity.builder()
                 .id(123L)

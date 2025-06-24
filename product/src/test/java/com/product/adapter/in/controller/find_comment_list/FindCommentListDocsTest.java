@@ -19,6 +19,7 @@ import com.epages.restdocs.apispec.Schema;
 import com.product.RestDocsSupport;
 import com.product.application.port.in.FindCommentListUseCase;
 import com.product.application.service.find_comment_list.FindCommentListServiceResponse;
+import com.product.application.service.find_comment_list.FindCommentListServiceResponse.FindCommentListServiceResponseItem;
 import com.product.infrastructure.exception.CustomNotFoundException;
 import com.product.infrastructure.exception.ErrorCode;
 import java.util.List;
@@ -52,16 +53,20 @@ public class FindCommentListDocsTest extends RestDocsSupport {
                 .size(10)
                 .build();
             when(findCommentListUseCase.findCommentList(any()))
-                .thenReturn(List.of(
-                    FindCommentListServiceResponse.builder()
-                        .customerEmail("email1")
-                        .comment("Great product!")
+                .thenReturn(FindCommentListServiceResponse.builder()
+                    .productId(productId)
+                    .page(0)
+                    .size(10)
+                    .commentCount(2)
+                    .comments(List.of(FindCommentListServiceResponseItem.builder()
+                            .comment("좋아요")
+                            .customerEmail("od@gmail.com")
                         .build(),
-                    FindCommentListServiceResponse.builder()
-                        .customerEmail("email2")
-                        .comment("Not bad.")
-                        .build()
-                ));
+                        FindCommentListServiceResponseItem.builder()
+                            .comment("굿굿")
+                            .customerEmail("exg@gmail.com")
+                            .build()))
+                    .build());
 
             // when then
             performDocument(request, productId, status().isOk(), "success", "find-comment-list",
@@ -69,12 +74,22 @@ public class FindCommentListDocsTest extends RestDocsSupport {
                     .description("상태 코드"),
                 fieldWithPath("message").type(JsonFieldType.STRING)
                     .description("상태 메시지"),
-                fieldWithPath("data").type(JsonFieldType.ARRAY)
+                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                    .description("응답 데이터"),
+                fieldWithPath("data.productId").type(JsonFieldType.NUMBER)
+                    .description("상품 ID"),
+                fieldWithPath("data.page").type(JsonFieldType.NUMBER)
+                    .description("조회 페이지"),
+                fieldWithPath("data.size").type(JsonFieldType.NUMBER)
+                    .description("조회 사이즈"),
+                fieldWithPath("data.commentCount").type(JsonFieldType.NUMBER)
+                    .description("조회된 리뷰 수"),
+                fieldWithPath("data.comments[]").type(JsonFieldType.ARRAY)
                     .description("리뷰 목록"),
-                fieldWithPath("data[].customerEmail").type(JsonFieldType.STRING)
-                    .description("구매자 이메일"),
-                fieldWithPath("data[].comment").type(JsonFieldType.STRING)
-                    .description("리뷰")
+                fieldWithPath("data.comments[].comment").type(JsonFieldType.STRING)
+                    .description("리뷰 내용"),
+                fieldWithPath("data.comments[].customerEmail").type(JsonFieldType.STRING)
+                    .description("리뷰 작성자")
             );
         }
 

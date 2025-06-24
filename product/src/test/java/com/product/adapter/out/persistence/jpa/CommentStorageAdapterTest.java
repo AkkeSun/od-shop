@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 class CommentStorageAdapterTest extends IntegrationTestSupport {
 
@@ -39,8 +40,7 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             Comment result = shard1Adapter.findByProductId(
                     FindCommentListCommand.builder()
                         .productId(comment.productId())
-                        .page(0)
-                        .size(10)
+                        .pageable(PageRequest.of(0, 10))
                         .build())
                 .getFirst();
 
@@ -63,8 +63,7 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             Comment result = shard2Adapter.findByProductId(
                     FindCommentListCommand.builder()
                         .productId(comment.productId())
-                        .page(0)
-                        .size(10)
+                        .pageable(PageRequest.of(0, 10))
                         .build())
                 .getFirst();
 
@@ -92,8 +91,7 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             Comment result = adapter.findByProductId(
                 FindCommentListCommand.builder()
                     .productId(comment.productId())
-                    .page(0)
-                    .size(10)
+                    .pageable(PageRequest.of(0, 10))
                     .build()).getFirst();
 
             // then
@@ -116,8 +114,7 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             Comment result = adapter.findByProductId(
                 FindCommentListCommand.builder()
                     .productId(comment.productId())
-                    .page(0)
-                    .size(10)
+                    .pageable(PageRequest.of(0, 10))
                     .build()).getFirst();
 
             // then
@@ -143,8 +140,7 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             assert shard1Adapter.findByProductId(
                 FindCommentListCommand.builder()
                     .productId(comment.productId())
-                    .page(0)
-                    .size(10)
+                    .pageable(PageRequest.of(0, 10))
                     .build()).size() == 1;
 
             // when
@@ -152,8 +148,7 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             List<Comment> result = shard1Adapter.findByProductId(
                 FindCommentListCommand.builder()
                     .productId(comment.productId())
-                    .page(0)
-                    .size(10)
+                    .pageable(PageRequest.of(0, 10))
                     .build());
 
             // then
@@ -168,8 +163,7 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             shard2Adapter.register(comment);
             assert shard2Adapter.findByProductId(FindCommentListCommand.builder()
                 .productId(comment.productId())
-                .page(0)
-                .size(10)
+                .pageable(PageRequest.of(0, 10))
                 .build()).size() == 1;
 
             // when
@@ -177,8 +171,7 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
             List<Comment> result = shard1Adapter.findByProductId(
                 FindCommentListCommand.builder()
                     .productId(comment.productId())
-                    .page(0)
-                    .size(10)
+                    .pageable(PageRequest.of(0, 10))
                     .build());
 
             // then

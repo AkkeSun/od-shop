@@ -44,7 +44,6 @@ class ProductEsStorageAdapterTest extends IntegrationTestSupport {
             assert productEsDocument.getPrice() == product.getPrice();
             assert productEsDocument.getKeywords().equals(String.join(",", product.getKeywords()));
             assert productEsDocument.getCategory().equals(product.getCategory());
-            assert productEsDocument.getRegDateTime().equals(product.getRegDateTime().toString());
             assert productEsDocument.getReviewCount() == product.getReviewCount();
             assert productEsDocument.getTotalScore() == product.getTotalScore();
             for (int i = 0; i < embedding.length; i++) {

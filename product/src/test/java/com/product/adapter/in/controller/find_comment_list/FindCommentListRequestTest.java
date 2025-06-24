@@ -26,8 +26,8 @@ class FindCommentListRequestTest {
 
             // then
             assert command.productId().equals(productId);
-            assert command.page() == 1;
-            assert command.size() == 10;
+            assert command.pageable().getPageNumber() == 1;
+            assert command.pageable().getPageSize() == 10;
         }
     }
 }

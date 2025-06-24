@@ -17,10 +17,8 @@ class FindCommentListService implements FindCommentListUseCase {
 
     @NewSpan
     @Override
-    public List<FindCommentListServiceResponse> findCommentList(FindCommentListCommand command) {
+    public FindCommentListServiceResponse findCommentList(FindCommentListCommand command) {
         List<Comment> comments = commentStoragePort.findByProductId(command);
-        return comments.stream()
-            .map(FindCommentListServiceResponse::of)
-            .toList();
+        return FindCommentListServiceResponse.of(comments, command);
     }
 }

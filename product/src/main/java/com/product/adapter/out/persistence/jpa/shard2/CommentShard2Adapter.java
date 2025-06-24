@@ -5,7 +5,6 @@ import com.product.application.port.out.CommentStoragePort;
 import com.product.domain.model.Comment;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,7 @@ public class CommentShard2Adapter implements CommentStoragePort {
     @Override
     public List<Comment> findByProductId(FindCommentListCommand command) {
         List<CommentShard2Entity> entities = repository.findByProductId(command.productId(),
-            PageRequest.of(command.page(), command.size()));
+            command.pageable());
 
         return entities.stream()
             .map(CommentShard2Entity::toDomain)

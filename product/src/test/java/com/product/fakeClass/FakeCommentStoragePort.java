@@ -13,7 +13,7 @@ public class FakeCommentStoragePort implements CommentStoragePort {
     @Override
     public List<Comment> findByProductId(FindCommentListCommand command) {
         return database.stream().filter(comment -> command.productId().equals(command.productId()))
-            .limit(command.size())
+            .limit(command.pageable().getPageSize())
             .toList();
     }
 

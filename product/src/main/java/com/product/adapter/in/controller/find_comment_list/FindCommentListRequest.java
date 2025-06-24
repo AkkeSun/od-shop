@@ -6,6 +6,7 @@ import com.product.application.port.in.command.FindCommentListCommand;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 
 @Getter
 @NoArgsConstructor
@@ -23,8 +24,7 @@ class FindCommentListRequest {
     FindCommentListCommand toCommand(Long productId) {
         return FindCommentListCommand.builder()
             .productId(productId)
-            .page(page)
-            .size(size == 0 ? 10 : size)
+            .pageable(PageRequest.of(page, size == 0 ? 10 : size))
             .build();
     }
 

@@ -6,10 +6,10 @@ import com.product.domain.model.Comment;
 import com.product.fakeClass.FakeCommentStoragePort;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
 
 class FindCommentListServiceTest {
 
@@ -40,18 +40,21 @@ class FindCommentListServiceTest {
             commentStoragePort.register(comment);
             FindCommentListCommand command = FindCommentListCommand.builder()
                 .productId(1L)
-                .page(0)
-                .size(10)
+                .pageable(PageRequest.of(0, 10))
                 .build();
 
             // when
-            List<FindCommentListServiceResponse> response = findCommentListService
-                .findCommentList(command);
+            FindCommentListServiceResponse response = findCommentListService.findCommentList(
+                command);
 
             // then
-            assert response.size() == 1;
-            assert response.getFirst().comment().equals(comment.comment());
-            assert response.getFirst().customerEmail().equals(comment.customerEmail());
+            assert response.productId().equals(comment.productId());
+            assert response.page() == 0;
+            assert response.size() == 10;
+            assert response.comments().size() == 1;
+            assert response.comments().get(0).comment().equals(comment.comment());
+            assert response.comments().get(0).customerEmail().equals(comment.customerEmail());
+
         }
     }
 }
