@@ -1,12 +1,8 @@
 package com.product.adapter.out.persistence.jpa.shard1;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.product.IntegrationTestSupport;
 import com.product.application.port.in.command.FindCommentListCommand;
 import com.product.domain.model.Comment;
-import com.product.infrastructure.exception.CustomNotFoundException;
-import com.product.infrastructure.exception.ErrorCode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,7 +29,7 @@ class CommentShard1AdapterTest extends IntegrationTestSupport {
     class Describe_findByProductId {
 
         @Test
-        @DisplayName("[error] 리뷰가 존재하지 않을 때 예외를 응답한다.")
+        @DisplayName("[error] 리뷰가 존재하지 않을 때 빈 리스트를 응답한다.")
         void error() {
             // given
             FindCommentListCommand command = FindCommentListCommand.builder()
@@ -43,11 +39,10 @@ class CommentShard1AdapterTest extends IntegrationTestSupport {
                 .build();
 
             // when
-            CustomNotFoundException result = assertThrows(
-                CustomNotFoundException.class, () -> adapter.findByProductId(command));
+            List<Comment> result = adapter.findByProductId(command);
 
             // then
-            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_COMMENT_INFO);
+            assert result.isEmpty();
         }
 
         @Test

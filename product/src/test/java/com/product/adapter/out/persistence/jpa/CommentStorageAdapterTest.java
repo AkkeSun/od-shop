@@ -1,17 +1,14 @@
 package com.product.adapter.out.persistence.jpa;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.product.IntegrationTestSupport;
 import com.product.adapter.out.persistence.jpa.shard1.CommentShard1Adapter;
 import com.product.adapter.out.persistence.jpa.shard2.CommentShard2Adapter;
 import com.product.application.port.in.command.FindCommentListCommand;
 import com.product.domain.model.Comment;
-import com.product.infrastructure.exception.CustomNotFoundException;
-import com.product.infrastructure.exception.ErrorCode;
 import com.product.infrastructure.util.ShardKeyUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -152,15 +149,15 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
 
             // when
             adapter.deleteByProductId(comment.productId());
-            CustomNotFoundException result = assertThrows(CustomNotFoundException.class,
-                () -> shard1Adapter.findByProductId(FindCommentListCommand.builder()
+            List<Comment> result = shard1Adapter.findByProductId(
+                FindCommentListCommand.builder()
                     .productId(comment.productId())
                     .page(0)
                     .size(10)
-                    .build()));
+                    .build());
 
             // then
-            assert result.getErrorCode() == ErrorCode.DoesNotExist_COMMENT_INFO;
+            assert result.isEmpty();
         }
 
         @Test
@@ -177,15 +174,15 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
 
             // when
             adapter.deleteByProductId(comment.productId());
-            CustomNotFoundException result = assertThrows(CustomNotFoundException.class,
-                () -> shard1Adapter.findByProductId(FindCommentListCommand.builder()
+            List<Comment> result = shard1Adapter.findByProductId(
+                FindCommentListCommand.builder()
                     .productId(comment.productId())
                     .page(0)
                     .size(10)
-                    .build()));
+                    .build());
 
             // then
-            assert result.getErrorCode() == ErrorCode.DoesNotExist_COMMENT_INFO;
+            assert result.isEmpty();
         }
     }
 

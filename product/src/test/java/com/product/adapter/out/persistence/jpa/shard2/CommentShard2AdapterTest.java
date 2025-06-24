@@ -1,12 +1,8 @@
 package com.product.adapter.out.persistence.jpa.shard2;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.product.IntegrationTestSupport;
 import com.product.application.port.in.command.FindCommentListCommand;
 import com.product.domain.model.Comment;
-import com.product.infrastructure.exception.CustomNotFoundException;
-import com.product.infrastructure.exception.ErrorCode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,11 +39,10 @@ class CommentShard2AdapterTest extends IntegrationTestSupport {
                 .build();
 
             // when
-            CustomNotFoundException result = assertThrows(
-                CustomNotFoundException.class, () -> adapter.findByProductId(command));
+            List<Comment> result = adapter.findByProductId(command);
 
             // then
-            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_COMMENT_INFO);
+            assert result.isEmpty();
         }
 
         @Test

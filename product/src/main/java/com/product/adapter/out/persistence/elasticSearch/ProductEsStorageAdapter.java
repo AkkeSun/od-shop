@@ -3,8 +3,6 @@ package com.product.adapter.out.persistence.elasticSearch;
 import com.product.application.port.in.command.FindProductListCommand;
 import com.product.application.port.out.ProductEsStoragePort;
 import com.product.domain.model.Product;
-import com.product.infrastructure.exception.CustomNotFoundException;
-import com.product.infrastructure.exception.ErrorCode;
 import io.micrometer.tracing.annotation.NewSpan;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,10 +34,6 @@ class ProductEsStorageAdapter implements ProductEsStoragePort {
             repository.findByQuery(command.query(), command.pageable()) :
             repository.findByCategoryAndQuery(command.category().name(), command.query(),
                 command.pageable());
-
-        if (documents.isEmpty()) {
-            throw new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO);
-        }
 
         return documents.stream()
             .map(ProductEsDocument::toDomain)

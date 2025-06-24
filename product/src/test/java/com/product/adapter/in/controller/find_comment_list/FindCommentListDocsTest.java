@@ -79,22 +79,6 @@ public class FindCommentListDocsTest extends RestDocsSupport {
         }
 
         @Test
-        @DisplayName("[success] 조회된 리뷰가 없을 때 예외를 응답한다.")
-        void error() throws Exception {
-            // given
-            Long productId = 2L;
-            FindCommentListRequest request = FindCommentListRequest.builder()
-                .page(0)
-                .size(10)
-                .build();
-            when(findCommentListUseCase.findCommentList(any()))
-                .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_COMMENT_INFO));
-
-            // when then
-            performErrorDocument(request, productId, status().isNotFound(), "조회된 리뷰 없음");
-        }
-
-        @Test
         @DisplayName("[success] 조회된 리뷰에 해당하는 상품 정보가 없을때 예외를 응답한다.")
         void error2() throws Exception {
             // given
