@@ -7,7 +7,7 @@ import com.product.domain.model.Account;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
 import com.product.fakeClass.FakeCommentStoragePort;
-import com.product.fakeClass.FakeProductEsStoragePort;
+import com.product.fakeClass.FakeElasticSearchClientPort;
 import com.product.fakeClass.FakeProductStoragePort;
 import com.product.infrastructure.exception.CustomAuthorizationException;
 import com.product.infrastructure.exception.ErrorCode;
@@ -21,20 +21,20 @@ class DeleteProductServiceTest {
 
     private final FakeProductStoragePort productStoragePort;
     private final CommentStoragePort commentStoragePort;
-    private final FakeProductEsStoragePort productEsStoragePort;
+    private final FakeElasticSearchClientPort elasticSearchClientPort;
     private final DummyMessageProducerPort messageProducerPort;
     private final DeleteProductService deleteProductService;
 
     DeleteProductServiceTest() {
         this.productStoragePort = new FakeProductStoragePort();
-        this.productEsStoragePort = new FakeProductEsStoragePort();
+        this.elasticSearchClientPort = new FakeElasticSearchClientPort();
         this.messageProducerPort = new DummyMessageProducerPort();
         this.commentStoragePort = new FakeCommentStoragePort();
         this.deleteProductService = new DeleteProductService(
             commentStoragePort,
             productStoragePort,
             messageProducerPort,
-            productEsStoragePort
+            elasticSearchClientPort
         );
         ReflectionTestUtils.setField(deleteProductService, "historyTopic", "test");
     }
@@ -42,7 +42,7 @@ class DeleteProductServiceTest {
     @AfterEach
     void tearDown() {
         productStoragePort.database.clear();
-        productEsStoragePort.database.clear();
+        elasticSearchClientPort.database.clear();
     }
 
     @Nested
@@ -96,7 +96,7 @@ class DeleteProductServiceTest {
             // then
             assert serviceResponse.result();
             assert productStoragePort.findById(productId) == null;
-            assert productEsStoragePort.database.stream()
+            assert elasticSearchClientPort.database.stream()
                 .noneMatch(product -> product.getId().equals(productId));
         }
     }

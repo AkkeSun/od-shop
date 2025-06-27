@@ -7,7 +7,7 @@ import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.domain.model.Account;
 import com.product.fakeClass.DummyEmbeddingUtil;
 import com.product.fakeClass.DummySnowflakeGenerator;
-import com.product.fakeClass.FakeProductEsStoragePort;
+import com.product.fakeClass.FakeElasticSearchClientPort;
 import com.product.fakeClass.FakeProductStoragePort;
 import com.product.infrastructure.exception.CustomBusinessException;
 import java.util.Set;
@@ -21,22 +21,22 @@ class RegisterProductServiceTest {
     private final DummyEmbeddingUtil embeddingUtil;
     private final DummySnowflakeGenerator snowflakeGenerator;
     private final FakeProductStoragePort productStoragePort;
-    private final FakeProductEsStoragePort productEsStoragePort;
+    private final FakeElasticSearchClientPort elasticSearchClientPort;
     private final RegisterProductService service;
 
     RegisterProductServiceTest() {
         this.embeddingUtil = new DummyEmbeddingUtil();
         this.snowflakeGenerator = new DummySnowflakeGenerator();
         this.productStoragePort = new FakeProductStoragePort();
-        this.productEsStoragePort = new FakeProductEsStoragePort();
+        this.elasticSearchClientPort = new FakeElasticSearchClientPort();
         this.service = new RegisterProductService(embeddingUtil, snowflakeGenerator,
-            productStoragePort, productEsStoragePort);
+            productStoragePort, elasticSearchClientPort);
     }
 
     @AfterEach
     void tearDown() {
         productStoragePort.database.clear();
-        productEsStoragePort.database.clear();
+        elasticSearchClientPort.database.clear();
     }
 
     @Nested
@@ -102,7 +102,7 @@ class RegisterProductServiceTest {
 
             // then
             assert productStoragePort.database.isEmpty();
-            assert productEsStoragePort.database.isEmpty();
+            assert elasticSearchClientPort.database.isEmpty();
             assert response.getErrorCode().equals(Business_ES_PRODUCT_SAVE);
         }
     }
