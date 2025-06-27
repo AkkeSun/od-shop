@@ -37,11 +37,11 @@ spring:
       host: 140.245.70.130
       port: 6379
       timeout: 3000
-
-  elasticsearch:
-    username: elastic
-    password: 1234
-    uris: 152.67.206.159:9200
+      key:
+        product-recommend: product-recommend::%s-%s
+      ttl:
+        product-recommend: 86400 # 1 day
+        personal-recommend: 3600 # 1 hour
 
 server:
   port: 8082
@@ -82,12 +82,20 @@ resilience4j:
         slow-call-duration-threshold: 3s
         slow-call-rate-threshold: 100
         permitted-number-of-calls-in-half-open-state: 5
+      elasticsearch:
+        slidingWindowSize: 3
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
     instances:
       redis:
         base-config: redis
       kafka:
         base-config: kafka
-
+      elasticsearch:
+        base-config: elasticsearch
 
 service-constant:
   aes:
@@ -95,7 +103,7 @@ service-constant:
   snowflake:
     dataCenterId: 0
     workerId: 1
-  product:
-    search-page-size: 100
-    response-page-size: 10
+  external:
+    elasticsearch: http://152.67.206.159:9200
+
 

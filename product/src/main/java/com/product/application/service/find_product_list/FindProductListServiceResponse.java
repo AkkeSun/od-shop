@@ -1,9 +1,9 @@
 package com.product.application.service.find_product_list;
 
+import com.product.application.port.in.command.FindProductListCommand;
 import com.product.domain.model.Product;
 import java.util.List;
 import lombok.Builder;
-import org.springframework.data.domain.PageRequest;
 
 @Builder
 public record FindProductListServiceResponse(
@@ -14,10 +14,10 @@ public record FindProductListServiceResponse(
 ) {
 
     public static FindProductListServiceResponse of(List<Product> products,
-        PageRequest pageRequest) {
+        FindProductListCommand command) {
         return FindProductListServiceResponse.builder()
-            .page(pageRequest.getPageNumber())
-            .size(pageRequest.getPageSize())
+            .page(command.page())
+            .size(command.size())
             .productCount(products.size())
             .productList(products.stream()
                 .map(FindProductListServiceResponseItem::of)

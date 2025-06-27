@@ -1,5 +1,6 @@
 package com.product.domain.model;
 
+import java.util.Map;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -28,5 +29,13 @@ public enum SortType {
 
     public boolean isDescending() {
         return isDecending;
+    }
+
+    public Map<String, String> toMap() {
+        return Map.of(
+            "type", type,
+            "isDescending", String.valueOf(isDecending),
+            "description", description
+        );
     }
 }

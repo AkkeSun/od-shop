@@ -1,14 +1,16 @@
 package com.product.application.port.in.command;
 
 import com.product.domain.model.Category;
+import com.product.domain.model.SortType;
 import lombok.Builder;
-import org.springframework.data.domain.PageRequest;
 
 @Builder
 public record FindProductListCommand(
     String query,
     Category category,
-    PageRequest pageable
+    SortType sortType,
+    int page,
+    int size
 ) {
 
     public boolean isTotalCategorySearch() {

@@ -11,8 +11,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 @Getter
 @NoArgsConstructor
@@ -48,8 +46,9 @@ class FindProductListRequest {
         return FindProductListCommand.builder()
             .query(query)
             .category(Category.valueOf(category))
-            .pageable(PageRequest.of(page, size == 0 ? 10 : size, type.isDescending() ?
-                Sort.by(type.type()).descending() : Sort.by(type.type())))
+            .sortType(type)
+            .page(page)
+            .size(size == 0 ? 10 : size)
             .build();
     }
 }

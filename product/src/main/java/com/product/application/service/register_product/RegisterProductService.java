@@ -5,7 +5,7 @@ import static com.product.infrastructure.exception.ErrorCode.Business_ES_PRODUCT
 
 import com.product.application.port.in.RegisterProductUseCase;
 import com.product.application.port.in.command.RegisterProductCommand;
-import com.product.application.port.out.ProductEsStoragePort;
+import com.product.application.port.out.ElasticSearchClientPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomBusinessException;
@@ -24,7 +24,7 @@ class RegisterProductService implements RegisterProductUseCase {
     private final EmbeddingUtil embeddingUtil;
     private final SnowflakeGenerator snowflakeGenerator;
     private final ProductStoragePort productStoragePort;
-    private final ProductEsStoragePort productEsStoragePort;
+    private final ElasticSearchClientPort elasticSearchClientPort;
 
     @NewSpan
     @Override
@@ -37,7 +37,7 @@ class RegisterProductService implements RegisterProductUseCase {
 
         // elastic search error transaction rollback
         try {
-            productEsStoragePort.register(product, embedding);
+            elasticSearchClientPort.register(product, embedding);
         } catch (Exception e) {
             log.error("[registerProduct] elasticsearch save error : {}", e.getMessage());
             productStoragePort.deleteById(product.getId());

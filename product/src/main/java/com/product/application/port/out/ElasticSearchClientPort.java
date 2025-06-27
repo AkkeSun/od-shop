@@ -4,11 +4,11 @@ import com.product.application.port.in.command.FindProductListCommand;
 import com.product.domain.model.Product;
 import java.util.List;
 
-public interface ProductEsStoragePort {
+public interface ElasticSearchClientPort {
 
     void register(Product product, float[] embedding);
 
     void deleteById(Long productId);
 
-    List<Product> findByCategoryAndKeywords(FindProductListCommand command);
+    List<Product> findProducts(FindProductListCommand command);
 }

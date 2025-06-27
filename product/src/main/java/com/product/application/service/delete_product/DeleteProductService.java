@@ -4,8 +4,8 @@ import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.DeleteProductUseCase;
 import com.product.application.port.out.CommentStoragePort;
+import com.product.application.port.out.ElasticSearchClientPort;
 import com.product.application.port.out.MessageProducerPort;
-import com.product.application.port.out.ProductEsStoragePort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Account;
 import com.product.domain.model.Product;
@@ -26,7 +26,7 @@ class DeleteProductService implements DeleteProductUseCase {
     private final CommentStoragePort commentStoragePort;
     private final ProductStoragePort productStoragePort;
     private final MessageProducerPort messageProducerPort;
-    private final ProductEsStoragePort productEsStoragePort;
+    private final ElasticSearchClientPort elasticSearchClientPort;
 
     @Override
     public DeleteProductServiceResponse deleteProduct(Long productId, Account account) {
@@ -38,7 +38,7 @@ class DeleteProductService implements DeleteProductUseCase {
         LocalDateTime deleteAt = LocalDateTime.now();
         commentStoragePort.deleteByProductId(productId);
         productStoragePort.softDeleteById(productId, deleteAt);
-        productEsStoragePort.deleteById(productId);
+        elasticSearchClientPort.deleteById(productId);
 
         ProductHistory history = ProductHistory.createProductHistoryForDelete(product, deleteAt);
         messageProducerPort.sendMessage(historyTopic, toJsonString(history));
