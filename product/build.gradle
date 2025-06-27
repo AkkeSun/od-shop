@@ -71,6 +71,7 @@ dependencies {
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'com.squareup.okhttp3:mockwebserver'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
@@ -102,12 +103,12 @@ openapi3 {
 tasks.register('copyOasToSwagger', DefaultTask) {
     doLast {
         def openapi3File = file("src/main/resources/static/docs/product-api.yaml")
-        def securitySchemesContent = "  securitySchemes:\n" +                                   \
-                                                                       "    APIKey:\n" +                                   \
-                                                                       "      type: apiKey\n" +                                   \
-                                                                       "      name: Authorization\n" +                                   \
-                                                                       "      in: header\n" +                                  \
-                                                                       "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +                                    \
+                                                                        "    APIKey:\n" +                                    \
+                                                                        "      type: apiKey\n" +                                    \
+                                                                        "      name: Authorization\n" +                                    \
+                                                                        "      in: header\n" +                                   \
+                                                                        "security:\n" +
                 "  - APIKey: []"
 
         if (openapi3File.exists()) {
