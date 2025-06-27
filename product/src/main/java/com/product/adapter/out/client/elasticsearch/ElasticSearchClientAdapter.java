@@ -43,14 +43,16 @@ class ElasticSearchClientAdapter implements ElasticSearchClientPort {
     }
 
     private void registerFallback(Product product, float[] embedding, Throwable e) {
+        log.error("[elasticSearch] registerFallback : {}", e.getMessage());
         throw new RuntimeException(e.getMessage());
     }
 
     private void deleteByIdFallback(Long productId, Throwable e) {
-        log.error("[elasticSearch fallback] delete : {}", productId);
+        log.error("[elasticSearch] deleteByIdFallback {{}) : {}", productId, e.getMessage());
     }
 
     private List<Product> findProductsFallback(FindProductListCommand command, Throwable e) {
+        log.error("[elasticSearch] findProductsFallback : {}", e.getMessage());
         return new ArrayList<>();
     }
 }
