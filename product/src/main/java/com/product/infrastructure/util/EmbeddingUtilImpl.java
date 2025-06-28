@@ -24,4 +24,23 @@ public class EmbeddingUtilImpl implements EmbeddingUtil {
 
         return vector;
     }
+
+    @Override
+    public float[] averageEmbeddings(List<float[]> embeddings) {
+        int dimension = embeddings.getFirst().length;
+        float[] sum = new float[dimension];
+
+        for (float[] vec : embeddings) {
+            for (int i = 0; i < dimension; i++) {
+                sum[i] += vec[i];
+            }
+        }
+
+        int count = embeddings.size();
+        for (int i = 0; i < dimension; i++) {
+            sum[i] /= count;
+        }
+
+        return sum;
+    }
 }

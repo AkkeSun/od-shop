@@ -27,7 +27,7 @@ class RegisterCommentService implements RegisterCommentUseCase {
     @NewSpan
     @Override
     public RegisterCommentServiceResponse registerComment(RegisterCommentCommand command) {
-        Product product = productStoragePort.findById(command.productId());
+        Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");
         if (!orderClientPort.isOrderValid(product.getId(), command.account().id())) {
             throw new CustomAuthorizationException(ACCESS_DENIED);
         }

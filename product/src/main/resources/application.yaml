@@ -39,6 +39,7 @@ spring:
       timeout: 3000
       key:
         product-recommend: product-recommend::%s-%s
+        personal-recommend: product-recommend::%s-%s-%s
       ttl:
         product-recommend: 86400 # 1 day
         personal-recommend: 3600 # 1 hour

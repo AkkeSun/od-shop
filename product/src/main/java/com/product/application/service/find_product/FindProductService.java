@@ -24,7 +24,7 @@ class FindProductService implements FindProductUseCase {
     @NewSpan
     @Override
     public FindProductServiceResponse findProduct(Long productId) {
-        Product product = productStoragePort.findById(productId);
+        Product product = productStoragePort.findByIdAndDeleteYn(productId, "N");
 
         ProductClickLog productClickLog = ProductClickLog.of(productId);
         messageProducerPort.sendMessage(clickTopic, toJsonString(productClickLog));

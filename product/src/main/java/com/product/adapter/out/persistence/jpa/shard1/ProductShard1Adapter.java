@@ -5,6 +5,7 @@ import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomNotFoundException;
 import com.product.infrastructure.exception.ErrorCode;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,9 +38,13 @@ public class ProductShard1Adapter implements ProductStoragePort {
     }
 
     @Override
-    public Product findById(Long productId) {
-        ProductShard1Entity entity = productRepository.findByIdAndDeleteYn(productId, "N")
-            .orElseThrow(() -> new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
+    public Product findByIdAndDeleteYn(Long productId, String deleteYn) {
+        Optional<ProductShard1Entity> optional =
+            deleteYn.equals("A") ? productRepository.findById(productId) :
+                productRepository.findByIdAndDeleteYn(productId, deleteYn);
+
+        ProductShard1Entity entity = optional.orElseThrow(
+            () -> new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
         return entity.toDomain();
     }
 }

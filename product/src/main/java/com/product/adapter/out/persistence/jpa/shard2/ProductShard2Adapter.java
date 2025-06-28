@@ -1,11 +1,11 @@
 package com.product.adapter.out.persistence.jpa.shard2;
 
-import static com.product.infrastructure.exception.ErrorCode.DoesNotExist_PROUCT_INFO;
-
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomNotFoundException;
+import com.product.infrastructure.exception.ErrorCode;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +38,13 @@ public class ProductShard2Adapter implements ProductStoragePort {
     }
 
     @Override
-    public Product findById(Long productId) {
-        ProductShard2Entity entity = productRepository.findByIdAndDeleteYn(productId, "N")
-            .orElseThrow(() -> new CustomNotFoundException(DoesNotExist_PROUCT_INFO));
+    public Product findByIdAndDeleteYn(Long productId, String deleteYn) {
+        Optional<ProductShard2Entity> optional =
+            deleteYn.equals("A") ? productRepository.findById(productId) :
+                productRepository.findByIdAndDeleteYn(productId, deleteYn);
+
+        ProductShard2Entity entity = optional.orElseThrow(
+            () -> new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
         return entity.toDomain();
     }
 }

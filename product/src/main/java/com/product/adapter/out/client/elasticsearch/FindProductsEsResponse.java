@@ -4,6 +4,7 @@ import static com.product.infrastructure.util.DateUtil.parseDateTime;
 
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
+import com.product.domain.model.ProductRecommend;
 import java.util.List;
 import java.util.Set;
 import lombok.Builder;
@@ -81,6 +82,15 @@ public record FindProductsEsResponse(
                     .totalScore(totalScore)
                     .category(Category.valueOf(category))
                     .regDateTime(parseDateTime(regDateTime))
+                    .build();
+            }
+
+            ProductRecommend toRecommend() {
+                return ProductRecommend.builder()
+                    .id(productId)
+                    .productName(productName)
+                    .productImgUrl(productImgUrl)
+                    .price(price)
                     .build();
             }
         }

@@ -28,7 +28,7 @@ class UpdateProductService implements UpdateProductUseCase {
 
     @Override
     public UpdateProductServiceResponse updateProduct(UpdateProductCommand command) {
-        Product product = productStoragePort.findById(command.productId());
+        Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");
         if (!product.isSeller(command.account().id())) {
             throw new CustomAuthorizationException(ACCESS_DENIED);
         }

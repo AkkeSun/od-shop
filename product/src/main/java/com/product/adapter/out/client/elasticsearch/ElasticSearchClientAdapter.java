@@ -1,8 +1,11 @@
 package com.product.adapter.out.client.elasticsearch;
 
+import static com.product.infrastructure.util.JsonUtil.toJsonString;
+
 import com.product.application.port.in.command.FindProductListCommand;
 import com.product.application.port.out.ElasticSearchClientPort;
 import com.product.domain.model.Product;
+import com.product.domain.model.ProductRecommend;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.micrometer.tracing.annotation.NewSpan;
 import java.util.ArrayList;
@@ -37,9 +40,20 @@ class ElasticSearchClientAdapter implements ElasticSearchClientPort {
     @Override
     @CircuitBreaker(name = "elasticsearch", fallbackMethod = "findProductsFallback")
     public List<Product> findProducts(FindProductListCommand command) {
-        FindProductsEsResponse response = client.findProducts(FindProductsEsRequest.of(command));
+        FindProductsEsRequest request = FindProductsEsRequest.of(command);
+        FindProductsEsResponse response = client.findProducts(toJsonString(request));
         return response.isEmpty() ? Collections.emptyList() : response.hits().hits().stream()
             .map(da -> da._source().toDomain()).toList();
+    }
+
+    @NewSpan
+    @Override
+    @CircuitBreaker(name = "elasticsearch", fallbackMethod = "findByEmbeddingFallback")
+    public List<ProductRecommend> findByEmbedding(float[] embedding) {
+        FindProductEsByEmbeddingRequest request = FindProductEsByEmbeddingRequest.of(embedding);
+        FindProductsEsResponse response = client.findProducts(toJsonString(request));
+        return response.isEmpty() ? Collections.emptyList() : response.hits().hits().stream()
+            .map(da -> da._source().toRecommend()).toList();
     }
 
     private void registerFallback(Product product, float[] embedding, Throwable e) {

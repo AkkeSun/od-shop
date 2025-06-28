@@ -11,5 +11,5 @@ public interface ProductStoragePort {
 
     void softDeleteById(Long productId, LocalDateTime deleteAt);
 
-    Product findById(Long productId);
+    Product findByIdAndDeleteYn(Long productId, String deleteYn);
 }
