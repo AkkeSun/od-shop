@@ -1,7 +1,8 @@
 package com.product.domain.model;
 
+import static com.product.infrastructure.util.DateUtil.formatDateTime;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.Builder;
 
@@ -21,7 +22,7 @@ public record ProductHistory(
             .productId(product.getId())
             .type("delete")
             .detailInfo(product.getProductName())
-            .regDateTime(deleteAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+            .regDateTime(formatDateTime(deleteAt))
             .build();
     }
 
@@ -32,8 +33,7 @@ public record ProductHistory(
             .productId(product.getId())
             .type("update")
             .detailInfo(String.join(",", updateList))
-            .regDateTime(product.getUpdateDateTime()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+            .regDateTime(formatDateTime(product.getUpdateDateTime()))
             .build();
     }
 }

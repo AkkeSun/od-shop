@@ -1,7 +1,8 @@
 package com.product.adapter.out.client.elasticsearch;
 
+import static com.product.infrastructure.util.DateUtil.formatDateTime;
+
 import com.product.domain.model.Product;
-import java.time.format.DateTimeFormatter;
 import lombok.Builder;
 
 @Builder
@@ -32,8 +33,7 @@ public record RegisterProductEsRequest(
             .reviewCount(product.getReviewCount())
             .totalScore(product.getTotalScore())
             .category(product.getCategory().name())
-            .regDateTime(product.getRegDateTime()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+            .regDateTime(formatDateTime(product.getRegDateTime()))
             .embedding(embedding)
             .build();
 

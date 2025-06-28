@@ -1,9 +1,9 @@
 package com.product.adapter.out.client.elasticsearch;
 
+import static com.product.infrastructure.util.DateUtil.parseDateTime;
+
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 import lombok.Builder;
@@ -80,8 +80,7 @@ public record FindProductsEsResponse(
                     .reviewCount(reviewCount)
                     .totalScore(totalScore)
                     .category(Category.valueOf(category))
-                    .regDateTime(LocalDateTime.parse(regDateTime,
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                    .regDateTime(parseDateTime(regDateTime))
                     .build();
             }
         }
