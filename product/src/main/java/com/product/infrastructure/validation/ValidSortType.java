@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidSortType {
 
-    String message() default "존재하지 않은 정렬타입 입니다";
+    String message() default "존재하지 않은 정렬 타입 입니다";
 
     Class<?>[] groups() default {};
 

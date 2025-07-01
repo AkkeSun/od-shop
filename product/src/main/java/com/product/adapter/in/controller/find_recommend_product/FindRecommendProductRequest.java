@@ -6,6 +6,7 @@ import com.product.infrastructure.validation.ValidDateType;
 import com.product.infrastructure.validation.groups.ValidationGroups.CustomGroups;
 import com.product.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,11 @@ class FindRecommendProductRequest {
     @ValidDateType(groups = CustomGroups.class)
     @NotBlank(message = "검색 날짜는 필수값 입니다", groups = NotBlankGroups.class)
     private String searchDate;
+
+    @Builder
+    FindRecommendProductRequest(String searchDate) {
+        this.searchDate = searchDate;
+    }
 
     FindRecommendProductCommand toCommand(Account account) {
         return FindRecommendProductCommand.builder()

@@ -24,6 +24,7 @@ class FindProductListRequest {
     private String category;
 
     @ValidSortType(groups = CustomGroups.class)
+    @NotBlank(message = "정렬 타입은 필수값 입니다", groups = NotBlankGroups.class)
     private String sortType;
 
     private int page;
