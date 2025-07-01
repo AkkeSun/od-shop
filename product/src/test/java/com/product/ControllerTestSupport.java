@@ -3,7 +3,9 @@ package com.product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.product.application.port.in.DeleteProductUseCase;
 import com.product.application.port.in.FindCommentListUseCase;
+import com.product.application.port.in.FindProductListUseCase;
 import com.product.application.port.in.FindProductUseCase;
+import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.port.in.RegisterCommentUseCase;
 import com.product.application.port.in.RegisterProductUseCase;
 import com.product.application.port.in.UpdateProductUseCase;
@@ -47,4 +49,10 @@ public class ControllerTestSupport {
 
     @MockBean
     protected FindCommentListUseCase findCommentListUseCase;
+
+    @MockBean
+    protected FindProductListUseCase findProductListUseCase;
+
+    @MockBean
+    protected FindRecommendProductUseCase findRecommendProductUseCase;
 }
