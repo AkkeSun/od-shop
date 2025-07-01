@@ -6,10 +6,10 @@ import static com.product.infrastructure.exception.ErrorCode.Business_ES_PRODUCT
 import com.product.application.port.in.RegisterProductUseCase;
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.application.port.out.ElasticSearchClientPort;
+import com.product.application.port.out.GeminiClientPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomBusinessException;
-import com.product.infrastructure.util.EmbeddingUtil;
 import com.product.infrastructure.util.SnowflakeGenerator;
 import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class RegisterProductService implements RegisterProductUseCase {
 
-    private final EmbeddingUtil embeddingUtil;
+    private final GeminiClientPort geminiClientPort;
     private final SnowflakeGenerator snowflakeGenerator;
     private final ProductStoragePort productStoragePort;
     private final ElasticSearchClientPort elasticSearchClientPort;
@@ -33,7 +33,7 @@ class RegisterProductService implements RegisterProductUseCase {
         Product product = Product.of(command, snowflakeGenerator.nextId());
         productStoragePort.register(product);
 
-        float[] embedding = embeddingUtil.embedToFloatArray(product.getEmbeddingDocument());
+        float[] embedding = geminiClientPort.embedding(product.getEmbeddingDocument());
 
         // elastic search error transaction rollback
         try {

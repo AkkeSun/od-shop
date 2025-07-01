@@ -8,6 +8,7 @@ import static com.product.infrastructure.util.JsonUtil.toJsonString;
 import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.port.in.command.FindRecommendProductCommand;
 import com.product.application.port.out.ElasticSearchClientPort;
+import com.product.application.port.out.GeminiClientPort;
 import com.product.application.port.out.OrderClientPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.application.port.out.RecommendStoragePort;
@@ -15,7 +16,6 @@ import com.product.application.port.out.RedisStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductRecommend;
 import com.product.domain.model.RecommendType;
-import com.product.infrastructure.util.EmbeddingUtil;
 import io.micrometer.tracing.annotation.NewSpan;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -43,7 +43,7 @@ class FindRecommendProductService implements FindRecommendProductUseCase {
     @Value("${spring.data.redis.ttl.personal-recommend}")
     private long personalRecommendTtl;
 
-    private final EmbeddingUtil embeddingUtil;
+    private final GeminiClientPort geminiClientPort;
 
     private final OrderClientPort orderClientPort;
 
@@ -115,10 +115,10 @@ class FindRecommendProductService implements FindRecommendProductUseCase {
         List<float[]> embeddings = new ArrayList<>();
         for (Long productId : productIds) {
             Product product = productStoragePort.findByIdAndDeleteYn(productId, "A");
-            embeddings.add(embeddingUtil.embedToFloatArray(product.getEmbeddingDocument()));
+            embeddings.add(geminiClientPort.embedding(product.getEmbeddingDocument()));
         }
 
-        float[] embedding = embeddingUtil.averageEmbeddings(embeddings);
+        float[] embedding = averageEmbeddings(embeddings);
         return elasticSearchClientPort.findByEmbedding(embedding).stream()
             .filter(product -> !productIds.contains(product.id()))
             .toList();
@@ -139,5 +139,23 @@ class FindRecommendProductService implements FindRecommendProductUseCase {
         excludedIds.addAll(products.stream()
             .map(ProductRecommend::id)
             .toList());
+    }
+
+    public float[] averageEmbeddings(List<float[]> embeddings) {
+        int dimension = embeddings.getFirst().length;
+        float[] sum = new float[dimension];
+
+        for (float[] vec : embeddings) {
+            for (int i = 0; i < dimension; i++) {
+                sum[i] += vec[i];
+            }
+        }
+
+        int count = embeddings.size();
+        for (int i = 0; i < dimension; i++) {
+            sum[i] /= count;
+        }
+
+        return sum;
     }
 }
