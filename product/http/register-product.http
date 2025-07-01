@@ -1,0 +1,34 @@
+### Get Token
+POST http://localhost:8081/auth
+Content-Type: application/json
+
+{
+  "email": "od3",
+  "password": "1234"
+}
+
+> {%
+  client.global.set("Authorization", response.body.data.accessToken);
+%}
+
+### Register Product
+POST http://localhost:8082/products
+Content-Type: application/json
+Authorization: {{Authorization}}
+
+{
+  "productName": "test",
+  "category": "FASHION",
+  "price": 10000,
+  "quantity": 30,
+  "productImgUrl": "imgUrl",
+  "descriptionImgUrl": "descriptionImgUrl",
+  "productOption": [
+    "option1",
+    "option2"
+  ],
+  "keywords": [
+    "keyword1",
+    "keyword2"
+  ]
+}
