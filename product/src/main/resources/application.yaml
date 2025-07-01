@@ -83,7 +83,7 @@ resilience4j:
         slow-call-duration-threshold: 3s
         slow-call-rate-threshold: 100
         permitted-number-of-calls-in-half-open-state: 5
-      elasticsearch:
+      default:
         slidingWindowSize: 3
         failureRateThreshold: 100
         waitDurationInOpenState: 1m
@@ -96,7 +96,7 @@ resilience4j:
       kafka:
         base-config: kafka
       elasticsearch:
-        base-config: elasticsearch
+        base-config: default
       gemini:
         base-config: default
 
