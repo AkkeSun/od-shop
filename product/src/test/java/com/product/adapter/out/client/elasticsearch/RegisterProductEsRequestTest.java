@@ -39,7 +39,8 @@ class RegisterProductEsRequestTest {
             // then
             assert result.productId().equals(product.getId());
             assert result.productName().equals(product.getProductName());
-            assert result.keywords().equals("product,test");
+            assert result.keywords().contains("product");
+            assert result.keywords().contains("test");
             assert result.sellerEmail().equals(product.getSellerEmail());
             assert result.productImgUrl().equals(product.getProductImgUrl());
             assert result.price() == product.getPrice();

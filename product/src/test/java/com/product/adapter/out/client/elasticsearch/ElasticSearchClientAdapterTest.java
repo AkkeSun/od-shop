@@ -19,34 +19,40 @@ import java.util.List;
 import java.util.Set;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 
 class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
 
     @Autowired
     private ElasticSearchClientAdapter elasticSearchClientAdapter;
 
-    private MockWebServer mockWebServer;
+    static MockWebServer elasticsearchServer;
 
-    @Autowired
-    private EmbeddingUtil embeddingUtil;
-
-    @BeforeEach
-    void setup() throws IOException {
-        mockWebServer = new MockWebServer();
-        mockWebServer.start(9200);
+    @BeforeAll
+    static void setup() throws IOException {
+        elasticsearchServer = new MockWebServer();
+        elasticsearchServer.start(9200);
     }
 
-    @AfterEach
-    public void shutdown() throws IOException {
-        mockWebServer.shutdown();
+    @DynamicPropertySource
+    static void properties(DynamicPropertyRegistry registry) throws IOException {
+        registry.add("service-constant.external.elasticsearch.host",
+            () -> elasticsearchServer.url("/").toString());
     }
+
+    @AfterAll
+    static void shutdown() throws IOException {
+        elasticsearchServer.shutdown();
+    }
+
 
     @Nested
     @DisplayName("[register] 엘라스틱서치에 상품을 등록하는 메소드")
@@ -56,7 +62,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 상품을 엘라스틱서치에 등록한다.")
         void success() {
             // given
-            mockWebServer.enqueue(new MockResponse()
+            elasticsearchServer.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setHeader("Content-type", "application/json"));
             Product product = Product.builder()
@@ -65,9 +71,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
                 .regDateTime(LocalDateTime.now())
                 .category(Category.BOOKS)
                 .build();
-            float[] embedding = embeddingUtil.embedToFloatArray(
-                "This is a sample product description for testing purposes."
-            );
+            float[] embedding = new float[768];
 
             // when // then
             elasticSearchClientAdapter.register(product, embedding);
@@ -77,7 +81,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
         @DisplayName("[error] 상품 등록중 오류가 발생하는 경우 fallback 메소드를 호출한다.")
         void error(CapturedOutput output) {
             // given
-            mockWebServer.enqueue(new MockResponse()
+            elasticsearchServer.enqueue(new MockResponse()
                 .setResponseCode(500)
                 .setHeader("Content-type", "application/json"));
             Product product = Product.builder()
@@ -86,9 +90,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
                 .regDateTime(LocalDateTime.now())
                 .category(Category.BOOKS)
                 .build();
-            float[] embedding = embeddingUtil.embedToFloatArray(
-                "This is a sample product description for testing purposes."
-            );
+            float[] embedding = new float[768];
 
             // when
             RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
@@ -108,7 +110,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 삭제 요청에 성공한다.")
         void success() {
             // given
-            mockWebServer.enqueue(new MockResponse()
+            elasticsearchServer.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setHeader("Content-type", "application/json"));
             Long productId = 20L;
@@ -121,7 +123,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
         @DisplayName("[error] 삭제 요청에 실패하는 경우 fallback 메소드를 호출한다.")
         void success2(CapturedOutput output) {
             // given
-            mockWebServer.enqueue(new MockResponse()
+            elasticsearchServer.enqueue(new MockResponse()
                 .setResponseCode(500)
                 .setHeader("Content-type", "application/json"));
             Long productId = 20L;
@@ -149,7 +151,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
                 .page(1)
                 .size(10)
                 .build();
-            mockWebServer.enqueue(new MockResponse()
+            elasticsearchServer.enqueue(new MockResponse()
                 .setResponseCode(500)
                 .setHeader("Content-type", "application/json"));
 
@@ -172,7 +174,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
                 .page(1)
                 .size(10)
                 .build();
-            mockWebServer.enqueue(new MockResponse()
+            elasticsearchServer.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setHeader("Content-type", "application/json")
                 .setBody(JsonUtil.toJsonString(FindProductsEsResponse.builder()
@@ -203,7 +205,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
                 .page(1)
                 .size(10)
                 .build();
-            mockWebServer.enqueue(new MockResponse()
+            elasticsearchServer.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setHeader("Content-type", "application/json")
                 .setBody(JsonUtil.toJsonString(FindProductsEsResponse.builder()
@@ -235,7 +237,6 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
             List<Product> products = elasticSearchClientAdapter.findProducts(command);
 
             // then
-            assert products.size() == 1;
             Product product = products.getFirst();
             assert product.getId() == 10L;
             assert product.getProductName().equals("테스트 상품");

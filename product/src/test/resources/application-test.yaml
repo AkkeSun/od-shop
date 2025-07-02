@@ -21,7 +21,3 @@ spring:
       username: sa
       password:
       url: jdbc:h2:mem:product2;MODE=MySQL
-
-service-constant:
-  external:
-    elasticsearch: http://localhost:9200
