@@ -8,19 +8,42 @@ import com.product.domain.model.Product;
 import com.product.domain.model.ProductRecommend;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.micrometer.tracing.annotation.NewSpan;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.ClientHttpRequestFactories;
+import org.springframework.boot.web.client.ClientHttpRequestFactorySettings;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.support.RestClientAdapter;
+import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 class ElasticSearchClientAdapter implements ElasticSearchClientPort {
 
     private final ElasticSearchClient client;
+
+    ElasticSearchClientAdapter(
+        @Value("${service-constant.external.elasticsearch.host}") String host
+    ) {
+        RestClient restClient = RestClient.builder()
+            .baseUrl(host)
+            .requestFactory(ClientHttpRequestFactories.get(
+                ClientHttpRequestFactorySettings.DEFAULTS
+                    .withConnectTimeout(Duration.ofSeconds(1))
+                    .withReadTimeout(Duration.ofSeconds(5))))
+            .build();
+
+        this.client = HttpServiceProxyFactory.builder()
+            .exchangeAdapter(RestClientAdapter.create(restClient))
+            .build()
+            .createClient(ElasticSearchClient.class);
+        ;
+    }
 
     @NewSpan
     @Override
@@ -62,7 +85,7 @@ class ElasticSearchClientAdapter implements ElasticSearchClientPort {
     }
 
     private void deleteByIdFallback(Long productId, Throwable e) {
-        log.error("[elasticSearch] deleteByIdFallback {{}) : {}", productId, e.getMessage());
+        log.error("[elasticSearch] deleteByIdFallback ({}) : {}", productId, e.getMessage());
     }
 
     private List<Product> findProductsFallback(FindProductListCommand command, Throwable e) {

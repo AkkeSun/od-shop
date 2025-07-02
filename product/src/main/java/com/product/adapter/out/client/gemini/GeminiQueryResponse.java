@@ -11,12 +11,14 @@ public record GeminiQueryResponse(
     String responseId
 ) {
 
+    @Builder
     record GeminiQueryCandidate(
         GeminiQueryCandidateContent content,
         String finishReason,
         double avgLogprobs
     ) {
 
+        @Builder
         record GeminiQueryCandidateContent(
             List<GeminiQueryCandidateContentPart> parts,
             String role
