@@ -39,7 +39,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
 
             // when
             adapter.register(product);
-            Product result = shard1Adapter.findById(product.getId());
+            Product result = shard1Adapter.findByIdAndDeleteYn(product.getId(), "N");
 
             // then
             assert result.getId().equals(product.getId());
@@ -67,7 +67,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
 
             // when
             adapter.register(product);
-            Product result = shard2Adapter.findById(product.getId());
+            Product result = shard2Adapter.findByIdAndDeleteYn(product.getId(), "N");
 
             // then
             assert result.getId().equals(product.getId());
@@ -98,14 +98,13 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             // given
             Product product = getProduct(true);
             adapter.register(product);
-            Product savedProduct = shard1Adapter.findById(product.getId());
+            Product savedProduct = shard1Adapter.findByIdAndDeleteYn(product.getId(), "N");
             assert savedProduct != null;
 
             // when
             adapter.deleteById(product.getId());
             CustomNotFoundException result = assertThrows(CustomNotFoundException.class,
-                () -> shard1Adapter.findById(product.getId()));
-
+                () -> shard1Adapter.findByIdAndDeleteYn(product.getId(), "N"));
             // then
             assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
         }
@@ -116,20 +115,20 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             // given
             Product product = getProduct(false);
             adapter.register(product);
-            Product savedProduct = shard2Adapter.findById(product.getId());
+            Product savedProduct = shard2Adapter.findByIdAndDeleteYn(product.getId(), "N");
             assert savedProduct != null;
 
             // when
             adapter.deleteById(product.getId());
             CustomNotFoundException result = assertThrows(CustomNotFoundException.class,
-                () -> shard2Adapter.findById(product.getId()));
+                () -> shard2Adapter.findByIdAndDeleteYn(product.getId(), "N"));
 
             // then
             assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
         }
 
         @Nested
-        @DisplayName("[findById] 아이디로 상품을 조회하는 메소드")
+        @DisplayName("[findByIdAndDeleteYn] 아이디와 삭제 유무로 상품을 조회하는 메소드")
         class Describe_findById {
 
             @Test
@@ -140,7 +139,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                 shard1Adapter.register(product);
 
                 // when
-                Product result = adapter.findById(product.getId());
+                Product result = adapter.findByIdAndDeleteYn(product.getId(), "N");
 
                 // then
                 assert result.getId().equals(product.getId());
@@ -168,7 +167,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                 shard2Adapter.register(product);
 
                 // when
-                Product result = adapter.findById(product.getId());
+                Product result = adapter.findByIdAndDeleteYn(product.getId(), "N");
 
                 // then
                 assert result.getId().equals(product.getId());
@@ -203,7 +202,8 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                 // when
                 adapter.softDeleteById(product.getId(), LocalDateTime.now());
                 CustomNotFoundException result = assertThrows(
-                    CustomNotFoundException.class, () -> adapter.findById(product.getId()));
+                    CustomNotFoundException.class,
+                    () -> adapter.findByIdAndDeleteYn(product.getId(), "N"));
 
                 // then
                 assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
@@ -219,7 +219,8 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                 // when
                 adapter.softDeleteById(product.getId(), LocalDateTime.now());
                 CustomNotFoundException result = assertThrows(
-                    CustomNotFoundException.class, () -> adapter.findById(product.getId()));
+                    CustomNotFoundException.class,
+                    () -> adapter.findByIdAndDeleteYn(product.getId(), "N"));
 
                 // then
                 assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
