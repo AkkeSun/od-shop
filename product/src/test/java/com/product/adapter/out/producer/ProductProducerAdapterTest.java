@@ -18,8 +18,15 @@ import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.util.ReflectionTestUtils;
 
+@EmbeddedKafka(partitions = 1,
+    brokerProperties = {
+        "listeners=PLAINTEXT://localhost:9092",
+    },
+    ports = {9093}
+)
 class ProductProducerAdapterTest extends IntegrationTestSupport {
 
     @Autowired
