@@ -95,6 +95,7 @@ public class Product {
             .build();
     }
 
+    @JsonIgnore
     public String getEmbeddingDocument() {
         String keywordsString = String.join(", ", keywords);
         return String.format("""

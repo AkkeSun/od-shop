@@ -57,7 +57,7 @@ class RedisStorageAdapter implements RedisStoragePort {
     private <T> List<T> findDataListFallback(String key, Class<T> clazz,
         Throwable throwable) {
         log.error("[findDataListFallback] {}-{}", key, throwable.getMessage());
-        return null;
+        return Collections.emptyList();
     }
 
     private void registerRedis(String key, String data, Throwable throwable) {
