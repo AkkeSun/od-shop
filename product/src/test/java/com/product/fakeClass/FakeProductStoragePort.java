@@ -32,11 +32,19 @@ public class FakeProductStoragePort implements ProductStoragePort {
     }
 
     @Override
-    public Product findById(Long productId) {
+    public Product findByIdAndDeleteYn(Long productId, String deleteYn) {
         try {
+            if (deleteYn.equals("A")) {
+                return database.stream()
+                    .filter(product -> product.getId().equals(productId))
+                    .findFirst()
+                    .orElseThrow();
+            }
             return database.stream()
                 .filter(product -> product.getId().equals(productId))
-                .findFirst().get();
+                .filter(product -> product.getDeleteYn().equals(deleteYn))
+                .findFirst()
+                .orElseThrow();
         } catch (Exception e) {
             return null;
         }

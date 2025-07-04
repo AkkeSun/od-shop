@@ -62,6 +62,7 @@ class DeleteProductServiceTest {
                 Product.builder()
                     .id(ProductId)
                     .sellerId(3L)
+                    .deleteYn("N")
                     .build()
             );
 
@@ -86,6 +87,7 @@ class DeleteProductServiceTest {
                 Product.builder()
                     .id(productId)
                     .sellerId(account.id())
+                    .deleteYn("N")
                     .build()
             );
 
@@ -95,7 +97,7 @@ class DeleteProductServiceTest {
 
             // then
             assert serviceResponse.result();
-            assert productStoragePort.findById(productId) == null;
+            assert productStoragePort.findByIdAndDeleteYn(productId, "N") == null;
             assert elasticSearchClientPort.database.stream()
                 .noneMatch(product -> product.getId().equals(productId));
         }

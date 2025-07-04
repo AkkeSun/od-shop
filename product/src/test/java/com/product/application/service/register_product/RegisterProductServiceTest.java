@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.domain.model.Account;
-import com.product.fakeClass.DummyEmbeddingUtil;
+import com.product.fakeClass.DummyGeminiClientPort;
 import com.product.fakeClass.DummySnowflakeGenerator;
 import com.product.fakeClass.FakeElasticSearchClientPort;
 import com.product.fakeClass.FakeProductStoragePort;
@@ -18,18 +18,18 @@ import org.junit.jupiter.api.Test;
 
 class RegisterProductServiceTest {
 
-    private final DummyEmbeddingUtil embeddingUtil;
+    private final DummyGeminiClientPort geminiClientPort;
     private final DummySnowflakeGenerator snowflakeGenerator;
     private final FakeProductStoragePort productStoragePort;
     private final FakeElasticSearchClientPort elasticSearchClientPort;
     private final RegisterProductService service;
 
     RegisterProductServiceTest() {
-        this.embeddingUtil = new DummyEmbeddingUtil();
+        this.geminiClientPort = new DummyGeminiClientPort();
         this.snowflakeGenerator = new DummySnowflakeGenerator();
         this.productStoragePort = new FakeProductStoragePort();
         this.elasticSearchClientPort = new FakeElasticSearchClientPort();
-        this.service = new RegisterProductService(embeddingUtil, snowflakeGenerator,
+        this.service = new RegisterProductService(geminiClientPort, snowflakeGenerator,
             productStoragePort, elasticSearchClientPort);
     }
 

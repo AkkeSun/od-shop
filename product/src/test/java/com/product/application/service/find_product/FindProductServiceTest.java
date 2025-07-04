@@ -35,9 +35,10 @@ class FindProductServiceTest {
     @Nested
     @DisplayName("[findProduct] 상품을 조회한다.")
     class Describe_findProduct {
+
         @Test
         @DisplayName("[success] 상품 ID로 상품을 잘 조회하는지 확인한다.")
-        void success () {
+        void success() {
             // given
             Product product = Product.builder()
                 .id(20L)
@@ -53,6 +54,7 @@ class FindProductServiceTest {
                 .category(Category.ELECTRONICS)
                 .regDate(LocalDate.of(2025, 5, 1))
                 .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
+                .deleteYn("N")
                 .build();
             productStoragePort.database.add(product);
 

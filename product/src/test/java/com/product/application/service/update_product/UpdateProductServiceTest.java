@@ -45,6 +45,7 @@ class UpdateProductServiceTest {
             productStoragePort.register(Product.builder()
                 .id(ProductId)
                 .sellerId(3L)
+                .deleteYn("N")
                 .build());
             UpdateProductCommand command = UpdateProductCommand.builder()
                 .productId(ProductId)
@@ -76,6 +77,7 @@ class UpdateProductServiceTest {
             productStoragePort.register(Product.builder()
                 .id(ProductId)
                 .sellerId(account.id())
+                .deleteYn("N")
                 .build());
 
             // when
@@ -103,6 +105,7 @@ class UpdateProductServiceTest {
             productStoragePort.register(Product.builder()
                 .id(ProductId)
                 .sellerId(account.id())
+                .deleteYn("N")
                 .build());
 
             // when

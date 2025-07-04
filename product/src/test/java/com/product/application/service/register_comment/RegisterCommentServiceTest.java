@@ -50,6 +50,7 @@ class RegisterCommentServiceTest {
             // given
             Product product = Product.builder()
                 .id(10L)
+                .deleteYn("N")
                 .build();
             fakeProductStoragePort.database.add(product);
             RegisterCommentCommand command = RegisterCommentCommand.builder()
@@ -75,6 +76,7 @@ class RegisterCommentServiceTest {
             // given
             Product product = Product.builder()
                 .id(10L)
+                .deleteYn("N")
                 .build();
             fakeProductStoragePort.database.add(product);
             RegisterCommentCommand command = RegisterCommentCommand.builder()
