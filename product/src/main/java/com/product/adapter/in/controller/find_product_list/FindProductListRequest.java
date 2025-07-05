@@ -43,11 +43,10 @@ class FindProductListRequest {
     }
 
     FindProductListCommand toCommand() {
-        SortType type = SortType.valueOf(sortType);
         return FindProductListCommand.builder()
             .query(query)
             .category(Category.valueOf(category))
-            .sortType(type)
+            .sortType(SortType.valueOf(sortType))
             .page(page)
             .size(size == 0 ? 10 : size)
             .build();
