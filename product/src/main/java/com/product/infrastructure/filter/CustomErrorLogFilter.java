@@ -58,7 +58,7 @@ public class CustomErrorLogFilter extends OncePerRequestFilter {
             requestInfo.put("param", requestParam);
             requestInfo.put("body", requestBody);
 
-            if (!request.getRequestURI().contains("/docs")) {
+            if (!request.getRequestURI().contains("/docs") && !uri.equals("/favicon.ico")) {
                 log.info("[{} {}] request - {}", method, uri, requestInfo);
                 log.info("[{} {}] response - {}", method, uri, responseBody);
             }
