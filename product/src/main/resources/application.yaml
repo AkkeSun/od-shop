@@ -70,7 +70,7 @@ resilience4j:
   circuitbreaker:
     configs:
       redis:
-        slidingWindowSize: 1
+        slidingWindowSize: 3
         failureRateThreshold: 100
         waitDurationInOpenState: 1m
         slow-call-duration-threshold: 3s
