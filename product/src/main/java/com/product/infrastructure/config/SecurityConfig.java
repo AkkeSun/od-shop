@@ -47,9 +47,7 @@ public class SecurityConfig {
 
             // --------------- 인가 정책 ---------------
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers(HttpMethod.GET, "/products/recommendations")
-                    .hasRole("CUSTOMER")
-                    .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                auth.requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                     .requestMatchers("/docs/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/products").hasRole("SELLER")
                     .requestMatchers(HttpMethod.PUT, "/products/{productId}").hasRole("SELLER")
