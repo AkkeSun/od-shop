@@ -58,10 +58,11 @@ class RecommendShard2Entity {
     ProductRecommend toDomain() {
         return ProductRecommend.builder()
             .id(product.getId())
-            .type(type)
+            .productId(product.getId())
             .productName(product.getProductName())
-            .productImgUrl(product.getSellerEmail())
+            .sellerEmail(product.getSellerEmail())
             .productImgUrl(product.getProductImgUrl())
+            .price(product.getPrice())
             .build();
     }
 }

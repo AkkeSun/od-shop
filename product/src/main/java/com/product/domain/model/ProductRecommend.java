@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record ProductRecommend(
     Long id,
-    RecommendType type,
+    Long productId,
     String productName,
     String sellerEmail,
     String productImgUrl,
