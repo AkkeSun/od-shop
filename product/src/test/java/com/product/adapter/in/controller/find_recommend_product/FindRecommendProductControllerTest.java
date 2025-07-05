@@ -10,12 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.product.ControllerTestSupport;
 import com.product.application.service.find_recommend_product.FindRecommendProductServiceResponse;
-import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -27,7 +25,7 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
 
         @Test
         @WithMockUser(roles = "CUSTOMER")
-        @DisplayName("[success] 조회 권한을 가진 사용자가 필수값을 모두 입력했을 때 200 코드와 성공 메시지를 응답한다.")
+        @DisplayName("[success] 필수값을 모두 입력했을 때 200 코드와 성공 메시지를 응답한다.")
         void success() throws Exception {
             // given
             FindRecommendProductRequest request = FindRecommendProductRequest.builder()
@@ -50,65 +48,6 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.message").value("OK"))
                 .andExpect(jsonPath("$.data").exists());
         }
-
-        @Test
-        @WithAnonymousUser
-        @DisplayName("[error] 인증받지 않은 사용자가 API 를 요청 했을 때 401코드와 에러 메시지를 응답한다.")
-        void error() throws Exception {
-            // given
-            FindRecommendProductRequest request = FindRecommendProductRequest.builder()
-                .searchDate("20250501")
-                .build();
-            String authorization = "Bearer test-token";
-
-            // when
-            ResultActions actions = mockMvc.perform(get("/products/recommendations")
-                .param("searchDate", request.getSearchDate())
-                .header("Authorization", authorization)
-            );
-
-            // then
-            actions.andExpect(status().isUnauthorized())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$.httpStatus").value(401))
-                .andExpect(jsonPath("$.message").value("UNAUTHORIZED"))
-                .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(
-                    ErrorCode.INVALID_ACCESS_TOKEN_BY_SECURITY.getCode()))
-                .andExpect(jsonPath("$.data.errorMessage").value(
-                    ErrorCode.INVALID_ACCESS_TOKEN_BY_SECURITY.getMessage()))
-                .andDo(print());
-        }
-
-        @Test
-        @WithMockUser(roles = "SELLER")
-        @DisplayName("[success] 조회 권한이 없는 사용자가 API 를 호출할 때 403코드와 성공 메시지를 응답한다.")
-        void error4() throws Exception {
-            // given
-            FindRecommendProductRequest request = FindRecommendProductRequest.builder()
-                .searchDate("20250501")
-                .build();
-            String authorization = "Bearer test-token";
-
-            // when
-            ResultActions actions = mockMvc.perform(get("/products/recommendations")
-                .param("searchDate", request.getSearchDate())
-                .header("Authorization", authorization)
-            );
-
-            // then
-            actions.andExpect(status().isForbidden())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$.httpStatus").value(403))
-                .andExpect(jsonPath("$.message").value("FORBIDDEN"))
-                .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(
-                    ErrorCode.ACCESS_DENIED_BY_SECURITY.getCode()))
-                .andExpect(jsonPath("$.data.errorMessage").value(
-                    ErrorCode.ACCESS_DENIED_BY_SECURITY.getMessage()))
-                .andDo(print());
-        }
-
 
         @Test
         @WithMockUser(roles = "CUSTOMER")

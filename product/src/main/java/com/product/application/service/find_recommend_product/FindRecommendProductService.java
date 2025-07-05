@@ -60,7 +60,8 @@ class FindRecommendProductService implements FindRecommendProductUseCase {
     public FindRecommendProductServiceResponse findRecommendProductList(
         FindRecommendProductCommand command) {
 
-        List<ProductRecommend> personalProducts = getRecommendProduct(command, PERSONAL);
+        List<ProductRecommend> personalProducts = command.needsPersonalRecommend() ?
+            getRecommendProduct(command, PERSONAL) : Collections.emptyList();
         List<ProductRecommend> popularProducts = getRecommendProduct(command, POPULAR);
         List<ProductRecommend> trendProducts = getRecommendProduct(command, TREND);
 

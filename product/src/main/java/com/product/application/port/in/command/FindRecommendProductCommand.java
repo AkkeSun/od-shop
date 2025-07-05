@@ -8,4 +8,7 @@ public record FindRecommendProductCommand(
     Long accountId
 ) {
 
+    public boolean needsPersonalRecommend() {
+        return accountId != null;
+    }
 }

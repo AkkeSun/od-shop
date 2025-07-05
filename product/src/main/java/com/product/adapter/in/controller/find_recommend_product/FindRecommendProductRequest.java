@@ -25,7 +25,7 @@ class FindRecommendProductRequest {
 
     FindRecommendProductCommand toCommand(Account account) {
         return FindRecommendProductCommand.builder()
-            .accountId(account.id())
+            .accountId(account == null ? null : account.id())
             .searchDate(searchDate)
             .build();
     }

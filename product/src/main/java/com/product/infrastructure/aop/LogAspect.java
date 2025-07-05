@@ -49,6 +49,9 @@ public class LogAspect {
 
         // request body
         for (Object arg : joinPoint.getArgs()) {
+            if (arg == null) {
+                continue;
+            }
             if (arg.toString().contains("{")) {
                 requestBody = toObjectNode(arg);
             }

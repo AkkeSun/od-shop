@@ -25,6 +25,9 @@ public class LoginAccountResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String token = webRequest.getHeader("Authorization");
+        if (token == null) {
+            return null;
+        }
         return Account.of(jwtUtil.getClaims(token));
     }
 }

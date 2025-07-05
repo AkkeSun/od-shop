@@ -3,7 +3,6 @@ package com.product.adapter.in.controller.find_recommend_product;
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -22,9 +21,6 @@ import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.service.find_recommend_product.FindRecommendProductServiceResponse;
 import com.product.domain.model.ProductRecommend;
 import com.product.domain.model.RecommendType;
-import com.product.infrastructure.exception.CustomAuthenticationException;
-import com.product.infrastructure.exception.CustomAuthorizationException;
-import com.product.infrastructure.exception.ErrorCode;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -141,38 +137,6 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
     }
 
     @Test
-    @DisplayName("[error] 인증받지 않은 사용자가 API 를 요청 했을 때 401코드와 에러 메시지를 응답한다.")
-    void error() throws Exception {
-        // given
-        FindRecommendProductRequest request = FindRecommendProductRequest.builder()
-            .searchDate("20250501")
-            .build();
-        String authorization = "Bearer test-token";
-        given(findRecommendProductUseCase.findRecommendProductList(any())).willThrow(
-            new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
-
-        // when then
-        performErrorDocument(status().isUnauthorized(), authorization, request,
-            "인증받지 않은 사용자 요청");
-    }
-
-    @Test
-    @DisplayName("[error] 조회 권한이 없는 사용자가 API 를 요청 했을 때 403코드와 에러 메시지를 응답한다.")
-    void error2() throws Exception {
-        // given
-        FindRecommendProductRequest request = FindRecommendProductRequest.builder()
-            .searchDate("20250501")
-            .build();
-        String authorization = "Bearer test-token";
-        given(findRecommendProductUseCase.findRecommendProductList(any())).willThrow(
-            new CustomAuthorizationException(ErrorCode.ACCESS_DENIED));
-
-        // when then
-        performErrorDocument(status().isForbidden(), authorization, request,
-            "조회 권한이 없는 사용자 요청");
-    }
-
-    @Test
     @DisplayName("[error] 검색 날짜를 입력하지 않았을 때 400 코드와 에러 메시지를 응답한다.")
     void error3() throws Exception {
         // given
@@ -220,14 +184,15 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
                         .tag("Product")
                         .summary("추천 상품 목록 조회 API")
                         .description("추천 상품을 조회하는 API 입니다. <br><br>"
-                            + "1. 사용자 구매 데이터 기반 추천 상품, 최다 판매 상품, 트랜드 분석 기반 추천 상품이 응답 됩니다."
-                            + "2. 중복된 추천 상품은 제거되어 응답 됩니다."
+                            + "1. 최다 판매 상품, 트랜드 분석 기반 추천 상품이 기본 응답되며 인증 토큰 입력시 사용자 구매 데이터 기반 추천 상품이 추가로 응답 됩니다. <br>"
+                            + "2. 중복된 추천 상품은 제거되어 응답 됩니다. <br>"
                             + "3. 테스트시 우측 자물쇠를 클릭하여 유효한 인증 토큰을 입력해야 정상 테스트가 가능합니다. (요청 헤더에 인증 토큰을 입력하여 테스트하지 않습니다) <br>"
                             + "4. 구매 권한을 가진 사용자만 조회할 수 있습니다.")
                         .queryParameters(
                             parameterWithName("searchDate").description("검색 날짜 (yyyyMMdd)")
                         )
-                        .requestHeaders(headerWithName("Authorization").description("인증 토큰"))
+                        .requestHeaders(headerWithName("Authorization").description("인증 토큰")
+                            .optional())
                         .responseFields(responseFields)
                         .requestSchema(Schema.schema("[request] find-recommend-product"))
                         .responseSchema(Schema.schema(responseSchema))
