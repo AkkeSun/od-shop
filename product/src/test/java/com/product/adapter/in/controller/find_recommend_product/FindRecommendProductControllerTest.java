@@ -38,7 +38,7 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
             String authorization = "Bearer test-token";
 
             // when
-            ResultActions actions = mockMvc.perform(get("/products/recommends")
+            ResultActions actions = mockMvc.perform(get("/products/recommendations")
                 .param("searchDate", request.getSearchDate())
                 .header("Authorization", authorization)
             );
@@ -62,7 +62,7 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
             String authorization = "Bearer test-token";
 
             // when
-            ResultActions actions = mockMvc.perform(get("/products/recommends")
+            ResultActions actions = mockMvc.perform(get("/products/recommendations")
                 .param("searchDate", request.getSearchDate())
                 .header("Authorization", authorization)
             );
@@ -91,7 +91,7 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
             String authorization = "Bearer test-token";
 
             // when
-            ResultActions actions = mockMvc.perform(get("/products/recommends")
+            ResultActions actions = mockMvc.perform(get("/products/recommendations")
                 .param("searchDate", request.getSearchDate())
                 .header("Authorization", authorization)
             );
@@ -123,7 +123,7 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
             String authorization = "Bearer test-token";
 
             // when
-            ResultActions actions = mockMvc.perform(get("/products/recommends")
+            ResultActions actions = mockMvc.perform(get("/products/recommendations")
                 .param("searchDate", request.getSearchDate())
                 .header("Authorization", authorization)
             );
@@ -152,7 +152,7 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
             String authorization = "Bearer test-token";
 
             // when
-            ResultActions actions = mockMvc.perform(get("/products/recommends")
+            ResultActions actions = mockMvc.perform(get("/products/recommendations")
                 .param("searchDate", request.getSearchDate())
                 .header("Authorization", authorization)
             );

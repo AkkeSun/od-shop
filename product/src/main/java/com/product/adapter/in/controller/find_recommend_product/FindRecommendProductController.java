@@ -17,7 +17,7 @@ class FindRecommendProductController {
 
     private final FindRecommendProductUseCase findRecommendProductUseCase;
 
-    @GetMapping("/products/recommends")
+    @GetMapping("/products/recommendations")
     ApiResponse<FindRecommendProductResponse> findRecommendProducts(
         @Validated(ValidationSequence.class) FindRecommendProductRequest request,
         @LoginAccount Account account) {
