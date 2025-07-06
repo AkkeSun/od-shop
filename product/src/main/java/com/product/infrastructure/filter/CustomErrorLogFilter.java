@@ -1,13 +1,18 @@
 package com.product.infrastructure.filter;
 
+import static com.product.infrastructure.util.JsonUtil.toObjectNode;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.product.domain.model.Account;
+import com.product.infrastructure.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -16,7 +21,10 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CustomErrorLogFilter extends OncePerRequestFilter {
+
+    private final JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -41,6 +49,7 @@ public class CustomErrorLogFilter extends OncePerRequestFilter {
             ObjectNode requestInfo = new ObjectMapper().createObjectNode();
             ObjectNode requestParam = new ObjectMapper().createObjectNode();
             ObjectNode requestBody = new ObjectMapper().createObjectNode();
+            ObjectNode userInfo = new ObjectMapper().createObjectNode();
 
             // request parameter
             request.getParameterMap().forEach((key, value) -> {
@@ -55,8 +64,18 @@ public class CustomErrorLogFilter extends OncePerRequestFilter {
             } catch (Exception ignored) {
             }
 
+            // user info
+            String token = request.getHeader("Authorization");
+            if (token != null) {
+                try {
+                    userInfo = toObjectNode(Account.of(jwtUtil.getClaims(token)));
+                } catch (Exception ignore) {
+                }
+            }
+
             requestInfo.put("param", requestParam);
             requestInfo.put("body", requestBody);
+            requestInfo.put("userInfo", userInfo);
 
             if (!request.getRequestURI().contains("/docs") && !uri.equals("/favicon.ico")) {
                 log.info("[{} {}] request - {}", method, uri, requestInfo);

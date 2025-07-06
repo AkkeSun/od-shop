@@ -1,5 +1,6 @@
 package com.product.infrastructure.exception;
 
+import com.product.infrastructure.aop.ExceptionHandlerLog;
 import com.product.infrastructure.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,7 @@ public class ExceptionAdvice {
         );
     }
 
+    @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(CustomNotFoundException.class)
     ApiResponse<Object> notFoundException(CustomNotFoundException e) {
@@ -68,6 +70,7 @@ public class ExceptionAdvice {
         );
     }
 
+    @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(CustomAuthenticationException.class)
     ApiResponse<Object> customAuthenticationException(CustomAuthenticationException e) {
@@ -80,6 +83,7 @@ public class ExceptionAdvice {
         );
     }
 
+    @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(CustomAuthorizationException.class)
     ApiResponse<Object> customAuthenticationException(CustomAuthorizationException e) {
@@ -92,6 +96,7 @@ public class ExceptionAdvice {
         );
     }
 
+    @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(CustomBusinessException.class)
     ApiResponse<Object> notFoundException(CustomBusinessException e) {
@@ -104,6 +109,7 @@ public class ExceptionAdvice {
         );
     }
 
+    @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     ApiResponse<Object> notFoundException(Exception e) {
