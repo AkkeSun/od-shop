@@ -36,4 +36,15 @@ public record ProductHistory(
             .regDateTime(formatDateTime(product.getUpdateDateTime()))
             .build();
     }
+
+    public static ProductHistory createProductHistoryForUpdateQuantity(Product product,
+        long quantity) {
+        return ProductHistory.builder()
+            .accountId(product.getSellerId())
+            .productId(product.getId())
+            .type("update")
+            .detailInfo("add quantity " + quantity)
+            .regDateTime(formatDateTime(product.getUpdateDateTime()))
+            .build();
+    }
 }

@@ -3,6 +3,7 @@ package com.product.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.application.port.in.command.UpdateProductCommand;
+import com.product.application.port.in.command.UpdateProductQuantityCommand;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -143,6 +144,28 @@ public class Product {
         this.updateDateTime = LocalDateTime.now();
         this.needsEsUpdate = true;
         return updateList;
+    }
+
+    @JsonIgnore
+    public void updateQuantity(UpdateProductQuantityCommand command) {
+        switch (command.type()) {
+            case REFUND -> {
+                this.quantity -= command.quantity();
+                this.salesCount += command.quantity();
+            }
+            case ADD_QUANTITY -> {
+                this.quantity += command.quantity();
+            }
+            case PURCHASE -> {
+                this.quantity += command.quantity();
+                this.salesCount -= command.quantity();
+            }
+        }
+    }
+
+    @JsonIgnore
+    public boolean isAvailableForSale() {
+        return 0 < quantity;
     }
 
     @JsonIgnore

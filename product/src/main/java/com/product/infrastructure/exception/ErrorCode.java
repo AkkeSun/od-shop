@@ -30,7 +30,9 @@ public enum ErrorCode {
     ACCESS_DENIED(5001, "접근권한이 없습니다"),
     ACCESS_DENIED_BY_SECURITY(5002, "접근권한이 없습니다"),
 
-    ;
+
+    // status code 500 (6001 - 6099)
+    SERVER_DISTRIBUTE_LOCK(6001, "레디스 분산락 오류가 발생 하였습니다");
 
 
     private final int code;
