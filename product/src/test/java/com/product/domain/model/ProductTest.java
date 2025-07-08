@@ -2,6 +2,7 @@ package com.product.domain.model;
 
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.application.port.in.command.UpdateProductCommand;
+import com.product.application.port.in.command.UpdateProductQuantityCommand;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -103,4 +104,69 @@ class ProductTest {
         }
     }
 
+    @Nested
+    @DisplayName("[updateQuantity] 상품 수량을 업데이트하는 메소드")
+    class Describe_updateQuantity {
+
+        @Test
+        @DisplayName("[success] QuantityType이 REFUND인 경우 수량이 증가하고 판매량이 감소한다.")
+        void refundQuantity() {
+            // given
+            Product product = Product.builder()
+                .quantity(100L)
+                .salesCount(10L)
+                .build();
+            UpdateProductQuantityCommand command = UpdateProductQuantityCommand.builder()
+                .quantity(10)
+                .type(QuantityType.REFUND)
+                .build();
+
+            // when
+            product.updateQuantity(command);
+
+            // then
+            assert product.getQuantity() == 110L;
+            assert product.getSalesCount() == 0L;
+        }
+
+        @Test
+        @DisplayName("[success] QuantityType이 ADD_QUANTITY인 경우 수량이 증가한다.")
+        void addQuantity() {
+            // given
+            Product product = Product.builder()
+                .quantity(100L)
+                .build();
+            UpdateProductQuantityCommand command = UpdateProductQuantityCommand.builder()
+                .quantity(10)
+                .type(QuantityType.ADD_QUANTITY)
+                .build();
+
+            // when
+            product.updateQuantity(command);
+
+            // then
+            assert product.getQuantity() == 110L;
+        }
+
+        @Test
+        @DisplayName("[success] QuantityType이 PURCHASE인 경우 수량이 감소하고 판매량이 증가한다.")
+        void purchaseQuantity() {
+            // given
+            Product product = Product.builder()
+                .quantity(100L)
+                .salesCount(10L)
+                .build();
+            UpdateProductQuantityCommand command = UpdateProductQuantityCommand.builder()
+                .quantity(10)
+                .type(QuantityType.PURCHASE)
+                .build();
+
+            // when
+            product.updateQuantity(command);
+
+            // then
+            assert product.getQuantity() == 90L;
+            assert product.getSalesCount() == 20L;
+        }
+    }
 }

@@ -8,6 +8,7 @@ import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.port.in.RegisterCommentUseCase;
 import com.product.application.port.in.RegisterProductUseCase;
+import com.product.application.port.in.UpdateProductQuantityUseCase;
 import com.product.application.port.in.UpdateProductUseCase;
 import com.product.infrastructure.config.SecurityConfig;
 import com.product.infrastructure.util.JwtUtil;
@@ -55,4 +56,7 @@ public class ControllerTestSupport {
 
     @MockBean
     protected FindRecommendProductUseCase findRecommendProductUseCase;
+
+    @MockBean
+    protected UpdateProductQuantityUseCase updateProductQuantityUseCase;
 }
