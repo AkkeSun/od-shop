@@ -148,17 +148,18 @@ public class Product {
 
     @JsonIgnore
     public void updateQuantity(UpdateProductQuantityCommand command) {
+        this.updateDateTime = LocalDateTime.now();
         switch (command.type()) {
             case REFUND -> {
-                this.quantity -= command.quantity();
-                this.salesCount += command.quantity();
+                this.quantity += command.quantity();
+                this.salesCount -= command.quantity();
             }
             case ADD_QUANTITY -> {
                 this.quantity += command.quantity();
             }
             case PURCHASE -> {
-                this.quantity += command.quantity();
-                this.salesCount -= command.quantity();
+                this.quantity -= command.quantity();
+                this.salesCount += command.quantity();
             }
         }
     }
