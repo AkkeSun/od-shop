@@ -27,6 +27,8 @@ class UpdateProductQuantityController {
 
         UpdateProductQuantityServiceResponse serviceResponse = updateProductQuantity
             .updateProductQuantity(request.of(productId, account));
-        return ApiResponse.ok(null);
+        return ApiResponse.ok(UpdateProductQuantityResponse.builder()
+            .result(serviceResponse.result())
+            .build());
     }
 }
