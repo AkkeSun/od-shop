@@ -15,7 +15,7 @@ import lombok.Builder;
 record UpdateProductQuantityRequest(
 
     @Min(value = 1, message = "상품 수량은 1 이상 이어야 합니다", groups = SizeGroups.class)
-    Integer quantity,
+    int quantity,
 
     @ValidQuantityType(groups = CustomGroups.class)
     @NotBlank(message = "수정 타입은 필수 값 입니다", groups = NotBlankGroups.class)

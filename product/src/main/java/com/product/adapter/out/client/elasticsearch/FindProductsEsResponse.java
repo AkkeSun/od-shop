@@ -87,7 +87,7 @@ public record FindProductsEsResponse(
 
             ProductRecommend toRecommend() {
                 return ProductRecommend.builder()
-                    .id(productId)
+                    .productId(productId)
                     .productName(productName)
                     .productImgUrl(productImgUrl)
                     .price(price)

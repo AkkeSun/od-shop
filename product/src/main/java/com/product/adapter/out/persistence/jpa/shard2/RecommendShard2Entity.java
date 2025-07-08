@@ -57,7 +57,6 @@ class RecommendShard2Entity {
 
     ProductRecommend toDomain() {
         return ProductRecommend.builder()
-            .id(product.getId())
             .productId(product.getId())
             .productName(product.getProductName())
             .sellerEmail(product.getSellerEmail())

@@ -121,7 +121,7 @@ class FindRecommendProductService implements FindRecommendProductUseCase {
 
         float[] embedding = averageEmbeddings(embeddings);
         return elasticSearchClientPort.findByEmbedding(embedding).stream()
-            .filter(product -> !productIds.contains(product.id()))
+            .filter(product -> !productIds.contains(product.productId()))
             .toList();
     }
 
@@ -131,14 +131,14 @@ class FindRecommendProductService implements FindRecommendProductUseCase {
         Collections.shuffle(mutableProducts);
 
         return mutableProducts.stream()
-            .filter(product -> !excludedIds.contains(product.id()))
+            .filter(product -> !excludedIds.contains(product.productId()))
             .limit(10)
             .toList();
     }
 
     private void updateExcludedIds(List<Long> excludedIds, List<ProductRecommend> products) {
         excludedIds.addAll(products.stream()
-            .map(ProductRecommend::id)
+            .map(ProductRecommend::productId)
             .toList());
     }
 
