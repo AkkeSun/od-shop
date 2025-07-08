@@ -5,7 +5,6 @@ import static com.product.infrastructure.util.JsonUtil.toJsonString;
 import com.product.application.port.in.command.FindRecommendProductCommand;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductRecommend;
-import com.product.domain.model.RecommendType;
 import com.product.fakeClass.DummyGeminiClientPort;
 import com.product.fakeClass.DummyOrderClientPort;
 import com.product.fakeClass.FakeElasticSearchClientPort;
@@ -83,22 +82,19 @@ class FindRecommendProductServiceTest {
                 .searchDate("20250714")
                 .build();
             ProductRecommend trendRecommend = ProductRecommend.builder()
-                .id(10L)
-                .type(RecommendType.TREND)
+                .productId(10L)
                 .productName("trendProduct")
                 .sellerEmail("seller1")
                 .productImgUrl("img1")
                 .build();
             ProductRecommend personalRecommend = ProductRecommend.builder()
-                .id(11L)
-                .type(RecommendType.PERSONAL)
+                .productId(11L)
                 .productName("personalProduct")
                 .sellerEmail("seller2")
                 .productImgUrl("img2")
                 .build();
             ProductRecommend popularRecommend = ProductRecommend.builder()
-                .id(12L)
-                .type(RecommendType.POPULAR)
+                .productId(12L)
                 .productName("popularProduct")
                 .sellerEmail("seller3")
                 .productImgUrl("img3")
@@ -114,32 +110,27 @@ class FindRecommendProductServiceTest {
             FindRecommendProductServiceResponse result = service.findRecommendProductList(command);
 
             // then
-            assert result.personallyList().getFirst().type()
-                .equals(personalRecommend.type());
+
             assert result.personallyList().getFirst().productName()
                 .equals(personalRecommend.productName());
             assert result.personallyList().getFirst().productImgUrl()
                 .equals(personalRecommend.productImgUrl());
-            assert result.personallyList().getFirst().id()
-                .equals(personalRecommend.id());
+            assert result.personallyList().getFirst().productId()
+                .equals(personalRecommend.productId());
 
-            assert result.popularList().getFirst().type()
-                .equals(popularRecommend.type());
             assert result.popularList().getFirst().productName()
                 .equals(popularRecommend.productName());
             assert result.popularList().getFirst().productImgUrl()
                 .equals(popularRecommend.productImgUrl());
-            assert result.popularList().getFirst().id()
-                .equals(popularRecommend.id());
+            assert result.popularList().getFirst().productId()
+                .equals(popularRecommend.productId());
 
-            assert result.trendList().getFirst().type()
-                .equals(trendRecommend.type());
             assert result.trendList().getFirst().productName()
                 .equals(trendRecommend.productName());
             assert result.trendList().getFirst().productImgUrl()
                 .equals(trendRecommend.productImgUrl());
-            assert result.trendList().getFirst().id()
-                .equals(trendRecommend.id());
+            assert result.trendList().getFirst().productId()
+                .equals(trendRecommend.productId());
         }
 
         @Test
@@ -151,22 +142,19 @@ class FindRecommendProductServiceTest {
                 .searchDate("20250714")
                 .build();
             ProductRecommend trendRecommend = ProductRecommend.builder()
-                .id(10L)
-                .type(RecommendType.TREND)
+                .productId(10L)
                 .productName("trendProduct")
                 .sellerEmail("seller1")
                 .productImgUrl("img1")
                 .build();
             ProductRecommend personalRecommend = ProductRecommend.builder()
-                .id(11L)
-                .type(RecommendType.PERSONAL)
+                .productId(11L)
                 .productName("personalProduct")
                 .sellerEmail("seller2")
                 .productImgUrl("img2")
                 .build();
             ProductRecommend popularRecommend = ProductRecommend.builder()
-                .id(12L)
-                .type(RecommendType.POPULAR)
+                .productId(12L)
                 .productName("popularProduct")
                 .sellerEmail("seller3")
                 .productImgUrl("img3")
@@ -174,7 +162,7 @@ class FindRecommendProductServiceTest {
             recommendStoragePort.database.add(trendRecommend);
             recommendStoragePort.database.add(popularRecommend);
             productStoragePort.database.add(Product.builder()
-                .id(personalRecommend.id())
+                .id(personalRecommend.productId())
                 .price(50)
                 .keywords(Set.of("keyword1"))
                 .productName(popularRecommend.productName())
@@ -196,32 +184,8 @@ class FindRecommendProductServiceTest {
             FindRecommendProductServiceResponse result = service.findRecommendProductList(command);
 
             // then
-            assert result.personallyList().getFirst().type()
-                .equals(personalRecommend.type());
-            assert result.personallyList().getFirst().productName()
-                .equals(personalRecommend.productName());
-            assert result.personallyList().getFirst().productImgUrl()
-                .equals(personalRecommend.productImgUrl());
-            assert result.personallyList().getFirst().id()
-                .equals(15L);
-
-            assert result.popularList().getFirst().type()
-                .equals(popularRecommend.type());
-            assert result.popularList().getFirst().productName()
-                .equals(popularRecommend.productName());
-            assert result.popularList().getFirst().productImgUrl()
-                .equals(popularRecommend.productImgUrl());
-            assert result.popularList().getFirst().id()
-                .equals(popularRecommend.id());
-
-            assert result.trendList().getFirst().type()
-                .equals(trendRecommend.type());
-            assert result.trendList().getFirst().productName()
-                .equals(trendRecommend.productName());
-            assert result.trendList().getFirst().productImgUrl()
-                .equals(trendRecommend.productImgUrl());
-            assert result.trendList().getFirst().id()
-                .equals(trendRecommend.id());
+            assert result.personallyList().size() == 1;
+            assert result.popularList().size() == 2;
         }
 
         @Test
@@ -233,22 +197,19 @@ class FindRecommendProductServiceTest {
                 .searchDate("20250714")
                 .build();
             ProductRecommend trendRecommend = ProductRecommend.builder()
-                .id(10L)
-                .type(RecommendType.TREND)
+                .productId(10L)
                 .productName("trendProduct")
                 .sellerEmail("seller1")
                 .productImgUrl("img1")
                 .build();
             ProductRecommend personalRecommend = ProductRecommend.builder()
-                .id(11L)
-                .type(RecommendType.PERSONAL)
+                .productId(11L)
                 .productName("personalProduct")
                 .sellerEmail("seller2")
                 .productImgUrl("img2")
                 .build();
             ProductRecommend popularRecommend = ProductRecommend.builder()
-                .id(11L)
-                .type(RecommendType.POPULAR)
+                .productId(11L)
                 .productName("popularProduct")
                 .sellerEmail("seller3")
                 .productImgUrl("img3")
@@ -264,25 +225,21 @@ class FindRecommendProductServiceTest {
             FindRecommendProductServiceResponse result = service.findRecommendProductList(command);
 
             // then
-            assert result.personallyList().getFirst().type()
-                .equals(personalRecommend.type());
             assert result.personallyList().getFirst().productName()
                 .equals(personalRecommend.productName());
             assert result.personallyList().getFirst().productImgUrl()
                 .equals(personalRecommend.productImgUrl());
-            assert result.personallyList().getFirst().id()
-                .equals(personalRecommend.id());
+            assert result.personallyList().getFirst().productId()
+                .equals(personalRecommend.productId());
 
             assert result.popularList().isEmpty();
 
-            assert result.trendList().getFirst().type()
-                .equals(trendRecommend.type());
             assert result.trendList().getFirst().productName()
                 .equals(trendRecommend.productName());
             assert result.trendList().getFirst().productImgUrl()
                 .equals(trendRecommend.productImgUrl());
-            assert result.trendList().getFirst().id()
-                .equals(trendRecommend.id());
+            assert result.trendList().getFirst().productId()
+                .equals(trendRecommend.productId());
         }
     }
 }

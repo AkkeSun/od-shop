@@ -15,7 +15,6 @@ public class FakeRecommendStoragePort implements RecommendStoragePort {
     public List<ProductRecommend> findRecommendProductList(LocalDate checkDate,
         RecommendType type) {
         return database.stream()
-            .filter(data -> data.type().equals(type))
             .toList();
     }
 }

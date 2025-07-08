@@ -20,7 +20,6 @@ import com.product.RestDocsSupport;
 import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.service.find_recommend_product.FindRecommendProductServiceResponse;
 import com.product.domain.model.ProductRecommend;
-import com.product.domain.model.RecommendType;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -52,24 +51,21 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
             Mockito.when(findRecommendProductUseCase.findRecommendProductList(any()))
                 .thenReturn(FindRecommendProductServiceResponse.builder()
                     .personallyList(List.of(ProductRecommend.builder()
-                        .id(10L)
-                        .type(RecommendType.PERSONAL)
+                        .productId(21L)
                         .productName("product1")
                         .sellerEmail("seller1")
                         .productImgUrl("img1")
                         .price(10000)
                         .build()))
                     .popularList(List.of(ProductRecommend.builder()
-                        .id(11L)
-                        .type(RecommendType.POPULAR)
+                        .productId(22L)
                         .productName("product2")
                         .sellerEmail("seller2")
                         .productImgUrl("img2")
                         .price(20000)
                         .build()))
                     .trendList(List.of(ProductRecommend.builder()
-                        .id(12L)
-                        .type(RecommendType.TREND)
+                        .productId(23L)
                         .productName("product3")
                         .sellerEmail("seller3")
                         .productImgUrl("img3")
@@ -96,10 +92,8 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
                     .description("최다 판매 상품"),
                 fieldWithPath("data.trendList").type(JsonFieldType.ARRAY)
                     .description("트랜드 분석 기반 추천 상품"),
-                fieldWithPath("data.personallyList[].id").type(JsonFieldType.NUMBER)
+                fieldWithPath("data.personallyList[].productId").type(JsonFieldType.NUMBER)
                     .description("상품 아이디"),
-                fieldWithPath("data.personallyList[].type").type(JsonFieldType.STRING)
-                    .description("추천 타입"),
                 fieldWithPath("data.personallyList[].productName").type(JsonFieldType.STRING)
                     .description("상품명"),
                 fieldWithPath("data.personallyList[].sellerEmail").type(JsonFieldType.STRING)
@@ -108,10 +102,8 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
                     .description("상품 이미지 주소"),
                 fieldWithPath("data.personallyList[].price").type(JsonFieldType.NUMBER)
                     .description("상품 가격"),
-                fieldWithPath("data.popularList[].id").type(JsonFieldType.NUMBER)
+                fieldWithPath("data.popularList[].productId").type(JsonFieldType.NUMBER)
                     .description("상품 아이디"),
-                fieldWithPath("data.popularList[].type").type(JsonFieldType.STRING)
-                    .description("추천 타입"),
                 fieldWithPath("data.popularList[].productName").type(JsonFieldType.STRING)
                     .description("상품명"),
                 fieldWithPath("data.popularList[].sellerEmail").type(JsonFieldType.STRING)
@@ -120,10 +112,8 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
                     .description("상품 이미지 주소"),
                 fieldWithPath("data.popularList[].price").type(JsonFieldType.NUMBER)
                     .description("상품 가격"),
-                fieldWithPath("data.trendList[].id").type(JsonFieldType.NUMBER)
+                fieldWithPath("data.trendList[].productId").type(JsonFieldType.NUMBER)
                     .description("상품 아이디"),
-                fieldWithPath("data.trendList[].type").type(JsonFieldType.STRING)
-                    .description("추천 타입"),
                 fieldWithPath("data.trendList[].productName").type(JsonFieldType.STRING)
                     .description("상품명"),
                 fieldWithPath("data.trendList[].sellerEmail").type(JsonFieldType.STRING)

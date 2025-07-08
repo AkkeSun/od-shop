@@ -4,7 +4,6 @@ import com.product.application.port.in.command.FindProductListCommand;
 import com.product.application.port.out.ElasticSearchClientPort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductRecommend;
-import com.product.domain.model.RecommendType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +37,8 @@ public class FakeElasticSearchClientPort implements ElasticSearchClientPort {
     public List<ProductRecommend> findByEmbedding(float[] embedding) {
         return database.stream()
             .map(product -> ProductRecommend.builder()
-                .id(product.getId())
+                .productId(product.getId())
                 .productName(product.getProductName())
-                .type(RecommendType.PERSONAL)
                 .productImgUrl(product.getProductImgUrl())
                 .sellerEmail(product.getSellerEmail())
                 .price(product.getPrice())
