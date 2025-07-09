@@ -1,7 +1,6 @@
 package com.product.adapter.in.controller.find_product;
 
 import com.product.application.service.find_product.FindProductServiceResponse;
-import com.product.domain.model.Category;
 import java.util.Set;
 import lombok.Builder;
 
@@ -16,7 +15,7 @@ record FindProductResponse(
     Set<String> productOption,
     long price,
     long quantity,
-    Category category,
+    String category,
     String regDateTime
 ) {
 
@@ -31,7 +30,7 @@ record FindProductResponse(
             .productOption(serviceResponse.productOption())
             .price(serviceResponse.price())
             .quantity(serviceResponse.quantity())
-            .category(serviceResponse.category())
+            .category(serviceResponse.category().description())
             .regDateTime(serviceResponse.regDateTime())
             .build();
     }

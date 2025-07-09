@@ -107,7 +107,7 @@ public class Product {
                     상품의 가격은 약 %d원입니다. \s
                     상품과 관련된 키워드는 %s 입니다.
                 """,
-            productName, category, price, String.join(", ", keywords)
+            productName, category.description(), price, String.join(", ", keywords)
         );
     }
 
@@ -124,7 +124,7 @@ public class Product {
                     결과는 키워드1, 키워드2, ... 형태로 출력해야 한다. \s
                     상품의 특징, 소재, 스타일, 타겟 고객, 사용 상황을 종합적으로 고려하고, 다른 설명은 절대 붙이지 마라. \s
                 """,
-            productName, category, String.join(", ", productOption)
+            productName, category.description(), String.join(", ", productOption)
         );
     }
 

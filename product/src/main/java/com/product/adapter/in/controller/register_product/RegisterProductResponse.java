@@ -1,7 +1,6 @@
 package com.product.adapter.in.controller.register_product;
 
 import com.product.application.service.register_product.RegisterProductServiceResponse;
-import com.product.domain.model.Category;
 import java.util.Set;
 import lombok.Builder;
 
@@ -16,7 +15,7 @@ record RegisterProductResponse(
     String descriptionImgUrl,
     long price,
     long quantity,
-    Category category
+    String category
 ) {
 
 
@@ -31,7 +30,7 @@ record RegisterProductResponse(
             .productOption(serviceResponse.productOption())
             .price(serviceResponse.price())
             .quantity(serviceResponse.quantity())
-            .category(serviceResponse.category())
+            .category(serviceResponse.category().description())
             .build();
     }
 }

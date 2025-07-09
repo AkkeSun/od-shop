@@ -1,7 +1,6 @@
 package com.product.adapter.in.controller.update_product;
 
 import com.product.application.service.update_product.UpdateProductServiceResponse;
-import com.product.domain.model.Category;
 import java.util.Set;
 import lombok.Builder;
 
@@ -15,7 +14,7 @@ record UpdateProductResponse(
     Set<String> productOption,
     String descriptionImgUrl,
     long price,
-    Category category
+    String category
 ) {
 
 
@@ -29,7 +28,7 @@ record UpdateProductResponse(
             .keywords(serviceResponse.keywords())
             .productOption(serviceResponse.productOption())
             .price(serviceResponse.price())
-            .category(serviceResponse.category())
+            .category(serviceResponse.category().description())
             .build();
     }
 }
