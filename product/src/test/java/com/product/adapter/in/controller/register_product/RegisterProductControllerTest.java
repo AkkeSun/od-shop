@@ -76,7 +76,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.data.descriptionImgUrl").value(response.descriptionImgUrl()))
                 .andExpect(jsonPath("$.data.price").value(response.price()))
                 .andExpect(jsonPath("$.data.quantity").value(response.quantity()))
-                .andExpect(jsonPath("$.data.category").value(response.category().name()))
+                .andExpect(jsonPath("$.data.category").value(response.category().description()))
                 .andDo(print());
         }
 

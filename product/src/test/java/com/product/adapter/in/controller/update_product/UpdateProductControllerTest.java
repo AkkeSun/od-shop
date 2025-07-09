@@ -9,8 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.product.ControllerTestSupport;
-import com.product.adapter.in.controller.update_product.UpdateProductRequest;
 import com.product.application.service.update_product.UpdateProductServiceResponse;
+import com.product.domain.model.Category;
 import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -39,6 +39,7 @@ class UpdateProductControllerTest extends ControllerTestSupport {
                 .thenReturn(UpdateProductServiceResponse.builder()
                     .productId(1L)
                     .productName("Updated Product")
+                    .category(Category.BOOKS)
                     .build());
 
             // when

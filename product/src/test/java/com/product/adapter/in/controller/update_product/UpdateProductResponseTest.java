@@ -1,6 +1,5 @@
 package com.product.adapter.in.controller.update_product;
 
-import com.product.adapter.in.controller.update_product.UpdateProductResponse;
 import com.product.application.service.update_product.UpdateProductServiceResponse;
 import com.product.domain.model.Category;
 import java.util.Set;
@@ -42,7 +41,7 @@ class UpdateProductResponseTest {
             assert response.keywords().equals(serviceResponse.keywords());
             assert response.productOption().equals(serviceResponse.productOption());
             assert response.price() == serviceResponse.price();
-            assert response.category().equals(serviceResponse.category());
+            assert response.category().equals(serviceResponse.category().description());
         }
     }
 

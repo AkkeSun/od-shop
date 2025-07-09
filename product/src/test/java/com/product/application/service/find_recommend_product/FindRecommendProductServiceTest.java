@@ -3,6 +3,7 @@ package com.product.application.service.find_recommend_product;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.command.FindRecommendProductCommand;
+import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductRecommend;
 import com.product.fakeClass.DummyGeminiClientPort;
@@ -168,6 +169,7 @@ class FindRecommendProductServiceTest {
                 .productName(popularRecommend.productName())
                 .sellerEmail(personalRecommend.sellerEmail())
                 .productImgUrl(popularRecommend.productImgUrl())
+                .category(Category.BOOKS)
                 .deleteYn("N")
                 .build());
             elasticSearchClientPort.database.add(Product.builder()
@@ -177,6 +179,7 @@ class FindRecommendProductServiceTest {
                 .productName(personalRecommend.productName())
                 .sellerEmail(personalRecommend.sellerEmail())
                 .productImgUrl(personalRecommend.productImgUrl())
+                .category(Category.BOOKS)
                 .deleteYn("N")
                 .build());
 

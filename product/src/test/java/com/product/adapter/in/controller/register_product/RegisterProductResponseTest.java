@@ -1,6 +1,5 @@
 package com.product.adapter.in.controller.register_product;
 
-import com.product.adapter.in.controller.register_product.RegisterProductResponse;
 import com.product.application.service.register_product.RegisterProductServiceResponse;
 import com.product.domain.model.Category;
 import java.util.Set;
@@ -44,7 +43,7 @@ class RegisterProductResponseTest {
             assert response.productOption().equals(serviceResponse.productOption());
             assert response.price() == serviceResponse.price();
             assert response.quantity() == serviceResponse.quantity();
-            assert response.category().equals(serviceResponse.category());
+            assert response.category().equals(serviceResponse.category().description());
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.product.adapter.in.controller.find_product;
 
-import com.product.adapter.in.controller.find_product.FindProductResponse;
 import com.product.application.service.find_product.FindProductServiceResponse;
 import com.product.domain.model.Category;
 import java.util.Set;
@@ -37,7 +36,7 @@ class FindProductResponseTest {
             // then
             assert response.productId().equals(serviceResponse.productId());
             assert response.productName().equals(serviceResponse.productName());
-            assert response.category().equals(serviceResponse.category());
+            assert response.category().equals(serviceResponse.category().description());
             assert response.price() == serviceResponse.price();
             assert response.quantity() == serviceResponse.quantity();
             assert response.productImgUrl().equals(serviceResponse.productImgUrl());

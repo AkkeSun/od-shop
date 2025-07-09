@@ -53,7 +53,8 @@ class FindProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.message").value("OK"))
                 .andExpect(jsonPath("$.data.productId").value(productId))
                 .andExpect(jsonPath("$.data.productName").value(serviceResponse.productName()))
-                .andExpect(jsonPath("$.data.category").value(serviceResponse.category().name()))
+                .andExpect(
+                    jsonPath("$.data.category").value(serviceResponse.category().description()))
                 .andExpect(jsonPath("$.data.price").value(serviceResponse.price()))
                 .andExpect(jsonPath("$.data.quantity").value(serviceResponse.quantity()))
                 .andExpect(jsonPath("$.data.productImgUrl").value(serviceResponse.productImgUrl()))
