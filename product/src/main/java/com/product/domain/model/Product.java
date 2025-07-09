@@ -80,7 +80,6 @@ public class Product {
             .productImgUrl(command.productImgUrl())
             .descriptionImgUrl(command.descriptionImgUrl())
             .productOption(command.productOption())
-            .keywords(command.keywords())
             .price(command.price())
             .quantity(command.quantity())
             .hitCount(0)
@@ -97,14 +96,35 @@ public class Product {
     }
 
     @JsonIgnore
+    public void updateKeywords(String keyword) {
+        this.keywords = Set.of(keyword.replace("\n", "").split(","));
+    }
+
+    @JsonIgnore
     public String getEmbeddingDocument() {
-        String keywordsString = String.join(", ", keywords);
         return String.format("""
                     이 상품의 이름은 %s 이고, %s 카테고리에 속해 있습니다. \s
                     상품의 가격은 약 %d원입니다. \s
                     상품과 관련된 키워드는 %s 입니다.
                 """,
-            productName, category, price, keywordsString
+            productName, category, price, String.join(", ", keywords)
+        );
+    }
+
+    @JsonIgnore
+    public String getKeywordQueryDocument() {
+        return String.format("""
+                    너는 이커머스 상품 정보에서 고객의 검색 의도에 맞는 키워드를 추출하는 SEO 전문가야. \s
+                    아래에 제공되는 '상품명', '상품 카테고리', '상품 옵션' 정보를 바탕으로, 고객들이 검색할 만한 핵심 키워드 10개를 추출해 줘. \s
+                    \s
+                    * 상품명: %s \s
+                    * 상품 카테고리: %s \s
+                    * 상품 옵션: 색상: %s \s
+                                
+                    결과는 키워드1, 키워드2, ... 형태로 출력해야 한다. \s
+                    상품의 특징, 소재, 스타일, 타겟 고객, 사용 상황을 종합적으로 고려하고, 다른 설명은 절대 붙이지 마라. \s
+                """,
+            productName, category, String.join(", ", productOption)
         );
     }
 

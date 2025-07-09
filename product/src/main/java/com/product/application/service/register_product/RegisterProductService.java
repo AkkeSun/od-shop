@@ -31,6 +31,8 @@ class RegisterProductService implements RegisterProductUseCase {
     public RegisterProductServiceResponse registerProduct(RegisterProductCommand command) {
 
         Product product = Product.of(command, snowflakeGenerator.nextId());
+        String keywords = geminiClientPort.query(product.getKeywordQueryDocument());
+        product.updateKeywords(keywords);
         productStoragePort.register(product);
 
         float[] embedding = geminiClientPort.embedding(product.getEmbeddingDocument());
