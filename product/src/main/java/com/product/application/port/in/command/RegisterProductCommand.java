@@ -11,7 +11,6 @@ public record RegisterProductCommand(
     String productImgUrl,
     String descriptionImgUrl,
     Set<String> productOption,
-    Set<String> keywords,
     long price,
     long quantity,
     String category

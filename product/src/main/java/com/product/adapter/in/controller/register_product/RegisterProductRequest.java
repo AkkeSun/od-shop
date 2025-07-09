@@ -40,10 +40,7 @@ record RegisterProductRequest(
     String descriptionImgUrl,
 
     @NotNull(message = "상품 옵션은 필수값 입니다", groups = NotBlankGroups.class)
-    Set<String> productOption,
-
-    @NotNull(message = "키워드는 필수값 입니다", groups = NotBlankGroups.class)
-    Set<String> keywords
+    Set<String> productOption
 ) {
 
     RegisterProductCommand toCommand(Account account) {
@@ -53,7 +50,6 @@ record RegisterProductRequest(
             .productImgUrl(productImgUrl)
             .descriptionImgUrl(descriptionImgUrl)
             .productOption(productOption)
-            .keywords(keywords)
             .price(price)
             .quantity(quantity)
             .category(category)
