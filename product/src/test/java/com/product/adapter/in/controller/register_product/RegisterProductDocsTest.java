@@ -17,8 +17,6 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.product.RestDocsSupport;
-import com.product.adapter.in.controller.register_product.RegisterProductController;
-import com.product.adapter.in.controller.register_product.RegisterProductRequest;
 import com.product.application.port.in.RegisterProductUseCase;
 import com.product.application.service.register_product.RegisterProductServiceResponse;
 import com.product.domain.model.Category;
@@ -61,7 +59,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             RegisterProductServiceResponse response = RegisterProductServiceResponse.builder()
                 .productId(12345L)
@@ -72,7 +69,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .price(request.price())
                 .quantity(request.quantity())
                 .category(Category.valueOf(request.category()))
-                .keywords(request.keywords())
+                .keywords(Set.of("keyword1", "keyword2"))
                 .productOption(request.productOption())
                 .build();
             String authorization = "testToken";
@@ -122,7 +119,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
             given(registerProductUseCase.registerProduct(any())).willThrow(
@@ -145,7 +141,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
             given(registerProductUseCase.registerProduct(any())).willThrow(
@@ -168,7 +163,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -189,7 +183,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -210,7 +203,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -231,7 +223,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -252,7 +243,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -273,7 +263,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -294,7 +283,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl(null)
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -315,7 +303,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("test".repeat(13))
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -336,7 +323,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl(null)
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -357,7 +343,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("test".repeat(13))
                 .descriptionImgUrl(null)
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
@@ -378,34 +363,12 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(null)
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
             String authorization = "testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
                 "[register-product] 상품 옵션 미입력");
-        }
-
-        @Test
-        @DisplayName("[error] 판매 권한을 가진 사용자가 키워드를 입력하지 않았을 때 400코드와 에러 메시지를 응답한다.")
-        void error14() throws Exception {
-            // given
-            RegisterProductRequest request = RegisterProductRequest.builder()
-                .productName("상품명")
-                .category("AUTOMOTIVE")
-                .price(10000)
-                .quantity(20)
-                .productImgUrl("상품 이미지")
-                .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(null)
-                .build();
-            String authorization = "testToken";
-
-            // when then
-            performErrorDocument(request, authorization, status().isBadRequest(),
-                "[register-product] 상품 키워드 미입력");
         }
     }
 
@@ -424,8 +387,6 @@ public class RegisterProductDocsTest extends RestDocsSupport {
             request.descriptionImgUrl() == null ? JsonFieldType.NULL : JsonFieldType.STRING;
         JsonFieldType productOptionType =
             request.productOption() == null ? JsonFieldType.NULL : JsonFieldType.ARRAY;
-        JsonFieldType keywordsType =
-            request.keywords() == null ? JsonFieldType.NULL : JsonFieldType.ARRAY;
 
         mockMvc.perform(post("/products")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -458,9 +419,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                             fieldWithPath("descriptionImgUrl").type(descriptionImgUrlType)
                                 .description("상품 설명 이미지 (50자 이하)"),
                             fieldWithPath("productOption").type(productOptionType)
-                                .description("상품 옵션"),
-                            fieldWithPath("keywords").type(keywordsType)
-                                .description("상품 키워드")
+                                .description("상품 옵션")
                         )
                         .responseFields(responseFields)
                         .requestHeaders(headerWithName("Authorization").description("인증 토큰"))

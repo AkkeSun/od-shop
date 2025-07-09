@@ -1,6 +1,5 @@
 package com.product.adapter.in.controller.register_product;
 
-import com.product.adapter.in.controller.register_product.RegisterProductRequest;
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.domain.model.Account;
 import java.util.Set;
@@ -27,7 +26,6 @@ class RegisterProductRequestTest {
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
-                .keywords(Set.of("키워드1", "키워드2"))
                 .build();
 
             // when
@@ -41,7 +39,6 @@ class RegisterProductRequestTest {
             assert command.productImgUrl().equals(request.productImgUrl());
             assert command.descriptionImgUrl().equals(request.descriptionImgUrl());
             assert command.productOption().equals(request.productOption());
-            assert command.keywords().equals(request.keywords());
         }
     }
 }

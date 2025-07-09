@@ -56,7 +56,6 @@ class RegisterProductServiceTest {
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
                 .productOption(Set.of("Option1", "Option2"))
-                .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
                 .category("ELECTRONICS")
@@ -70,7 +69,6 @@ class RegisterProductServiceTest {
             assert response.productName().equals(command.productName());
             assert response.productImgUrl().equals(command.productImgUrl());
             assert response.descriptionImgUrl().equals(command.descriptionImgUrl());
-            assert response.keywords().equals(command.keywords());
             assert response.productOption().equals(command.productOption());
             assert response.price() == command.price();
             assert response.quantity() == command.quantity();
@@ -90,7 +88,6 @@ class RegisterProductServiceTest {
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
                 .productOption(Set.of("Option1", "Option2"))
-                .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
                 .category("ELECTRONICS")

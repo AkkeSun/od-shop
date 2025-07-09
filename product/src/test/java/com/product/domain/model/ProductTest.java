@@ -28,7 +28,6 @@ class ProductTest {
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
                 .productOption(Set.of("Option1", "Option2"))
-                .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
                 .category("ELECTRONICS")
@@ -46,7 +45,6 @@ class ProductTest {
             assert product.getProductImgUrl().equals(command.productImgUrl());
             assert product.getDescriptionImgUrl().equals(command.descriptionImgUrl());
             assert product.getProductOption().equals(command.productOption());
-            assert product.getKeywords().equals(command.keywords());
             assert product.getPrice() == command.price();
             assert product.getQuantity() == command.quantity();
             assert product.getCategory().equals(Category.ELECTRONICS);
