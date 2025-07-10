@@ -17,18 +17,14 @@ Content-Type: application/json
 Authorization: {{Authorization}}
 
 {
-  "productName": "test",
+  "productName": "아이다스 바람막이 컬렉션 할인",
   "category": "FASHION",
   "price": 10000,
   "quantity": 30,
   "productImgUrl": "imgUrl",
   "descriptionImgUrl": "descriptionImgUrl",
   "productOption": [
-    "option1",
-    "option2"
-  ],
-  "keywords": [
-    "keyword1",
-    "keyword2"
+    "100",
+    "120"
   ]
 }
