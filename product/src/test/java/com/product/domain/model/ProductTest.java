@@ -99,6 +99,42 @@ class ProductTest {
                 assert result.isEmpty();
                 assert product.getProductName().equals("Old Product Name");
             }
+
+            @Test
+            @DisplayName("[success] 모든 상품정보가 잘 수정되는지 확인한다.")
+            void success3() {
+                // given
+                Product product = Product.builder()
+                    .productName("Old Product Name")
+                    .productImgUrl("http://example.com/old_product.jpg")
+                    .descriptionImgUrl("http://example.com/old_description.jpg")
+                    .productOption(Set.of("OldOption1", "OldOption2"))
+                    .keywords(Set.of("old_keyword1", "old_keyword2"))
+                    .price(10000L)
+                    .build();
+
+                UpdateProductCommand command = UpdateProductCommand.builder()
+                    .productName("New Product Name")
+                    .productImgUrl("http://example.com/new_product.jpg")
+                    .descriptionImgUrl("http://example.com/new_description.jpg")
+                    .productOption(Set.of("NewOption1", "NewOption2"))
+                    .keywords(Set.of("new_keyword1", "new_keyword2"))
+                    .price(20000L)
+                    .build();
+
+                // when
+                List<String> result = product.update(command);
+
+                // then
+                assert result.containsAll(List.of("productName", "productImgUrl", "descriptionImgUrl", "productOption", "keywords", "price"));
+                assert product.getProductName().equals("New Product Name");
+                assert product.getProductImgUrl().equals("http://example.com/new_product.jpg");
+                assert product.getDescriptionImgUrl().equals("http://example.com/new_description.jpg");
+                assert product.getProductOption().equals(Set.of("NewOption1", "NewOption2"));
+                assert product.getKeywords().equals(Set.of("new_keyword1", "new_keyword2"));
+                assert product.getPrice() == 20000L;
+                assert product.isNeedsEsUpdate();
+            }
         }
     }
 
@@ -165,6 +201,37 @@ class ProductTest {
             // then
             assert product.getQuantity() == 90L;
             assert product.getSalesCount() == 20L;
+        }
+    }
+
+    @Nested
+    @DisplayName("[updateKeywords] 상품 키워드를 수정하는 메소드")
+    class Describe_updateKeywords {
+
+    }
+
+    @Nested
+    @DisplayName("[getEmbeddingDocument] 임베딩을 위한 문서를 생성하는 메소드")
+    class Describe_getEmbeddingDocument {
+
+        @Test
+        @DisplayName("[success] 임베딩 문서를 잘 생성하는지 확인한다.")
+        void success() {
+            // given
+            Product product = Product.builder()
+                .productName("name")
+                .category(Category.ELECTRONICS)
+                .price(10000)
+                .keywords(Set.of("keyword1", "keyword2"))
+                .build();
+
+            // when
+            String result = product.getEmbeddingDocument();
+
+            // then
+            assert result.contains("이 상품의 이름은 name 이고, 전자제품 카테고리에 속해 있습니다.");
+            assert result.contains("상품의 가격은 약 10000원입니다.");
+            assert result.contains("상품과 관련된 키워드는 keyword1, keyword2 입니다.");
         }
     }
 }
