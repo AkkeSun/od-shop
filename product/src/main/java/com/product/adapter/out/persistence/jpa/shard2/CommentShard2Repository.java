@@ -9,4 +9,6 @@ interface CommentShard2Repository extends JpaRepository<CommentShard2Entity, Lon
     List<CommentShard2Entity> findByProductId(Long productId, Pageable pageable);
 
     void deleteByProductId(Long productId);
+
+    boolean existsByCustomerIdAndProductId(Long customerId, Long productId);
 }

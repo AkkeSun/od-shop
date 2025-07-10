@@ -1,6 +1,7 @@
 package com.product.fakeClass;
 
 import com.product.application.port.in.command.FindCommentListCommand;
+import com.product.application.port.in.command.RegisterCommentCommand;
 import com.product.application.port.out.CommentStoragePort;
 import com.product.domain.model.Comment;
 import java.util.ArrayList;
@@ -20,6 +21,11 @@ public class FakeCommentStoragePort implements CommentStoragePort {
     @Override
     public void register(Comment comment) {
         database.add(comment);
+    }
+
+    @Override
+    public boolean existsByCustomerIdAndProductId(RegisterCommentCommand command) {
+        return false;
     }
 
     @Override

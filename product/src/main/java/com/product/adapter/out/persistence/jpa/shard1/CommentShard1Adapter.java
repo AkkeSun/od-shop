@@ -1,6 +1,7 @@
 package com.product.adapter.out.persistence.jpa.shard1;
 
 import com.product.application.port.in.command.FindCommentListCommand;
+import com.product.application.port.in.command.RegisterCommentCommand;
 import com.product.application.port.out.CommentStoragePort;
 import com.product.domain.model.Comment;
 import java.util.List;
@@ -28,6 +29,12 @@ public class CommentShard1Adapter implements CommentStoragePort {
     @Override
     public void register(Comment comment) {
         repository.save(CommentShard1Entity.of(comment));
+    }
+
+    @Override
+    public boolean existsByCustomerIdAndProductId(RegisterCommentCommand command) {
+        return repository.existsByCustomerIdAndProductId(command.account().id(),
+            command.productId());
     }
 
     @Override
