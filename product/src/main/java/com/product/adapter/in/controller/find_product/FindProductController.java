@@ -1,6 +1,7 @@
 package com.product.adapter.in.controller.find_product;
 
 import com.product.application.port.in.FindProductUseCase;
+import com.product.application.port.in.command.FindProductCommand;
 import com.product.application.service.find_product.FindProductServiceResponse;
 import com.product.infrastructure.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,8 @@ class FindProductController {
 
     @GetMapping("/products/{productId}")
     ApiResponse<FindProductResponse> findProduct(@PathVariable Long productId) {
-        FindProductServiceResponse serviceResponse = findProductUseCase.findProduct(productId);
+        FindProductServiceResponse serviceResponse = findProductUseCase.findProduct(
+            FindProductCommand.ofApiCall(productId));
         return ApiResponse.ok(FindProductResponse.of(serviceResponse));
     }
 }

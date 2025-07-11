@@ -16,8 +16,8 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.product.RestDocsSupport;
-import com.product.adapter.in.controller.find_product.FindProductController;
 import com.product.application.port.in.FindProductUseCase;
+import com.product.application.port.in.command.FindProductCommand;
 import com.product.application.service.find_product.FindProductServiceResponse;
 import com.product.domain.model.Category;
 import com.product.infrastructure.exception.CustomNotFoundException;
@@ -62,7 +62,8 @@ public class FindProductDocsTest extends RestDocsSupport {
                 .keywords(Set.of("Keyword1", "Keyword2"))
                 .regDateTime("2025-05-01 12:00:00")
                 .build();
-            when(findProductUseCase.findProduct(productId)).thenReturn(serviceResponse);
+            when(findProductUseCase.findProduct(FindProductCommand.ofApiCall(productId)))
+                .thenReturn(serviceResponse);
 
             // when then
             performAndDocument(productId, status().isOk(), "[find-product] success",
@@ -101,7 +102,7 @@ public class FindProductDocsTest extends RestDocsSupport {
         void error() throws Exception {
             // given
             Long productId = 99L;
-            when(findProductUseCase.findProduct(productId))
+            when(findProductUseCase.findProduct(FindProductCommand.ofApiCall(productId)))
                 .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
 
             // when then

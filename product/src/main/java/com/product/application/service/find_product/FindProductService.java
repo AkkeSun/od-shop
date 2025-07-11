@@ -3,6 +3,7 @@ package com.product.application.service.find_product;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.FindProductUseCase;
+import com.product.application.port.in.command.FindProductCommand;
 import com.product.application.port.out.MessageProducerPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
@@ -23,11 +24,13 @@ class FindProductService implements FindProductUseCase {
 
     @NewSpan
     @Override
-    public FindProductServiceResponse findProduct(Long productId) {
-        Product product = productStoragePort.findByIdAndDeleteYn(productId, "N");
+    public FindProductServiceResponse findProduct(FindProductCommand command) {
+        Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");
 
-        ProductClickLog productClickLog = ProductClickLog.of(productId);
-        messageProducerPort.sendMessage(clickTopic, toJsonString(productClickLog));
+        if (command.isApiCall()) {
+            ProductClickLog productClickLog = ProductClickLog.of(command.productId());
+            messageProducerPort.sendMessage(clickTopic, toJsonString(productClickLog));
+        }
         return FindProductServiceResponse.of(product);
     }
 }

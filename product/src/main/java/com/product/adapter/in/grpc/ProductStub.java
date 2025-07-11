@@ -4,6 +4,7 @@ import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.in.UpdateProductQuantityUseCase;
+import com.product.application.port.in.command.FindProductCommand;
 import com.product.application.port.in.command.UpdateProductQuantityCommand;
 import com.product.application.service.find_product.FindProductServiceResponse;
 import com.product.application.service.update_product_quantity.UpdateProductQuantityServiceResponse;
@@ -37,7 +38,7 @@ class ProductStub extends ProductServiceImplBase {
             log.info("[gRPC] findProduct request - {}", toJsonString(request));
 
             FindProductServiceResponse response = findProductUseCase.findProduct(
-                request.getProductId());
+                FindProductCommand.ofGrpcCall(request.getProductId()));
 
             responseObserver.onNext(response.toStubResponse());
             responseObserver.onCompleted();

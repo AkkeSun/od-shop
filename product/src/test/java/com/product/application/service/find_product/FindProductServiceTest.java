@@ -1,5 +1,6 @@
 package com.product.application.service.find_product;
 
+import com.product.application.port.in.command.FindProductCommand;
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
@@ -59,7 +60,8 @@ class FindProductServiceTest {
             productStoragePort.database.add(product);
 
             // when
-            FindProductServiceResponse response = service.findProduct(product.getId());
+            FindProductServiceResponse response = service.findProduct(
+                FindProductCommand.ofApiCall(product.getId()));
 
             // then
             assert response.productId().equals(product.getId());

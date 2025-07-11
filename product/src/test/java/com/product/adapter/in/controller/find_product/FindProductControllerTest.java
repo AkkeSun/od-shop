@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.product.ControllerTestSupport;
+import com.product.application.port.in.command.FindProductCommand;
 import com.product.application.service.find_product.FindProductServiceResponse;
 import com.product.domain.model.Category;
 import java.util.Set;
@@ -41,7 +42,8 @@ class FindProductControllerTest extends ControllerTestSupport {
                 .keywords(Set.of("Keyword1", "Keyword2"))
                 .regDateTime("2025-05-01 12:00:00")
                 .build();
-            when(findProductUseCase.findProduct(productId)).thenReturn(serviceResponse);
+            when(findProductUseCase.findProduct(FindProductCommand.ofApiCall(productId)))
+                .thenReturn(serviceResponse);
 
             // when
             ResultActions actions = mockMvc.perform(get("/products/{productId}", productId));
