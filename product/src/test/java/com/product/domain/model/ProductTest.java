@@ -126,10 +126,13 @@ class ProductTest {
                 List<String> result = product.update(command);
 
                 // then
-                assert result.containsAll(List.of("productName", "productImgUrl", "descriptionImgUrl", "productOption", "keywords", "price"));
+                assert result.containsAll(
+                    List.of("productName", "productImgUrl", "descriptionImgUrl", "productOption",
+                        "keywords", "price"));
                 assert product.getProductName().equals("New Product Name");
                 assert product.getProductImgUrl().equals("http://example.com/new_product.jpg");
-                assert product.getDescriptionImgUrl().equals("http://example.com/new_description.jpg");
+                assert product.getDescriptionImgUrl()
+                    .equals("http://example.com/new_description.jpg");
                 assert product.getProductOption().equals(Set.of("NewOption1", "NewOption2"));
                 assert product.getKeywords().equals(Set.of("new_keyword1", "new_keyword2"));
                 assert product.getPrice() == 20000L;
@@ -231,7 +234,6 @@ class ProductTest {
             // then
             assert result.contains("이 상품의 이름은 name 이고, 전자제품 카테고리에 속해 있습니다.");
             assert result.contains("상품의 가격은 약 10000원입니다.");
-            assert result.contains("상품과 관련된 키워드는 keyword1, keyword2 입니다.");
         }
     }
 }

@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.application.port.in.command.RegisterCommentCommand;
 import com.product.domain.model.Account;
+import com.product.domain.model.Comment;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyOrderClientPort;
 import com.product.fakeClass.DummySnowflakeGenerator;
 import com.product.fakeClass.FakeCommentStoragePort;
 import com.product.fakeClass.FakeProductStoragePort;
 import com.product.infrastructure.exception.CustomAuthorizationException;
+import com.product.infrastructure.exception.CustomBusinessException;
 import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,11 +43,11 @@ class RegisterCommentServiceTest {
     }
 
     @Nested
-    @DisplayName("[registerComment] 댓글을 등록하는 메소드")
+    @DisplayName("[registerComment] 리뷰를 등록하는 메소드")
     class Describe_registerComment {
 
         @Test
-        @DisplayName("[success] 댓글을 성공적으로 등록하는지 확인한다.")
+        @DisplayName("[success] 리뷰를 성공적으로 등록하는지 확인한다.")
         void success() {
             // given
             Product product = Product.builder()
@@ -95,6 +97,34 @@ class RegisterCommentServiceTest {
 
             // then
             assert result.getErrorCode().equals(ErrorCode.ACCESS_DENIED);
+        }
+
+        @Test
+        @DisplayName("[error] 이미 리뷰를 등록했다면 예외를 응답한다.")
+        void error2() {
+            // given
+            Product product = Product.builder()
+                .id(10L)
+                .deleteYn("N")
+                .build();
+            fakeProductStoragePort.database.add(product);
+            RegisterCommentCommand command = RegisterCommentCommand.builder()
+                .productId(product.getId())
+                .account(Account.builder().id(1L)
+                    .email("od")
+                    .build())
+                .comment("comment")
+                .productId(10L)
+                .score(5.0)
+                .build();
+            fakeCommentStoragePort.database.add(Comment.of(command, 10L));
+
+            // when
+            CustomBusinessException result = assertThrows(CustomBusinessException.class,
+                () -> registerCommentService.registerComment(command));
+
+            // then
+            assert result.getErrorCode().equals(ErrorCode.Business_SAVED_REVIEW_INFO);
         }
     }
 }

@@ -25,7 +25,10 @@ public class FakeCommentStoragePort implements CommentStoragePort {
 
     @Override
     public boolean existsByCustomerIdAndProductId(RegisterCommentCommand command) {
-        return false;
+        return !database.stream()
+            .filter(data -> data.customerId().equals(command.account().id()))
+            .filter(data -> data.productId().equals(command.productId()))
+            .toList().isEmpty();
     }
 
     @Override

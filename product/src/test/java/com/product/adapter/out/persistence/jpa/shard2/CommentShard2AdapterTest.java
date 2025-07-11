@@ -2,6 +2,8 @@ package com.product.adapter.out.persistence.jpa.shard2;
 
 import com.product.IntegrationTestSupport;
 import com.product.application.port.in.command.FindCommentListCommand;
+import com.product.application.port.in.command.RegisterCommentCommand;
+import com.product.domain.model.Account;
 import com.product.domain.model.Comment;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -158,6 +160,64 @@ class CommentShard2AdapterTest extends IntegrationTestSupport {
 
             // then
             assert !repository.findById(comment.id()).isPresent();
+        }
+    }
+
+    @Nested
+    @DisplayName("[existsByCustomerIdAndProductId] 고객 아이디와 상품아이디로 리뷰 등록 유무를 조회하는 메소드")
+    class Describe_existsByCustomerIdAndProductId {
+
+        @Test
+        @DisplayName("[success] 조회된 리뷰가 있으면 true 를 응답한다.")
+        void success() {
+            // given
+            Comment comment = Comment.builder()
+                .id(123L)
+                .productId(1L)
+                .customerId(10L)
+                .comment("Great product!")
+                .score(4.5)
+                .regDate(LocalDate.of(2025, 1, 1))
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .build();
+            adapter.register(comment);
+            assert repository.findById(comment.id()).isPresent();
+
+            // when
+            boolean result = adapter.existsByCustomerIdAndProductId(
+                RegisterCommentCommand.builder()
+                    .productId(comment.productId())
+                    .account(Account.builder().id(comment.customerId()).build())
+                    .build()
+            );
+
+            // then
+            assert result;
+        }
+
+        @Test
+        @DisplayName("[success] 조회된 리뷰가 없으면 false 를 응답한다.")
+        void success2() {
+            // given
+            Comment comment = Comment.builder()
+                .id(123L)
+                .productId(1L)
+                .customerId(10L)
+                .comment("Great product!")
+                .score(4.5)
+                .regDate(LocalDate.of(2025, 1, 1))
+                .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
+                .build();
+            // when
+            boolean result = adapter.existsByCustomerIdAndProductId(
+                RegisterCommentCommand.builder()
+                    .productId(comment.productId())
+                    .account(Account.builder().id(comment.customerId()).build())
+                    .build()
+            );
+
+            // then
+            assert !result;
         }
     }
 }

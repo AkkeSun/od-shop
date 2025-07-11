@@ -4,6 +4,8 @@ import com.product.IntegrationTestSupport;
 import com.product.adapter.out.persistence.jpa.shard1.CommentShard1Adapter;
 import com.product.adapter.out.persistence.jpa.shard2.CommentShard2Adapter;
 import com.product.application.port.in.command.FindCommentListCommand;
+import com.product.application.port.in.command.RegisterCommentCommand;
+import com.product.domain.model.Account;
 import com.product.domain.model.Comment;
 import com.product.infrastructure.util.ShardKeyUtil;
 import java.time.LocalDate;
@@ -176,6 +178,47 @@ class CommentStorageAdapterTest extends IntegrationTestSupport {
 
             // then
             assert result.isEmpty();
+        }
+    }
+
+    @Nested
+    @DisplayName("[existsByCustomerIdAndProductId] 고객 아이디와 상품아이디로 리뷰 등록 유무를 조회하는 메소드")
+    class Describe_existsByCustomerIdAndProductId {
+
+        @Test
+        @DisplayName("[success] 상품 아이디가 shard1에 해당하면 shard1에 상품 정보를 조회한다.")
+        void success1() {
+            // given
+            Comment comment = getComment(true);
+            adapter.register(comment);
+
+            // when
+            boolean result = shard1Adapter.existsByCustomerIdAndProductId(
+                RegisterCommentCommand.builder()
+                    .productId(comment.productId())
+                    .account(Account.builder().id(comment.customerId()).build())
+                    .build());
+
+            // then
+            assert result;
+        }
+
+        @Test
+        @DisplayName("[success] 상품 아이디가 shard2에 해당하면 shard1에 상품 정보를 조회한다.")
+        void success2() {
+            // given
+            Comment comment = getComment(false);
+            adapter.register(comment);
+
+            // when
+            boolean result = shard2Adapter.existsByCustomerIdAndProductId(
+                RegisterCommentCommand.builder()
+                    .productId(comment.productId())
+                    .account(Account.builder().id(comment.customerId()).build())
+                    .build());
+
+            // then
+            assert result;
         }
     }
 
