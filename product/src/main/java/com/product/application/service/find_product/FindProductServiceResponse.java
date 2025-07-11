@@ -2,7 +2,9 @@ package com.product.application.service.find_product;
 
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
+import grpc.product.FindProductStubResponse;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Set;
 import lombok.Builder;
 
@@ -35,6 +37,22 @@ public record FindProductServiceResponse(
             .category(product.getCategory())
             .regDateTime(
                 product.getRegDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+            .build();
+    }
+
+    public FindProductStubResponse toStubResponse() {
+        return FindProductStubResponse.newBuilder()
+            .setProductId(productId)
+            .setSellerEmail(sellerEmail)
+            .setProductName(productName)
+            .setProductImgUrl(productImgUrl)
+            .setDescriptionImgUrl(descriptionImgUrl)
+            .addAllKeywords(new ArrayList<>(keywords))
+            .addAllProductOption(new ArrayList<>(productOption))
+            .setPrice(price)
+            .setQuantity(quantity)
+            .setCategory(category.description())
+            .setRegDateTime(regDateTime)
             .build();
     }
 }

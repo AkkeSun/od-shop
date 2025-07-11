@@ -48,6 +48,10 @@ server:
   port: 8082
   shutdown: graceful
 
+grpc:
+  server:
+    port: 8083
+
 logging:
   level:
     org.springframework.transaction.interceptor: DEBUG

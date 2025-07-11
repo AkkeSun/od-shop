@@ -13,14 +13,15 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Slf4j
 @Aspect
 @Component
 @RequiredArgsConstructor
 public class LogAspect {
-
-    private final HttpServletRequest request;
 
     @Pointcut("@annotation(io.micrometer.tracing.annotation.NewSpan))")
     private void newSpan() {
@@ -36,6 +37,7 @@ public class LogAspect {
 
     @Around("controllerMethods()")
     public Object controllerLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        HttpServletRequest request = getRequest();
         String httpMethod = request.getMethod();
         String path = request.getRequestURI();
 
@@ -74,7 +76,8 @@ public class LogAspect {
     }
 
     @Around("controllerAdviceMethods()")
-    public Object controllerAdvieLog(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object controllerAdviceLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        HttpServletRequest request = getRequest();
         Object result = joinPoint.proceed();
         log.info("[{} {}] response - {}", request.getMethod(), request.getRequestURI(), result);
         return result;
@@ -82,13 +85,28 @@ public class LogAspect {
 
     @Around("newSpan()")
     public Object newSpanLog(ProceedingJoinPoint joinPoint) throws Throwable {
-        String httpMethod = request.getMethod();
-        String path = request.getRequestURI();
         String[] packages = joinPoint.getSignature().getDeclaringTypeName().split("\\.");
         String className = packages[packages.length - 1];
         String methodName = joinPoint.getSignature().getName();
 
-        log.info("[{} {}] {}.{}() call", httpMethod, path, className, methodName);
+        HttpServletRequest request = getRequest();
+        if (request == null) {
+            log.info("[gRPC] {}.{}() call", className, methodName);
+        } else {
+            String httpMethod = request.getMethod();
+            String path = request.getRequestURI();
+
+            log.info("[{} {}] {}.{}() call", httpMethod, path, className, methodName);
+        }
         return joinPoint.proceed();
+    }
+
+    // CAUTION) gRPC 는 HTTP/2 통신 이므로 HttpServletRequest 는 사용할 수 없음
+    private HttpServletRequest getRequest() {
+        RequestAttributes attrs = RequestContextHolder.getRequestAttributes();
+        if (attrs instanceof ServletRequestAttributes servletAttrs) {
+            return servletAttrs.getRequest();
+        }
+        return null;
     }
 }

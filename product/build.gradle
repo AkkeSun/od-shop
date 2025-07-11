@@ -1,9 +1,18 @@
+buildscript {
+    ext {
+        protobufVersion = '4.27.2'
+        protobufPluginVersion = '0.9.4'
+        grpcVersion = '1.65.1'
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'com.epages.restdocs-api-spec' version '0.19.0'
     id 'org.hidetake.swagger.generator' version '2.19.2'
+    id 'com.google.protobuf' version "${protobufPluginVersion}"
 }
 
 group = 'com.sweettracker'
@@ -63,6 +72,15 @@ dependencies {
     // Jasypt
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 
+    // grpc
+    implementation "com.google.protobuf:protobuf-java-util:3.25.3"
+    implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+    implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
+    implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
+
     // redis test
     testImplementation 'it.ozimov:embedded-redis:0.7.2'
 
@@ -82,6 +100,26 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+// ./gradlew clean generateProto
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    clean {
+        delete generatedFilesBaseDir
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
 }
 
 swaggerSources {
@@ -106,12 +144,12 @@ openapi3 {
 tasks.register('copyOasToSwagger', DefaultTask) {
     doLast {
         def openapi3File = file("src/main/resources/static/docs/product-api.yaml")
-        def securitySchemesContent = "  securitySchemes:\n" +                                       \
-                                                                           "    APIKey:\n" +                                       \
-                                                                           "      type: apiKey\n" +                                       \
-                                                                           "      name: Authorization\n" +                                       \
-                                                                           "      in: header\n" +                                      \
-                                                                           "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +                                                       \
+                                                                                           "    APIKey:\n" +                                                       \
+                                                                                           "      type: apiKey\n" +                                                       \
+                                                                                           "      name: Authorization\n" +                                                       \
+                                                                                           "      in: header\n" +                                                      \
+                                                                                           "security:\n" +
                 "  - APIKey: []"
 
         if (openapi3File.exists()) {

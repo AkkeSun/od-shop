@@ -45,18 +45,6 @@ public class ExceptionAdvice {
         );
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(CustomValidationException.class)
-    ApiResponse<Object> customValidationException(CustomValidationException e) {
-        return ApiResponse.of(
-            HttpStatus.BAD_REQUEST,
-            ErrorResponse.builder()
-                .errorCode(1001)
-                .errorMessage(e.getErrorMessage())
-                .build()
-        );
-    }
-
     @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(CustomNotFoundException.class)
