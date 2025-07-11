@@ -3,10 +3,10 @@ package com.product.application.service.delete_product;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.DeleteProductUseCase;
-import com.product.application.port.out.CommentStoragePort;
 import com.product.application.port.out.ElasticSearchClientPort;
 import com.product.application.port.out.MessageProducerPort;
 import com.product.application.port.out.ProductStoragePort;
+import com.product.application.port.out.ReviewStoragePort;
 import com.product.domain.model.Account;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductHistory;
@@ -23,7 +23,7 @@ class DeleteProductService implements DeleteProductUseCase {
 
     @Value("${kafka.topic.history}")
     private String historyTopic;
-    private final CommentStoragePort commentStoragePort;
+    private final ReviewStoragePort reviewStoragePort;
     private final ProductStoragePort productStoragePort;
     private final MessageProducerPort messageProducerPort;
     private final ElasticSearchClientPort elasticSearchClientPort;
@@ -36,7 +36,7 @@ class DeleteProductService implements DeleteProductUseCase {
         }
 
         LocalDateTime deleteAt = LocalDateTime.now();
-        commentStoragePort.deleteByProductId(productId);
+        reviewStoragePort.deleteByProductId(productId);
         productStoragePort.softDeleteById(productId, deleteAt);
         elasticSearchClientPort.deleteById(productId);
 

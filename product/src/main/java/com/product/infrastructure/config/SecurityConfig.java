@@ -52,7 +52,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/products").hasRole("SELLER")
                     .requestMatchers(HttpMethod.PUT, "/products/{productId}").hasRole("SELLER")
                     .requestMatchers(HttpMethod.DELETE, "/products/{productId}").hasRole("SELLER")
-                    .requestMatchers(HttpMethod.POST, "/products/{productId}/comments")
+                    .requestMatchers(HttpMethod.POST, "/products/{productId}/reviews")
                     .hasRole("CUSTOMER")
                     .anyRequest().authenticated();
             })

@@ -2,13 +2,13 @@ package com.product.application.service.delete_product;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.product.application.port.out.CommentStoragePort;
+import com.product.application.port.out.ReviewStoragePort;
 import com.product.domain.model.Account;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
-import com.product.fakeClass.FakeCommentStoragePort;
 import com.product.fakeClass.FakeElasticSearchClientPort;
 import com.product.fakeClass.FakeProductStoragePort;
+import com.product.fakeClass.FakeReviewStoragePort;
 import com.product.infrastructure.exception.CustomAuthorizationException;
 import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.AfterEach;
@@ -20,7 +20,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 class DeleteProductServiceTest {
 
     private final FakeProductStoragePort productStoragePort;
-    private final CommentStoragePort commentStoragePort;
+    private final ReviewStoragePort reviewStoragePort;
     private final FakeElasticSearchClientPort elasticSearchClientPort;
     private final DummyMessageProducerPort messageProducerPort;
     private final DeleteProductService deleteProductService;
@@ -29,9 +29,9 @@ class DeleteProductServiceTest {
         this.productStoragePort = new FakeProductStoragePort();
         this.elasticSearchClientPort = new FakeElasticSearchClientPort();
         this.messageProducerPort = new DummyMessageProducerPort();
-        this.commentStoragePort = new FakeCommentStoragePort();
+        this.reviewStoragePort = new FakeReviewStoragePort();
         this.deleteProductService = new DeleteProductService(
-            commentStoragePort,
+            reviewStoragePort,
             productStoragePort,
             messageProducerPort,
             elasticSearchClientPort
