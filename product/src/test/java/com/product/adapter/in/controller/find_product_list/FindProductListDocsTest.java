@@ -211,7 +211,7 @@ public class FindProductListDocsTest extends RestDocsSupport {
                         .queryParameters(
                             parameterWithName("query").description("검색어"),
                             parameterWithName("category").description(
-                                "카테고리 (ELECTRONICS, FASHION, HOME_APPLIANCES, BEAUTY, BOOKS, SPORTS FOOD, TOYS, FURNITURE, AUTOMOTIVE, HEALTH, TOTAL"),
+                                "카테고리 (ELECTRONICS, FASHION, HOME_APPLIANCES, BEAUTY, BOOKS, SPORTS FOOD, TOYS, FURNITURE, AUTOMOTIVE, HEALTH, TOTAL)"),
                             parameterWithName("sortType").description(
                                 "정렬 타입 (PRICE_ASC, PRICE_DESC, SALES_COUNT_ASC, SALES_COUNT_DESC, REVIEW_CNT_ASC, REVIEW_CNT_DESC, REG_DATE_TIME_ASC, REG_DATE_TIME_DESC, TOTAL_SCORE_ASC, TOTAL_SCORE_DESC)"),
                             parameterWithName("page").description("조회 페이지 (기본값 0)").optional(),

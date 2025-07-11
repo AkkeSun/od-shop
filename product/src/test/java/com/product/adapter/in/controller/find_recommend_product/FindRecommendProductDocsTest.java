@@ -75,10 +75,10 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
             FindRecommendProductRequest request = FindRecommendProductRequest.builder()
                 .searchDate("20250501")
                 .build();
-            String token = "Bearer test";
+            String authorization = "Bearer testToken";
 
             // when then
-            performDocument(status().isOk(), token, request, "success",
+            performDocument(status().isOk(), authorization, request, "success",
                 "[response] find-recommend-product",
                 fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
                     .description("상태 코드"),
@@ -133,7 +133,7 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
         FindRecommendProductRequest request = FindRecommendProductRequest.builder()
             .searchDate("")
             .build();
-        String authorization = "Bearer test-token";
+        String authorization = "Bearer testToken";
 
         // when then
         performErrorDocument(status().isBadRequest(), authorization, request,
@@ -147,7 +147,7 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
         FindRecommendProductRequest request = FindRecommendProductRequest.builder()
             .searchDate("error")
             .build();
-        String authorization = "Bearer test-token";
+        String authorization = "Bearer testToken";
 
         // when then
         performErrorDocument(status().isBadRequest(), authorization, request,
@@ -174,10 +174,9 @@ public class FindRecommendProductDocsTest extends RestDocsSupport {
                         .tag("Product")
                         .summary("추천 상품 목록 조회 API")
                         .description("추천 상품을 조회하는 API 입니다. <br><br>"
-                            + "1. 최다 판매 상품, 트랜드 분석 기반 추천 상품이 기본 응답되며 인증 토큰 입력시 사용자 구매 데이터 기반 추천 상품이 추가로 응답 됩니다. <br>"
+                            + "1. 최다 판매 상품, 트랜드 분석 기반 추천 상품이 조회되며 인증 토큰 입력시 사용자 구매 데이터 기반 추천 상품이 추가로 조회 됩니다. <br>"
                             + "2. 중복된 추천 상품은 제거되어 응답 됩니다. <br>"
-                            + "3. 테스트시 우측 자물쇠를 클릭하여 유효한 인증 토큰을 입력해야 정상 테스트가 가능합니다. (요청 헤더에 인증 토큰을 입력하여 테스트하지 않습니다) <br>"
-                            + "4. 구매 권한을 가진 사용자만 조회할 수 있습니다.")
+                            + "3. 테스트시 우측 자물쇠를 클릭하여 유효한 인증 토큰을 입력해야 정상 테스트가 가능합니다. (요청 헤더에 인증 토큰을 입력하여 테스트하지 않습니다)")
                         .queryParameters(
                             parameterWithName("searchDate").description("검색 날짜 (yyyyMMdd)")
                         )

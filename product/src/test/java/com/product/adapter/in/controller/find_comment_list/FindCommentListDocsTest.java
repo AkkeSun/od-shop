@@ -61,7 +61,7 @@ public class FindCommentListDocsTest extends RestDocsSupport {
                     .comments(List.of(FindCommentListServiceResponseItem.builder()
                             .comment("좋아요")
                             .customerEmail("od@gmail.com")
-                        .build(),
+                            .build(),
                         FindCommentListServiceResponseItem.builder()
                             .comment("굿굿")
                             .customerEmail("exg@gmail.com")
@@ -145,7 +145,7 @@ public class FindCommentListDocsTest extends RestDocsSupport {
     private void performErrorDocument(FindCommentListRequest request, Long productId,
         ResultMatcher status, String identifier) throws Exception {
 
-        performDocument(request, productId, status, identifier, "[response] error",
+        performDocument(request, productId, status, identifier, "error",
             fieldWithPath("httpStatus").type(JsonFieldType.NUMBER)
                 .description("상태 코드"),
             fieldWithPath("message").type(JsonFieldType.STRING)

@@ -72,7 +72,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .keywords(Set.of("keyword1", "keyword2"))
                 .productOption(request.productOption())
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             given(registerProductUseCase.registerProduct(any())).willReturn(response);
 
             // when then
@@ -120,7 +120,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             given(registerProductUseCase.registerProduct(any())).willThrow(
                 new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
 
@@ -142,7 +142,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             given(registerProductUseCase.registerProduct(any())).willThrow(
                 new CustomAuthorizationException(ErrorCode.ACCESS_DENIED));
 
@@ -164,7 +164,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -184,7 +184,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -204,7 +204,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -224,7 +224,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -244,11 +244,11 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
-                "[register-product] 1미만의 상품 금액 입력");
+                "[register-product] 1 미만의 상품 금액 입력");
         }
 
         @Test
@@ -264,7 +264,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -284,7 +284,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -304,7 +304,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -324,7 +324,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl(null)
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -344,7 +344,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl(null)
                 .productOption(Set.of("옵션1", "옵션2"))
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -364,7 +364,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                 .descriptionImgUrl("상품 설명")
                 .productOption(null)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
 
             // when then
             performErrorDocument(request, authorization, status().isBadRequest(),
@@ -403,7 +403,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
                         .summary("상품 등록 API")
                         .description("상품을 등록하는 API 입니다. <br><br>"
                             + "1. 테스트시 우측 자물쇠를 클릭하여 유효한 인증 토큰을 입력해야 정상 테스트가 가능합니다. (요청 헤더에 인증 토큰을 입력하여 테스트하지 않습니다) <br>"
-                            + "2. 판매자 권한을 가진 사용자만 상품을 등록할 수 있습니다.")
+                            + "2. 판매 권한을 가진 사용자만 상품을 등록할 수 있습니다.")
                         .requestFields(
                             fieldWithPath("productName").type(productNameType)
                                 .description("상품명 (50자 이하)"),

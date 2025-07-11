@@ -19,8 +19,6 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.product.RestDocsSupport;
-import com.product.adapter.in.controller.update_product.UpdateProductController;
-import com.product.adapter.in.controller.update_product.UpdateProductRequest;
 import com.product.application.port.in.UpdateProductUseCase;
 import com.product.application.service.update_product.UpdateProductServiceResponse;
 import com.product.domain.model.Category;
@@ -58,7 +56,7 @@ public class UpdateProductDocsTest extends RestDocsSupport {
             .descriptionImgUrl("http://example.com/description.jpg")
             .build();
         Long productId = 1L;
-        String authorization = "testToken";
+        String authorization = "Bearer testToken";
 
         when(updateProductUseCase.updateProduct(any()))
             .thenReturn(UpdateProductServiceResponse.builder()
@@ -116,7 +114,7 @@ public class UpdateProductDocsTest extends RestDocsSupport {
             .descriptionImgUrl("http://example.com/description.jpg")
             .build();
         Long productId = 1L;
-        String authorization = "errorToken";
+        String authorization = "Bearer testToken";
         given(updateProductUseCase.updateProduct(any())).willThrow(
             new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
 
@@ -138,7 +136,7 @@ public class UpdateProductDocsTest extends RestDocsSupport {
             .descriptionImgUrl("http://example.com/description.jpg")
             .build();
         Long productId = 1L;
-        String authorization = "errorToken";
+        String authorization = "Bearer testToken";
         given(updateProductUseCase.updateProduct(any())).willThrow(
             new CustomAuthorizationException(ErrorCode.ACCESS_DENIED));
 
@@ -160,7 +158,7 @@ public class UpdateProductDocsTest extends RestDocsSupport {
             .descriptionImgUrl("http://example.com/description.jpg")
             .build();
         Long productId = 1L;
-        String authorization = "errorToken";
+        String authorization = "Bearer testToken";
 
         // when then
         performErrorDocument(request, productId, authorization, status().isBadRequest(),
@@ -180,7 +178,7 @@ public class UpdateProductDocsTest extends RestDocsSupport {
             .descriptionImgUrl("http://example.com/description.jpg")
             .build();
         Long productId = 1L;
-        String authorization = "testToken";
+        String authorization = "Bearer testToken";
 
         // when then
         performErrorDocument(request, productId, authorization, status().isBadRequest(),
@@ -200,7 +198,7 @@ public class UpdateProductDocsTest extends RestDocsSupport {
             .descriptionImgUrl("test".repeat(13))
             .build();
         Long productId = 1L;
-        String authorization = "testToken";
+        String authorization = "Bearer testToken";
 
         // when then
         performErrorDocument(request, productId, authorization, status().isBadRequest(),
@@ -220,7 +218,7 @@ public class UpdateProductDocsTest extends RestDocsSupport {
             .descriptionImgUrl("http://example.com/description.jpg")
             .build();
         Long productId = 2L;
-        String authorization = "testToken";
+        String authorization = "Bearer testToken";
         given(updateProductUseCase.updateProduct(any())).willThrow(
             new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
 

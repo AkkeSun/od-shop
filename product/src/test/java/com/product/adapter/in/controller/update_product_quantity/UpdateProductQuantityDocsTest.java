@@ -53,7 +53,7 @@ class UpdateProductQuantityDocsTest extends RestDocsSupport {
                 .quantity(10)
                 .quantityType("ADD_QUANTITY")
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 10L;
             given(updateProductQuantityUseCase.updateProductQuantity(any()))
                 .willReturn(UpdateProductQuantityServiceResponse.builder()
@@ -83,7 +83,7 @@ class UpdateProductQuantityDocsTest extends RestDocsSupport {
                 .quantity(10)
                 .quantityType("ADD_QUANTITY")
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 10L;
             given(updateProductQuantityUseCase.updateProductQuantity(any()))
                 .willThrow(new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
@@ -101,7 +101,7 @@ class UpdateProductQuantityDocsTest extends RestDocsSupport {
                 .quantity(10)
                 .quantityType("ADD_QUANTITY")
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 10L;
             given(updateProductQuantityUseCase.updateProductQuantity(any()))
                 .willThrow(new CustomAuthorizationException(ErrorCode.ACCESS_DENIED));
@@ -119,7 +119,7 @@ class UpdateProductQuantityDocsTest extends RestDocsSupport {
                 .quantity(-1)
                 .quantityType("ADD_QUANTITY")
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 10L;
 
             // when // then
@@ -135,7 +135,7 @@ class UpdateProductQuantityDocsTest extends RestDocsSupport {
                 .quantity(20)
                 .quantityType("ADD_QUANTITY")
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 10L;
             given(updateProductQuantityUseCase.updateProductQuantity(any()))
                 .willThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
@@ -153,7 +153,7 @@ class UpdateProductQuantityDocsTest extends RestDocsSupport {
                 .quantity(20)
                 .quantityType("error")
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 10L;
 
             // when // then
@@ -168,7 +168,7 @@ class UpdateProductQuantityDocsTest extends RestDocsSupport {
             UpdateProductQuantityRequest request = UpdateProductQuantityRequest.builder()
                 .quantity(20)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 11L;
 
             // when // then

@@ -18,7 +18,6 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.product.RestDocsSupport;
-import com.product.adapter.in.controller.delete_product.DeleteProductController;
 import com.product.application.port.in.DeleteProductUseCase;
 import com.product.application.service.delete_product.DeleteProductServiceResponse;
 import com.product.infrastructure.exception.CustomAuthenticationException;
@@ -51,7 +50,7 @@ public class DeleteProductDocsTest extends RestDocsSupport {
         void success() throws Exception {
             // given
             Long productId = 1L;
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             when(deleteProductUseCase.deleteProduct(any(), any()))
                 .thenReturn(DeleteProductServiceResponse.builder().result(true).build());
 
@@ -75,7 +74,7 @@ public class DeleteProductDocsTest extends RestDocsSupport {
         void error() throws Exception {
             // given
             Long productId = 1L;
-            String authorization = "invalidToken";
+            String authorization = "Bearer testToken";
             when(deleteProductUseCase.deleteProduct(any(), any()))
                 .thenThrow(new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
 
@@ -89,7 +88,7 @@ public class DeleteProductDocsTest extends RestDocsSupport {
         void error2() throws Exception {
             // given
             Long productId = 1L;
-            String authorization = "invalidToken2";
+            String authorization = "Bearer testToken";
             when(deleteProductUseCase.deleteProduct(any(), any()))
                 .thenThrow(new CustomAuthorizationException(ErrorCode.ACCESS_DENIED));
 
@@ -104,7 +103,7 @@ public class DeleteProductDocsTest extends RestDocsSupport {
         void error3() throws Exception {
             // given
             Long productId = 2L;
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             when(deleteProductUseCase.deleteProduct(any(), any()))
                 .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
 

@@ -54,7 +54,7 @@ public class RegisterCommentDocsTest extends RestDocsSupport {
                 .comment("테스트 리뷰 정보 입니다.")
                 .score(5.0)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 1L;
             when(registerCommentUseCase.registerComment(any()))
                 .thenReturn(RegisterCommentServiceResponse.ofSuccess());
@@ -81,7 +81,7 @@ public class RegisterCommentDocsTest extends RestDocsSupport {
                 .comment("테스트 리뷰 정보 입니다.")
                 .score(5.0)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 1L;
             given(registerCommentUseCase.registerComment(any())).willThrow(
                 new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
@@ -99,7 +99,7 @@ public class RegisterCommentDocsTest extends RestDocsSupport {
                 .comment("테스트 리뷰 정보 입니다.")
                 .score(5.0)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 1L;
             given(registerCommentUseCase.registerComment(any())).willThrow(
                 new CustomAuthorizationException(ErrorCode.ACCESS_DENIED));
@@ -117,7 +117,7 @@ public class RegisterCommentDocsTest extends RestDocsSupport {
                 .comment(null)
                 .score(5.0)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 1L;
 
             // when then
@@ -133,7 +133,7 @@ public class RegisterCommentDocsTest extends RestDocsSupport {
                 .comment("")
                 .score(5.0)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 1L;
 
             // when then
@@ -149,7 +149,7 @@ public class RegisterCommentDocsTest extends RestDocsSupport {
                 .comment("error")
                 .score(5.0)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 1L;
 
             // when then
@@ -165,7 +165,7 @@ public class RegisterCommentDocsTest extends RestDocsSupport {
                 .comment("테스트 리뷰 정보 입니다.")
                 .score(null)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 1L;
 
             // when then
@@ -181,7 +181,7 @@ public class RegisterCommentDocsTest extends RestDocsSupport {
                 .comment("테스트 리뷰 정보 입니다.")
                 .score(7.0)
                 .build();
-            String authorization = "testToken";
+            String authorization = "Bearer testToken";
             Long productId = 1L;
 
             // when then
