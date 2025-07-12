@@ -42,7 +42,7 @@ public class RegisterLoginLogConsumer {
             log.info("[login-log-dql] result - " + response.result());
         } catch (Exception e) {
             log.error("[login-log-dlq] error - ", e);
-            registerDqlInfoUseCase.registerDqlInfo(payload);
+            registerDqlInfoUseCase.registerDqlInfo("account-login", payload);
         }
     }
 }

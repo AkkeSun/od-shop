@@ -41,7 +41,7 @@ class RegisterHistoryConsumer {
             log.info("[account-history-dql] result - " + response.result());
         } catch (Exception e) {
             log.error("[account-history-dlq] error - ", e);
-            registerDqlInfoUseCase.registerDqlInfo(payload);
+            registerDqlInfoUseCase.registerDqlInfo("account-history", payload);
         }
     }
 }
