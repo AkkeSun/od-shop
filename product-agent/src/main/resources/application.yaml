@@ -1,3 +1,84 @@
 spring:
   application:
     name: product-agent
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+  datasource:
+    shard1:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: akkessun
+      password: ENC(BlWM+FZglaP3eCZQRUcq/YNGKv77wW7Y)
+      url: jdbc:mysql://140.245.70.130:3306/product1?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      hikari:
+        maximum-pool-size=30
+        minimum-idle=10
+        connection-timeout=100000
+    shard2:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: akkessun
+      password: ENC(BlWM+FZglaP3eCZQRUcq/YNGKv77wW7Y)
+      url: jdbc:mysql://140.245.70.130:3306/product2?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      hikari:
+        maximum-pool-size=30
+        minimum-idle=10
+        connection-timeout=100000
+
+  data:
+    redis:
+      host: 140.245.70.130
+      port: 6379
+      timeout: 3000
+    mongodb:
+      uri: mongodb://akkessun:sunyang2ek+@140.245.70.130:27017/product
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      redis:
+        slidingWindowSize: 3
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+      kafka:
+        slidingWindowSize: 5
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+      default:
+        slidingWindowSize: 3
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+    instances:
+      redis:
+        base-config: redis
+      kafka:
+        base-config: kafka
+      elasticsearch:
+        base-config: default
+      gemini:
+        base-config: default
+
+server:
+  port: 18082
+  shutdown: graceful
+
+kafka:
+  host: 152.67.206.159:9092
