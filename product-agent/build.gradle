@@ -56,6 +56,11 @@ dependencies {
     // Jasypt
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 
+    // circuit breaker
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
+    implementation 'commons-codec:commons-codec:1.15'
+
     // grpc
     implementation "com.google.protobuf:protobuf-java-util:3.25.3"
     implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
