@@ -10,4 +10,5 @@ public interface LogStoragePort {
 
     void registerDlqLog(DlqLog log);
 
+    void registerDlqLogs(List<DlqLog> logs);
 }

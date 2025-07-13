@@ -28,4 +28,10 @@ class LogStorageAdapter implements LogStoragePort {
     public void registerDlqLog(DlqLog log) {
         mongoTemplate.insert(DlqLogDocument.of(log), "dql_" + getCurrentDate());
     }
+
+    @Override
+    public void registerDlqLogs(List<DlqLog> logs) {
+        mongoTemplate.insert(logs.stream().map(DlqLogDocument::of).toList(),
+            "dql_" + getCurrentDate());
+    }
 }

@@ -1,8 +1,8 @@
 package com.productagent.domain.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.productagent.infrastructure.util.DateUtil;
 import lombok.Builder;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 @Builder
 public record DlqLog(
@@ -11,10 +11,10 @@ public record DlqLog(
     String regDateTime
 ) {
 
-    public static DlqLog of(JsonNode jsonNode) {
+    public static DlqLog of(ConsumerRecord<String, String> record) {
         return DlqLog.builder()
-            .topic(jsonNode.get("topic").asText())
-            .payload(jsonNode.get("value").asText())
+            .topic(record.topic())
+            .payload(record.value())
             .regDateTime(DateUtil.getCurrentDateTime())
             .build();
     }

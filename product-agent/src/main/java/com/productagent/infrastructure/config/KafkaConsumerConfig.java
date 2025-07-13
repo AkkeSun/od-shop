@@ -1,5 +1,6 @@
 package com.productagent.infrastructure.config;
 
+import com.productagent.infrastructure.handler.DlqHandler;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.CommonErrorHandler;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.DefaultErrorHandler;
@@ -63,33 +63,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> dlqContainerFactory(
-        @Qualifier("consumerFactory") ConsumerFactory<String, String> consumerFactory) {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
-            new ConcurrentKafkaListenerContainerFactory<>();
-
-        factory.setConsumerFactory(consumerFactory);
-        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.RECORD);
-        return factory;
-    }
-
-    @Bean
-    public CommonErrorHandler errorHandler(KafkaTemplate<String, String> kafkaTemplate) {
-        // 재시도 간격: 2초, 최대 재시도 횟수: 3회
-        FixedBackOff fixedBackOff = new FixedBackOff(2000L, 3L);
-
-        // Dql Handler
-        return new DefaultErrorHandler((record, exception) -> {
-            String payload = String.format(
-                "{ \"topic\": \"%s\", \"value\": \"%s\" }",
-                record.topic(), record.value()
-            );
-
-            kafkaTemplate.send("product-dlq", payload)
-                .exceptionally(ex -> {
-                    log.error("[push dlq] failed ==> {} | {}", payload, ex.toString());
-                    return null;
-                });
-        }, fixedBackOff);
+    public CommonErrorHandler errorHandler(DlqHandler handler) {
+        return new DefaultErrorHandler(handler::handle, new FixedBackOff(2000L, 3L));
     }
 }

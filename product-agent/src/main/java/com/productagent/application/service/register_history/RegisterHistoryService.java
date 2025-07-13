@@ -35,5 +35,6 @@ class RegisterHistoryService implements RegisterHistoryUseCase {
         if (!histories.isEmpty()) {
             logStoragePort.registerHistories(histories);
         }
+        throw new RuntimeException();
     }
 }
