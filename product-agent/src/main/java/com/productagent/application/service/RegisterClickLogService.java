@@ -1,4 +1,4 @@
-package com.productagent.application.service.register_click_log;
+package com.productagent.application.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productagent.application.port.in.RegisterClickLogUseCase;

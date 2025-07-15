@@ -1,4 +1,4 @@
-package com.productagent.application.service.register_dlq;
+package com.productagent.application.service;
 
 import com.productagent.application.port.in.RegisterDlqUseCase;
 import com.productagent.application.port.in.command.RegisterDlqCommand;

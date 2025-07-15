@@ -1,4 +1,4 @@
-package com.productagent.application.service.register_history;
+package com.productagent.application.service;
 
 import static com.productagent.infrastructure.util.JsonUtil.parseJson;
 
