@@ -1,0 +1,1 @@
+GET http://localhost:8082/products?query=멋진상품&category=FASHION&sortType=PRICE_ASC
