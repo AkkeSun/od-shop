@@ -47,6 +47,11 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
+    public ConsumerFactory<String, String> registerSearchLogConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(getBatchConsumerProps("search-log"));
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> defaultContainerFactory(
         @Qualifier("consumerFactory") ConsumerFactory<String, String> consumerFactory,
         CommonErrorHandler errorHandler) {
