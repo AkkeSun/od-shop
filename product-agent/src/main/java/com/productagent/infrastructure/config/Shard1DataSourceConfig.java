@@ -60,7 +60,7 @@ public class Shard1DataSourceConfig {
 
         return builder
             .dataSource(dataSource)
-            .packages("com.product.adapter.out.persistence.jpa.shard1")
+            .packages("com.productagent.adapter.out.persistence.jpa.shard1")
             .persistenceUnit("primaryEntityManager")
             .properties(props)
             .build();

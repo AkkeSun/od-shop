@@ -56,7 +56,7 @@ public class Shard2DataSourceConfig {
 
         return builder
             .dataSource(dataSource)
-            .packages("com.product.adapter.out.persistence.jpa.shard2")
+            .packages("com.productagent.adapter.out.persistence.jpa.shard2")
             .persistenceUnit("secondaryEntityManager")
             .properties(props)
             .build();
