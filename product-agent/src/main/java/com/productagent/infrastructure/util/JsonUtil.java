@@ -13,12 +13,8 @@ public class JsonUtil {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
-    public static <T> T parseJson(String json, Class<T> clazz) {
-        try {
-            return objectMapper.readValue(json, clazz);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public static <T> T parseJson(String json, Class<T> clazz) throws JsonProcessingException {
+        return objectMapper.readValue(json, clazz);
     }
 
     public static JsonNode getJsonNode(String payload) {
