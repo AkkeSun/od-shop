@@ -8,4 +8,8 @@ public interface ProductStoragePort {
     void registerMetrics(List<Product> products);
 
     Product findByIdAndDeleteYn(Long productId, String deleteYn);
+
+    void deleteBySellerId(Long sellerId);
+
+    List<Long> findIdBySellerId(Long sellerId);
 }

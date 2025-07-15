@@ -87,3 +87,7 @@ kafka:
     click: product-click
     search: product-search
 
+service-constant:
+  external:
+    elasticsearch:
+      host: http://152.67.206.159:9200

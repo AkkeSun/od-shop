@@ -41,4 +41,17 @@ class ProductStorageAdapter implements ProductStoragePort {
         return isShard1(productId) ? shard1Adapter.findByIdAndDeleteYn(productId, deleteYn) :
             shard2Adapter.findByIdAndDeleteYn(productId, deleteYn);
     }
+
+    @Override
+    public void deleteBySellerId(Long sellerId) {
+        shard1Adapter.deleteBySellerId(sellerId);
+        shard2Adapter.deleteBySellerId(sellerId);
+    }
+
+    @Override
+    public List<Long> findIdBySellerId(Long sellerId) {
+        List<Long> ids = shard1Adapter.findIdBySellerId(sellerId);
+        ids.addAll(shard2Adapter.findIdBySellerId(sellerId));
+        return ids;
+    }
 }

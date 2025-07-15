@@ -15,5 +15,9 @@ public class DateUtil {
         return LocalDateTime.now()
             .format(DateTimeFormatter.ofPattern("yyyyMMdd", Locale.KOREA));
     }
+
+    public static String formatDateTime(LocalDateTime dateTime) {
+        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.KOREA));
+    }
 }
 

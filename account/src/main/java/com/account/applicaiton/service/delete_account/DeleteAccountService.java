@@ -11,6 +11,7 @@ import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.AccountHistory;
+import com.account.domain.model.DeleteAccountLog;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,8 @@ class DeleteAccountService implements DeleteAccountUseCase {
         tokenStoragePort.deleteByEmail(account.getEmail());
         redisStoragePort.deleteTokenByEmail(account.getEmail());
 
-        messageProducerPort.sendMessage(deleteTopic, String.valueOf(account.getId()));
-        messageProducerPort.sendMessage(historyTopic, toJsonString(history));
+        messageProducerPort.sendMessage(deleteTopic, toJsonString(account));
+        messageProducerPort.sendMessage(historyTopic, toJsonString(DeleteAccountLog.of(account)));
 
         return DeleteAccountServiceResponse.ofSuccess(account);
     }

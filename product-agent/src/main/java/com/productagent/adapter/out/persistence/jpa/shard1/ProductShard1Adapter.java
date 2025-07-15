@@ -5,6 +5,7 @@ import com.productagent.application.port.out.ProductStoragePort;
 import com.productagent.domain.model.Product;
 import com.productagent.infrastructure.exception.CustomNotFoundException;
 import com.productagent.infrastructure.exception.ErrorCode;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,16 @@ public class ProductShard1Adapter implements ProductStoragePort {
         ProductShard1Entity entity = optional.orElseThrow(
             () -> new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
         return entity.toDomain();
+    }
+
+    @Override
+    public void deleteBySellerId(Long sellerId) {
+        productRepository.softDeleteByIdSellerId(sellerId, LocalDateTime.now());
+        metricRepository.deleteAllById(productRepository.findIdBySellerId(sellerId));
+    }
+
+    @Override
+    public List<Long> findIdBySellerId(Long sellerId) {
+        return productRepository.findIdBySellerId(sellerId);
     }
 }
