@@ -29,8 +29,8 @@ public class KafkaBatchHandlerImpl implements KafkaBatchHandler {
         for (int i = 1; i <= maxRetry; i++) {
             try {
                 handler.process(records);
-                return;
             } catch (Exception e) {
+                log.warn("[{}] retry {}/{}", topic, i, maxRetry);
                 threadSleep();
                 if (i == maxRetry) {
                     registerDlqUseCase.register(records);
