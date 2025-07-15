@@ -1,6 +1,5 @@
 package com.productagent.application.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productagent.application.port.in.RegisterClickLogUseCase;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.application.port.out.ProductStoragePort;
@@ -17,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Slf4j
 @Service
@@ -33,17 +33,19 @@ class RegisterClickLogService implements RegisterClickLogUseCase {
 
         for (ConsumerRecord<String, String> record : records) {
             String payload = record.value();
-            try {
-                ProductClickLog log = JsonUtil.parseJson(payload, ProductClickLog.class);
-                logs.add(log);
-
-                Product metric = productMap.getOrDefault(log.productId(),
-                    productStoragePort.findByIdAndDeleteYn(log.productId(), "N"));
-                metric.updateHitCount();
-                productMap.put(log.productId(), metric);
-
-            } catch (JsonProcessingException e) {
+            ProductClickLog clickLog = JsonUtil.parseJson(payload, ProductClickLog.class);
+            if (ObjectUtils.isEmpty(clickLog)) {
                 log.error("[registerClickLogService] parsingFailed - {} ", payload);
+                continue;
+            }
+            logs.add(clickLog);
+
+            try {
+                Product product = productMap.getOrDefault(clickLog.productId(),
+                    productStoragePort.findByIdAndDeleteYn(clickLog.productId(), "N"));
+                product.updateHitCount();
+                productMap.put(clickLog.productId(), product);
+
             } catch (CustomNotFoundException e) {
                 log.error("[registerClickLogService] unknownProduct - {} ", payload);
             }

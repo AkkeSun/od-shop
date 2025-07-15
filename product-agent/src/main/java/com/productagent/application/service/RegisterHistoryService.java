@@ -2,7 +2,6 @@ package com.productagent.application.service;
 
 import static com.productagent.infrastructure.util.JsonUtil.parseJson;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productagent.application.port.in.RegisterHistoryUseCase;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.domain.model.ProductHistory;
@@ -13,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Slf4j
 @Service
@@ -26,11 +26,13 @@ class RegisterHistoryService implements RegisterHistoryUseCase {
         List<ProductHistory> histories = new ArrayList<>();
         for (ConsumerRecord<String, String> record : records) {
             String payload = record.value();
-            try {
-                histories.add(parseJson(payload, ProductHistory.class));
-            } catch (JsonProcessingException e) {
+            ProductHistory history = parseJson(payload, ProductHistory.class);
+
+            if (ObjectUtils.isEmpty(history)) {
                 log.error("[registerHistory] parsingFailed - {} ", payload);
+                continue;
             }
+            histories.add(history);
         }
 
         if (!histories.isEmpty()) {
