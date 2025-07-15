@@ -1,6 +1,5 @@
 package com.productagent.infrastructure.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -13,8 +12,12 @@ public class JsonUtil {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
-    public static <T> T parseJson(String json, Class<T> clazz) throws JsonProcessingException {
-        return objectMapper.readValue(json, clazz);
+    public static <T> T parseJson(String json, Class<T> clazz) {
+        try {
+            return objectMapper.readValue(json, clazz);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static JsonNode getJsonNode(String payload) {
