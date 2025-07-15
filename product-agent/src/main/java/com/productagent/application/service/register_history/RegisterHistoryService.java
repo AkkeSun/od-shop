@@ -2,6 +2,7 @@ package com.productagent.application.service.register_history;
 
 import static com.productagent.infrastructure.util.JsonUtil.parseJson;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productagent.application.port.in.RegisterHistoryUseCase;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.domain.model.ProductHistory;
@@ -27,7 +28,7 @@ class RegisterHistoryService implements RegisterHistoryUseCase {
             String payload = record.value();
             try {
                 histories.add(parseJson(payload, ProductHistory.class));
-            } catch (RuntimeException e) {
+            } catch (JsonProcessingException e) {
                 log.error("[registerHistory] parsingFailed - {} ", payload);
             }
         }

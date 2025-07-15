@@ -37,16 +37,13 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, String> batchConsumerFactory() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "product-batch");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "500"); // max poll size
-        return new DefaultKafkaConsumerFactory<>(props);
+    public ConsumerFactory<String, String> registerHistoryConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(getBatchConsumerProps("product-history"));
+    }
+
+    @Bean
+    public ConsumerFactory<String, String> registerClickConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(getBatchConsumerProps("product-click"));
     }
 
     @Bean
@@ -65,5 +62,17 @@ public class KafkaConsumerConfig {
     @Bean
     public CommonErrorHandler errorHandler(DlqHandler handler) {
         return new DefaultErrorHandler(handler::handle, new FixedBackOff(2000L, 3L));
+    }
+
+    private Map<String, Object> getBatchConsumerProps(String groupId) {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "500"); // max poll size
+        return props;
     }
 }

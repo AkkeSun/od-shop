@@ -82,3 +82,8 @@ server:
 
 kafka:
   host: 152.67.206.159:9092
+  topic:
+    history: product-history
+    click: product-click
+    search: product-search
+

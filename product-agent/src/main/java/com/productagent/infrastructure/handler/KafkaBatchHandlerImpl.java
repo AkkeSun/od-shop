@@ -2,12 +2,10 @@ package com.productagent.infrastructure.handler;
 
 import com.productagent.application.port.in.RegisterDlqUseCase;
 import java.time.Duration;
-import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -16,12 +14,9 @@ import org.springframework.stereotype.Component;
 public class KafkaBatchHandlerImpl implements KafkaBatchHandler {
 
     private final RegisterDlqUseCase registerDlqUseCase;
-    private final ConsumerFactory<String, String> batchConsumerFactory;
 
     @Override
-    public void handle(String topic, KafkaBatchProcess handler) {
-        Consumer<String, String> consumer = batchConsumerFactory.createConsumer();
-        consumer.subscribe(Collections.singletonList(topic));
+    public void handle(Consumer<String, String> consumer, String topic, KafkaBatchProcess handler) {
         ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(5));
 
         if (records.isEmpty()) {
@@ -44,7 +39,6 @@ public class KafkaBatchHandlerImpl implements KafkaBatchHandler {
         }
 
         consumer.commitSync();
-        consumer.close();
     }
 
     private void threadSleep() {
