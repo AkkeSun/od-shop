@@ -9,6 +9,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.RedisConnectionException;
+import org.redisson.client.RedisTimeoutException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -42,7 +44,7 @@ public class DistributedLockAspect {
                 return false;
             }
             return aopForTransaction.proceed(joinPoint);
-        } catch (Exception e) {
+        } catch (InterruptedException | RedisConnectionException | RedisTimeoutException e) {
             log.error("[DistributedLockAspect] {}", e.getMessage());
             throw new CustomServerException(ErrorCode.SERVER_DISTRIBUTE_LOCK);
         } finally {
