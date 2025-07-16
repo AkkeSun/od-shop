@@ -66,7 +66,7 @@ class ProductStub extends ProductServiceImplBase {
 
             responseObserver.onNext(serviceResponse.toStubResponse());
             responseObserver.onCompleted();
-            log.info("[gRPC] updateProductQuantity response - {}", toJsonString(request));
+            log.info("[gRPC] updateProductQuantity response - {}", toJsonString(serviceResponse));
 
         } catch (Exception e) {
             Status status = GrpcUtil.getStatus(e);
