@@ -10,7 +10,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 @Slf4j
 @Service
@@ -24,10 +23,6 @@ class DeleteProductService implements DeleteProductUseCase {
     @Override
     public void delete(String payload) {
         DeleteAccountLog account = JsonUtil.parseJson(payload, DeleteAccountLog.class);
-        if (ObjectUtils.isEmpty(account)) {
-            log.error("[deleteProduct] parsingFailed - {} ", payload);
-        }
-
         if (account.isSeller()) {
             List<Long> productIds = productStoragePort.findIdBySellerId(account.accountId());
             productStoragePort.deleteBySellerId(account.accountId());
