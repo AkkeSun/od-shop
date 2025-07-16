@@ -91,3 +91,10 @@ service-constant:
   external:
     elasticsearch:
       host: http://152.67.206.159:9200
+
+
+grpc:
+  client:
+    product:
+      address: 'static://localhost:8083'
+      negotiation-type: plaintext
