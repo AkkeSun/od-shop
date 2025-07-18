@@ -4,6 +4,7 @@ import com.productagent.application.port.in.RegisterDlqUseCase;
 import com.productagent.application.port.in.command.RegisterDlqCommand;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.domain.model.DlqLog;
+import com.productagent.infrastructure.constant.CollectionName;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ class RegisterDlqService implements RegisterDlqUseCase {
 
     @Override
     public void register(RegisterDlqCommand command) {
-        logStoragePort.registerDlqLog(command.toDomain());
+        logStoragePort.register(command.toDomain(), CollectionName.DLQ());
     }
 
     @Override
@@ -28,6 +29,6 @@ class RegisterDlqService implements RegisterDlqUseCase {
         for (ConsumerRecord<String, String> record : records) {
             logs.add(DlqLog.of(record));
         }
-        logStoragePort.registerDlqLogs(logs);
+        logStoragePort.register(logs, CollectionName.DLQ());
     }
 }

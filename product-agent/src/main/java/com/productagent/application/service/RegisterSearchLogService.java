@@ -5,6 +5,7 @@ import static com.productagent.infrastructure.util.JsonUtil.parseJson;
 import com.productagent.application.port.in.RegisterSearchLogUseCase;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.domain.model.SearchLog;
+import com.productagent.infrastructure.constant.CollectionName;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ class RegisterSearchLogService implements RegisterSearchLogUseCase {
             logs.add(parseJson(payload, SearchLog.class));
         }
         if (!logs.isEmpty()) {
-            logStoragePort.registerSearchLogs(logs);
+            logStoragePort.register(logs, CollectionName.SEARCH());
         }
     }
 }

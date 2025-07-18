@@ -5,6 +5,7 @@ import static com.productagent.infrastructure.util.JsonUtil.parseJson;
 import com.productagent.application.port.in.RegisterHistoryUseCase;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.domain.model.ProductHistory;
+import com.productagent.infrastructure.constant.CollectionName;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ class RegisterHistoryService implements RegisterHistoryUseCase {
         }
 
         if (!histories.isEmpty()) {
-            logStoragePort.registerHistories(histories);
+            logStoragePort.register(histories, CollectionName.HISTORY());
         }
     }
 }

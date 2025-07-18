@@ -4,6 +4,7 @@ import com.productagent.application.port.in.RegisterClickLogUseCase;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.domain.model.Product;
 import com.productagent.domain.model.ProductClickLog;
+import com.productagent.infrastructure.constant.CollectionName;
 import com.productagent.infrastructure.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ class RegisterClickLogService implements RegisterClickLogUseCase {
         }
 
         if (!logs.isEmpty()) {
-            logStoragePort.registerClickLogs(logs);
+            logStoragePort.register(logs, CollectionName.CLICK());
         }
     }
 }
