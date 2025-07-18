@@ -16,7 +16,7 @@ class UpdateProductMetricScheduler {
     @Async
     @Scheduled(cron = "0 */10 * * * *")
     @SchedulerLock(name = "product-metric-update", lockAtLeastFor = "1s", lockAtMostFor = "30s")
-    void registerSearchLog() {
+    void update() {
         useCase.update();
     }
 }
