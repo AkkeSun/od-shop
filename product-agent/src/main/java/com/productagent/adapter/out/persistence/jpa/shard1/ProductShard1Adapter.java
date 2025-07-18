@@ -3,8 +3,6 @@ package com.productagent.adapter.out.persistence.jpa.shard1;
 
 import com.productagent.application.port.out.ProductStoragePort;
 import com.productagent.domain.model.Product;
-import com.productagent.infrastructure.exception.CustomNotFoundException;
-import com.productagent.infrastructure.exception.ErrorCode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +32,7 @@ public class ProductShard1Adapter implements ProductStoragePort {
             deleteYn.equals("A") ? productRepository.findById(productId) :
                 productRepository.findByIdAndDeleteYn(productId, deleteYn);
 
-        ProductShard1Entity entity = optional.orElseThrow(
-            () -> new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
-        return entity.toDomain();
+        return optional.map(ProductShard1Entity::toDomain).orElse(null);
     }
 
     @Override

@@ -67,6 +67,30 @@ public class Product {
 
     public void updateHitCount() {
         hitCount++;
+    }
+
+    public void updateReviewInfo(Review review) {
+        reviewCount++;
+        reviewScore = (reviewScore + review.score()) / reviewCount;
+    }
+
+    public void updateSalesCount() {
+        salesCount++;
+    }
+
+    public void updateTotalScore() {
+        double maxSales = 10000.0;
+        double maxReviews = 500.0;
+        double maxHits = 10000.0;
+
+        double salesScore = Math.min(salesCount / maxSales, 1.0);
+        double reviewCntScore = Math.min(reviewCount / maxReviews, 1.0);
+        double hitScore = Math.min(hitCount / maxHits, 1.0);
+        double reviewScoreNormalized = reviewScore / 5.0;
+
+        totalScore = (salesScore * 0.4 + reviewCntScore * 0.2 + hitScore * 0.1 +
+            reviewScoreNormalized * 0.3) * 100.0;
+
         needsEsUpdate = true;
         updateDateTime = LocalDateTime.now();
     }

@@ -1,9 +1,21 @@
 package com.productagent.adapter.out.persistence.mongo;
 
+import static com.productagent.infrastructure.constant.CollectionName.METRIC_UPDATE_TIME;
+import static com.productagent.infrastructure.util.DateUtil.formatDate;
+import static com.productagent.infrastructure.util.DateUtil.parseDateTime;
+
 import com.productagent.application.port.out.LogStoragePort;
+import com.productagent.domain.model.MetricUpdateTime;
+import com.productagent.domain.model.ProductClickLog;
+import com.productagent.infrastructure.util.DateUtil;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,5 +31,22 @@ class LogStorageAdapter implements LogStoragePort {
         } else {
             mongoTemplate.insert(document, collectionName);
         }
+    }
+
+    @Override
+    public LocalDateTime findLastMetricUpdateTime() {
+        Query query = new Query().with(Sort.by(Sort.Direction.DESC, "regDateTime")).limit(1);
+        MetricUpdateTime metricUpdateTime = mongoTemplate.findOne(query, MetricUpdateTime.class,
+            METRIC_UPDATE_TIME);
+        return parseDateTime(metricUpdateTime.regDateTime());
+    }
+
+    @Override
+    public List<ProductClickLog> findClickLogBetween(LocalDateTime start, LocalDateTime end) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("regDateTime")
+            .gte(DateUtil.formatDateTime(start))
+            .lte(DateUtil.formatDateTime(end)));
+        return mongoTemplate.find(query, ProductClickLog.class, "click_" + formatDate(end));
     }
 }

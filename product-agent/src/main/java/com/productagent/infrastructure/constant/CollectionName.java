@@ -4,6 +4,8 @@ import static com.productagent.infrastructure.util.DateUtil.getCurrentDate;
 
 public class CollectionName {
 
+    public static String METRIC_UPDATE_TIME = "metric_update_time";
+
     public static String HISTORY() {
         return "history_" + getCurrentDate();
     }
