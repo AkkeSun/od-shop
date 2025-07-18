@@ -1,5 +1,6 @@
 package com.productagent.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -94,4 +95,20 @@ public class Product {
         needsEsUpdate = true;
         updateDateTime = LocalDateTime.now();
     }
+
+    @JsonIgnore
+    public String getEmbeddingDocument() {
+        return String.format("""
+                    이 상품의 이름은 %s 이고, %s 카테고리에 속해 있습니다. \s
+                    상품의 가격은 약 %d원입니다. \s
+                    상품과 관련된 키워드는 %s 입니다.
+                """,
+            productName, category.description(), price, String.join(", ", keywords)
+        );
+    }
+
+    public void updateNeedsEsUpdate(boolean needsEsUpdate) {
+        this.needsEsUpdate = needsEsUpdate;
+    }
+
 }

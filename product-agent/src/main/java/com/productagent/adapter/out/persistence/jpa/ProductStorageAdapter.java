@@ -50,8 +50,15 @@ class ProductStorageAdapter implements ProductStoragePort {
 
     @Override
     public List<Long> findIdBySellerId(Long sellerId) {
-        List<Long> ids = shard1Adapter.findIdBySellerId(sellerId);
+        List<Long> ids = new ArrayList<>(shard1Adapter.findIdBySellerId(sellerId));
         ids.addAll(shard2Adapter.findIdBySellerId(sellerId));
         return ids;
+    }
+
+    @Override
+    public List<Product> findByNeedsEsUpdate(boolean needsEsUpdate) {
+        List<Product> products = new ArrayList<>(shard1Adapter.findByNeedsEsUpdate(needsEsUpdate));
+        products.addAll(shard2Adapter.findByNeedsEsUpdate(needsEsUpdate));
+        return products;
     }
 }

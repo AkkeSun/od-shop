@@ -91,7 +91,9 @@ service-constant:
   external:
     elasticsearch:
       host: http://152.67.206.159:9200
-
+    gemini:
+      host: https://generativelanguage.googleapis.com
+      token: ENC(aKOk5MZ8d46rBr9g4sqa1JsG6yLQHz/sID/2VOV77I1wVrg2Rn8OxbumtQkwE5L6)
 
 grpc:
   client:

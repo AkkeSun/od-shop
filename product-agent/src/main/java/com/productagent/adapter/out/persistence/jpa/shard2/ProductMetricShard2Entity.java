@@ -1,5 +1,6 @@
 package com.productagent.adapter.out.persistence.jpa.shard2;
 
+import com.productagent.domain.model.Product;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,6 +10,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -84,6 +87,32 @@ class ProductMetricShard2Entity {
             .regDate(product.getRegDate())
             .regDateTime(product.getRegDateTime())
             .updateTime(product.getUpdateDateTime())
+            .build();
+    }
+
+    Product toDomain() {
+        return Product.builder()
+            .id(id)
+            .sellerId(product.getSellerId())
+            .sellerEmail(product.getSellerEmail())
+            .productName(product.getProductName())
+            .productImgUrl(product.getProductImgUrl())
+            .productOption(new HashSet<>(List.of(product.getProductOption().split(","))))
+            .keywords(new HashSet<>(List.of(product.getKeyword().split(","))))
+            .descriptionImgUrl(product.getDescriptionImgUrl())
+            .price(product.getPrice())
+            .quantity(product.getQuantity())
+            .category(product.getCategory())
+            .deleteYn(product.getDeleteYn())
+            .regDate(regDate)
+            .regDateTime(regDateTime)
+            .updateDateTime(product.getUpdateDateTime())
+            .salesCount(salesCount)
+            .reviewCount(reviewCount)
+            .hitCount(hitCount)
+            .reviewScore(reviewScore)
+            .totalScore(totalScore)
+            .needsEsUpdate(needsEsUpdate)
             .build();
     }
 }

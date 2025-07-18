@@ -12,4 +12,6 @@ public interface ProductStoragePort {
     void deleteBySellerId(Long sellerId);
 
     List<Long> findIdBySellerId(Long sellerId);
+
+    List<Product> findByNeedsEsUpdate(boolean needsEsUpdate);
 }

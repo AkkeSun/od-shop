@@ -46,4 +46,12 @@ public class ProductShard2Adapter implements ProductStoragePort {
     public List<Long> findIdBySellerId(Long sellerId) {
         return productRepository.findIdBySellerId(sellerId);
     }
+
+    @Override
+    public List<Product> findByNeedsEsUpdate(boolean needsEsUpdate) {
+        return metricRepository.findByNeedsEsUpdate(needsEsUpdate).stream()
+            .map(ProductMetricShard2Entity::toDomain)
+            .filter(product -> product.getDeleteYn().equals("N"))
+            .toList();
+    }
 }
