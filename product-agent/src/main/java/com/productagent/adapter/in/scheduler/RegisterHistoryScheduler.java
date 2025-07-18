@@ -8,6 +8,7 @@ import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,7 @@ class RegisterHistoryScheduler {
         consumer.subscribe(Collections.singletonList(topicName));
     }
 
+    @Async
     @Scheduled(cron = "0 0/1 * * * *")
     @SchedulerLock(name = "product-history", lockAtLeastFor = "1s", lockAtMostFor = "30s")
     void registerHistory() {
