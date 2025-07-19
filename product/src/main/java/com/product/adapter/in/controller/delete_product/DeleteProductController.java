@@ -21,7 +21,7 @@ class DeleteProductController {
         @LoginAccount Account account) {
         DeleteProductServiceResponse serviceResponse = deleteProductUseCase
             .deleteProduct(productId, account);
-
+        //test
         return ApiResponse.ok(DeleteProductResponse.of(serviceResponse));
     }
 }
