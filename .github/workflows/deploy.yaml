@@ -3,7 +3,7 @@ name: od-shop
 on:
   push:
     branches:
-      - master
+      - dev-ci
     paths:
       - 'account/**'
       - 'product/**'
