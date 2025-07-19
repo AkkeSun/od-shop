@@ -60,7 +60,7 @@ public class ApiCallLogFilter extends OncePerRequestFilter {
                 requestInfo.put("param", requestParam);
                 requestInfo.put("body", requestBody);
 
-                if (!uri.equals("/docs/account-api.yaml")) {
+                if (!uri.equals("/accounts/docs/account-api.yaml")) {
                     log.info("[{} {}] request - {}", method, uri, requestInfo);
                     log.info("[{} {}] response - {}", method, uri, responseBody);
                 }
