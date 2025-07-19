@@ -18,5 +18,6 @@ class DeleteLogScheduler {
         String regDate = LocalDate.now().minusDays(90)
             .format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         deleteLogUseCase.deleteLog(regDate);
+        //test
     }
 }

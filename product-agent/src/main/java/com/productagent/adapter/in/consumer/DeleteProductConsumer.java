@@ -22,5 +22,6 @@ class DeleteProductConsumer {
     void deleteProduct(@Payload String payload) {
         log.info("[delete-product] <== {}", payload);
         deleteProductUseCase.delete(payload);
+        //test
     }
 }
