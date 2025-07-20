@@ -1,2 +1,6 @@
 rootProject.name = 'od-shop'
 
+include 'account'
+include 'account-agent'
+include 'product'
+include 'product-agent'
