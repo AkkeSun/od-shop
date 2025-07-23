@@ -11,4 +11,6 @@ public interface LogStoragePort {
     LocalDateTime findLastMetricUpdateTime();
 
     List<ProductClickLog> findClickLogBetween(LocalDateTime start, LocalDateTime end);
+
+    void dropCollection(LocalDateTime targetDate);
 }

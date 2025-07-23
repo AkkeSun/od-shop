@@ -49,4 +49,13 @@ class LogStorageAdapter implements LogStoragePort {
             .lte(DateUtil.formatDateTime(end)));
         return mongoTemplate.find(query, ProductClickLog.class, "click_" + formatDate(end));
     }
+
+    @Override
+    public void dropCollection(LocalDateTime targetDate) {
+        String date = DateUtil.formatDate(targetDate);
+        mongoTemplate.dropCollection("history_" + date);
+        mongoTemplate.dropCollection("click_" + date);
+        mongoTemplate.dropCollection("search_" + date);
+        mongoTemplate.dropCollection("dql_" + date);
+    }
 }
