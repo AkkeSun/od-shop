@@ -30,7 +30,7 @@ class RegisterProductServiceResponseTest {
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
-                .category(Category.ELECTRONICS)
+                .category(Category.DIGITAL)
                 .regDate(LocalDate.of(2025, 5, 1))
                 .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
                 .build();
@@ -49,7 +49,6 @@ class RegisterProductServiceResponseTest {
             assert response.price() == product.getPrice();
             assert response.quantity() == product.getQuantity();
             assert response.category().equals(product.getCategory());
-            assert response.category() == Category.ELECTRONICS;
         }
     }
 }

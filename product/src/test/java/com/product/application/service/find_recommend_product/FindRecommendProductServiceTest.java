@@ -169,7 +169,7 @@ class FindRecommendProductServiceTest {
                 .productName(popularRecommend.productName())
                 .sellerEmail(personalRecommend.sellerEmail())
                 .productImgUrl(popularRecommend.productImgUrl())
-                .category(Category.BOOKS)
+                .category(Category.DIGITAL)
                 .deleteYn("N")
                 .build());
             elasticSearchClientPort.database.add(Product.builder()
@@ -179,7 +179,7 @@ class FindRecommendProductServiceTest {
                 .productName(personalRecommend.productName())
                 .sellerEmail(personalRecommend.sellerEmail())
                 .productImgUrl(personalRecommend.productImgUrl())
-                .category(Category.BOOKS)
+                .category(Category.DIGITAL)
                 .deleteYn("N")
                 .build());
 

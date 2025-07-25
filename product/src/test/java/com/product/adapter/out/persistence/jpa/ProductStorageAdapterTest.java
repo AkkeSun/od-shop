@@ -257,7 +257,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             .keywords(Set.of("keyword1", "keyword2"))
             .price(10000L)
             .quantity(100L)
-            .category(Category.ELECTRONICS)
+            .category(Category.DIGITAL)
             .regDate(LocalDate.of(2025, 5, 1))
             .regDateTime(LocalDateTime.of(2025, 5, 1, 12, 0, 0))
             .salesCount(0L)

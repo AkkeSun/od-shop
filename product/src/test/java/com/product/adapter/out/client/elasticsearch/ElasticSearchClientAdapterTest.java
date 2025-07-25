@@ -69,7 +69,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
                 .id(10L)
                 .keywords(Set.of("keyword1", "keyword2"))
                 .regDateTime(LocalDateTime.now())
-                .category(Category.BOOKS)
+                .category(Category.DIGITAL)
                 .build();
             float[] embedding = new float[768];
 
@@ -88,7 +88,7 @@ class ElasticSearchClientAdapterTest extends IntegrationTestSupport {
                 .id(10L)
                 .keywords(Set.of("keyword1", "keyword2"))
                 .regDateTime(LocalDateTime.now())
-                .category(Category.BOOKS)
+                .category(Category.DIGITAL)
                 .build();
             float[] embedding = new float[768];
 

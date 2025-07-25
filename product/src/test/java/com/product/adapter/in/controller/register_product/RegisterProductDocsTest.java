@@ -53,7 +53,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
             // given
             RegisterProductRequest request = RegisterProductRequest.builder()
                 .productName("상품명")
-                .category("AUTOMOTIVE")
+                .category("DIGITAL")
                 .price(10000)
                 .quantity(30)
                 .productImgUrl("상품 이미지")
@@ -113,7 +113,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
             // given
             RegisterProductRequest request = RegisterProductRequest.builder()
                 .productName("상품명")
-                .category("AUTOMOTIVE")
+                .category("DIGITAL")
                 .price(10000)
                 .quantity(30)
                 .productImgUrl("상품 이미지")
@@ -135,7 +135,7 @@ public class RegisterProductDocsTest extends RestDocsSupport {
             // given
             RegisterProductRequest request = RegisterProductRequest.builder()
                 .productName("상품명")
-                .category("AUTOMOTIVE")
+                .category("DIGITAL")
                 .price(10000)
                 .quantity(30)
                 .productImgUrl("상품 이미지")

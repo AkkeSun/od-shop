@@ -39,7 +39,7 @@ class UpdateProductControllerTest extends ControllerTestSupport {
                 .thenReturn(UpdateProductServiceResponse.builder()
                     .productId(1L)
                     .productName("Updated Product")
-                    .category(Category.BOOKS)
+                    .category(Category.DIGITAL)
                     .build());
 
             // when

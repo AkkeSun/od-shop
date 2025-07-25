@@ -58,7 +58,7 @@ class RegisterProductServiceTest {
                 .productOption(Set.of("Option1", "Option2"))
                 .price(10000L)
                 .quantity(100L)
-                .category("ELECTRONICS")
+                .category("DIGITAL")
                 .build();
 
             // when
@@ -90,7 +90,7 @@ class RegisterProductServiceTest {
                 .productOption(Set.of("Option1", "Option2"))
                 .price(10000L)
                 .quantity(100L)
-                .category("ELECTRONICS")
+                .category("DIGITAL")
                 .build();
 
             // when

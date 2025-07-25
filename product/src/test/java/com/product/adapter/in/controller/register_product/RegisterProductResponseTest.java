@@ -25,7 +25,7 @@ class RegisterProductResponseTest {
                 .descriptionImgUrl("상품 설명")
                 .productOption(Set.of("옵션1", "옵션2"))
                 .keywords(Set.of("키워드1", "키워드2"))
-                .category(Category.AUTOMOTIVE)
+                .category(Category.DIGITAL)
                 .price(10000)
                 .quantity(30)
                 .build();

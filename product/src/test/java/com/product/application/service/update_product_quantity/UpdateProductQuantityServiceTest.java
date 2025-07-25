@@ -58,7 +58,7 @@ class UpdateProductQuantityServiceTest {
                 .reviewCount(0)
                 .reviewScore(0)
                 .totalScore(0)
-                .category(Category.ELECTRONICS)
+                .category(Category.DIGITAL)
                 .deleteYn("N")
                 .regDate(LocalDate.now())
                 .regDateTime(LocalDateTime.now())

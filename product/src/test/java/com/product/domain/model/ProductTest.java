@@ -30,7 +30,7 @@ class ProductTest {
                 .productOption(Set.of("Option1", "Option2"))
                 .price(10000L)
                 .quantity(100L)
-                .category("ELECTRONICS")
+                .category("DIGITAL")
                 .build();
             Long id = 12L;
 
@@ -47,7 +47,7 @@ class ProductTest {
             assert product.getProductOption().equals(command.productOption());
             assert product.getPrice() == command.price();
             assert product.getQuantity() == command.quantity();
-            assert product.getCategory().equals(Category.ELECTRONICS);
+            assert product.getCategory().equals(Category.DIGITAL);
             assert product.getHitCount() == 0L;
             assert product.getSalesCount() == 0L;
             assert product.getReviewCount() == 0L;
@@ -223,7 +223,7 @@ class ProductTest {
             // given
             Product product = Product.builder()
                 .productName("name")
-                .category(Category.ELECTRONICS)
+                .category(Category.DIGITAL)
                 .price(10000)
                 .keywords(Set.of("keyword1", "keyword2"))
                 .build();

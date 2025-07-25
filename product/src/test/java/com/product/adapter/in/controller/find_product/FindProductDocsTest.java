@@ -53,7 +53,7 @@ public class FindProductDocsTest extends RestDocsSupport {
                 .productId(productId)
                 .sellerEmail("test@gmail.com")
                 .productName("Test Product")
-                .category(Category.AUTOMOTIVE)
+                .category(Category.DIGITAL)
                 .price(10000)
                 .quantity(30)
                 .productImgUrl("http://example.com/product.jpg")
