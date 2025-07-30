@@ -22,6 +22,6 @@ class FindAccountController {
         FindAccountServiceResponse serviceResponse = findAccountInfoUseCase.
             findAccountInfo(account);
 
-        return ApiResponse.ok(new FindAccountResponse().of(serviceResponse));
+        return ApiResponse.ok(FindAccountResponse.of(serviceResponse));
     }
 }

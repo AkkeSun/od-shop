@@ -4,6 +4,7 @@ import com.account.applicaiton.port.in.command.UpdateAccountCommand;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.Claims;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,7 +51,9 @@ public class Account {
         return Account.builder()
             .email(claims.getSubject())
             .id(Long.valueOf(claims.get("accountId").toString()))
-            //    .role(Role.valueOf(claims.get("role").toString()))
+            .roles(Arrays.stream(claims.get("roles").toString().split(","))
+                .map(role -> Role.builder().name(role).build())
+                .toList())
             .build();
     }
 

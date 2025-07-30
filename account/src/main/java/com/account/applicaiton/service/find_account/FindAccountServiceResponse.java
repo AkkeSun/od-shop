@@ -1,6 +1,9 @@
 package com.account.applicaiton.service.find_account;
 
 import com.account.domain.model.Account;
+import com.account.domain.model.Role;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 
 @Builder
@@ -11,7 +14,7 @@ public record FindAccountServiceResponse(
     String userTel,
     String address,
     String regDate,
-    String role
+    List<String> roles
 ) {
 
     public static FindAccountServiceResponse of(Account account) {
@@ -22,7 +25,8 @@ public record FindAccountServiceResponse(
             .userTel(account.getUserTel())
             .address(account.getAddress())
             .regDate(account.getRegDate())
-            //    .role(account.getRole().toString())
+            .roles(account.getRoles().stream().map(Role::name)
+                .collect(Collectors.toList()))
             .build();
     }
 }

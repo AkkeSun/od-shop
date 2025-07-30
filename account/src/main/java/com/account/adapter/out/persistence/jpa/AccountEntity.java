@@ -2,6 +2,7 @@ package com.account.adapter.out.persistence.jpa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,7 +43,7 @@ class AccountEntity {
     @Column(name = "ADDRESS")
     private String address;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "ACCOUNT_ROLE",
         joinColumns = @JoinColumn(name = "ACCOUNT_ID"),

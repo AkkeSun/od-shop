@@ -1,6 +1,7 @@
 package com.account.adapter.in.controller.find_account;
 
 import com.account.applicaiton.service.find_account.FindAccountServiceResponse;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,22 +15,22 @@ class FindAccountResponse {
     private String username;
     private String userTel;
     private String address;
-    private String role;
+    private List<String> roles;
     private String regDate;
 
     @Builder
     public FindAccountResponse(Long id, String email, String username, String userTel,
-        String address, String role, String regDate) {
+        String address, List<String> roles, String regDate) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.userTel = userTel;
         this.address = address;
-        this.role = role;
+        this.roles = roles;
         this.regDate = regDate;
     }
 
-    FindAccountResponse of(FindAccountServiceResponse serviceResponse) {
+    static FindAccountResponse of(FindAccountServiceResponse serviceResponse) {
         return FindAccountResponse.builder()
             .id(serviceResponse.id())
             .email(serviceResponse.email())
@@ -37,7 +38,7 @@ class FindAccountResponse {
             .userTel(serviceResponse.userTel())
             .address(serviceResponse.address())
             .regDate(serviceResponse.regDate())
-            .role(serviceResponse.role())
+            .roles(serviceResponse.roles())
             .build();
     }
 }
