@@ -32,6 +32,7 @@ class TokenStorageAdapter implements TokenStoragePort {
     }
 
     @Override
+    @Transactional
     public void deleteByEmail(String email) {
         tokenRepository.deleteByEmail(email);
     }
