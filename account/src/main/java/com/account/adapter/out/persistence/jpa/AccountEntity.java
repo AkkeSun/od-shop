@@ -1,15 +1,17 @@
 package com.account.adapter.out.persistence.jpa;
 
-import com.account.domain.model.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,9 +42,13 @@ class AccountEntity {
     @Column(name = "ADDRESS")
     private String address;
 
-    @Column(name = "ROLE")
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToMany
+    @JoinTable(
+        name = "ACCOUNT_ROLE",
+        joinColumns = @JoinColumn(name = "ACCOUNT_ID"),
+        inverseJoinColumns = @JoinColumn(name = "ROLE_ID")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
 
     @Column(name = "REG_DATE_TIME")
     private LocalDateTime regDateTime;
@@ -51,15 +57,15 @@ class AccountEntity {
     private String regDate;
 
     @Builder
-    AccountEntity(Long id, String email, String password, String username, String userTel,
-        String address, Role role, LocalDateTime regDateTime, String regDate) {
+    public AccountEntity(Long id, String email, String password, String username, String userTel,
+        String address, Set<RoleEntity> roles, LocalDateTime regDateTime, String regDate) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
         this.userTel = userTel;
         this.address = address;
-        this.role = role;
+        this.roles = roles;
         this.regDateTime = regDateTime;
         this.regDate = regDate;
     }

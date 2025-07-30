@@ -34,21 +34,21 @@ class TokenEntity {
     @Column(name = "REFRESH_TOKEN")
     private String refreshToken;
 
-    @Column(name = "ROLE")
-    private String role;
+    @Column(name = "ROLES")
+    private String roles;
 
     @Column(name = "REG_DATE_TIME")
     private String regDateTime;
 
     @Builder
     TokenEntity(Long id, Long accountId, String email, String userAgent, String refreshToken,
-        String role, String regDateTime) {
+        String roles, String regDateTime) {
         this.id = id;
         this.accountId = accountId;
         this.email = email;
         this.userAgent = userAgent;
         this.refreshToken = refreshToken;
-        this.role = role;
+        this.roles = roles;
         this.regDateTime = regDateTime;
     }
 
@@ -56,5 +56,6 @@ class TokenEntity {
         this.refreshToken = domain.getRefreshToken();
         this.regDateTime = domain.getRegDateTime();
         this.userAgent = domain.getUserAgent();
+        this.roles = domain.getRoles();
     }
 }

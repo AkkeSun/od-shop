@@ -26,7 +26,7 @@ public class Account {
 
     private String address;
 
-    private Role role;
+    private List<Role> roles;
 
     private LocalDateTime regDateTime;
 
@@ -34,14 +34,14 @@ public class Account {
 
     @Builder
     public Account(Long id, String email, String password, String username, String userTel,
-        String address, Role role, LocalDateTime regDateTime, String regDate) {
+        String address, List<Role> roles, LocalDateTime regDateTime, String regDate) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
         this.userTel = userTel;
         this.address = address;
-        this.role = role;
+        this.roles = roles;
         this.regDateTime = regDateTime;
         this.regDate = regDate;
     }
@@ -50,7 +50,7 @@ public class Account {
         return Account.builder()
             .email(claims.getSubject())
             .id(Long.valueOf(claims.get("accountId").toString()))
-            .role(Role.valueOf(claims.get("role").toString()))
+            //    .role(Role.valueOf(claims.get("role").toString()))
             .build();
     }
 

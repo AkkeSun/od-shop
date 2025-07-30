@@ -1,12 +1,14 @@
 package com.account.infrastructure.util;
 
 import com.account.domain.model.Account;
+import com.account.domain.model.Role;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +29,9 @@ public class JwtUtilImpl implements JwtUtil {
         Date now = new Date();
         Claims claims = Jwts.claims().setSubject(account.getEmail());
         claims.put("accountId", account.getId());
-        claims.put("role", account.getRole());
+        claims.put("roles", account.getRoles().stream()
+            .map(Role::name)
+            .collect(Collectors.joining(",")));
         return "Bearer " + Jwts.builder()
             .setClaims(claims)
             .setIssuedAt(now)

@@ -22,7 +22,7 @@ public record FindAccountServiceResponse(
             .userTel(account.getUserTel())
             .address(account.getAddress())
             .regDate(account.getRegDate())
-            .role(account.getRole().toString())
+            //    .role(account.getRole().toString())
             .build();
     }
 }

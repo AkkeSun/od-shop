@@ -11,9 +11,11 @@ import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.LoginLog;
+import com.account.domain.model.Role;
 import com.account.domain.model.Token;
 import com.account.infrastructure.util.JwtUtil;
 import com.account.infrastructure.util.UserAgentUtil;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -46,7 +48,9 @@ class RegisterTokenService implements RegisterTokenUseCase {
             .userAgent(userAgentUtil.getUserAgent())
             .refreshToken(refreshToken)
             .regDateTime(getCurrentDateTime())
-            .role(account.getRole().name())
+            .roles(account.getRoles().stream()
+                .map(Role::name)
+                .collect(Collectors.joining(",")))
             .build();
 
         redisStoragePort.registerToken(token);

@@ -2,7 +2,6 @@ package com.account.adapter.in.controller.register_account;
 
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.infrastructure.validation.ValidPassword;
-import com.account.infrastructure.validation.ValidRole;
 import com.account.infrastructure.validation.ValidUserTel;
 import com.account.infrastructure.validation.ValidationGroups.CustomGroups;
 import com.account.infrastructure.validation.ValidationGroups.NotBlankGroups;
@@ -10,7 +9,9 @@ import com.account.infrastructure.validation.ValidationGroups.SizeGroups;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +31,8 @@ class RegisterAccountRequest {
     @NotBlank(message = "비밀번호 확인은 필수값 입니다.", groups = NotBlankGroups.class)
     private String passwordCheck;
 
-    @ValidRole(groups = CustomGroups.class)
-    @NotBlank(message = "권한은 필수값 입니다.", groups = NotBlankGroups.class)
-    private String role;
+    @NotNull(message = "권한은 필수값 입니다.", groups = NotBlankGroups.class)
+    private List<String> roles;
 
     @Size(max = 10, message = "이름은 10자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
     private String username;
@@ -46,14 +46,14 @@ class RegisterAccountRequest {
     @Builder
     RegisterAccountRequest(String email, String password, String passwordCheck,
         String username,
-        String userTel, String address, String role) {
+        String userTel, String address, List<String> roles) {
         this.email = email;
         this.password = password;
         this.passwordCheck = passwordCheck;
         this.username = username;
         this.userTel = userTel;
         this.address = address;
-        this.role = role;
+        this.roles = roles;
     }
 
     RegisterAccountCommand toCommand() {
@@ -63,7 +63,7 @@ class RegisterAccountRequest {
             .username(username)
             .userTel(userTel)
             .address(address)
-            .role(role)
+            .roles(roles)
             .build();
     }
 

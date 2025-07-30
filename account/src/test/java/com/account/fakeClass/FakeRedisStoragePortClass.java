@@ -30,4 +30,24 @@ public class FakeRedisStoragePortClass implements RedisStoragePort {
             .toList();
         return list.isEmpty() ? null : list.getFirst();
     }
+
+    @Override
+    public <T> T findData(String key, Class<T> clazz) {
+        return null;
+    }
+
+    @Override
+    public <T> List<T> findDataList(String key, Class<T> clazz) {
+        return null;
+    }
+
+    @Override
+    public void register(String key, String data, long ttl) {
+
+    }
+
+    @Override
+    public List<String> getKeys(String input) {
+        return null;
+    }
 }

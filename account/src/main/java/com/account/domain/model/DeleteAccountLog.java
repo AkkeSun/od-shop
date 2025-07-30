@@ -11,7 +11,7 @@ public record DeleteAccountLog(
     public static DeleteAccountLog of(Account account) {
         return DeleteAccountLog.builder()
             .accountId(account.getId())
-            .role(account.getRole().name())
+            //    .role(account.getRole().name())
             .build();
     }
 }

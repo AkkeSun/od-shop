@@ -2,6 +2,7 @@ package com.account.adapter.out.persistence.jpa;
 
 import com.account.domain.model.Account;
 import com.account.infrastructure.util.AesUtil;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,9 @@ class AccountMapper {
             .username(entity.getUsername())
             .userTel(entity.getUserTel())
             .address(entity.getAddress())
-            .role(entity.getRole())
+            .roles(entity.getRoles().stream()
+                .map(RoleEntity::toDomain)
+                .toList())
             .regDateTime(entity.getRegDateTime())
             .regDate(entity.getRegDate())
             .build();
@@ -33,7 +36,9 @@ class AccountMapper {
             .username(domain.getUsername())
             .userTel(domain.getUserTel())
             .address(domain.getAddress())
-            .role(domain.getRole())
+            .roles(domain.getRoles().stream()
+                .map(RoleEntity::of)
+                .collect(Collectors.toSet()))
             .regDateTime(domain.getRegDateTime())
             .regDate(domain.getRegDate())
             .build();

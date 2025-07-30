@@ -1,7 +1,6 @@
 package com.account.domain.model;
 
-import com.account.domain.model.Account;
-import com.account.domain.model.Role;
+import java.util.Arrays;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,18 +15,18 @@ public class Token {
     private String userAgent;
     private String refreshToken;
     private String regDateTime;
-    private String role;
+    private String roles;
 
     @Builder
     public Token(Long id, Long accountId, String email, String userAgent, String refreshToken,
-        String regDateTime, String role) {
+        String regDateTime, String roles) {
         this.id = id;
         this.accountId = accountId;
         this.email = email;
         this.userAgent = userAgent;
         this.refreshToken = refreshToken;
         this.regDateTime = regDateTime;
-        this.role = role;
+        this.roles = roles;
     }
 
     public boolean isDifferentRefreshToken(String refreshToken) {
@@ -46,7 +45,10 @@ public class Token {
         return Account.builder()
             .id(accountId)
             .email(email)
-            .role(Role.valueOf(role))
+            .roles(Arrays.stream(roles.split(","))
+                .map(role -> Role.builder().name(role).build())
+                .toList()
+            )
             .build();
     }
 }
