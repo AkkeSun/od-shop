@@ -40,7 +40,6 @@ class DeleteAccountServiceTest {
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
 
         service = new DeleteAccountService(
-            fakeJwtUtilClass,
             fakeCachePortClass,
             fakeTokenStoragePortClass,
             fakeAccountStorageClass,

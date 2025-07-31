@@ -1,11 +1,13 @@
 package com.account.adapter.out.persistence.redis;
 
 import static com.account.infrastructure.util.JsonUtil.parseJson;
-import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.IntegrationTestSupport;
+import com.account.domain.model.Account;
 import com.account.domain.model.Token;
-import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import com.account.infrastructure.util.JsonUtil;
+import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,14 +24,130 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
+    @AfterEach
+    void reset() {
+        circuitBreakerRegistry.circuitBreaker("redis").reset();
+    }
+
     @Nested
-    @DisplayName("[registerToken] 토큰 캐시를 등록하는 메소드")
-    class Describe_registerToken {
+    @DisplayName("[findData] 레디스에 저장된 오브젝트를 조회하는 메소드")
+    class Describe_findData {
 
         @Test
-        @DisplayName("[success] 토큰 캐시를 정상적으로 등록 하는지 확인한다.")
+        @DisplayName("[success] 저장된 데이터가 있다면 데이터를 응답한다.")
         void success() {
             // given
+            String key = "findDataTest1";
+            Token token = Token.builder().id(10L).build();
+            redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(token));
+
+            // when
+            Token result = adapter.findData(key, Token.class);
+
+            // then
+            assert token.getId().equals(result.getId());
+
+            // clean
+            redisTemplate.delete(key);
+        }
+
+        @Test
+        @DisplayName("[success] 저장된 데이터가 없다면 null 을 응답한다.")
+        void success2() {
+            // given
+            String key = "findDataTest2";
+
+            // when
+            Token result = adapter.findData(key, Token.class);
+
+            // then
+            assert result == null;
+        }
+
+        @Test
+        @DisplayName("[success] 작업중 오류가 발생하면 fallback 메소드가 실행된다.")
+        void success3(CapturedOutput output) {
+            // given
+            String key = "findDataTest3";
+            Token token = Token.builder().id(10L).build();
+            redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(token));
+
+            // when
+            Account result = adapter.findData(key, Account.class);
+
+            // then
+            assert result == null;
+            assert output.toString().contains("[findRedisDataFallback] findDataTest3");
+
+            // clean
+            redisTemplate.delete(key);
+        }
+    }
+
+    @Nested
+    @DisplayName("[findDataList] 레디스에 저장된 리스트를 조회하는 메소드")
+    class Describe_findDataList {
+
+        @Test
+        @DisplayName("[success] 저장된 데이터가 있다면 데이터를 응답한다.")
+        void success() {
+            // given
+            String key = "findDataListTest1";
+            List<Token> tokens = List.of(Token.builder().id(10L).build());
+            redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(tokens));
+
+            // when
+            List<Token> result = adapter.findDataList(key, Token.class);
+
+            // then
+            assert result.getFirst().getId().equals(tokens.getFirst().getId());
+
+            // clean
+            redisTemplate.delete(key);
+        }
+
+        @Test
+        @DisplayName("[success] 저장된 데이터가 없다면 null 을 응답한다.")
+        void success2() {
+            // given
+            String key = "findDataListTest2";
+
+            // when
+            List<Token> result = adapter.findDataList(key, Token.class);
+
+            // then
+            assert result.isEmpty();
+        }
+
+        @Test
+        @DisplayName("[success] 작업중 오류가 발생하면 fallback 메소드가 실행된다.")
+        void success3(CapturedOutput output) {
+            // given
+            String key = "findDataListTest3";
+            List<Token> tokens = List.of(Token.builder().id(10L).build());
+            redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(tokens));
+
+            // when
+            List<Token> result = adapter.findDataList(key, Token.class);
+
+            // then
+            assert result.isEmpty();
+            assert output.toString().contains("[findDataListFallback] findDataListTest3");
+
+            // clean
+            redisTemplate.delete(key);
+        }
+    }
+
+    @Nested
+    @DisplayName("[register] 레디스에 데이터를 등록하는 메소드")
+    class Describe_register {
+
+        @Test
+        @DisplayName("[success] 데이터를 저장한다.")
+        void success() {
+            // given
+            String key = "registerTest1";
             Token token = Token.builder()
                 .id(1234L)
                 .accountId(11111L)
@@ -39,113 +157,16 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
                 .regDateTime("regDateTime")
                 .roles("role")
                 .build();
-            String key = "token::email-userAgent1";
 
             // when
-            adapter.registerToken(token);
-            Token savedToken = parseJson(redisTemplate.opsForValue().get(key), Token.class);
+            adapter.register(key, JsonUtil.toJsonString(token), 1000L);
+            Token result = parseJson(redisTemplate.opsForValue().get(key), Token.class);
 
             // then
-            assert savedToken.getId().equals(token.getId());
-            assert savedToken.getAccountId().equals(token.getAccountId());
-            assert savedToken.getEmail().equals(token.getEmail());
-            assert savedToken.getUserAgent().equals(token.getUserAgent());
-            assert savedToken.getRefreshToken().equals(token.getRefreshToken());
-            assert savedToken.getRegDateTime().equals(token.getRegDateTime());
-            assert savedToken.getRoles().equals(token.getRoles());
-        }
-    }
+            assert result.getId().equals(token.getId());
 
-    @Nested
-    @DisplayName("[findTokenByEmailAndUserAgent] 이메일과 UserAgent로 토큰을 조회하는 메소드")
-    class Describe_findTokenByEmailAndUserAgent {
-
-        @Test
-        @DisplayName("[success] 조회된 토큰이 있다면 토큰을 응답한다.")
-        void success() {
-            // given
-            Token token = Token.builder()
-                .id(1234L)
-                .accountId(11111L)
-                .email("email")
-                .userAgent("userAgent2")
-                .refreshToken("refreshToken")
-                .regDateTime("regDateTime")
-                .roles("role")
-                .build();
-            String key = "token::email-userAgent2";
-            redisTemplate.opsForValue().set(key, toJsonString(token));
-
-            // when
-            Token savedToken = adapter.findTokenByEmailAndUserAgent("email", "userAgent2");
-
-            // then
-            assert savedToken.getId().equals(token.getId());
-            assert savedToken.getAccountId().equals(token.getAccountId());
-            assert savedToken.getEmail().equals(token.getEmail());
-            assert savedToken.getUserAgent().equals(token.getUserAgent());
-            assert savedToken.getRefreshToken().equals(token.getRefreshToken());
-            assert savedToken.getRegDateTime().equals(token.getRegDateTime());
-            assert savedToken.getRoles().equals(token.getRoles());
-        }
-
-        @Test
-        @DisplayName("[success] 조회된 토큰이 없다면 null을 응답한다.")
-        void success2() {
-            // when
-            Token savedToken = adapter.findTokenByEmailAndUserAgent("email", "test");
-
-            // then
-            assert savedToken == null;
-        }
-
-        @Test
-        @DisplayName("[error] 토큰 조회중 에러 발생시 서키브레이커가 오픈되고 null 을 응답하는지 확인한다.")
-        void error(CapturedOutput output) {
-            // given
-            String key = "token::email-userAgent2-2";
-            redisTemplate.opsForValue().set(key, "errorValue");
-
-            // when
-            Token savedToken = adapter.findTokenByEmailAndUserAgent("email", "userAgent2-2");
-            CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker("redis");
-
-            // then
-            assert savedToken == null;
-            assert output.toString().contains("[findByEmailAndUserAgentFallback] call - ");
-            assert circuitBreaker.getState().equals(CircuitBreaker.State.OPEN);
-
-            // cleanup
-            circuitBreaker.reset();
-        }
-    }
-
-    @Nested
-    @DisplayName("[deleteTokenByEmail] 이메일로 토큰을 삭제하는 메소드")
-    class Describe_deleteTokenByEmail {
-
-        @Test
-        @DisplayName("[success] 토큰이 정상적으로 삭제되는지 확인한다.")
-        void success() {
-            // given
-            Token token = Token.builder()
-                .id(1234L)
-                .accountId(11111L)
-                .email("email")
-                .userAgent("userAgent3")
-                .refreshToken("refreshToken")
-                .regDateTime("regDateTime")
-                .roles("role")
-                .build();
-            String key = "token::email-userAgent3";
-            redisTemplate.opsForValue().set(key, toJsonString(token));
-
-            // when
-            adapter.deleteTokenByEmail("email");
-            String savedToken = redisTemplate.opsForValue().get(key);
-
-            // then
-            assert savedToken == null;
+            // clean
+            redisTemplate.delete(key);
         }
     }
 }

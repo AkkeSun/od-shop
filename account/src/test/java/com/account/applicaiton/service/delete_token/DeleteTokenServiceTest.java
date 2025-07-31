@@ -30,7 +30,6 @@ class DeleteTokenServiceTest {
         fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         service = new DeleteTokenService(
-            fakeJwtUtilClass,
             fakeCachePortClass,
             fakeTokenStoragePortClass
         );

@@ -52,7 +52,7 @@ class RegisterTokenServiceTest {
 
     @BeforeEach
     void setup() {
-        fakeRedisStoragePortClass.tokenList.clear();
+        fakeRedisStoragePortClass.redisData.clear();
     }
 
     @Nested

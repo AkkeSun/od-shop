@@ -12,6 +12,7 @@ import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.ErrorCode;
+import com.account.infrastructure.util.JsonUtil;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +61,7 @@ class RegisterTokenByRefreshServiceTest {
             .password("1234")
             .build();
         fakeAccountStorageClass.register(account);
-        fakeRedisStoragePortClass.tokenList.clear();
+        fakeRedisStoragePortClass.redisData.clear();
         fakeTokenStoragePortClass.tokenList.clear();
     }
 
@@ -80,7 +81,8 @@ class RegisterTokenByRefreshServiceTest {
                 .refreshToken(refreshToken)
                 .roles("ROLE_CUSTOMER")
                 .build();
-            fakeRedisStoragePortClass.registerToken(token);
+            String key = String.format("token::%s-%s", token.getEmail(), token.getUserAgent());
+            fakeRedisStoragePortClass.register(key, JsonUtil.toJsonString(token), 10L);
 
             // when
             RegisterTokenByRefreshServiceResponse serviceResponse = service
@@ -133,7 +135,8 @@ class RegisterTokenByRefreshServiceTest {
                 .refreshToken("test")
                 .roles("ROLE_CUSTOMER")
                 .build();
-            fakeRedisStoragePortClass.registerToken(token);
+            String key = String.format("token::%s-%s", token.getEmail(), token.getUserAgent());
+            fakeRedisStoragePortClass.register(key, JsonUtil.toJsonString(token), 10L);
 
             // when
             CustomAuthenticationException exception = assertThrows(
