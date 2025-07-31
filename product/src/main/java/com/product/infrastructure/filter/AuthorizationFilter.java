@@ -70,7 +70,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             }
         }
 
-        if(auth.getPrincipal().toString().equals("anonymousUser")){
+        if (auth.getPrincipal().toString().contains("anonymous")) {
             throw new AccessDeniedException("e");
         }
 
