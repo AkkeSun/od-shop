@@ -3,6 +3,8 @@ package com.product.adapter.out.persistence.jpa.shard1;
 import com.product.domain.model.AuthorizationRule;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Builder;
@@ -17,6 +19,7 @@ class AuthorizationRuleEntity {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "SORT_ORDER")
@@ -43,6 +46,7 @@ class AuthorizationRuleEntity {
 
     AuthorizationRule toDomain() {
         return AuthorizationRule.builder()
+            .id(id)
             .httpMethod(httpMethod)
             .uriPattern(uriPattern)
             .role(role)
@@ -51,6 +55,7 @@ class AuthorizationRuleEntity {
 
     static AuthorizationRuleEntity of(AuthorizationRule domain) {
         return AuthorizationRuleEntity.builder()
+            .id(domain.id())
             .httpMethod(domain.httpMethod())
             .uriPattern(domain.uriPattern())
             .role(domain.role())
