@@ -1,7 +1,10 @@
 package com.account;
 
+import com.account.applicaiton.port.out.RoleStoragePort;
+import com.account.domain.model.Role;
 import com.account.infrastructure.util.AesUtil;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,4 +28,16 @@ public class IntegrationTestSupport {
 
     @Autowired
     protected AesUtil aesUtil;
+
+    @Autowired
+    private RoleStoragePort roleStoragePort;
+
+    @BeforeEach
+    void setup() {
+        Role role = Role.builder()
+            .name("ROLE_CUSTOMER")
+            .description("구매자")
+            .build();
+        roleStoragePort.register(role);
+    }
 }

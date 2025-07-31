@@ -10,6 +10,8 @@ import com.account.infrastructure.exception.ErrorCode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,7 +50,7 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
                 .username("username")
                 .userTel("userTel")
                 .address("address")
-                .role(Role.ROLE_SELLER)
+                .roles(Set.of(RoleEntity.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
                 .regDate("20210101")
                 .build();
@@ -64,7 +66,6 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
             assert account.getUsername().equals(savedEntity.getUsername());
             assert account.getUserTel().equals(savedEntity.getUserTel());
             assert account.getAddress().equals(savedEntity.getAddress());
-            assert account.getRole().equals(savedEntity.getRole());
             assert account.getRegDateTime().equals(savedEntity.getRegDateTime());
             assert account.getRegDate().equals(savedEntity.getRegDate());
         }
@@ -98,7 +99,7 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
                 .username("username")
                 .userTel("userTel")
                 .address("address")
-                .role(Role.ROLE_SELLER)
+                .roles(Set.of(RoleEntity.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
                 .regDate("20210101")
                 .build();
@@ -115,7 +116,6 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
             assert account.getUsername().equals(savedEntity.getUsername());
             assert account.getUserTel().equals(savedEntity.getUserTel());
             assert account.getAddress().equals(savedEntity.getAddress());
-            assert account.getRole().equals(savedEntity.getRole());
             assert account.getRegDateTime().equals(savedEntity.getRegDateTime());
             assert account.getRegDate().equals(savedEntity.getRegDate());
         }
@@ -150,7 +150,7 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
                 .username("username")
                 .userTel("userTel")
                 .address("address")
-                .role(Role.ROLE_SELLER)
+                .roles(Set.of(RoleEntity.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.now())
                 .regDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
                 .build();
@@ -191,7 +191,7 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
                 .username("username")
                 .userTel("userTel")
                 .address("address")
-                .role(Role.ROLE_SELLER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.now())
                 .regDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
                 .build();
@@ -206,7 +206,6 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
             assert savedAccount.getUsername().equals(account.getUsername());
             assert savedAccount.getUserTel().equals(account.getUserTel());
             assert savedAccount.getAddress().equals(account.getAddress());
-            assert savedAccount.getRole().equals(account.getRole());
             assert savedAccount.getRegDateTime().equals(account.getRegDateTime());
             assert savedAccount.getRegDate().equals(account.getRegDate());
         }
@@ -226,7 +225,7 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
                 .username("username")
                 .userTel("userTel")
                 .address("address")
-                .role(Role.ROLE_SELLER)
+                .roles(Set.of(RoleEntity.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
                 .regDate("20210101")
                 .build();
@@ -239,7 +238,7 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
                 .username("updateUsername")
                 .userTel("updateUserTel")
                 .address("updateAddress")
-                .role(savedEntity.getRole())
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
                 .regDate("20210101")
                 .build();
@@ -255,7 +254,6 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
             assert updatedAccount.getUsername().equals(account.getUsername());
             assert updatedAccount.getUserTel().equals(account.getUserTel());
             assert updatedAccount.getAddress().equals(account.getAddress());
-            assert updatedAccount.getRole().equals(account.getRole());
             assert updatedAccount.getRegDateTime().equals(account.getRegDateTime());
             assert updatedAccount.getRegDate().equals(account.getRegDate());
         }
@@ -275,7 +273,7 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
                 .username("username")
                 .userTel("userTel")
                 .address("address")
-                .role(Role.ROLE_SELLER)
+                .roles(Set.of(RoleEntity.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.now())
                 .regDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")))
                 .build();

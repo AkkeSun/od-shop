@@ -4,13 +4,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
     @Query("SELECT a FROM AccountEntity a JOIN FETCH a.roles WHERE a.id = :id")
-    Optional<AccountEntity> findById(@Param("id") Long id);
+    Optional<AccountEntity> findById(Long id);
 
+    @Query("SELECT a FROM AccountEntity a JOIN FETCH a.roles WHERE a.email = :email and a.password = :password")
     Optional<AccountEntity> findByEmailAndPassword(String email, String password);
 
     boolean existsByEmail(String email);

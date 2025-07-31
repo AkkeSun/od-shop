@@ -9,11 +9,13 @@ import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
+import com.account.fakeClass.FakeRoleStoragePort;
 import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
 import com.account.infrastructure.exception.CustomBusinessException;
 import com.account.infrastructure.exception.ErrorCode;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,6 +29,7 @@ class RegisterAccountServiceTest {
 
     RegisterAccountService service;
     FakeJwtUtilClass fakeJwtUtilClass;
+    FakeRoleStoragePort fakeRoleStoragePort;
     FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass stubUserAgentUtilClass;
     FakeTokenStoragePortClass fakeTokenStoragePortClass;
@@ -35,6 +38,7 @@ class RegisterAccountServiceTest {
     RegisterAccountServiceTest() {
         fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
+        fakeRoleStoragePort = new FakeRoleStoragePort();
         stubUserAgentUtilClass = new StubUserAgentUtilClass();
         fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
@@ -42,6 +46,7 @@ class RegisterAccountServiceTest {
         service = new RegisterAccountService(
             fakeJwtUtilClass,
             stubUserAgentUtilClass,
+            fakeRoleStoragePort,
             fakeRedisStoragePortClass,
             fakeTokenStoragePortClass,
             fakeAccountStorageClass
@@ -66,7 +71,7 @@ class RegisterAccountServiceTest {
                 .address("registerAccount.success")
                 .password("registerAccount.success")
                 .userTel("01012341234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .build();
 
             // when
@@ -90,7 +95,7 @@ class RegisterAccountServiceTest {
                 .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
                 .regDate("20240101")
                 .userTel("01012341234")
-                .role(Role.ROLE_CUSTOMER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .password("1234")
                 .build();
             fakeAccountStorageClass.register(account);

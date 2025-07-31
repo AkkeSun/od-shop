@@ -14,9 +14,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.service.register_account.RegisterAccountServiceResponse;
+import com.account.infrastructure.exception.CustomValidationException;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -47,7 +49,7 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .email("od@test.com")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -83,7 +85,7 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .email("")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -108,7 +110,7 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .email("test@gmail.com")
                 .password("")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -133,7 +135,7 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .email("test@gmail.com")
                 .password("1234")
                 .passwordCheck("")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -158,17 +160,10 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .email("test@gmail.com")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("")
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
                 .build();
-            RegisterAccountServiceResponse response = RegisterAccountServiceResponse.builder()
-                .accessToken("accessToken")
-                .refreshToken("refreshToken")
-                .build();
-            given(registerAccountUseCase.registerAccount(request.toCommand()))
-                .willReturn(response);
 
             // when // then
             performErrorDocument(request, status().isBadRequest(),
@@ -183,7 +178,7 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .email("test@gmail.com")
                 .password("1234")
                 .passwordCheck("12345")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -208,17 +203,14 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .email("test@gmail.com")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("error")
+                .roles(List.of("ERROR"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
                 .build();
-            RegisterAccountServiceResponse response = RegisterAccountServiceResponse.builder()
-                .accessToken("accessToken")
-                .refreshToken("refreshToken")
-                .build();
+
             given(registerAccountUseCase.registerAccount(request.toCommand()))
-                .willReturn(response);
+                .willThrow(new CustomValidationException("존재하지 않는 권한 입니다"));
 
             // when // then
             performErrorDocument(request, status().isBadRequest(),
@@ -233,17 +225,11 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .email("test@gmail.com")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("111")
                 .address("서울시 강남구")
                 .build();
-            RegisterAccountServiceResponse response = RegisterAccountServiceResponse.builder()
-                .accessToken("accessToken")
-                .refreshToken("refreshToken")
-                .build();
-            given(registerAccountUseCase.registerAccount(request.toCommand()))
-                .willReturn(response);
 
             // when // then
             performErrorDocument(request, status().isBadRequest(),
@@ -253,6 +239,8 @@ class RegisterAccountDocsTest extends RestDocsSupport {
         private void performDocument(RegisterAccountRequest request,
             ResultMatcher status, String docIdentifier, String responseSchema,
             FieldDescriptor... responseFields) throws Exception {
+            JsonFieldType roleType = request.getRoles() == null ?
+                JsonFieldType.NULL : JsonFieldType.ARRAY;
 
             mockMvc.perform(post("/accounts")
                     .content(objectMapper.writeValueAsString(request))
@@ -273,7 +261,7 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                                     .description("비밀번호"),
                                 fieldWithPath("passwordCheck").type(JsonFieldType.STRING)
                                     .description("비밀번호 확인"),
-                                fieldWithPath("role").type(JsonFieldType.STRING)
+                                fieldWithPath("roles").type(roleType)
                                     .description("권한 (ROLE_CUSTOMER, ROLE_SELLER)"),
                                 fieldWithPath("username").type(JsonFieldType.STRING)
                                     .description("이름 (10자 미만)").optional(),

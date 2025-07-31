@@ -5,6 +5,7 @@ import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,7 +21,6 @@ class FindAccountServiceTest {
         fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         service = new FindAccountService(
-            fakeJwtUtilClass,
             fakeAccountStorageClass
         );
     }
@@ -46,7 +46,7 @@ class FindAccountServiceTest {
                 .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
                 .regDate("20240101")
                 .userTel("01012341234")
-                .role(Role.ROLE_CUSTOMER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .password("1234")
                 .build();
             fakeAccountStorageClass.register(account);
@@ -60,7 +60,7 @@ class FindAccountServiceTest {
             assert response.email().equals(account.getEmail());
             assert response.username().equals(account.getUsername());
             assert response.userTel().equals(account.getUserTel());
-            assert response.role().equals(account.getRole().toString());
+            assert response.roles().contains("ROLE_CUSTOMER");
             assert response.regDate().equals(account.getRegDate());
         }
     }

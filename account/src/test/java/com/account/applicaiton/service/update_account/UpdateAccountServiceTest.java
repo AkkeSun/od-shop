@@ -6,6 +6,7 @@ import com.account.domain.model.Role;
 import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -54,7 +55,7 @@ class UpdateAccountServiceTest {
                 .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
                 .regDate("20240101")
                 .userTel("01012341234")
-                .role(Role.ROLE_CUSTOMER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .password("1234")
                 .build();
             fakeAccountStorageClass.register(account);
@@ -92,7 +93,7 @@ class UpdateAccountServiceTest {
                 .regDateTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0))
                 .regDate("20240101")
                 .userTel("01012341234")
-                .role(Role.ROLE_CUSTOMER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .password("1234")
                 .build();
             fakeAccountStorageClass.register(account);

@@ -3,6 +3,7 @@ package com.account.adapter.in.controller.register_account;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class RegisterAccountRequestTest {
                 .email("od@test.com")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -33,7 +34,7 @@ class RegisterAccountRequestTest {
             // then
             assertThat(command.email()).isEqualTo(request.getEmail());
             assertThat(command.password()).isEqualTo(request.getPassword());
-            assertThat(command.role()).isEqualTo(request.getRole());
+            assertThat(command.roles()).isEqualTo(request.getRoles());
             assertThat(command.username()).isEqualTo(request.getUsername());
             assertThat(command.userTel()).isEqualTo(request.getUserTel());
             assertThat(command.address()).isEqualTo(request.getAddress());

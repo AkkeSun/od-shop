@@ -22,6 +22,7 @@ import com.account.infrastructure.exception.ErrorCode;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,7 @@ class FindAccountDocsTest extends RestDocsSupport {
                 .userTel("01012341234")
                 .address("서울특별시 송파구")
                 .email("test@google.com")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .regDate("20241212")
                 .build();
             given(findAccountInfoUseCase.findAccountInfo(any())).willReturn(response);
@@ -81,7 +82,7 @@ class FindAccountDocsTest extends RestDocsSupport {
                     .description("사용자 주소"),
                 fieldWithPath("data.email").type(JsonFieldType.STRING)
                     .description("사용자 이메일"),
-                fieldWithPath("data.role").type(JsonFieldType.STRING)
+                fieldWithPath("data.roles").type(JsonFieldType.ARRAY)
                     .description("사용자 권한"),
                 fieldWithPath("data.regDate").type(JsonFieldType.STRING)
                     .description("등록일")

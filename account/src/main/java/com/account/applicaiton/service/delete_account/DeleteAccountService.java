@@ -47,7 +47,7 @@ class DeleteAccountService implements DeleteAccountUseCase {
         tokenStoragePort.deleteByEmail(account.getEmail());
         redisStoragePort.deleteTokenByEmail(account.getEmail());
 
-        messageProducerPort.sendMessage(deleteTopic, toJsonString(account));
+        messageProducerPort.sendMessage(deleteTopic, toJsonString(DeleteAccountLog.of(account)));
         messageProducerPort.sendMessage(historyTopic, toJsonString(DeleteAccountLog.of(account)));
 
         return DeleteAccountServiceResponse.ofSuccess(account);

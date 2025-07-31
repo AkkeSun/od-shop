@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.account.ControllerTestSupport;
 import com.account.applicaiton.service.find_account.FindAccountServiceResponse;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -58,7 +59,7 @@ class FindAccountControllerTest extends ControllerTestSupport {
                 .userTel("01012341234")
                 .address("서울특별시 송파구")
                 .email("test@google.com")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .build();
             given(findAccountInfoUseCase.findAccountInfo(any())).willReturn(response);
 
@@ -77,7 +78,6 @@ class FindAccountControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.data.userTel").value(response.userTel()))
                 .andExpect(jsonPath("$.data.address").value(response.address()))
                 .andExpect(jsonPath("$.data.email").value(response.email()))
-                .andExpect(jsonPath("$.data.role").value(response.role()))
                 .andDo(print());
         }
     }

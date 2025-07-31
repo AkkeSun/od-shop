@@ -27,7 +27,7 @@ class JsonUtilTest {
         @DisplayName("[success] 정상적으로 json 문자열이 객체로 변환되는지 확인한다.")
         void success() {
             // given
-            String jsonText = "{\"id\":1,\"email\":\"od@gmail.com\",\"password\":\"1234\",\"username\":\"od\",\"userTel\":\"010-1234-5678\",\"address\":\"서울시 강남구\",\"role\":null}";
+            String jsonText = "{\"id\":1,\"email\":\"od@gmail.com\",\"password\":\"1234\",\"username\":\"od\",\"userTel\":\"010-1234-5678\",\"address\":\"서울시 강남구\",\"roles\":[]}";
 
             // when
             Account result = jsonUtil.parseJson(jsonText, Account.class);
@@ -39,7 +39,6 @@ class JsonUtilTest {
             assertThat(result.getUsername()).isEqualTo("od");
             assertThat(result.getUserTel()).isEqualTo("010-1234-5678");
             assertThat(result.getAddress()).isEqualTo("서울시 강남구");
-            assertThat(result.getRole()).isNull();
         }
 
         @Test
@@ -86,7 +85,7 @@ class JsonUtilTest {
             assertThat(jsonObject.get("username")).isEqualTo(account.getUsername());
             assertThat(jsonObject.get("userTel")).isEqualTo(account.getUserTel());
             assertThat(jsonObject.get("address")).isEqualTo(account.getAddress());
-            assertThat(jsonObject.get("role")).isEqualTo(null);
+            assertThat(jsonObject.get("roles")).isEqualTo(null);
         }
     }
 }

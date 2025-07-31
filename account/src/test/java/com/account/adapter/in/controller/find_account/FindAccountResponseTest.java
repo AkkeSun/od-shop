@@ -3,6 +3,7 @@ package com.account.adapter.in.controller.find_account;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import com.account.applicaiton.service.find_account.FindAccountServiceResponse;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,11 +24,11 @@ class FindAccountResponseTest {
                 .userTel("01012341234")
                 .address("서울특별시 송파구")
                 .email("test@gmail.com")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .build();
 
             // when
-            FindAccountResponse response = new FindAccountResponse().of(serviceResponse);
+            FindAccountResponse response = FindAccountResponse.of(serviceResponse);
 
             // then
             assertThat(response.getId()).isEqualTo(serviceResponse.id());
@@ -35,7 +36,7 @@ class FindAccountResponseTest {
             assertThat(response.getUserTel()).isEqualTo(serviceResponse.userTel());
             assertThat(response.getAddress()).isEqualTo(serviceResponse.address());
             assertThat(response.getEmail()).isEqualTo(serviceResponse.email());
-            assertThat(response.getRole()).isEqualTo(serviceResponse.role());
+            assertThat(response.getRoles()).isEqualTo(serviceResponse.roles());
         }
     }
 }

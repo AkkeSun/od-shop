@@ -7,6 +7,7 @@ import com.account.domain.model.Role;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -36,7 +37,7 @@ class JwtUtilTest {
             Account account = Account.builder()
                 .id(1L)
                 .email("od@gmail.com")
-                .role(Role.ROLE_SELLER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .build();
 
             // when
@@ -144,7 +145,7 @@ class JwtUtilTest {
             Account account = Account.builder()
                 .id(1L)
                 .email("1234")
-                .role(Role.ROLE_SELLER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .build();
             String token = jwtUtil.createAccessToken(account);
 
@@ -181,7 +182,7 @@ class JwtUtilTest {
             Account account = Account.builder()
                 .id(1L)
                 .email("1234")
-                .role(Role.ROLE_SELLER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .build();
             String token = jwtUtil.createAccessToken(account);
 
@@ -191,7 +192,7 @@ class JwtUtilTest {
             // then
             assert claims.getSubject().equals("1234");
             assert claims.get("accountId").equals(1);
-            assert claims.get("role").equals(Role.ROLE_SELLER.toString());
+            assert claims.get("roles").equals("ROLE_CUSTOMER");
         }
 
         @Test

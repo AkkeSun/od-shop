@@ -38,7 +38,7 @@ public class FakeRedisStoragePortClass implements RedisStoragePort {
 
     @Override
     public <T> List<T> findDataList(String key, Class<T> clazz) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

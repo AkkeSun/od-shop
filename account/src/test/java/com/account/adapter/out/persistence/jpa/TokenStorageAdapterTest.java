@@ -36,7 +36,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .email(email)
                 .userAgent(userAgent)
                 .refreshToken("refreshToken")
-                .role("role")
+                .roles("role")
                 .accountId(1L)
                 .build();
             tokenRepository.save(entity);
@@ -48,7 +48,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
             assert token.getEmail().equals(email);
             assert token.getUserAgent().equals(userAgent);
             assert token.getRefreshToken().equals("refreshToken");
-            assert token.getRole().equals("role");
+            assert token.getRoles().equals("role");
             assert token.getAccountId().equals(1L);
         }
 
@@ -79,7 +79,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .email("email")
                 .userAgent("userAgent")
                 .refreshToken("refreshToken")
-                .role("role")
+                .roles("role")
                 .accountId(1L)
                 .build();
 
@@ -91,7 +91,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
             assert entity.getEmail().equals("email");
             assert entity.getUserAgent().equals("userAgent");
             assert entity.getRefreshToken().equals("refreshToken");
-            assert entity.getRole().equals("role");
+            assert entity.getRoles().equals("role");
             assert entity.getAccountId().equals(1L);
         }
 
@@ -104,7 +104,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .email("email")
                 .userAgent("userAgent")
                 .refreshToken("refreshToken")
-                .role("role")
+                .roles("role")
                 .accountId(1L)
                 .regDateTime("regDateTime")
                 .build();
@@ -114,7 +114,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .userAgent("newUserAgent")
                 .refreshToken("newRefreshToken")
                 .regDateTime("newRegDateTime")
-                .role("role")
+                .roles("role")
                 .accountId(1L)
                 .build();
 
@@ -126,7 +126,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
             assert result.getEmail().equals(token.getEmail());
             assert result.getUserAgent().equals(token.getUserAgent());
             assert result.getRefreshToken().equals(token.getRefreshToken());
-            assert result.getRole().equals(token.getRole());
+            assert result.getRoles().equals(token.getRoles());
             assert result.getRegDateTime().equals(token.getRegDateTime());
             assert result.getAccountId().equals(1L);
         }
@@ -144,7 +144,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .email("email")
                 .userAgent("userAgent")
                 .refreshToken("refreshToken")
-                .role("role")
+                .roles("role")
                 .accountId(1L)
                 .build();
             tokenRepository.save(entity);
@@ -170,7 +170,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .userAgent("updateToken.success.userAgent")
                 .refreshToken("updateToken.success.refreshToken")
                 .regDateTime("updateToken.success.regDateTime")
-                .role("ROLE_CUSTOMER")
+                .roles("ROLE_CUSTOMER")
                 .build();
             adapter.registerToken(token1Domain);
             Token token1Domain2 = Token.builder()
@@ -178,7 +178,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .userAgent("updateToken.success.userAgent")
                 .refreshToken("updateRefreshToken")
                 .regDateTime("updateRegDateTime")
-                .role("ROLE_CUSTOMER")
+                .roles("ROLE_CUSTOMER")
                 .build();
             // when
 

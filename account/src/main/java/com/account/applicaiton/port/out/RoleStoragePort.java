@@ -6,4 +6,6 @@ import java.util.List;
 public interface RoleStoragePort {
 
     List<Role> findAll();
+
+    void register(Role role);
 }

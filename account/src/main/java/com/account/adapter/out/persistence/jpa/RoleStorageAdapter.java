@@ -18,4 +18,9 @@ class RoleStorageAdapter implements RoleStoragePort {
             .map(RoleEntity::toDomain)
             .toList();
     }
+
+    @Override
+    public void register(Role role) {
+        repository.save(RoleEntity.of(role));
+    }
 }

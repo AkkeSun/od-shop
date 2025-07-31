@@ -13,7 +13,7 @@ class TokenMapper {
             .email(entity.getEmail())
             .userAgent(entity.getUserAgent())
             .refreshToken(entity.getRefreshToken())
-            //    .role(entity.getRole())
+            .roles(entity.getRoles())
             .regDateTime(entity.getRegDateTime())
             .build();
     }

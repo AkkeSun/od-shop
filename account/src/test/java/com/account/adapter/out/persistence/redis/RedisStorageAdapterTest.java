@@ -37,7 +37,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
                 .userAgent("userAgent1")
                 .refreshToken("refreshToken")
                 .regDateTime("regDateTime")
-                .role("role")
+                .roles("role")
                 .build();
             String key = "token::email-userAgent1";
 
@@ -52,7 +52,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
             assert savedToken.getUserAgent().equals(token.getUserAgent());
             assert savedToken.getRefreshToken().equals(token.getRefreshToken());
             assert savedToken.getRegDateTime().equals(token.getRegDateTime());
-            assert savedToken.getRole().equals(token.getRole());
+            assert savedToken.getRoles().equals(token.getRoles());
         }
     }
 
@@ -71,7 +71,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
                 .userAgent("userAgent2")
                 .refreshToken("refreshToken")
                 .regDateTime("regDateTime")
-                .role("role")
+                .roles("role")
                 .build();
             String key = "token::email-userAgent2";
             redisTemplate.opsForValue().set(key, toJsonString(token));
@@ -86,7 +86,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
             assert savedToken.getUserAgent().equals(token.getUserAgent());
             assert savedToken.getRefreshToken().equals(token.getRefreshToken());
             assert savedToken.getRegDateTime().equals(token.getRegDateTime());
-            assert savedToken.getRole().equals(token.getRole());
+            assert savedToken.getRoles().equals(token.getRoles());
         }
 
         @Test
@@ -135,7 +135,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
                 .userAgent("userAgent3")
                 .refreshToken("refreshToken")
                 .regDateTime("regDateTime")
-                .role("role")
+                .roles("role")
                 .build();
             String key = "token::email-userAgent3";
             redisTemplate.opsForValue().set(key, toJsonString(token));

@@ -4,6 +4,8 @@ import com.account.IntegrationTestSupport;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -29,7 +31,7 @@ class AccountMapperTest extends IntegrationTestSupport {
                 .username("username")
                 .userTel("userTel")
                 .address("address")
-                .role(Role.ROLE_SELLER)
+                .roles(Set.of(RoleEntity.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.now())
                 .regDate("regDate")
                 .build();
@@ -44,7 +46,6 @@ class AccountMapperTest extends IntegrationTestSupport {
             assert domain.getUsername().equals(entity.getUsername());
             assert domain.getUserTel().equals(entity.getUserTel());
             assert domain.getAddress().equals(entity.getAddress());
-            assert domain.getRole().equals(entity.getRole());
             assert domain.getRegDateTime().equals(entity.getRegDateTime());
             assert domain.getRegDate().equals(entity.getRegDate());
         }
@@ -65,7 +66,7 @@ class AccountMapperTest extends IntegrationTestSupport {
                 .username("username")
                 .userTel("userTel")
                 .address("address")
-                .role(Role.ROLE_SELLER)
+                .roles(List.of(Role.builder().id(1L).name("ROLE_CUSTOMER").build()))
                 .regDateTime(LocalDateTime.now())
                 .regDate("regDate")
                 .build();
@@ -80,7 +81,6 @@ class AccountMapperTest extends IntegrationTestSupport {
             assert entity.getUsername().equals(domain.getUsername());
             assert entity.getUserTel().equals(domain.getUserTel());
             assert entity.getAddress().equals(domain.getAddress());
-            assert entity.getRole().equals(domain.getRole());
             assert entity.getRegDateTime().equals(domain.getRegDateTime());
             assert entity.getRegDate().equals(domain.getRegDate());
         }

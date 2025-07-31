@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.account.ControllerTestSupport;
 import com.account.applicaiton.service.register_account.RegisterAccountServiceResponse;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("od@test.com")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -68,7 +69,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
             RegisterAccountRequest request = RegisterAccountRequest.builder()
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -105,7 +106,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -141,7 +142,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
             RegisterAccountRequest request = RegisterAccountRequest.builder()
                 .email("test@gmail.com")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -178,7 +179,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("test@gmail.com")
                 .password("")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -214,7 +215,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
             RegisterAccountRequest request = RegisterAccountRequest.builder()
                 .email("test@gmail.com")
                 .password("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -251,7 +252,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("test@gmail.com")
                 .password("1234")
                 .passwordCheck("")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -317,43 +318,6 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
 
         @Test
         @WithAnonymousUser
-        @DisplayName("[error] 권한을 빈 값으로 입력했을 때 400 코드와 오류 메시지를 응답한다.")
-        void error8() throws Exception {
-            // given
-            RegisterAccountRequest request = RegisterAccountRequest.builder()
-                .email("test@gmail.com")
-                .password("1234")
-                .passwordCheck("1234")
-                .role("")
-                .username("od")
-                .userTel("01012345678")
-                .address("서울시 강남구")
-                .build();
-            RegisterAccountServiceResponse response = RegisterAccountServiceResponse.builder()
-                .accessToken("accessToken")
-                .refreshToken("refreshToken")
-                .build();
-            given(registerAccountUseCase.registerAccount(request.toCommand()))
-                .willReturn(response);
-
-            // when
-            ResultActions actions = mockMvc.perform(post("/accounts")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request))
-            );
-
-            // then
-            actions.andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.httpStatus").value(400))
-                .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
-                .andExpect(jsonPath("$.data.errorMessage").value("권한은 필수값 입니다."))
-                .andDo(print());
-        }
-
-        @Test
-        @WithAnonymousUser
         @DisplayName("[error] 비밀번호와 비밀번호 확인이 동일하지 않을 때 400 코드와 오류 메시지를 응답한다.")
         void error9() throws Exception {
             // given
@@ -361,7 +325,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("test@gmail.com")
                 .password("1234")
                 .passwordCheck("12345")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -385,37 +349,6 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
 
         @Test
         @WithAnonymousUser
-        @DisplayName("[error] 유효한 권한을 입력하지 않았을 때 400 코드와 오류 메시지를 응답한다.")
-        void error10() throws Exception {
-            // given
-            RegisterAccountRequest request = RegisterAccountRequest.builder()
-                .email("test@gmail.com")
-                .password("1234")
-                .passwordCheck("1234")
-                .role("error")
-                .username("od")
-                .userTel("01012345678")
-                .address("서울시 강남구")
-                .build();
-
-            // when
-            ResultActions actions = mockMvc.perform(post("/accounts")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request))
-            );
-
-            // then
-            actions.andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.httpStatus").value(400))
-                .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
-                .andExpect(jsonPath("$.data.errorMessage").value("유효하지 않은 권한 입니다."))
-                .andDo(print());
-        }
-
-        @Test
-        @WithAnonymousUser
         @DisplayName("[error] 올바른 전화번호 형식을 입력하지 않았을 때 400 코드와 오류 메시지를 응답한다.")
         void error11() throws Exception {
             // given
@@ -423,7 +356,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("test@gmail.com")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("111")
                 .address("서울시 강남구")
@@ -460,7 +393,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("12345".repeat(11))
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -497,7 +430,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("12345")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od".repeat(6))
                 .userTel("01012345678")
                 .address("서울시 강남구")
@@ -534,7 +467,7 @@ class RegisterAccountControllerTest extends ControllerTestSupport {
                 .email("12345")
                 .password("1234")
                 .passwordCheck("1234")
-                .role("ROLE_CUSTOMER")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .username("od")
                 .userTel("01012345678")
                 .address("12345".repeat(21))
