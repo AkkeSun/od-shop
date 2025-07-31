@@ -28,6 +28,10 @@ class RegisterTokenService implements RegisterTokenUseCase {
 
     @Value("${kafka.topic.login}")
     private String loginTopic;
+    @Value("${spring.data.redis.key.token}")
+    private String tokenRedisKey;
+    @Value("${spring.data.redis.ttl.refresh-token}")
+    private Long refreshTokenTtl;
     private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
@@ -53,7 +57,11 @@ class RegisterTokenService implements RegisterTokenUseCase {
                 .collect(Collectors.joining(",")))
             .build();
 
-        redisStoragePort.registerToken(token);
+        redisStoragePort.register(
+            String.format(tokenRedisKey, token.getEmail(), token.getUserAgent()),
+            toJsonString(token),
+            refreshTokenTtl
+        );
         tokenStoragePort.registerToken(token);
 
         LoginLog loginLog = LoginLog.builder()

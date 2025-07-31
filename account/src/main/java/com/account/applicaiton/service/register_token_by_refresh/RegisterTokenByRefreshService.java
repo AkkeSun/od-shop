@@ -1,6 +1,7 @@
 package com.account.applicaiton.service.register_token_by_refresh;
 
 import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
+import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.RegisterTokenByRefreshUseCase;
 import com.account.applicaiton.port.out.RedisStoragePort;
@@ -13,6 +14,7 @@ import com.account.infrastructure.util.JwtUtil;
 import com.account.infrastructure.util.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -23,6 +25,10 @@ import org.springframework.util.ObjectUtils;
 @RequiredArgsConstructor
 class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
 
+    @Value("${spring.data.redis.key.token}")
+    private String tokenRedisKey;
+    @Value("${spring.data.redis.ttl.refresh-token}")
+    private Long refreshTokenTtl;
     private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
@@ -36,7 +42,9 @@ class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
 
         String email = jwtUtil.getEmail(refreshToken);
         String userAgent = userAgentUtil.getUserAgent();
-        Token savedToken = redisStoragePort.findTokenByEmailAndUserAgent(email, userAgent);
+        String redisKey = String.format(tokenRedisKey, email, userAgent);
+
+        Token savedToken = redisStoragePort.findData(redisKey, Token.class);
 
         if (ObjectUtils.isEmpty(savedToken)) {
             log.info("[token cache notfound] {} - {}", email, userAgent);
@@ -54,7 +62,7 @@ class RegisterTokenByRefreshService implements RegisterTokenByRefreshUseCase {
         savedToken.updateRefreshToken(newRefreshToken);
         savedToken.updateRegTime(getCurrentDateTime());
 
-        redisStoragePort.registerToken(savedToken);
+        redisStoragePort.register(redisKey, toJsonString(savedToken), refreshTokenTtl);
         tokenStoragePort.updateToken(savedToken);
 
         return RegisterTokenByRefreshServiceResponse.builder()

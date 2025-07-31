@@ -1,6 +1,5 @@
 package com.account.applicaiton.service.delete_account;
 
-import static com.account.domain.model.AccountHistory.createAccountHistoryForDelete;
 import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
@@ -10,10 +9,9 @@ import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
-import com.account.domain.model.AccountHistory;
 import com.account.domain.model.DeleteAccountLog;
 import com.account.infrastructure.exception.CustomNotFoundException;
-import com.account.infrastructure.util.JwtUtil;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,7 +26,8 @@ class DeleteAccountService implements DeleteAccountUseCase {
     private String historyTopic;
     @Value("${kafka.topic.delete}")
     private String deleteTopic;
-    private final JwtUtil jwtUtil;
+    @Value("${spring.data.redis.key.token}")
+    private String tokenRedisKey;
     private final RedisStoragePort redisStoragePort;
     private final TokenStoragePort tokenStoragePort;
     private final AccountStoragePort accountStoragePort;
@@ -41,11 +40,12 @@ class DeleteAccountService implements DeleteAccountUseCase {
             throw new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO);
         }
 
-        AccountHistory history = createAccountHistoryForDelete(account.getId());
-
         accountStoragePort.deleteById(account.getId());
         tokenStoragePort.deleteByEmail(account.getEmail());
-        redisStoragePort.deleteTokenByEmail(account.getEmail());
+
+        List<String> keys = redisStoragePort.getKeys(
+            String.format(tokenRedisKey, account.getEmail(), "*"));
+        redisStoragePort.delete(keys);
 
         messageProducerPort.sendMessage(deleteTopic, toJsonString(DeleteAccountLog.of(account)));
         messageProducerPort.sendMessage(historyTopic, toJsonString(DeleteAccountLog.of(account)));

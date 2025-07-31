@@ -25,6 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class RegisterAccountService implements RegisterAccountUseCase {
 
+    @Value("${spring.data.redis.key.token}")
+    private String tokenRedisKey;
+    @Value("${spring.data.redis.ttl.refresh-token}")
+    private Long refreshTokenTtl;
     private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RoleStoragePort roleStoragePort;
@@ -81,7 +86,11 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .roles(String.join(",", command.roles()))
             .build();
 
-        redisStoragePort.registerToken(token);
+        redisStoragePort.register(
+            String.format(tokenRedisKey, token.getEmail(), token.getUserAgent()),
+            toJsonString(token),
+            refreshTokenTtl
+        );
         tokenStoragePort.registerToken(token);
 
         return RegisterAccountServiceResponse.builder()

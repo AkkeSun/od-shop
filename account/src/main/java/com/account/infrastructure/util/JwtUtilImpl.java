@@ -18,10 +18,10 @@ public class JwtUtilImpl implements JwtUtil {
     @Value("${jwt.token.secret-key}")
     private String secretKey;
 
-    @Value("${jwt.token.valid-time}")
+    @Value("${spring.data.redis.ttl.access-token}")
     private long tokenValidTime;
 
-    @Value("${jwt.token.refresh-valid-time}")
+    @Value("${spring.data.redis.ttl.refresh-token}")
     private long refreshTokenValidTime;
 
     @Override

@@ -25,6 +25,11 @@ spring:
       host: 140.245.70.130
       port: 6379
       timeout: 3000
+      key:
+        token: token::%s-%s
+      ttl:
+        access-token: 600000       # 10 min
+        refresh-token: 259200000   # 3 days
 
 server:
   port: 8081
@@ -33,8 +38,6 @@ server:
 jwt:
   token:
     secret-key: hello-jwt
-    valid-time: 600000 # ms (10min)
-    refresh-valid-time: 259200000 # ms (3days)
 
 kafka:
   host: 152.67.206.159:9092

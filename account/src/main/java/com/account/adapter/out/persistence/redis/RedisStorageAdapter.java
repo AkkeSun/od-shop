@@ -2,17 +2,15 @@ package com.account.adapter.out.persistence.redis;
 
 import static com.account.infrastructure.util.JsonUtil.parseJson;
 import static com.account.infrastructure.util.JsonUtil.parseJsonList;
-import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.out.RedisStoragePort;
-import com.account.domain.model.Token;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,36 +20,11 @@ import org.springframework.util.StringUtils;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 class RedisStorageAdapter implements RedisStoragePort {
 
-    private final long validTime;
-    private final String tokenCacheKey;
     private final RedisTemplate<String, String> redisTemplate;
 
-    RedisStorageAdapter(RedisTemplate<String, String> redisTemplate,
-        @Value("${jwt.token.refresh-valid-time}") long validTime) {
-        this.redisTemplate = redisTemplate;
-        this.validTime = validTime;
-        this.tokenCacheKey = "token::%s-%s";
-    }
-
-    @CircuitBreaker(name = "redis", fallbackMethod = "registerTokenFallback")
-    public void registerToken(Token token) {
-        String key = String.format(tokenCacheKey, token.getEmail(), token.getUserAgent());
-        String redisData = toJsonString(token);
-        redisTemplate.opsForValue().set(key, redisData, validTime, TimeUnit.MILLISECONDS);
-    }
-
-    @Override
-    @CircuitBreaker(name = "redis", fallbackMethod = "findByEmailAndUserAgentFallback")
-    public Token findTokenByEmailAndUserAgent(String email, String userAgent) {
-        String key = String.format(tokenCacheKey, email, userAgent);
-        String redisData = redisTemplate.opsForValue().get(key);
-        if (!StringUtils.hasText(redisData)) {
-            return null;
-        }
-        return parseJson(redisData, Token.class);
-    }
 
     @Override
     @CircuitBreaker(name = "redis", fallbackMethod = "findDataFallback")
@@ -74,9 +47,15 @@ class RedisStorageAdapter implements RedisStoragePort {
     }
 
     @Override
-    @CircuitBreaker(name = "redis", fallbackMethod = "registerRedis")
+    @CircuitBreaker(name = "redis", fallbackMethod = "registerFallback")
     public void register(String key, String data, long ttl) {
-        redisTemplate.opsForValue().set(key, data, ttl, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(key, data, ttl, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    @CircuitBreaker(name = "redis", fallbackMethod = "deleteTokenFallback")
+    public void delete(List<String> keys) {
+        redisTemplate.delete(keys);
     }
 
     @Override
@@ -97,27 +76,6 @@ class RedisStorageAdapter implements RedisStoragePort {
         return redisKeys;
     }
 
-    @Override
-    @CircuitBreaker(name = "redis", fallbackMethod = "deleteByEmailFallback")
-    public void deleteTokenByEmail(String email) {
-        String key = String.format(tokenCacheKey, email, "*");
-        List<String> redisKeys = scanByPattern(key);
-        redisTemplate.delete(redisKeys);
-    }
-
-    private void registerTokenFallback(Token token, Exception e) {
-        log.error("[registerTokenFallback] call - " + e.getMessage());
-    }
-
-    private Token findByEmailAndUserAgentFallback(String email, String userAgent, Exception e) {
-        log.error("[findByEmailAndUserAgentFallback] call - " + e.getMessage());
-        return null;
-    }
-
-    private void deleteByEmailFallback(String email, Exception e) {
-        log.error("[deleteByEmailFallbackFallback] call - " + e.getMessage());
-    }
-
     private <T> T findDataFallback(String key, Class<T> clazz,
         Throwable throwable) {
         log.error("[findRedisDataFallback] {}-{}", key, throwable.getMessage());
@@ -130,13 +88,15 @@ class RedisStorageAdapter implements RedisStoragePort {
         return Collections.emptyList();
     }
 
-    private void registerRedis(String key, String data, Throwable throwable) {
+    private void registerFallback(String key, String data, long ttl, Throwable throwable) {
         log.error("[registerRedis] {}-{}-{}", key, data, throwable.getMessage());
-        System.out.println("check");
     }
 
     private List<String> getKeysFallback(String input, Throwable throwable) {
         return new ArrayList<>();
+    }
+
+    private void deleteTokenFallback(List<String> keys, Throwable throwable) {
     }
 
     private List<String> scanByPattern(String pattern) {
