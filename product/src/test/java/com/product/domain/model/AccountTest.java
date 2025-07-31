@@ -18,7 +18,7 @@ class AccountTest {
             // given
             Claims claims = Jwts.claims().setSubject("test@gmail.com");
             claims.put("accountId", 1L);
-            claims.put("role", "USER");
+            claims.put("roles", "USER");
 
             // when
             Account account = Account.of(claims);
@@ -26,7 +26,7 @@ class AccountTest {
             // then
             assert account.id().equals(1L);
             assert account.email().equals("test@gmail.com");
-            assert account.role().equals("USER");
+            assert account.roles().contains("USER");
         }
     }
 }

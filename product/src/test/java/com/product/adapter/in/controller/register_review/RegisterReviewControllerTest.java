@@ -66,7 +66,7 @@ class RegisterReviewControllerTest extends ControllerTestSupport {
 
             // when
             ResultActions actions = mockMvc.perform(
-                post("/products/{productId}/registerReview", productId)
+                post("/products/{productId}/reviews", productId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", authorization)
                     .content(objectMapper.writeValueAsString(request))
