@@ -1,13 +1,13 @@
 package com.account.adapter.out.persistence.jpa;
 
-import com.account.domain.model.Token;
+import com.account.domain.model.RefreshTokenInfo;
 import org.springframework.stereotype.Component;
 
 @Component
-class TokenMapper {
+class RefreshTokenInfoMapper {
 
-    public Token toDomain(TokenEntity entity) {
-        return Token.builder()
+    public RefreshTokenInfo toDomain(RefreshTokenInfoEntity entity) {
+        return RefreshTokenInfo.builder()
             .id(entity.getId())
             .accountId(entity.getAccountId())
             .email(entity.getEmail())
@@ -18,8 +18,8 @@ class TokenMapper {
             .build();
     }
 
-    public TokenEntity toEntity(Token domain) {
-        return TokenEntity.builder()
+    public RefreshTokenInfoEntity toEntity(RefreshTokenInfo domain) {
+        return RefreshTokenInfoEntity.builder()
             .id(domain.getId())
             .accountId(domain.getAccountId())
             .email(domain.getEmail())

@@ -1,6 +1,6 @@
-package com.account.adapter.in.controller.register_token_by_refresh;
+package com.account.adapter.in.controller.update_token;
 
-import com.account.applicaiton.service.register_token_by_refresh.RegisterTokenByRefreshServiceResponse;
+import com.account.applicaiton.service.update_token.UpdateTokenServiceResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,19 +9,19 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-class RegisterTokenByRefreshResponse {
+class UpdateTokenResponse {
 
     private String accessToken;
     private String refreshToken;
 
     @Builder
-    RegisterTokenByRefreshResponse(String accessToken, String refreshToken) {
+    UpdateTokenResponse(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
 
-    RegisterTokenByRefreshResponse of(RegisterTokenByRefreshServiceResponse serviceResponse) {
-        return RegisterTokenByRefreshResponse.builder()
+    UpdateTokenResponse of(UpdateTokenServiceResponse serviceResponse) {
+        return UpdateTokenResponse.builder()
             .accessToken(serviceResponse.accessToken())
             .refreshToken(serviceResponse.refreshToken())
             .build();

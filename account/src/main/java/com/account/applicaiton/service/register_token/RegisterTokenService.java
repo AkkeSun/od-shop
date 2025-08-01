@@ -8,11 +8,11 @@ import com.account.applicaiton.port.in.command.RegisterTokenCommand;
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.applicaiton.port.out.RedisStoragePort;
-import com.account.applicaiton.port.out.TokenStoragePort;
+import com.account.applicaiton.port.out.RefreshTokenInfoStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.LoginLog;
+import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
-import com.account.domain.model.Token;
 import com.account.infrastructure.util.JwtUtil;
 import com.account.infrastructure.util.UserAgentUtil;
 import java.util.stream.Collectors;
@@ -35,7 +35,7 @@ class RegisterTokenService implements RegisterTokenUseCase {
     private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
-    private final TokenStoragePort tokenStoragePort;
+    private final RefreshTokenInfoStoragePort refreshTokenInfoStoragePort;
     private final AccountStoragePort accountStoragePort;
     private final MessageProducerPort messageProducerPort;
 
@@ -46,7 +46,7 @@ class RegisterTokenService implements RegisterTokenUseCase {
 
         String accessToken = jwtUtil.createAccessToken(account);
         String refreshToken = jwtUtil.createRefreshToken(command.email());
-        Token token = Token.builder()
+        RefreshTokenInfo refreshTokenInfo = RefreshTokenInfo.builder()
             .accountId(account.getId())
             .email(account.getEmail())
             .userAgent(userAgentUtil.getUserAgent())
@@ -58,19 +58,12 @@ class RegisterTokenService implements RegisterTokenUseCase {
             .build();
 
         redisStoragePort.register(
-            String.format(tokenRedisKey, token.getEmail(), token.getUserAgent()),
-            toJsonString(token),
+            String.format(tokenRedisKey, account.getEmail(), refreshTokenInfo.getUserAgent()),
+            toJsonString(refreshTokenInfo),
             refreshTokenTtl
         );
-        tokenStoragePort.registerToken(token);
-
-        LoginLog loginLog = LoginLog.builder()
-            .accountId(account.getId())
-            .email(account.getEmail())
-            .loginDateTime(getCurrentDateTime())
-            .build();
-
-        messageProducerPort.sendMessage(loginTopic, toJsonString(loginLog));
+        refreshTokenInfoStoragePort.registerToken(refreshTokenInfo);
+        messageProducerPort.sendMessage(loginTopic, toJsonString(LoginLog.of(account)));
 
         return RegisterTokenServiceResponse.builder()
             .accessToken(accessToken)

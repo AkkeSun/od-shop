@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class Token {
+public class RefreshTokenInfo {
 
     private Long id;
     private Long accountId;
@@ -18,7 +18,8 @@ public class Token {
     private String roles;
 
     @Builder
-    public Token(Long id, Long accountId, String email, String userAgent, String refreshToken,
+    public RefreshTokenInfo(Long id, Long accountId, String email, String userAgent,
+        String refreshToken,
         String regDateTime, String roles) {
         this.id = id;
         this.accountId = accountId;

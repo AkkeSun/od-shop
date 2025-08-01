@@ -1,18 +1,18 @@
 package com.account.fakeClass;
 
-import com.account.applicaiton.port.out.TokenStoragePort;
-import com.account.domain.model.Token;
+import com.account.applicaiton.port.out.RefreshTokenInfoStoragePort;
+import com.account.domain.model.RefreshTokenInfo;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FakeTokenStoragePortClass implements TokenStoragePort {
+public class FakeTokenStoragePortClass implements RefreshTokenInfoStoragePort {
 
-    public List<Token> tokenList = new ArrayList<>();
+    public List<RefreshTokenInfo> tokenList = new ArrayList<>();
 
     @Override
-    public void registerToken(Token token) {
+    public void registerToken(RefreshTokenInfo token) {
         tokenList.add(token);
         log.info("FakeTokenStoragePortClass registerToken");
     }
@@ -23,8 +23,8 @@ public class FakeTokenStoragePortClass implements TokenStoragePort {
     }
 
     @Override
-    public Token findByEmailAndUserAgent(String email, String userAgent) {
-        List<Token> list = tokenList.stream()
+    public RefreshTokenInfo findByEmailAndUserAgent(String email, String userAgent) {
+        List<RefreshTokenInfo> list = tokenList.stream()
             .filter(token -> token.getEmail().equals(email))
             .filter(token -> token.getUserAgent().equals(userAgent))
             .toList();
@@ -32,7 +32,7 @@ public class FakeTokenStoragePortClass implements TokenStoragePort {
     }
 
     @Override
-    public void updateToken(Token tokenCache) {
+    public void updateToken(RefreshTokenInfo tokenCache) {
         log.info("FakeTokenStoragePortClass updateToken");
     }
 }

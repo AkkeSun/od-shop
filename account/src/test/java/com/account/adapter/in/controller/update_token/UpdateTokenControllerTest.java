@@ -1,4 +1,4 @@
-package com.account.adapter.in.controller.register_token_by_refresh;
+package com.account.adapter.in.controller.update_token;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.account.ControllerTestSupport;
-import com.account.applicaiton.service.register_token_by_refresh.RegisterTokenByRefreshServiceResponse;
+import com.account.applicaiton.service.update_token.UpdateTokenServiceResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.web.servlet.ResultActions;
 
-class RegisterTokenByRefreshControllerTest extends ControllerTestSupport {
+class UpdateTokenControllerTest extends ControllerTestSupport {
 
     @Nested
     @WithAnonymousUser
@@ -27,16 +27,16 @@ class RegisterTokenByRefreshControllerTest extends ControllerTestSupport {
         @DisplayName("[success] API 를 호출했을 때 200 코드와 성공 메시지를 응답한다.")
         void success() throws Exception {
             // given
-            RegisterTokenByRefreshRequest request = RegisterTokenByRefreshRequest
+            UpdateTokenRequest request = UpdateTokenRequest
                 .builder()
                 .refreshToken("test-refresh-token")
                 .build();
-            RegisterTokenByRefreshServiceResponse response =
-                RegisterTokenByRefreshServiceResponse.builder()
+            UpdateTokenServiceResponse response =
+                UpdateTokenServiceResponse.builder()
                     .accessToken("new-access-token")
                     .refreshToken("new-refresh-token")
                     .build();
-            given(registerTokenByRefreshUseCase.registerTokenByRefresh(
+            given(registerTokenByRefreshUseCase.update(
                 request.getRefreshToken())).willReturn(response);
 
             // when
@@ -60,7 +60,7 @@ class RegisterTokenByRefreshControllerTest extends ControllerTestSupport {
         @DisplayName("[error] 리프래시 토큰을 입력하지 않았을 때 400 코드와 오류 메시지를 응답한다.")
         void error() throws Exception {
             // given
-            RegisterTokenByRefreshRequest request = RegisterTokenByRefreshRequest
+            UpdateTokenRequest request = UpdateTokenRequest
                 .builder()
                 .build();
 
@@ -84,7 +84,7 @@ class RegisterTokenByRefreshControllerTest extends ControllerTestSupport {
         @DisplayName("[error] 리프래시 토큰을 빈 값으로 않았을 때 400 코드와 오류 메시지를 응답한다.")
         void error2() throws Exception {
             // given
-            RegisterTokenByRefreshRequest request = RegisterTokenByRefreshRequest
+            UpdateTokenRequest request = UpdateTokenRequest
                 .builder()
                 .refreshToken("")
                 .build();

@@ -9,11 +9,11 @@ import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.RedisStoragePort;
+import com.account.applicaiton.port.out.RefreshTokenInfoStoragePort;
 import com.account.applicaiton.port.out.RoleStoragePort;
-import com.account.applicaiton.port.out.TokenStoragePort;
 import com.account.domain.model.Account;
+import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
-import com.account.domain.model.Token;
 import com.account.infrastructure.exception.CustomBusinessException;
 import com.account.infrastructure.exception.CustomValidationException;
 import com.account.infrastructure.util.JwtUtil;
@@ -42,7 +42,7 @@ class RegisterAccountService implements RegisterAccountUseCase {
     private final UserAgentUtil userAgentUtil;
     private final RoleStoragePort roleStoragePort;
     private final RedisStoragePort redisStoragePort;
-    private final TokenStoragePort tokenStoragePort;
+    private final RefreshTokenInfoStoragePort refreshTokenInfoStoragePort;
     private final AccountStoragePort accountStoragePort;
 
     @Override
@@ -57,7 +57,7 @@ class RegisterAccountService implements RegisterAccountUseCase {
         }
 
         Account savedAccount = accountStoragePort.register(Account.of(command, validRoles));
-        Token token = Token.builder()
+        RefreshTokenInfo refreshTokenInfo = RefreshTokenInfo.builder()
             .accountId(savedAccount.getId())
             .email(savedAccount.getEmail())
             .userAgent(userAgentUtil.getUserAgent())
@@ -67,15 +67,15 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .build();
 
         redisStoragePort.register(
-            String.format(tokenRedisKey, token.getEmail(), token.getUserAgent()),
-            toJsonString(token),
+            String.format(tokenRedisKey, savedAccount.getEmail(), refreshTokenInfo.getUserAgent()),
+            toJsonString(refreshTokenInfo),
             refreshTokenTtl
         );
-        tokenStoragePort.registerToken(token);
+        refreshTokenInfoStoragePort.registerToken(refreshTokenInfo);
 
         return RegisterAccountServiceResponse.builder()
             .accessToken(jwtUtil.createAccessToken(savedAccount))
-            .refreshToken(token.getRefreshToken())
+            .refreshToken(refreshTokenInfo.getRefreshToken())
             .build();
     }
 

@@ -1,13 +1,13 @@
 package com.account.adapter.out.persistence.jpa;
 
-import com.account.domain.model.Token;
+import com.account.domain.model.RefreshTokenInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class TokenMapperTest {
+class RefreshTokenInfoMapperTest {
 
-    TokenMapper mapper = new TokenMapper();
+    RefreshTokenInfoMapper mapper = new RefreshTokenInfoMapper();
 
     @Nested
     @DisplayName("[toDomain] 엔티티 정보를 도메인 정보로 변환하는 메소드")
@@ -17,14 +17,14 @@ class TokenMapperTest {
         @DisplayName("[success] 엔티티 정보를 도메인 정보로 정상적으로 변환하는지 확인한다.")
         void success() {
             // given
-            TokenEntity entity = TokenEntity.builder()
+            RefreshTokenInfoEntity entity = RefreshTokenInfoEntity.builder()
                 .refreshToken("refreshToken")
                 .regDateTime("regDateTime")
                 .userAgent("userAgent")
                 .build();
 
             // when
-            Token domain = mapper.toDomain(entity);
+            RefreshTokenInfo domain = mapper.toDomain(entity);
 
             // then
             assert domain.getRefreshToken().equals("refreshToken");
@@ -41,14 +41,14 @@ class TokenMapperTest {
         @DisplayName("[success] 도메인 정보를 엔티티 정보로 정상적으로 변환하는지 확인한다.")
         void success() {
             // given
-            Token domain = Token.builder()
+            RefreshTokenInfo domain = RefreshTokenInfo.builder()
                 .refreshToken("refreshToken")
                 .regDateTime("regDateTime")
                 .userAgent("userAgent")
                 .build();
 
             // when
-            TokenEntity entity = mapper.toEntity(domain);
+            RefreshTokenInfoEntity entity = mapper.toEntity(domain);
 
             // then
             assert entity.getRefreshToken().equals("refreshToken");

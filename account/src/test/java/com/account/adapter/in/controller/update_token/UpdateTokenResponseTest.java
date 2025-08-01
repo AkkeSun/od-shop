@@ -1,13 +1,13 @@
-package com.account.adapter.in.controller.register_token_by_refresh;
+package com.account.adapter.in.controller.update_token;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.account.applicaiton.service.register_token_by_refresh.RegisterTokenByRefreshServiceResponse;
+import com.account.applicaiton.service.update_token.UpdateTokenServiceResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class RegisterTokenByRefreshResponseTest {
+class UpdateTokenResponseTest {
 
     @Nested
     @DisplayName("[of] 서비스 응답 객체를 API 응답 객체로 변환하는 메소드")
@@ -17,14 +17,14 @@ class RegisterTokenByRefreshResponseTest {
         @DisplayName("[success] 서비스 응답 객체를 API 응답 객체로 잘 변환하는지 확인한다")
         void success() {
             // given
-            RegisterTokenByRefreshServiceResponse serviceResponse = RegisterTokenByRefreshServiceResponse.builder()
+            UpdateTokenServiceResponse serviceResponse = UpdateTokenServiceResponse.builder()
                 .accessToken("accessToken")
                 .refreshToken("refreshToken")
                 .build();
 
             // when
-            RegisterTokenByRefreshResponse response =
-                new RegisterTokenByRefreshResponse().of(serviceResponse);
+            UpdateTokenResponse response =
+                new UpdateTokenResponse().of(serviceResponse);
 
             // then
             assertEquals(response.getAccessToken(), serviceResponse.accessToken());

@@ -1,6 +1,6 @@
 package com.account.adapter.out.persistence.jpa;
 
-import com.account.domain.model.Token;
+import com.account.domain.model.RefreshTokenInfo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "TOKEN")
+@Table(name = "REFRESH_TOKEN_INFO")
 @NoArgsConstructor
-class TokenEntity {
+class RefreshTokenInfoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +41,8 @@ class TokenEntity {
     private String regDateTime;
 
     @Builder
-    TokenEntity(Long id, Long accountId, String email, String userAgent, String refreshToken,
+    RefreshTokenInfoEntity(Long id, Long accountId, String email, String userAgent,
+        String refreshToken,
         String roles, String regDateTime) {
         this.id = id;
         this.accountId = accountId;
@@ -52,7 +53,7 @@ class TokenEntity {
         this.regDateTime = regDateTime;
     }
 
-    void updateByDomain(Token domain) {
+    void updateByDomain(RefreshTokenInfo domain) {
         this.refreshToken = domain.getRefreshToken();
         this.regDateTime = domain.getRegDateTime();
         this.userAgent = domain.getUserAgent();

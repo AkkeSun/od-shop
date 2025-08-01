@@ -1,4 +1,4 @@
-package com.account.adapter.in.controller.register_token_by_refresh;
+package com.account.adapter.in.controller.update_token;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-class RegisterTokenByRefreshRequest {
+class UpdateTokenRequest {
 
     @NotBlank(message = "리프레시 토큰은 필수값 입니다.")
     private String refreshToken;
 
     @Builder
-    public RegisterTokenByRefreshRequest(String refreshToken) {
+    public UpdateTokenRequest(String refreshToken) {
         this.refreshToken = refreshToken;
     }
 

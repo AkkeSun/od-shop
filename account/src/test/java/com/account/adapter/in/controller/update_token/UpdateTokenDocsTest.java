@@ -1,4 +1,4 @@
-package com.account.adapter.in.controller.register_token_by_refresh;
+package com.account.adapter.in.controller.update_token;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.BDDMockito.given;
@@ -12,8 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.account.RestDocsSupport;
-import com.account.applicaiton.port.in.RegisterTokenByRefreshUseCase;
-import com.account.applicaiton.service.register_token_by_refresh.RegisterTokenByRefreshServiceResponse;
+import com.account.applicaiton.port.in.UpdateTokenUseCase;
+import com.account.applicaiton.service.update_token.UpdateTokenServiceResponse;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.ErrorCode;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
@@ -27,14 +27,14 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultMatcher;
 
-class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
+class UpdateTokenDocsTest extends RestDocsSupport {
 
-    private final RegisterTokenByRefreshUseCase registerTokenByRefreshUseCase
-        = mock(RegisterTokenByRefreshUseCase.class);
+    private final UpdateTokenUseCase registerTokenByRefreshUseCase
+        = mock(UpdateTokenUseCase.class);
 
     @Override
     protected Object initController() {
-        return new RegisterTokenByRefreshController(registerTokenByRefreshUseCase);
+        return new UpdateTokenController(registerTokenByRefreshUseCase);
     }
 
     @Nested
@@ -45,16 +45,16 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
         @DisplayName("[success] API 를 호출했을 때 200 코드와 성공 메시지를 응답한다.")
         void success() throws Exception {
             // given
-            RegisterTokenByRefreshRequest request = RegisterTokenByRefreshRequest
+            UpdateTokenRequest request = UpdateTokenRequest
                 .builder()
                 .refreshToken("valid-refresh-token")
                 .build();
-            RegisterTokenByRefreshServiceResponse response =
-                RegisterTokenByRefreshServiceResponse.builder()
+            UpdateTokenServiceResponse response =
+                UpdateTokenServiceResponse.builder()
                     .accessToken("new-access-token")
                     .refreshToken("new-refresh-token")
                     .build();
-            given(registerTokenByRefreshUseCase.registerTokenByRefresh(
+            given(registerTokenByRefreshUseCase.update(
                 request.getRefreshToken())).willReturn(response);
 
             // when // then
@@ -77,7 +77,7 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
         @DisplayName("[error] 리프래시 토큰을 빈 값으로 않았을 때 400 코드와 오류 메시지를 응답한다.")
         void error1() throws Exception {
             // given
-            RegisterTokenByRefreshRequest request = RegisterTokenByRefreshRequest
+            UpdateTokenRequest request = UpdateTokenRequest
                 .builder()
                 .refreshToken("")
                 .build();
@@ -91,12 +91,11 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
         @DisplayName("[error] 유효하지 않은 토큰을 입력했을 때 401 코드와 오류 메시지를 응답한다.")
         void error2() throws Exception {
             // given
-            RegisterTokenByRefreshRequest request = RegisterTokenByRefreshRequest
+            UpdateTokenRequest request = UpdateTokenRequest
                 .builder()
                 .refreshToken("invalid-refresh-token")
                 .build();
-            given(registerTokenByRefreshUseCase
-                .registerTokenByRefresh(request.getRefreshToken()))
+            given(registerTokenByRefreshUseCase.update(request.getRefreshToken()))
                 .willThrow(new CustomAuthenticationException(ErrorCode.INVALID_REFRESH_TOKEN));
 
             // when // then
@@ -105,7 +104,7 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
         }
     }
 
-    private void performDocument(RegisterTokenByRefreshRequest request,
+    private void performDocument(UpdateTokenRequest request,
         ResultMatcher status, String docIdentifier, String responseSchema,
         FieldDescriptor... responseFields) throws Exception {
 
@@ -135,7 +134,7 @@ class RegisterTokenByRefreshDocsTest extends RestDocsSupport {
             );
     }
 
-    private void performErrorDocument(RegisterTokenByRefreshRequest request, ResultMatcher status,
+    private void performErrorDocument(UpdateTokenRequest request, ResultMatcher status,
         String identifier) throws Exception {
 
         performDocument(request, status, identifier, "[response] error",

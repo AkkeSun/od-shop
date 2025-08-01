@@ -6,18 +6,18 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-interface TokenRepository extends JpaRepository<TokenEntity, Long> {
+interface RefreshTokenInfoRepository extends JpaRepository<RefreshTokenInfoEntity, Long> {
 
-    Optional<TokenEntity> findByEmail(String email);
+    Optional<RefreshTokenInfoEntity> findByEmail(String email);
 
-    Optional<TokenEntity> findByEmailAndUserAgent(String email, String userAgent);
+    Optional<RefreshTokenInfoEntity> findByEmailAndUserAgent(String email, String userAgent);
 
     void deleteByEmail(String email);
 
     @Modifying
-    @Query("update TokenEntity t "
+    @Query("update RefreshTokenInfoEntity t "
         + "set t.refreshToken = :#{#token.refreshToken}, t.regDateTime = :#{#token.regDateTime} "
         + "where t.email = :#{#token.email} "
         + "and t.userAgent = :#{#token.userAgent}")
-    void updateToken(@Param("token") TokenEntity token);
+    void updateToken(@Param("token") RefreshTokenInfoEntity token);
 }

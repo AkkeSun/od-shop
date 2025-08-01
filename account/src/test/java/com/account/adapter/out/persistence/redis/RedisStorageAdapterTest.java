@@ -4,7 +4,7 @@ import static com.account.infrastructure.util.JsonUtil.parseJson;
 
 import com.account.IntegrationTestSupport;
 import com.account.domain.model.Account;
-import com.account.domain.model.Token;
+import com.account.domain.model.RefreshTokenInfo;
 import com.account.infrastructure.util.JsonUtil;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -38,11 +38,11 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
         void success() {
             // given
             String key = "findDataTest1";
-            Token token = Token.builder().id(10L).build();
+            RefreshTokenInfo token = RefreshTokenInfo.builder().id(10L).build();
             redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(token));
 
             // when
-            Token result = adapter.findData(key, Token.class);
+            RefreshTokenInfo result = adapter.findData(key, RefreshTokenInfo.class);
 
             // then
             assert token.getId().equals(result.getId());
@@ -58,7 +58,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
             String key = "findDataTest2";
 
             // when
-            Token result = adapter.findData(key, Token.class);
+            RefreshTokenInfo result = adapter.findData(key, RefreshTokenInfo.class);
 
             // then
             assert result == null;
@@ -69,7 +69,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
         void success3(CapturedOutput output) {
             // given
             String key = "findDataTest3";
-            Token token = Token.builder().id(10L).build();
+            RefreshTokenInfo token = RefreshTokenInfo.builder().id(10L).build();
             redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(token));
 
             // when
@@ -93,11 +93,11 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
         void success() {
             // given
             String key = "findDataListTest1";
-            List<Token> tokens = List.of(Token.builder().id(10L).build());
+            List<RefreshTokenInfo> tokens = List.of(RefreshTokenInfo.builder().id(10L).build());
             redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(tokens));
 
             // when
-            List<Token> result = adapter.findDataList(key, Token.class);
+            List<RefreshTokenInfo> result = adapter.findDataList(key, RefreshTokenInfo.class);
 
             // then
             assert result.getFirst().getId().equals(tokens.getFirst().getId());
@@ -113,7 +113,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
             String key = "findDataListTest2";
 
             // when
-            List<Token> result = adapter.findDataList(key, Token.class);
+            List<RefreshTokenInfo> result = adapter.findDataList(key, RefreshTokenInfo.class);
 
             // then
             assert result.isEmpty();
@@ -124,7 +124,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
         void success3(CapturedOutput output) {
             // given
             String key = "findDataListTest3";
-            List<Token> tokens = List.of(Token.builder().id(10L).build());
+            List<RefreshTokenInfo> tokens = List.of(RefreshTokenInfo.builder().id(10L).build());
             redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(tokens));
 
             // when
@@ -148,7 +148,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
         void success() {
             // given
             String key = "registerTest1";
-            Token token = Token.builder()
+            RefreshTokenInfo token = RefreshTokenInfo.builder()
                 .id(1234L)
                 .accountId(11111L)
                 .email("email")
@@ -160,7 +160,8 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
 
             // when
             adapter.register(key, JsonUtil.toJsonString(token), 1000L);
-            Token result = parseJson(redisTemplate.opsForValue().get(key), Token.class);
+            RefreshTokenInfo result = parseJson(redisTemplate.opsForValue().get(key),
+                RefreshTokenInfo.class);
 
             // then
             assert result.getId().equals(token.getId());

@@ -4,9 +4,9 @@ import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.port.in.DeleteTokenUseCase;
 import com.account.applicaiton.port.in.FindAccountInfoUseCase;
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
-import com.account.applicaiton.port.in.RegisterTokenByRefreshUseCase;
 import com.account.applicaiton.port.in.RegisterTokenUseCase;
 import com.account.applicaiton.port.in.UpdateAccountUseCase;
+import com.account.applicaiton.port.in.UpdateTokenUseCase;
 import com.account.infrastructure.config.SecurityConfig;
 import com.account.infrastructure.filter.ApiCallLogFilter;
 import com.account.infrastructure.filter.JwtAuthenticationFilter;
@@ -50,7 +50,7 @@ public class ControllerTestSupport {
     protected RegisterTokenUseCase registerTokenUseCase;
 
     @MockBean
-    protected RegisterTokenByRefreshUseCase registerTokenByRefreshUseCase;
+    protected UpdateTokenUseCase registerTokenByRefreshUseCase;
 
     @MockBean
     protected RegisterAccountUseCase registerAccountUseCase;

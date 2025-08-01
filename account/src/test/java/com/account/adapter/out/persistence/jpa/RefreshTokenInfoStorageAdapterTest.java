@@ -1,7 +1,7 @@
 package com.account.adapter.out.persistence.jpa;
 
 import com.account.IntegrationTestSupport;
-import com.account.domain.model.Token;
+import com.account.domain.model.RefreshTokenInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class TokenStorageAdapterTest extends IntegrationTestSupport {
+class RefreshTokenInfoStorageAdapterTest extends IntegrationTestSupport {
 
     @Autowired
-    private TokenStorageAdapter adapter;
+    private RefreshTokenInfoStorageAdapter adapter;
     @Autowired
-    private TokenRepository tokenRepository;
+    private RefreshTokenInfoRepository tokenRepository;
 
     @BeforeEach
     @AfterEach
@@ -32,7 +32,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
             // given
             String email = "email";
             String userAgent = "userAgent";
-            TokenEntity entity = TokenEntity.builder()
+            RefreshTokenInfoEntity entity = RefreshTokenInfoEntity.builder()
                 .email(email)
                 .userAgent(userAgent)
                 .refreshToken("refreshToken")
@@ -42,7 +42,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
             tokenRepository.save(entity);
 
             // when
-            Token token = adapter.findByEmailAndUserAgent(email, userAgent);
+            RefreshTokenInfo token = adapter.findByEmailAndUserAgent(email, userAgent);
 
             // then
             assert token.getEmail().equals(email);
@@ -60,7 +60,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
             String userAgent = "error";
 
             // when
-            Token token = adapter.findByEmailAndUserAgent(email, userAgent);
+            RefreshTokenInfo token = adapter.findByEmailAndUserAgent(email, userAgent);
 
             // then
             assert token == null;
@@ -75,7 +75,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 저장된 토큰이 없다면 신규 토큰을 저장한다.")
         void success() {
             // given
-            Token token = Token.builder()
+            RefreshTokenInfo token = RefreshTokenInfo.builder()
                 .email("email")
                 .userAgent("userAgent")
                 .refreshToken("refreshToken")
@@ -87,7 +87,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
             adapter.registerToken(token);
 
             // then
-            TokenEntity entity = tokenRepository.findByEmail("email").get();
+            RefreshTokenInfoEntity entity = tokenRepository.findByEmail("email").get();
             assert entity.getEmail().equals("email");
             assert entity.getUserAgent().equals("userAgent");
             assert entity.getRefreshToken().equals("refreshToken");
@@ -100,7 +100,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 저장된 토큰이 있다면 기존 토큰을 수정하여 저장한다.")
         void success2() {
             // given
-            TokenEntity entity = TokenEntity.builder()
+            RefreshTokenInfoEntity entity = RefreshTokenInfoEntity.builder()
                 .email("email")
                 .userAgent("userAgent")
                 .refreshToken("refreshToken")
@@ -109,7 +109,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .regDateTime("regDateTime")
                 .build();
             tokenRepository.save(entity);
-            Token token = Token.builder()
+            RefreshTokenInfo token = RefreshTokenInfo.builder()
                 .email("email")
                 .userAgent("newUserAgent")
                 .refreshToken("newRefreshToken")
@@ -120,7 +120,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
 
             // when
             adapter.registerToken(token);
-            TokenEntity result = tokenRepository.findByEmail("email").get();
+            RefreshTokenInfoEntity result = tokenRepository.findByEmail("email").get();
 
             // then
             assert result.getEmail().equals(token.getEmail());
@@ -140,7 +140,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 삭제할 토큰이 있다면 토큰을 삭제한다.")
         void success() {
             // given
-            TokenEntity entity = TokenEntity.builder()
+            RefreshTokenInfoEntity entity = RefreshTokenInfoEntity.builder()
                 .email("email")
                 .userAgent("userAgent")
                 .refreshToken("refreshToken")
@@ -165,7 +165,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
         @DisplayName("[success] 토큰을 수정한다.")
         void success() {
             // given
-            Token token1Domain = Token.builder()
+            RefreshTokenInfo token1Domain = RefreshTokenInfo.builder()
                 .email("updateToken.success.email")
                 .userAgent("updateToken.success.userAgent")
                 .refreshToken("updateToken.success.refreshToken")
@@ -173,7 +173,7 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
                 .roles("ROLE_CUSTOMER")
                 .build();
             adapter.registerToken(token1Domain);
-            Token token1Domain2 = Token.builder()
+            RefreshTokenInfo token1Domain2 = RefreshTokenInfo.builder()
                 .email("updateToken.success.email")
                 .userAgent("updateToken.success.userAgent")
                 .refreshToken("updateRefreshToken")
@@ -183,7 +183,8 @@ class TokenStorageAdapterTest extends IntegrationTestSupport {
             // when
 
             adapter.updateToken(token1Domain2);
-            TokenEntity result = tokenRepository.findByEmailAndUserAgent(token1Domain.getEmail(),
+            RefreshTokenInfoEntity result = tokenRepository.findByEmailAndUserAgent(
+                token1Domain.getEmail(),
                 token1Domain.getUserAgent()).get();
 
             // then

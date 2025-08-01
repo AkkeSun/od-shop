@@ -1,10 +1,10 @@
-package com.account.applicaiton.service.register_token_by_refresh;
+package com.account.applicaiton.service.update_token;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.account.domain.model.Account;
+import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
-import com.account.domain.model.Token;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
@@ -25,23 +25,23 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
-class RegisterTokenByRefreshServiceTest {
+class UpdateTokenByRefreshServiceTest {
 
-    RegisterTokenByRefreshService service;
+    UpdateTokenService service;
     FakeJwtUtilClass fakeJwtUtilClass;
     FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass fakeUserAgentUtilClass;
     FakeTokenStoragePortClass fakeTokenStoragePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
-    RegisterTokenByRefreshServiceTest() {
+    UpdateTokenByRefreshServiceTest() {
         fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         fakeUserAgentUtilClass = new StubUserAgentUtilClass();
         fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
-        service = new RegisterTokenByRefreshService(
+        service = new UpdateTokenService(
             fakeJwtUtilClass,
             fakeUserAgentUtilClass,
             fakeRedisStoragePortClass,
@@ -80,7 +80,7 @@ class RegisterTokenByRefreshServiceTest {
         void success1(CapturedOutput output) {
             // given
             String refreshToken = "valid refresh token - od@test.com";
-            Token token = Token.builder()
+            RefreshTokenInfo token = RefreshTokenInfo.builder()
                 .accountId(1L)
                 .email("od@test.com")
                 .userAgent(fakeUserAgentUtilClass.getUserAgent())
@@ -91,8 +91,7 @@ class RegisterTokenByRefreshServiceTest {
             fakeRedisStoragePortClass.register(key, JsonUtil.toJsonString(token), 10L);
 
             // when
-            RegisterTokenByRefreshServiceResponse serviceResponse = service
-                .registerTokenByRefresh(refreshToken);
+            UpdateTokenServiceResponse serviceResponse = service.update(refreshToken);
 
             // then
             assert serviceResponse.accessToken().equals("valid token - od@test.com");
@@ -107,7 +106,7 @@ class RegisterTokenByRefreshServiceTest {
         void success2(CapturedOutput output) {
             // given
             String refreshToken = "valid refresh token - od@test.com";
-            Token token = Token.builder()
+            RefreshTokenInfo token = RefreshTokenInfo.builder()
                 .accountId(1L)
                 .email("od@test.com")
                 .userAgent(fakeUserAgentUtilClass.getUserAgent())
@@ -117,8 +116,7 @@ class RegisterTokenByRefreshServiceTest {
             fakeTokenStoragePortClass.registerToken(token);
 
             // when
-            RegisterTokenByRefreshServiceResponse serviceResponse = service
-                .registerTokenByRefresh(refreshToken);
+            UpdateTokenServiceResponse serviceResponse = service.update(refreshToken);
 
             // then
             assert serviceResponse.accessToken().equals("valid token - od@test.com");
@@ -134,7 +132,7 @@ class RegisterTokenByRefreshServiceTest {
         void error4(CapturedOutput output) {
             // given
             String refreshToken = "valid refresh token - od@test.com";
-            Token token = Token.builder()
+            RefreshTokenInfo token = RefreshTokenInfo.builder()
                 .accountId(1L)
                 .email("od@test.com")
                 .userAgent(fakeUserAgentUtilClass.getUserAgent())
@@ -146,8 +144,7 @@ class RegisterTokenByRefreshServiceTest {
 
             // when
             CustomAuthenticationException exception = assertThrows(
-                CustomAuthenticationException.class, () ->
-                    service.registerTokenByRefresh(refreshToken));
+                CustomAuthenticationException.class, () -> service.update(refreshToken));
 
             // then
             assert output.toString().contains("[invalid refresh token]");
@@ -163,7 +160,7 @@ class RegisterTokenByRefreshServiceTest {
             // when
             CustomAuthenticationException exception = assertThrows(
                 CustomAuthenticationException.class,
-                () -> service.registerTokenByRefresh(refreshToken));
+                () -> service.update(refreshToken));
 
             // then
             assert output.toString().contains("[invalid refresh token]");
