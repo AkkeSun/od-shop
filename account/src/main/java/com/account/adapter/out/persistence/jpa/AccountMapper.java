@@ -1,22 +1,22 @@
 package com.account.adapter.out.persistence.jpa;
 
 import com.account.domain.model.Account;
-import com.account.infrastructure.util.AesUtil;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 class AccountMapper {
 
-    private final AesUtil aesUtil;
+    private final PasswordEncoder encoder;
 
     public Account toDomain(AccountEntity entity) {
         return Account.builder()
             .id(entity.getId())
             .email(entity.getEmail())
-            .password(aesUtil.decryptText(entity.getPassword()))
+            .password(entity.getPassword())
             .username(entity.getUsername())
             .userTel(entity.getUserTel())
             .address(entity.getAddress())
@@ -32,7 +32,7 @@ class AccountMapper {
         return AccountEntity.builder()
             .id(domain.getId())
             .email(domain.getEmail())
-            .password(aesUtil.encryptText(domain.getPassword()))
+            .password(encoder.encode(domain.getPassword()))
             .username(domain.getUsername())
             .userTel(domain.getUserTel())
             .address(domain.getAddress())

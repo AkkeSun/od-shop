@@ -10,8 +10,8 @@ interface AccountRepository extends JpaRepository<AccountEntity, Long> {
     @Query("SELECT a FROM AccountEntity a JOIN FETCH a.roles WHERE a.id = :id")
     Optional<AccountEntity> findById(Long id);
 
-    @Query("SELECT a FROM AccountEntity a JOIN FETCH a.roles WHERE a.email = :email and a.password = :password")
-    Optional<AccountEntity> findByEmailAndPassword(String email, String password);
+    @Query("SELECT a FROM AccountEntity a JOIN FETCH a.roles WHERE a.email = :email")
+    Optional<AccountEntity> findByEmail(String email);
 
     boolean existsByEmail(String email);
 

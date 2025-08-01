@@ -5,16 +5,16 @@ import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUN
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.domain.model.Account;
 import com.account.infrastructure.exception.CustomNotFoundException;
-import com.account.infrastructure.util.AesUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 class AccountStorageAdapter implements AccountStoragePort {
 
-    private final AesUtil aesUtil;
+    private final PasswordEncoder encoder;
     private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;
 
@@ -27,9 +27,12 @@ class AccountStorageAdapter implements AccountStoragePort {
 
     @Override
     public Account findByEmailAndPassword(String email, String password) {
-        AccountEntity entity = accountRepository.findByEmailAndPassword(email,
-                aesUtil.encryptText(password))
+        AccountEntity entity = accountRepository.findByEmail(email)
             .orElseThrow(() -> new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO));
+
+        if(!encoder.matches(password, entity.getPassword())) {
+            throw new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO);
+        }
         return accountMapper.toDomain(entity);
     }
 
