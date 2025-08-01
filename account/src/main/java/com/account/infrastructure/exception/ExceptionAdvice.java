@@ -51,7 +51,7 @@ public class ExceptionAdvice {
             HttpStatus.BAD_REQUEST,
             ErrorResponse.builder()
                 .errorCode(1001)
-                .errorMessage(e.getErrorMessage())
+                .errorMessage(e.getErrorCode().getMessage())
                 .build()
         );
     }

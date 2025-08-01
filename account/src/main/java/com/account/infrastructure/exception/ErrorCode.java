@@ -7,6 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    // status code 400 (1001): bad request
+    INVALID_ROLE(1001,"유효하지 않은 권한 입니다"),
+
     // status code 404 (2001 - 2099) : Not found error
     DoesNotExist_ACCOUNT_INFO(2001, "조회된 사용자 정보가 없습니다"),
 

@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class CustomValidationException extends RuntimeException {
 
-    private final String errorMessage;
+    private final ErrorCode errorCode;
 
-    public CustomValidationException(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public CustomValidationException(ErrorCode errorCode) {
+        this.errorCode = errorCode;
     }
 }

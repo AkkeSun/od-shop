@@ -1,6 +1,7 @@
 package com.account.applicaiton.service.register_account;
 
 import static com.account.infrastructure.exception.ErrorCode.Business_SAVED_ACCOUNT_INFO;
+import static com.account.infrastructure.exception.ErrorCode.INVALID_ROLE;
 import static com.account.infrastructure.util.DateUtil.getCurrentDate;
 import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
@@ -52,15 +53,10 @@ class RegisterAccountService implements RegisterAccountUseCase {
             throw new CustomBusinessException(Business_SAVED_ACCOUNT_INFO);
         }
 
-        Map<String, Role> roleMap = getRoleMap();
-        List<Role> roles = command.roles().stream()
-            .map(r -> {
-                if (!roleMap.containsKey(r)) {
-                    throw new CustomValidationException("존재하지 않는 권한 입니다");
-                }
-                return roleMap.get(r);
-            })
-            .toList();
+        Map<String, Role> validRoles = getValidRoles();
+        if(!isValidRole(command, validRoles)) {
+            throw new CustomValidationException(INVALID_ROLE);
+        }
 
         Account account = Account.builder()
             .email(command.email())
@@ -68,7 +64,9 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .username(command.username())
             .userTel(command.userTel())
             .address(command.address())
-            .roles(roles)
+            .roles(command.roles().stream()
+                .map(validRoles::get)
+                .toList())
             .regDateTime(LocalDateTime.now())
             .regDate(getCurrentDate())
             .build();
@@ -99,7 +97,16 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .build();
     }
 
-    private Map<String, Role> getRoleMap() {
+    private boolean isValidRole(RegisterAccountCommand command, Map<String, Role> validRoles) {
+        for (String role : command.roles()) {
+            if(!validRoles.containsKey(role)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Map<String, Role> getValidRoles() {
         List<Role> roles = redisStoragePort.findDataList("roles", Role.class);
         if (roles.isEmpty()) {
             roles = roleStoragePort.findAll();
