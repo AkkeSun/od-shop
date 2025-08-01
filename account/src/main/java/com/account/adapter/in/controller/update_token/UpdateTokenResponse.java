@@ -20,7 +20,7 @@ class UpdateTokenResponse {
         this.refreshToken = refreshToken;
     }
 
-    UpdateTokenResponse of(UpdateTokenServiceResponse serviceResponse) {
+    static UpdateTokenResponse of(UpdateTokenServiceResponse serviceResponse) {
         return UpdateTokenResponse.builder()
             .accessToken(serviceResponse.accessToken())
             .refreshToken(serviceResponse.refreshToken())

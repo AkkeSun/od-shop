@@ -22,6 +22,6 @@ class RegisterAccountController {
         RegisterAccountServiceResponse serviceResponse = registerAccountUseCase
             .registerAccount(request.toCommand());
 
-        return ApiResponse.ok(new RegisterAccountResponse().of(serviceResponse));
+        return ApiResponse.ok(RegisterAccountResponse.of(serviceResponse));
     }
 }

@@ -20,6 +20,6 @@ class DeleteAccountController {
         DeleteAccountServiceResponse serviceResponse = deleteAccountUseCase
             .deleteAccount(account);
 
-        return ApiResponse.ok(new DeleteAccountResponse().of(serviceResponse));
+        return ApiResponse.ok(DeleteAccountResponse.of(serviceResponse));
     }
 }

@@ -25,6 +25,6 @@ class UpdateAccountController {
         UpdateAccountServiceResponse serviceResponse = updateAccountUseCase
             .updateAccount(request.toCommand(account.getId()));
 
-        return ApiResponse.ok(new UpdateAccountResponse().of(serviceResponse));
+        return ApiResponse.ok(UpdateAccountResponse.of(serviceResponse));
     }
 }

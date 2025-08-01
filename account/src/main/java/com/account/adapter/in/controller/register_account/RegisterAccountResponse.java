@@ -20,7 +20,7 @@ class RegisterAccountResponse {
         this.refreshToken = refreshToken;
     }
 
-    RegisterAccountResponse of(RegisterAccountServiceResponse serviceResponse) {
+    static RegisterAccountResponse of(RegisterAccountServiceResponse serviceResponse) {
         return RegisterAccountResponse.builder()
             .accessToken(serviceResponse.accessToken())
             .refreshToken(serviceResponse.refreshToken())

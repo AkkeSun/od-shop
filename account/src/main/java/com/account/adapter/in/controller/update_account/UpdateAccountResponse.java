@@ -21,7 +21,7 @@ class UpdateAccountResponse {
         this.updateList = updateList;
     }
 
-    UpdateAccountResponse of(UpdateAccountServiceResponse serviceResponse) {
+    static UpdateAccountResponse of(UpdateAccountServiceResponse serviceResponse) {
         return UpdateAccountResponse.builder()
             .updateYn(serviceResponse.updateYn())
             .updateList(serviceResponse.updateList())

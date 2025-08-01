@@ -18,7 +18,7 @@ class DeleteAccountResponse {
         this.result = result;
     }
 
-    DeleteAccountResponse of(DeleteAccountServiceResponse serviceResponse) {
+    static DeleteAccountResponse of(DeleteAccountServiceResponse serviceResponse) {
         return DeleteAccountResponse.builder()
             .id(serviceResponse.id())
             .result(serviceResponse.result())

@@ -21,6 +21,6 @@ class UpdateTokenController {
         UpdateTokenServiceResponse serviceResponse = registerTokenByRefreshUseCase
             .update(request.getRefreshToken());
 
-        return ApiResponse.ok(new UpdateTokenResponse().of(serviceResponse));
+        return ApiResponse.ok(UpdateTokenResponse.of(serviceResponse));
     }
 }

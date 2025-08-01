@@ -16,7 +16,7 @@ class DeleteTokenResponse {
         this.result = result;
     }
 
-    DeleteTokenResponse of(DeleteTokenServiceResponse serviceResponse) {
+    static DeleteTokenResponse of(DeleteTokenServiceResponse serviceResponse) {
         return DeleteTokenResponse.builder()
             .result(serviceResponse.result())
             .build();

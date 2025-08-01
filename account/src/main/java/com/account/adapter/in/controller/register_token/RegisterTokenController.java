@@ -21,6 +21,6 @@ class RegisterTokenController {
         RegisterTokenServiceResponse serviceResponse = registerTokenUseCase
             .registerToken(request.toCommand());
 
-        return ApiResponse.ok(new RegisterTokenResponse().of(serviceResponse));
+        return ApiResponse.ok(RegisterTokenResponse.of(serviceResponse));
     }
 }

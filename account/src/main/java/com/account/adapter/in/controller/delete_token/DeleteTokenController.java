@@ -19,6 +19,6 @@ class DeleteTokenController {
     ApiResponse<DeleteTokenResponse> deleteToken(@LoginAccount Account account) {
         DeleteTokenServiceResponse serviceResponse = deleteTokenUseCase.deleteToken(account);
 
-        return ApiResponse.ok(new DeleteTokenResponse().of(serviceResponse));
+        return ApiResponse.ok(DeleteTokenResponse.of(serviceResponse));
     }
 }
