@@ -15,6 +15,7 @@ import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.service.register_account.RegisterAccountServiceResponse;
 import com.account.infrastructure.exception.CustomValidationException;
+import com.account.infrastructure.exception.ErrorCode;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
@@ -210,7 +211,7 @@ class RegisterAccountDocsTest extends RestDocsSupport {
                 .build();
 
             given(registerAccountUseCase.registerAccount(request.toCommand()))
-                .willThrow(new CustomValidationException("존재하지 않는 권한 입니다"));
+                .willThrow(new CustomValidationException(ErrorCode.INVALID_ROLE));
 
             // when // then
             performErrorDocument(request, status().isBadRequest(),

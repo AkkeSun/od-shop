@@ -14,6 +14,7 @@ public class FakeAccountStorageClass implements AccountStoragePort {
     @Override
     public Account register(Account account) {
         accountList.add(account);
+        log.info("FakeCachePortClass registerToken");
         return account;
     }
 

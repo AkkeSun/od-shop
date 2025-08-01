@@ -26,9 +26,6 @@ public class IntegrationTestSupport {
     protected CircuitBreakerRegistry circuitBreakerRegistry;
 
     @Autowired
-    protected AesUtil aesUtil;
-
-    @Autowired
     private RoleStoragePort roleStoragePort;
 
     @BeforeEach

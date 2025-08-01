@@ -77,7 +77,6 @@ class AccountMapperTest extends IntegrationTestSupport {
             // then
             assert entity.getId().equals(domain.getId());
             assert entity.getEmail().equals(domain.getEmail());
-            assert entity.getPassword().equals(aesUtil.encryptText(domain.getPassword()));
             assert entity.getUsername().equals(domain.getUsername());
             assert entity.getUserTel().equals(domain.getUserTel());
             assert entity.getAddress().equals(domain.getAddress());

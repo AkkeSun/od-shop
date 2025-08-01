@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
 class DeleteTokenServiceTest {
@@ -33,6 +34,7 @@ class DeleteTokenServiceTest {
             fakeCachePortClass,
             fakeTokenStoragePortClass
         );
+        ReflectionTestUtils.setField(service, "tokenRedisKey", "token::%s-%s");
     }
 
     @Nested

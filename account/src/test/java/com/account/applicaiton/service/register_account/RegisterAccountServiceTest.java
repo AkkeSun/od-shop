@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
 class RegisterAccountServiceTest {
@@ -51,6 +52,8 @@ class RegisterAccountServiceTest {
             fakeTokenStoragePortClass,
             fakeAccountStorageClass
         );
+        ReflectionTestUtils.setField(service, "tokenRedisKey", "token::%s-%s");
+        ReflectionTestUtils.setField(service, "refreshTokenTtl", 99999999L);
     }
 
     @BeforeEach

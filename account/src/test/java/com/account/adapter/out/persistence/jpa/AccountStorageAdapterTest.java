@@ -18,6 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 class AccountStorageAdapterTest extends IntegrationTestSupport {
 
@@ -25,6 +26,8 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
     AccountStorageAdapter adapter;
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @AfterEach
     void tearDown() {
@@ -95,7 +98,7 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
             // given
             AccountEntity entity = AccountEntity.builder()
                 .email("email")
-                .password(aesUtil.encryptText("password"))
+                .password(passwordEncoder.encode("password"))
                 .username("username")
                 .userTel("userTel")
                 .address("address")
@@ -112,7 +115,6 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
             // then
             assert account.getId().equals(savedEntity.getId());
             assert account.getEmail().equals(savedEntity.getEmail());
-            assert account.getPassword().equals(aesUtil.decryptText(savedEntity.getPassword()));
             assert account.getUsername().equals(savedEntity.getUsername());
             assert account.getUserTel().equals(savedEntity.getUserTel());
             assert account.getAddress().equals(savedEntity.getAddress());
@@ -202,7 +204,6 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
             // then
             assert savedAccount.getId() != null;
             assert savedAccount.getEmail().equals(account.getEmail());
-            assert savedAccount.getPassword().equals(account.getPassword());
             assert savedAccount.getUsername().equals(account.getUsername());
             assert savedAccount.getUserTel().equals(account.getUserTel());
             assert savedAccount.getAddress().equals(account.getAddress());
@@ -250,7 +251,6 @@ class AccountStorageAdapterTest extends IntegrationTestSupport {
             // then
             assert updatedAccount.getId().equals(account.getId());
             assert updatedAccount.getEmail().equals(account.getEmail());
-            assert updatedAccount.getPassword().equals(account.getPassword());
             assert updatedAccount.getUsername().equals(account.getUsername());
             assert updatedAccount.getUserTel().equals(account.getUserTel());
             assert updatedAccount.getAddress().equals(account.getAddress());

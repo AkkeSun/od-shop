@@ -48,6 +48,7 @@ class DeleteAccountServiceTest {
 
         ReflectionTestUtils.setField(service, "historyTopic", "account-history");
         ReflectionTestUtils.setField(service, "deleteTopic", "delete-account");
+        ReflectionTestUtils.setField(service, "tokenRedisKey", "token::%s-%s");
     }
 
     @BeforeEach

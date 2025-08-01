@@ -48,6 +48,8 @@ class RegisterTokenServiceTest {
             dummyMessageProducerPortClass
         );
         ReflectionTestUtils.setField(service, "loginTopic", "account-login");
+        ReflectionTestUtils.setField(service, "tokenRedisKey", "token::%s-%s");
+        ReflectionTestUtils.setField(service, "refreshTokenTtl", 99999999L);
     }
 
     @BeforeEach

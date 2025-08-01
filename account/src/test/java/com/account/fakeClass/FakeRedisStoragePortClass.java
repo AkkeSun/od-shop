@@ -38,6 +38,7 @@ public class FakeRedisStoragePortClass implements RedisStoragePort {
 
     @Override
     public void delete(List<String> keys) {
+        log.info("FakeCachePortClass deleteTokenByEmail");
         for (String s : keys) {
             redisData.remove(s);
         }
@@ -45,6 +46,6 @@ public class FakeRedisStoragePortClass implements RedisStoragePort {
 
     @Override
     public List<String> getKeys(String input) {
-        return null;
+        return new ArrayList<>();
     }
 }

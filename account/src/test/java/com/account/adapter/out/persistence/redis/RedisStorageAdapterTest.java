@@ -128,7 +128,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
             redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(tokens));
 
             // when
-            List<Token> result = adapter.findDataList(key, Token.class);
+            List<Account> result = adapter.findDataList(key, Account.class);
 
             // then
             assert result.isEmpty();
