@@ -1,11 +1,15 @@
 package com.account.domain.model;
 
+import static com.account.infrastructure.util.DateUtil.getCurrentDate;
+
+import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.Claims;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,6 +58,21 @@ public class Account {
             .roles(Arrays.stream(claims.get("roles").toString().split(","))
                 .map(role -> Role.builder().name(role).build())
                 .toList())
+            .build();
+    }
+
+    public static Account of(RegisterAccountCommand command, Map<String, Role> validRoles) {
+        return Account.builder()
+            .email(command.email())
+            .password(command.password())
+            .username(command.username())
+            .userTel(command.userTel())
+            .address(command.address())
+            .roles(command.roles().stream()
+                .map(validRoles::get)
+                .toList())
+            .regDateTime(LocalDateTime.now())
+            .regDate(getCurrentDate())
             .build();
     }
 

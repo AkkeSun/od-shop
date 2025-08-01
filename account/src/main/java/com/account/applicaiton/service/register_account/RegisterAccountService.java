@@ -2,7 +2,6 @@ package com.account.applicaiton.service.register_account;
 
 import static com.account.infrastructure.exception.ErrorCode.Business_SAVED_ACCOUNT_INFO;
 import static com.account.infrastructure.exception.ErrorCode.INVALID_ROLE;
-import static com.account.infrastructure.util.DateUtil.getCurrentDate;
 import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
@@ -19,7 +18,6 @@ import com.account.infrastructure.exception.CustomBusinessException;
 import com.account.infrastructure.exception.CustomValidationException;
 import com.account.infrastructure.util.JwtUtil;
 import com.account.infrastructure.util.UserAgentUtil;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -58,28 +56,12 @@ class RegisterAccountService implements RegisterAccountUseCase {
             throw new CustomValidationException(INVALID_ROLE);
         }
 
-        Account account = Account.builder()
-            .email(command.email())
-            .password(command.password())
-            .username(command.username())
-            .userTel(command.userTel())
-            .address(command.address())
-            .roles(command.roles().stream()
-                .map(validRoles::get)
-                .toList())
-            .regDateTime(LocalDateTime.now())
-            .regDate(getCurrentDate())
-            .build();
-        Account savedAccount = accountStoragePort.register(account);
-
-        String accessToken = jwtUtil.createAccessToken(savedAccount);
-        String refreshToken = jwtUtil.createRefreshToken(savedAccount.getEmail());
-
+        Account savedAccount = accountStoragePort.register(Account.of(command, validRoles));
         Token token = Token.builder()
             .accountId(savedAccount.getId())
             .email(savedAccount.getEmail())
             .userAgent(userAgentUtil.getUserAgent())
-            .refreshToken(refreshToken)
+            .refreshToken(jwtUtil.createRefreshToken(savedAccount.getEmail()))
             .regDateTime(getCurrentDateTime())
             .roles(String.join(",", command.roles()))
             .build();
@@ -92,8 +74,8 @@ class RegisterAccountService implements RegisterAccountUseCase {
         tokenStoragePort.registerToken(token);
 
         return RegisterAccountServiceResponse.builder()
-            .accessToken(accessToken)
-            .refreshToken(refreshToken)
+            .accessToken(jwtUtil.createAccessToken(savedAccount))
+            .refreshToken(token.getRefreshToken())
             .build();
     }
 
