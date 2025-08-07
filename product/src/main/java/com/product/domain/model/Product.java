@@ -3,7 +3,6 @@ package com.product.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.application.port.in.command.UpdateProductCommand;
-import com.product.application.port.in.command.UpdateProductQuantityCommand;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -8,7 +8,6 @@ import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.port.in.FindReviewListUseCase;
 import com.product.application.port.in.RegisterProductUseCase;
 import com.product.application.port.in.RegisterReviewUseCase;
-import com.product.application.port.in.UpdateProductQuantityUseCase;
 import com.product.application.port.in.UpdateProductUseCase;
 import com.product.application.port.out.AuthorizationStoragePort;
 import com.product.domain.model.AuthorizationRule;
