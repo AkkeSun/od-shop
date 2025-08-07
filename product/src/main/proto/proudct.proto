@@ -35,6 +35,8 @@ message FindProductStubResponse {
 }
 
 service ProductService {
+  // SAGA
   rpc updateProductQuantity (UpdateProductQuantityStubRequest) returns (UpdateProductQuantityStubResponse);
+  // Order
   rpc findProduct (FindProductStubRequest) returns (FindProductStubResponse);
 }
