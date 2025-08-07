@@ -54,6 +54,9 @@ class ProductShard1Entity {
     @Column(name = "QUANTITY")
     private long quantity;
 
+    @Column(name = "RESERVED_QUANTITY")
+    private long reservedQuantity;
+
     @Column(name = "CATEGORY")
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -72,7 +75,7 @@ class ProductShard1Entity {
 
     @Builder
     ProductShard1Entity(Category category, String descriptionImgUrl, String keyword,
-        long price, Long id, String productImgUrl,
+        long price, Long id, String productImgUrl, long reservedQuantity,
         String productName, String productOption, long quantity, LocalDate regDate,
         LocalDateTime regDateTime, String sellerEmail, Long sellerId, String deleteYn,
         LocalDateTime updateDateTime) {
@@ -81,6 +84,7 @@ class ProductShard1Entity {
         this.keyword = keyword;
         this.price = price;
         this.id = id;
+        this.reservedQuantity = reservedQuantity;
         this.productImgUrl = productImgUrl;
         this.productName = productName;
         this.productOption = productOption;
@@ -105,6 +109,7 @@ class ProductShard1Entity {
             .descriptionImgUrl(domain.getDescriptionImgUrl())
             .price(domain.getPrice())
             .quantity(domain.getQuantity())
+            .reservedQuantity(domain.getReservedQuantity())
             .category(domain.getCategory())
             .deleteYn(domain.getDeleteYn())
             .regDate(domain.getRegDate())
@@ -125,6 +130,7 @@ class ProductShard1Entity {
             .descriptionImgUrl(descriptionImgUrl)
             .price(price)
             .quantity(quantity)
+            .reservedQuantity(reservedQuantity)
             .category(category)
             .deleteYn(deleteYn)
             .regDate(regDate)

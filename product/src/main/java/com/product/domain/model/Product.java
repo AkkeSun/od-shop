@@ -28,6 +28,7 @@ public class Product {
     private Set<String> keywords;
     private long price;
     private long quantity;
+    private long reservedQuantity;
     private Category category;
     private String deleteYn;
     private LocalDate regDate;
@@ -47,7 +48,7 @@ public class Product {
         boolean needsEsUpdate, long price, Long id, String productImgUrl, String productName,
         Set<String> productOption, long quantity, LocalDate regDate, LocalDateTime regDateTime,
         long reviewCount, double reviewScore, long salesCount, String sellerEmail, Long sellerId,
-        String deleteYn, double totalScore, LocalDateTime updateDateTime) {
+        String deleteYn, double totalScore, LocalDateTime updateDateTime, long reservedQuantity) {
         this.category = category;
         this.descriptionImgUrl = descriptionImgUrl;
         this.hitCount = hitCount;
@@ -68,6 +69,7 @@ public class Product {
         this.sellerId = sellerId;
         this.deleteYn = deleteYn;
         this.totalScore = totalScore;
+        this.reservedQuantity = reservedQuantity;
         this.updateDateTime = updateDateTime;
     }
 
@@ -82,6 +84,7 @@ public class Product {
             .productOption(command.productOption())
             .price(command.price())
             .quantity(command.quantity())
+            .reservedQuantity(0)
             .hitCount(0)
             .needsEsUpdate(false)
             .salesCount(0)
