@@ -1,12 +1,9 @@
 package com.account.applicaiton.service.update_token;
 
-import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.UpdateTokenUseCase;
 import com.account.applicaiton.port.out.RedisStoragePort;
-import com.account.applicaiton.port.out.RefreshTokenInfoStoragePort;
-import com.account.domain.model.Account;
 import com.account.domain.model.RefreshTokenInfo;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.ErrorCode;
@@ -32,7 +29,6 @@ class UpdateTokenService implements UpdateTokenUseCase {
     private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
-    private final RefreshTokenInfoStoragePort tokenStoragePort;
 
     @Override
     public UpdateTokenServiceResponse update(String refreshToken) {
@@ -47,27 +43,15 @@ class UpdateTokenService implements UpdateTokenUseCase {
         RefreshTokenInfo tokenInfo = redisStoragePort.findData(redisKey, RefreshTokenInfo.class);
 
         if (ObjectUtils.isEmpty(tokenInfo)) {
-            log.info("[token cache notfound] {} - {}", email, userAgent);
-            tokenInfo = tokenStoragePort.findByEmailAndUserAgent(email, userAgent);
-        }
-        if (ObjectUtils.isEmpty(tokenInfo) || tokenInfo.isDifferentRefreshToken(refreshToken)) {
-            log.info("[invalid refresh token] {} - {}", email, userAgent);
             throw new CustomAuthenticationException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
 
-        Account account = tokenInfo.toAccount();
-        String newAccessToken = jwtUtil.createAccessToken(account);
-        String newRefreshToken = jwtUtil.createRefreshToken(email);
-
-        tokenInfo.updateRefreshToken(newRefreshToken);
-        tokenInfo.updateRegTime(getCurrentDateTime());
-
+        tokenInfo.updateRefreshToken(jwtUtil.createRefreshToken(email));
         redisStoragePort.register(redisKey, toJsonString(tokenInfo), refreshTokenTtl);
-        tokenStoragePort.updateToken(tokenInfo);
 
         return UpdateTokenServiceResponse.builder()
-            .accessToken(newAccessToken)
-            .refreshToken(newRefreshToken)
+            .accessToken(jwtUtil.createAccessToken(tokenInfo.toAccount()))
+            .refreshToken(tokenInfo.getRefreshToken())
             .build();
     }
 }

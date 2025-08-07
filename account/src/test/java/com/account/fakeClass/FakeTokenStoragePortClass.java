@@ -1,6 +1,5 @@
 package com.account.fakeClass;
 
-import com.account.applicaiton.port.out.RefreshTokenInfoStoragePort;
 import com.account.domain.model.RefreshTokenInfo;
 import java.util.ArrayList;
 import java.util.List;

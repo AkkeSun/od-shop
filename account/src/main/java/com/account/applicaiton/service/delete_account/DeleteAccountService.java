@@ -7,7 +7,6 @@ import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.applicaiton.port.out.RedisStoragePort;
-import com.account.applicaiton.port.out.RefreshTokenInfoStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.DeleteAccountLog;
 import com.account.infrastructure.exception.CustomNotFoundException;
@@ -29,7 +28,6 @@ class DeleteAccountService implements DeleteAccountUseCase {
     @Value("${spring.data.redis.key.token}")
     private String tokenRedisKey;
     private final RedisStoragePort redisStoragePort;
-    private final RefreshTokenInfoStoragePort tokenStoragePort;
     private final AccountStoragePort accountStoragePort;
     private final MessageProducerPort messageProducerPort;
 
@@ -41,7 +39,6 @@ class DeleteAccountService implements DeleteAccountUseCase {
         }
 
         accountStoragePort.deleteById(account.getId());
-        tokenStoragePort.deleteByEmail(account.getEmail());
 
         List<String> keys = redisStoragePort.getKeys(
             String.format(tokenRedisKey, account.getEmail(), "*"));

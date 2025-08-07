@@ -2,14 +2,12 @@ package com.account.applicaiton.service.register_account;
 
 import static com.account.infrastructure.exception.ErrorCode.Business_SAVED_ACCOUNT_INFO;
 import static com.account.infrastructure.exception.ErrorCode.INVALID_ROLE;
-import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.RedisStoragePort;
-import com.account.applicaiton.port.out.RefreshTokenInfoStoragePort;
 import com.account.applicaiton.port.out.RoleStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.RefreshTokenInfo;
@@ -42,7 +40,6 @@ class RegisterAccountService implements RegisterAccountUseCase {
     private final UserAgentUtil userAgentUtil;
     private final RoleStoragePort roleStoragePort;
     private final RedisStoragePort redisStoragePort;
-    private final RefreshTokenInfoStoragePort refreshTokenInfoStoragePort;
     private final AccountStoragePort accountStoragePort;
 
     @Override
@@ -62,8 +59,7 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .email(savedAccount.getEmail())
             .userAgent(userAgentUtil.getUserAgent())
             .refreshToken(jwtUtil.createRefreshToken(savedAccount.getEmail()))
-            .regDateTime(getCurrentDateTime())
-            .roles(String.join(",", command.roles()))
+            .roles(command.roles())
             .build();
 
         redisStoragePort.register(
@@ -71,7 +67,6 @@ class RegisterAccountService implements RegisterAccountUseCase {
             toJsonString(refreshTokenInfo),
             refreshTokenTtl
         );
-        refreshTokenInfoStoragePort.registerToken(refreshTokenInfo);
 
         return RegisterAccountServiceResponse.builder()
             .accessToken(jwtUtil.createAccessToken(savedAccount))

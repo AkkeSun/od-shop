@@ -1,6 +1,5 @@
 package com.account.applicaiton.service.register_token;
 
-import static com.account.infrastructure.util.DateUtil.getCurrentDateTime;
 import static com.account.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.RegisterTokenUseCase;
@@ -8,14 +7,12 @@ import com.account.applicaiton.port.in.command.RegisterTokenCommand;
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.applicaiton.port.out.RedisStoragePort;
-import com.account.applicaiton.port.out.RefreshTokenInfoStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.LoginLog;
 import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
 import com.account.infrastructure.util.JwtUtil;
 import com.account.infrastructure.util.UserAgentUtil;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,7 +32,6 @@ class RegisterTokenService implements RegisterTokenUseCase {
     private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
-    private final RefreshTokenInfoStoragePort refreshTokenInfoStoragePort;
     private final AccountStoragePort accountStoragePort;
     private final MessageProducerPort messageProducerPort;
 
@@ -44,17 +40,14 @@ class RegisterTokenService implements RegisterTokenUseCase {
         Account account = accountStoragePort.findByEmailAndPassword(command.email(),
             command.password());
 
-        String accessToken = jwtUtil.createAccessToken(account);
-        String refreshToken = jwtUtil.createRefreshToken(command.email());
         RefreshTokenInfo refreshTokenInfo = RefreshTokenInfo.builder()
             .accountId(account.getId())
             .email(account.getEmail())
             .userAgent(userAgentUtil.getUserAgent())
-            .refreshToken(refreshToken)
-            .regDateTime(getCurrentDateTime())
+            .refreshToken(jwtUtil.createRefreshToken(command.email()))
             .roles(account.getRoles().stream()
                 .map(Role::name)
-                .collect(Collectors.joining(",")))
+                .toList())
             .build();
 
         redisStoragePort.register(
@@ -62,12 +55,11 @@ class RegisterTokenService implements RegisterTokenUseCase {
             toJsonString(refreshTokenInfo),
             refreshTokenTtl
         );
-        refreshTokenInfoStoragePort.registerToken(refreshTokenInfo);
         messageProducerPort.sendMessage(loginTopic, toJsonString(LoginLog.of(account)));
 
         return RegisterTokenServiceResponse.builder()
-            .accessToken(accessToken)
-            .refreshToken(refreshToken)
+            .accessToken(jwtUtil.createAccessToken(account))
+            .refreshToken(refreshTokenInfo.getRefreshToken())
             .build();
     }
 }
