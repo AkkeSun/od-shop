@@ -154,8 +154,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
                 .email("email")
                 .userAgent("userAgent1")
                 .refreshToken("refreshToken")
-                .regDateTime("regDateTime")
-                .roles("role")
+                .roles(List.of("ROLE_CUSTOMER"))
                 .build();
 
             // when

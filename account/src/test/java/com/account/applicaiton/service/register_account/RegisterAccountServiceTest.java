@@ -10,7 +10,6 @@ import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.FakeRoleStoragePort;
-import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
 import com.account.infrastructure.exception.CustomBusinessException;
 import com.account.infrastructure.exception.ErrorCode;
@@ -33,7 +32,6 @@ class RegisterAccountServiceTest {
     FakeRoleStoragePort fakeRoleStoragePort;
     FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass stubUserAgentUtilClass;
-    FakeTokenStoragePortClass fakeTokenStoragePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     RegisterAccountServiceTest() {
@@ -41,7 +39,6 @@ class RegisterAccountServiceTest {
         fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         fakeRoleStoragePort = new FakeRoleStoragePort();
         stubUserAgentUtilClass = new StubUserAgentUtilClass();
-        fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
         service = new RegisterAccountService(
@@ -49,7 +46,6 @@ class RegisterAccountServiceTest {
             stubUserAgentUtilClass,
             fakeRoleStoragePort,
             fakeRedisStoragePortClass,
-            fakeTokenStoragePortClass,
             fakeAccountStorageClass
         );
         ReflectionTestUtils.setField(service, "tokenRedisKey", "token::%s-%s");
@@ -59,6 +55,7 @@ class RegisterAccountServiceTest {
     @BeforeEach
     void setup() {
         fakeAccountStorageClass.accountList.clear();
+        fakeRedisStoragePortClass.redisData.clear();
     }
 
     @Nested
@@ -84,7 +81,6 @@ class RegisterAccountServiceTest {
             assert response.accessToken().equals("valid token - new email");
             assert response.refreshToken().equals("valid refresh token - new email");
             assert output.toString().contains("FakeCachePortClass registerToken");
-            assert output.toString().contains("FakeTokenStoragePortClass registerToken");
         }
 
         @Test

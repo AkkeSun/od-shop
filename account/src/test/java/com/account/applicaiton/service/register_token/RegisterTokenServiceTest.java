@@ -7,7 +7,6 @@ import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
-import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,7 +26,6 @@ class RegisterTokenServiceTest {
     FakeJwtUtilClass fakeJwtUtilClass;
     FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass fakeUserAgentUtilClass;
-    FakeTokenStoragePortClass fakeTokenStoragePortClass;
     DummyMessageProducerPortClass dummyMessageProducerPortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
@@ -35,7 +33,6 @@ class RegisterTokenServiceTest {
         fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         fakeUserAgentUtilClass = new StubUserAgentUtilClass();
-        fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
@@ -43,7 +40,6 @@ class RegisterTokenServiceTest {
             fakeJwtUtilClass,
             fakeUserAgentUtilClass,
             fakeRedisStoragePortClass,
-            fakeTokenStoragePortClass,
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
         );
@@ -88,7 +84,6 @@ class RegisterTokenServiceTest {
             assert response.accessToken().equals("valid token - " + account.getEmail());
             assert response.refreshToken().equals("valid refresh token - " + account.getEmail());
             assert output.toString().contains("FakeCachePortClass registerToken");
-            assert output.toString().contains("FakeTokenStoragePortClass registerToken");
             assert output.toString().contains("[account-login] ==>");
         }
     }

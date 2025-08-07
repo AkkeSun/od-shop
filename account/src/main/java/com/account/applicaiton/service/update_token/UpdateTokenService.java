@@ -42,7 +42,7 @@ class UpdateTokenService implements UpdateTokenUseCase {
 
         RefreshTokenInfo tokenInfo = redisStoragePort.findData(redisKey, RefreshTokenInfo.class);
 
-        if (ObjectUtils.isEmpty(tokenInfo)) {
+        if (ObjectUtils.isEmpty(tokenInfo) || tokenInfo.isDifferentRefreshToken(refreshToken)) {
             throw new CustomAuthenticationException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
 

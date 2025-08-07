@@ -8,7 +8,6 @@ import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
-import com.account.fakeClass.FakeTokenStoragePortClass;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import com.account.infrastructure.exception.ErrorCode;
 import java.time.LocalDateTime;
@@ -27,21 +26,18 @@ class DeleteAccountServiceTest {
 
     DeleteAccountService service;
     FakeRedisStoragePortClass fakeCachePortClass;
-    FakeTokenStoragePortClass fakeTokenStoragePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
     FakeJwtUtilClass fakeJwtUtilClass;
     DummyMessageProducerPortClass dummyMessageProducerPortClass;
 
     DeleteAccountServiceTest() {
         fakeCachePortClass = new FakeRedisStoragePortClass();
-        fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         fakeJwtUtilClass = new FakeJwtUtilClass();
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
 
         service = new DeleteAccountService(
             fakeCachePortClass,
-            fakeTokenStoragePortClass,
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
         );
@@ -84,7 +80,6 @@ class DeleteAccountServiceTest {
             assert response.result().equals("Y");
             assert response.id() == 1L;
             assert output.toString().contains("FakeAccountStorageClass deleteById");
-            assert output.toString().contains("FakeTokenStoragePortClass deleteByEmail");
             assert output.toString().contains("FakeCachePortClass deleteTokenByEmail");
             assert output.toString().contains("[delete-account] ==>");
             assert output.toString().contains("[account-history] ==>");

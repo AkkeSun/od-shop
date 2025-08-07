@@ -5,7 +5,6 @@ import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
-import com.account.fakeClass.FakeTokenStoragePortClass;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -22,17 +21,14 @@ class DeleteTokenServiceTest {
     DeleteTokenService service;
     FakeJwtUtilClass fakeJwtUtilClass;
     FakeRedisStoragePortClass fakeCachePortClass;
-    FakeTokenStoragePortClass fakeTokenStoragePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     DeleteTokenServiceTest() {
         fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeCachePortClass = new FakeRedisStoragePortClass();
-        fakeTokenStoragePortClass = new FakeTokenStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         service = new DeleteTokenService(
-            fakeCachePortClass,
-            fakeTokenStoragePortClass
+            fakeCachePortClass
         );
         ReflectionTestUtils.setField(service, "tokenRedisKey", "token::%s-%s");
     }
@@ -63,7 +59,6 @@ class DeleteTokenServiceTest {
 
             // then
             assert result.result().equals("Y");
-            assert output.toString().contains("FakeTokenStoragePortClass deleteByEmail");
             assert output.toString().contains("FakeCachePortClass deleteTokenByEmail");
         }
     }
