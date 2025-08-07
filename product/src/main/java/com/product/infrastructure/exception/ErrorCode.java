@@ -8,10 +8,10 @@ import lombok.Getter;
 public enum ErrorCode {
 
     // status code 404 (2001 - 2099) : Not found error
-    DoesNotExist_ACCOUNT_INFO(2001, "조회된 사용자 정보가 없습니다"),
-    DoesNotExist_PROUCT_INFO(2002, "조회된 상픔 정보가 없습니다"),
+    DoesNotExist_PRODUCT_INFO(2001, "조회된 상픔 정보가 없습니다"),
+    DoesNotExist_PRODUCT_RESERVE_INFO(2002, "조회된 상픔 예약 정보가 없습니다"),
 
-
+    
     // status code 401 (3001 - 3099) : Unauthorized
     INVALID_ACCESS_TOKEN(3001, "유효한 인증 토큰이 아닙니다"),
     INVALID_REFRESH_TOKEN(3002, "유효한 리프레시 토큰이 아닙니다"),

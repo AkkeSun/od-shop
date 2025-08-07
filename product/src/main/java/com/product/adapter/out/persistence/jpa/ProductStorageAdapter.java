@@ -4,6 +4,7 @@ import com.product.adapter.out.persistence.jpa.shard1.ProductShard1Adapter;
 import com.product.adapter.out.persistence.jpa.shard2.ProductShard2Adapter;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
+import com.product.domain.model.ProductReserveHistory;
 import com.product.infrastructure.util.ShardKeyUtil;
 import io.micrometer.tracing.annotation.NewSpan;
 import java.time.LocalDateTime;
@@ -18,6 +19,45 @@ class ProductStorageAdapter implements ProductStoragePort {
 
     private final ProductShard1Adapter shard1Adapter;
     private final ProductShard2Adapter shard2Adapter;
+
+    @NewSpan
+    @Override
+    public ProductReserveHistory createReservation(Product product,
+        ProductReserveHistory reserveHistory) {
+        if (ShardKeyUtil.isShard1(product.getId())) {
+            return shard1Adapter.createReservation(product, reserveHistory);
+        }
+        return shard2Adapter.createReservation(product, reserveHistory);
+    }
+
+    @NewSpan
+    @Override
+    public void confirmReservation(Product product, ProductReserveHistory reserveHistory) {
+        if (ShardKeyUtil.isShard1(product.getId())) {
+            shard1Adapter.confirmReservation(product, reserveHistory);
+        } else {
+            shard2Adapter.confirmReservation(product, reserveHistory);
+        }
+    }
+
+    @NewSpan
+    @Override
+    public void cancelReservation(Product product, ProductReserveHistory reserveHistory) {
+        if (ShardKeyUtil.isShard1(product.getId())) {
+            shard1Adapter.cancelReservation(product, reserveHistory);
+        } else {
+            shard2Adapter.cancelReservation(product, reserveHistory);
+        }
+    }
+
+    @NewSpan
+    @Override
+    public ProductReserveHistory findReservationById(Long reserveId) {
+        if (ShardKeyUtil.isShard1(reserveId)) {
+            return shard1Adapter.findReservationById(reserveId);
+        }
+        return shard2Adapter.findReservationById(reserveId);
+    }
 
     @NewSpan
     @Override

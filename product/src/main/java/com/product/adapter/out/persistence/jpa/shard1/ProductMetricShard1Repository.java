@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 interface ProductMetricShard1Repository extends JpaRepository<ProductMetricShard1Entity, Long> {
 
-    void deleteById(Long id);
+    
 }

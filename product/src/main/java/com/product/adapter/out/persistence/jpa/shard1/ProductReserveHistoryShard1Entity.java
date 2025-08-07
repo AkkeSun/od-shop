@@ -1,5 +1,6 @@
 package com.product.adapter.out.persistence.jpa.shard1;
 
+import com.product.domain.model.ProductReserveHistory;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -34,5 +35,24 @@ class ProductReserveHistoryShard1Entity {
         this.productId = productId;
         this.customerId = customerId;
         this.reservedQuantity = reservedQuantity;
+    }
+
+    static ProductReserveHistoryShard1Entity of(ProductReserveHistory domain) {
+        return ProductReserveHistoryShard1Entity.builder()
+            .id(domain.id())
+            .productId(domain.productId())
+            .customerId(domain.customerId())
+            .reservedQuantity(domain.reservedQuantity())
+            .build();
+    }
+
+    ProductReserveHistory toDomain() {
+        return ProductReserveHistory.builder()
+            .id(id)
+            .productId(productId)
+            .customerId(customerId)
+            .reservedQuantity(reservedQuantity)
+            .build();
+
     }
 }
