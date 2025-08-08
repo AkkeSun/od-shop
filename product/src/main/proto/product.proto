@@ -6,14 +6,14 @@ option java_multiple_files = true;
 option java_package = "grpc.product";
 option java_outer_classname = "Product";
 
-message UpdateProductQuantityStubRequest {
-  int64 productId = 1;
-  int64 quantity = 2;
-  string quantityType = 3;
+message ReserveProductStubRequest {
+  int64 customerId = 1;
+  int64 productId = 2;
+  int64 quantity = 3;
 }
 
-message UpdateProductQuantityStubResponse {
-  bool result = 1;
+message ReserveProductStubResponse {
+  int64 reserveId = 1;
 }
 
 message FindProductStubRequest {
@@ -35,8 +35,6 @@ message FindProductStubResponse {
 }
 
 service ProductService {
-  // SAGA
-  rpc updateProductQuantity (UpdateProductQuantityStubRequest) returns (UpdateProductQuantityStubResponse);
-  // Order
+  rpc reserveProduct (ReserveProductStubRequest) returns (ReserveProductStubResponse);
   rpc findProduct (FindProductStubRequest) returns (FindProductStubResponse);
 }

@@ -9,6 +9,8 @@ import com.product.infrastructure.util.GrpcUtil;
 import grpc.product.FindProductStubRequest;
 import grpc.product.FindProductStubResponse;
 import grpc.product.ProductServiceGrpc.ProductServiceImplBase;
+import grpc.product.ReserveProductStubRequest;
+import grpc.product.ReserveProductStubResponse;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,28 @@ class ProductStub extends ProductServiceImplBase {
         } catch (Exception e) {
             Status status = GrpcUtil.getStatus(e);
             log.info("[gRPC] findProduct error - {}", toJsonString(status));
+
+            responseObserver.onError(status
+                .withDescription(status.getDescription())
+                .asRuntimeException());
+        }
+    }
+
+    @Override
+    public void reserveProduct(ReserveProductStubRequest request,
+        StreamObserver<ReserveProductStubResponse> responseObserver) {
+        try {
+
+            log.info("[gRPC] reserveProduct request - {}", toJsonString(request));
+            /*
+            responseObserver.onNext(response.toStubResponse());
+            responseObserver.onCompleted();
+            log.info("[gRPC] reserveProduct response - {}", toJsonString(response));
+             */
+
+        } catch (Exception e) {
+            Status status = GrpcUtil.getStatus(e);
+            log.info("[gRPC] reserveProduct error - {}", toJsonString(status));
 
             responseObserver.onError(status
                 .withDescription(status.getDescription())
