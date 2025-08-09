@@ -2,9 +2,9 @@ package com.product.adapter.in.grpc;
 
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
-import com.product.application.port.in.ReserveProductUseCase;
-import com.product.application.port.in.command.ReserveProductCommand;
-import com.product.application.service.reserve_product.ReserveProductServiceResponse;
+import com.product.application.port.in.CreateReservationUseCase;
+import com.product.application.port.in.command.CreateReservationCommand;
+import com.product.application.service.create_reservation.CreateReservationServiceResponse;
 import com.product.infrastructure.util.GrpcUtil;
 import grpc.product.CreateProductReservationRequest;
 import grpc.product.CreateProductReservationResponse;
@@ -20,7 +20,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 @RequiredArgsConstructor
 class CreateReservationStub extends CreateProductReservationServiceImplBase {
 
-    private final ReserveProductUseCase useCase;
+    private final CreateReservationUseCase useCase;
 
 
     @Override
@@ -29,7 +29,8 @@ class CreateReservationStub extends CreateProductReservationServiceImplBase {
         try {
 
             log.info("[gRPC] createReservation request - {}", toJsonString(request));
-            ReserveProductServiceResponse response = useCase.reserve(ReserveProductCommand.builder()
+            CreateReservationServiceResponse response = useCase.reserve(
+                CreateReservationCommand.builder()
                 .productId(request.getProductId())
                 .productQuantity(request.getQuantity())
                 .customerId(request.getCustomerId())

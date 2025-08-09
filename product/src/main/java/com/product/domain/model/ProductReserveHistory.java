@@ -1,6 +1,6 @@
 package com.product.domain.model;
 
-import com.product.application.port.in.command.ReserveProductCommand;
+import com.product.application.port.in.command.CreateReservationCommand;
 import lombok.Builder;
 
 @Builder
@@ -11,7 +11,7 @@ public record ProductReserveHistory(
     long reservedQuantity
 ) {
 
-    public static ProductReserveHistory of(Long id, ReserveProductCommand command) {
+    public static ProductReserveHistory of(Long id, CreateReservationCommand command) {
         return ProductReserveHistory.builder()
             .id(id)
             .productId(command.productId())
