@@ -180,6 +180,14 @@ public class Product {
     }
 
     @JsonIgnore
+    public void confirmReservation(ProductReserveHistory reservation) {
+        this.reservedQuantity -= reservation.reservedQuantity();
+        this.quantity -= reservation.reservedQuantity();
+        this.salesCount += reservation.reservedQuantity();
+        this.updateDateTime = LocalDateTime.now();
+    }
+
+    @JsonIgnore
     private boolean isProductNameRequired(String newProductName) {
         return StringUtils.hasText(newProductName) && !newProductName.equals(this.productName);
     }
