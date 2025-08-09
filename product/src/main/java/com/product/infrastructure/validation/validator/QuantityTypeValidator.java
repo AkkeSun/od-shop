@@ -1,6 +1,5 @@
 package com.product.infrastructure.validation.validator;
 
-import com.product.domain.model.QuantityType;
 import com.product.infrastructure.validation.ValidQuantityType;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

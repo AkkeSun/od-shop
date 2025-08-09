@@ -1,6 +1,7 @@
 package com.product.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.product.application.port.in.command.IncreaseProductQuantityCommand;
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.application.port.in.command.UpdateProductCommand;
 import java.time.LocalDate;
@@ -190,6 +191,12 @@ public class Product {
     @JsonIgnore
     public void cancelReservation(ProductReserveHistory reservation) {
         this.reservedQuantity -= reservation.reservedQuantity();
+        this.updateDateTime = LocalDateTime.now();
+    }
+
+    @JsonIgnore
+    public void increaseQuantity(IncreaseProductQuantityCommand command) {
+        this.quantity += command.quantity();
         this.updateDateTime = LocalDateTime.now();
     }
 
