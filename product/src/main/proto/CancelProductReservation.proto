@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package grpc.product;
+
+option java_multiple_files = true;
+option java_package = "grpc.product";
+option java_outer_classname = "CancelProductReservation";
+
+message CancelProductReservationRequest {
+  int64 productId = 1;
+  int64 reservationId = 2;
+}
+
+message CancelProductReservationResponse {
+  bool result = 1;
+}
+
+
+service CancelProductReservationService {
+  rpc cancelReservation (CancelProductReservationRequest) returns (CancelProductReservationResponse);}
