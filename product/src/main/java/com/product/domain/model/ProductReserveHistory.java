@@ -1,5 +1,6 @@
 package com.product.domain.model;
 
+import com.product.application.port.in.command.ReserveProductCommand;
 import lombok.Builder;
 
 @Builder
@@ -10,4 +11,12 @@ public record ProductReserveHistory(
     long reservedQuantity
 ) {
 
+    public static ProductReserveHistory of(Long id, ReserveProductCommand command) {
+        return ProductReserveHistory.builder()
+            .id(id)
+            .productId(command.productId())
+            .customerId(command.customerId())
+            .reservedQuantity(command.productQuantity())
+            .build();
+    }
 }

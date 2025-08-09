@@ -169,26 +169,14 @@ public class Product {
     }
 
     @JsonIgnore
-    public void updateQuantity(UpdateProductQuantityCommand command) {
-        this.updateDateTime = LocalDateTime.now();
-        switch (command.type()) {
-            case REFUND -> {
-                this.quantity += command.quantity();
-                this.salesCount -= command.quantity();
-            }
-            case ADD_QUANTITY -> {
-                this.quantity += command.quantity();
-            }
-            case PURCHASE -> {
-                this.quantity -= command.quantity();
-                this.salesCount += command.quantity();
-            }
-        }
+    public boolean isReservable() {
+        return 0 < quantity - reservedQuantity;
     }
 
     @JsonIgnore
-    public boolean isAvailableForSale() {
-        return 0 < quantity;
+    public void reserve(long reservedQuantity) {
+        this.reservedQuantity += reservedQuantity;
+        this.updateDateTime = LocalDateTime.now();
     }
 
     @JsonIgnore

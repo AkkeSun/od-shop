@@ -58,6 +58,18 @@ public class SnowflakeGeneratorImpl implements SnowflakeGenerator {
             | sequence;
     }
 
+    @Override
+    public long nextId(boolean isShard1) {
+        long id = nextId();
+        if (isShard1 && ShardKeyUtil.isShard1(id)) {
+            return id;
+        }
+        if (!isShard1 && !ShardKeyUtil.isShard1(id)) {
+            return id;
+        }
+        return nextId(isShard1);
+    }
+
     private long waitNextMillis(long lastTimestamp) {
         long timestamp = System.currentTimeMillis();
         while (timestamp <= lastTimestamp) {
