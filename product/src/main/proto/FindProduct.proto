@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package grpc.product;
+
+option java_multiple_files = true;
+option java_package = "grpc.product";
+option java_outer_classname = "FindProduct";
+
+message FindProductRequest {
+  int64 productId = 1;
+}
+
+message FindProductResponse {
+  int64 productId = 1;
+  string sellerEmail = 2;
+  string productName = 3;
+  string productImgUrl = 4;
+  string descriptionImgUrl = 5;
+  repeated string keywords = 6;
+  repeated string productOption = 7;
+  int64 price = 8;
+  int64 quantity = 9;
+  string category = 10;
+  string regDateTime = 11;
+}
+
+service FindProductService {
+  rpc findProduct (FindProductRequest) returns (FindProductResponse);
+}

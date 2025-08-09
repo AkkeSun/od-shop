@@ -14,11 +14,4 @@ public record FindProductCommand(
             .isApiCall(true)
             .build();
     }
-
-    public static FindProductCommand ofGrpcCall(Long productId) {
-        return FindProductCommand.builder()
-            .productId(productId)
-            .isApiCall(false)
-            .build();
-    }
 }
