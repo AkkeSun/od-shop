@@ -9,6 +9,7 @@ import com.product.application.port.out.MessageProducerPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductHistory;
+import com.product.infrastructure.aop.DistributedLock;
 import com.product.infrastructure.exception.CustomAuthorizationException;
 import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class IncreaseProductQuantityService implements IncreaseProductQuantityUs
 
     @NewSpan
     @Override
+    @DistributedLock(key = "PRODUCT_QUANTITY", isUniqueKey = true)
     public IncreaseProductQuantityServiceResponse update(IncreaseProductQuantityCommand command) {
         Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");
         if (!product.isSeller(command.account().id())) {
