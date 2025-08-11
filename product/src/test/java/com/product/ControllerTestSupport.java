@@ -1,11 +1,15 @@
 package com.product;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.product.application.port.in.CancelReservationUseCase;
+import com.product.application.port.in.ConfirmReservationUseCase;
+import com.product.application.port.in.CreateReservationUseCase;
 import com.product.application.port.in.DeleteProductUseCase;
 import com.product.application.port.in.FindProductListUseCase;
 import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.port.in.FindReviewListUseCase;
+import com.product.application.port.in.IncreaseProductQuantityUseCase;
 import com.product.application.port.in.RegisterProductUseCase;
 import com.product.application.port.in.RegisterReviewUseCase;
 import com.product.application.port.in.UpdateProductUseCase;
@@ -59,7 +63,16 @@ public class ControllerTestSupport {
     protected FindRecommendProductUseCase findRecommendProductUseCase;
 
     @MockBean
-    protected UpdateProductQuantityUseCase updateProductQuantityUseCase;
+    protected IncreaseProductQuantityUseCase increaseProductQuantityUseCase;
+
+    @MockBean
+    protected CancelReservationUseCase cancelReservationUseCase;
+
+    @MockBean
+    protected ConfirmReservationUseCase confirmReservationUseCase;
+
+    @MockBean
+    protected CreateReservationUseCase createReservationUseCase;
 
     @Autowired
     private AuthorizationStoragePort authorizationStoragePort;

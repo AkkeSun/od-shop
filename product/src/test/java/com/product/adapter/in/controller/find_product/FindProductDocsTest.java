@@ -103,7 +103,7 @@ public class FindProductDocsTest extends RestDocsSupport {
             // given
             Long productId = 99L;
             when(findProductUseCase.findProduct(FindProductCommand.ofApiCall(productId)))
-                .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
+                .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PRODUCT_INFO));
 
             // when then
             performErrorDocument(productId, status().isNotFound(), "[find-product] 조회된 상품 정보 없음");

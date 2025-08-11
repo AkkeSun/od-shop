@@ -2,6 +2,7 @@ package com.product.fakeClass;
 
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
+import com.product.domain.model.ProductReserveHistory;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,27 @@ import java.util.List;
 public class FakeProductStoragePort implements ProductStoragePort {
 
     public List<Product> database = new ArrayList<>();
+
+    @Override
+    public ProductReserveHistory createReservation(Product product,
+        ProductReserveHistory reserveHistory) {
+        return null;
+    }
+
+    @Override
+    public void confirmReservation(Product product, ProductReserveHistory reserveHistory) {
+
+    }
+
+    @Override
+    public void cancelReservation(Product product, ProductReserveHistory reserveHistory) {
+
+    }
+
+    @Override
+    public ProductReserveHistory findReservationById(Long reserveId) {
+        return null;
+    }
 
     @Override
     public void register(Product product) {

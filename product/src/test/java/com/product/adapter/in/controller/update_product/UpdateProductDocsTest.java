@@ -220,7 +220,7 @@ public class UpdateProductDocsTest extends RestDocsSupport {
         Long productId = 2L;
         String authorization = "Bearer testToken";
         given(updateProductUseCase.updateProduct(any())).willThrow(
-            new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
+            new CustomNotFoundException(ErrorCode.DoesNotExist_PRODUCT_INFO));
 
         // when then
         performErrorDocument(request, productId, authorization, status().isNotFound(),

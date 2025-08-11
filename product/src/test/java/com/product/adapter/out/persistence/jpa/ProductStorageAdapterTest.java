@@ -106,7 +106,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             CustomNotFoundException result = assertThrows(CustomNotFoundException.class,
                 () -> shard1Adapter.findByIdAndDeleteYn(product.getId(), "N"));
             // then
-            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PRODUCT_INFO);
         }
 
         @Test
@@ -124,7 +124,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                 () -> shard2Adapter.findByIdAndDeleteYn(product.getId(), "N"));
 
             // then
-            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PRODUCT_INFO);
         }
 
         @Nested
@@ -206,7 +206,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                     () -> adapter.findByIdAndDeleteYn(product.getId(), "N"));
 
                 // then
-                assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+                assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PRODUCT_INFO);
             }
 
             @Test
@@ -223,7 +223,7 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                     () -> adapter.findByIdAndDeleteYn(product.getId(), "N"));
 
                 // then
-                assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+                assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PRODUCT_INFO);
             }
         }
     }

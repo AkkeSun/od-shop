@@ -197,7 +197,7 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 });
 
             // then
-            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PRODUCT_INFO);
         }
 
         @Test
@@ -324,7 +324,7 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
             ProductShard2Entity entity = productRepository.findById(product.getId()).get();
 
             // then
-            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PROUCT_INFO);
+            assert result.getErrorCode().equals(ErrorCode.DoesNotExist_PRODUCT_INFO);
             assert entity.getDeleteYn().equals("Y");
             assert entity.getUpdateDateTime().equals(deleteAt);
             assert metricRepository.findById(product.getId()).isEmpty();

@@ -103,7 +103,7 @@ public class FindReviewListDocsTest extends RestDocsSupport {
                 .size(10)
                 .build();
             when(findReviewListUseCase.findReviewList(any()))
-                .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
+                .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PRODUCT_INFO));
 
             // when then
             performErrorDocument(request, productId, status().isNotFound(), "조회된 상품 정보 없음");

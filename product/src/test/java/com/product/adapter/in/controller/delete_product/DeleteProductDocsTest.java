@@ -105,7 +105,7 @@ public class DeleteProductDocsTest extends RestDocsSupport {
             Long productId = 2L;
             String authorization = "Bearer testToken";
             when(deleteProductUseCase.deleteProduct(any(), any()))
-                .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PROUCT_INFO));
+                .thenThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PRODUCT_INFO));
 
             // when then
             performErrorDocument(productId, authorization, status().isNotFound(),
