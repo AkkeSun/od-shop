@@ -21,10 +21,6 @@ public class LogAspect {
 
     private final HttpServletRequest request;
 
-    @Pointcut("@annotation(io.micrometer.tracing.annotation.NewSpan))")
-    private void newSpan() {
-    }
-
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
     private void controllerMethods() {
     }
@@ -69,17 +65,5 @@ public class LogAspect {
         Object result = joinPoint.proceed();
         log.info("[{} {}] response - {}", request.getMethod(), request.getRequestURI(), result);
         return result;
-    }
-
-    @Around("newSpan()")
-    public Object newSpanLog(ProceedingJoinPoint joinPoint) throws Throwable {
-        String httpMethod = request.getMethod();
-        String path = request.getRequestURI();
-        String[] packages = joinPoint.getSignature().getDeclaringTypeName().split("\\.");
-        String className = packages[packages.length - 1];
-        String methodName = joinPoint.getSignature().getName();
-
-        log.info("[{} {}] {}.{}() call", httpMethod, path, className, methodName);
-        return joinPoint.proceed();
     }
 }
