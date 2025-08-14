@@ -16,7 +16,6 @@ import com.product.application.port.out.RedisStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductRecommend;
 import com.product.domain.model.RecommendType;
-import io.micrometer.tracing.annotation.NewSpan;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -55,7 +54,6 @@ class FindRecommendProductService implements FindRecommendProductUseCase {
 
     private final ElasticSearchClientPort elasticSearchClientPort;
 
-    @NewSpan
     @Override
     public FindRecommendProductServiceResponse findRecommendProductList(
         FindRecommendProductCommand command) {

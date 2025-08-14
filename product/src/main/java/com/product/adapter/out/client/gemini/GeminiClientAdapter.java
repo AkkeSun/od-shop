@@ -2,7 +2,6 @@ package com.product.adapter.out.client.gemini;
 
 import com.product.application.port.out.GeminiClientPort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.micrometer.tracing.annotation.NewSpan;
 import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +36,6 @@ class GeminiClientAdapter implements GeminiClientPort {
             .createClient(GeminiClient.class);
     }
 
-    @NewSpan
     @Override
     @CircuitBreaker(name = "gemini", fallbackMethod = "embeddingFallback")
     public float[] embedding(String document) {
@@ -45,7 +43,6 @@ class GeminiClientAdapter implements GeminiClientPort {
         return result.getResponse();
     }
 
-    @NewSpan
     @Override
     @CircuitBreaker(name = "gemini", fallbackMethod = "queryFallback")
     public String query(String query) {

@@ -8,7 +8,6 @@ import com.product.application.port.out.MessageProducerPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductClickLog;
-import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ class FindProductService implements FindProductUseCase {
     private final ProductStoragePort productStoragePort;
     private final MessageProducerPort messageProducerPort;
 
-    @NewSpan
     @Override
     public FindProductServiceResponse findProduct(FindProductCommand command) {
         Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");

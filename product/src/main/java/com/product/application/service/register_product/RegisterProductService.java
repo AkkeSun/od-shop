@@ -11,7 +11,6 @@ import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomBusinessException;
 import com.product.infrastructure.util.SnowflakeGenerator;
-import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ class RegisterProductService implements RegisterProductUseCase {
     private final ProductStoragePort productStoragePort;
     private final ElasticSearchClientPort elasticSearchClientPort;
 
-    @NewSpan
     @Override
     public RegisterProductServiceResponse registerProduct(RegisterProductCommand command) {
 

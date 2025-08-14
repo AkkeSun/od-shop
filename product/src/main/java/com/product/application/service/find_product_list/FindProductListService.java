@@ -8,7 +8,6 @@ import com.product.application.port.out.ElasticSearchClientPort;
 import com.product.application.port.out.MessageProducerPort;
 import com.product.domain.model.Product;
 import com.product.domain.model.SearchLog;
-import io.micrometer.tracing.annotation.NewSpan;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +22,6 @@ class FindProductListService implements FindProductListUseCase {
     private final MessageProducerPort messageProducerPort;
     private final ElasticSearchClientPort elasticSearchClientPort;
 
-    @NewSpan
     @Override
     public FindProductListServiceResponse findProductList(FindProductListCommand command) {
         messageProducerPort.sendMessage(topicName, toJsonString(SearchLog.of(command.query())));

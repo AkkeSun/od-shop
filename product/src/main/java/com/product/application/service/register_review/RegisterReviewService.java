@@ -13,7 +13,6 @@ import com.product.domain.model.Review;
 import com.product.infrastructure.exception.CustomAuthorizationException;
 import com.product.infrastructure.exception.CustomBusinessException;
 import com.product.infrastructure.util.SnowflakeGenerator;
-import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,6 @@ class RegisterReviewService implements RegisterReviewUseCase {
     private final ProductStoragePort productStoragePort;
     private final ReviewStoragePort reviewStoragePort;
 
-    @NewSpan
     @Override
     public RegisterReviewServiceResponse registerReview(RegisterReviewCommand command) {
         Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");

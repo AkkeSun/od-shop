@@ -6,7 +6,6 @@ import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductReserveHistory;
 import com.product.infrastructure.util.ShardKeyUtil;
-import io.micrometer.tracing.annotation.NewSpan;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -20,7 +19,6 @@ class ProductStorageAdapter implements ProductStoragePort {
     private final ProductShard1Adapter shard1Adapter;
     private final ProductShard2Adapter shard2Adapter;
 
-    @NewSpan
     @Override
     public ProductReserveHistory createReservation(Product product,
         ProductReserveHistory reserveHistory) {
@@ -30,7 +28,6 @@ class ProductStorageAdapter implements ProductStoragePort {
         return shard2Adapter.createReservation(product, reserveHistory);
     }
 
-    @NewSpan
     @Override
     public void confirmReservation(Product product, ProductReserveHistory reserveHistory) {
         if (ShardKeyUtil.isShard1(product.getId())) {
@@ -40,7 +37,6 @@ class ProductStorageAdapter implements ProductStoragePort {
         }
     }
 
-    @NewSpan
     @Override
     public void cancelReservation(Product product, ProductReserveHistory reserveHistory) {
         if (ShardKeyUtil.isShard1(product.getId())) {
@@ -50,7 +46,6 @@ class ProductStorageAdapter implements ProductStoragePort {
         }
     }
 
-    @NewSpan
     @Override
     public ProductReserveHistory findReservationById(Long reserveId) {
         if (ShardKeyUtil.isShard1(reserveId)) {
@@ -59,7 +54,6 @@ class ProductStorageAdapter implements ProductStoragePort {
         return shard2Adapter.findReservationById(reserveId);
     }
 
-    @NewSpan
     @Override
     public void register(Product product) {
         if (ShardKeyUtil.isShard1(product.getId())) {
@@ -69,7 +63,6 @@ class ProductStorageAdapter implements ProductStoragePort {
         }
     }
 
-    @NewSpan
     @Override
     public void deleteById(Long productId) {
         if (ShardKeyUtil.isShard1(productId)) {
@@ -88,7 +81,6 @@ class ProductStorageAdapter implements ProductStoragePort {
         }
     }
 
-    @NewSpan
     @Override
     public Product findByIdAndDeleteYn(Long productId, String deleteYn) {
         return ShardKeyUtil.isShard1(productId) ?

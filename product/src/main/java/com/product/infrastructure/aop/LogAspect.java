@@ -23,10 +23,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @RequiredArgsConstructor
 public class LogAspect {
 
-    @Pointcut("@annotation(io.micrometer.tracing.annotation.NewSpan))")
-    private void newSpan() {
-    }
-
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
     private void controllerMethods() {
     }
@@ -81,24 +77,6 @@ public class LogAspect {
         Object result = joinPoint.proceed();
         log.info("[{} {}] response - {}", request.getMethod(), request.getRequestURI(), result);
         return result;
-    }
-
-    @Around("newSpan()")
-    public Object newSpanLog(ProceedingJoinPoint joinPoint) throws Throwable {
-        String[] packages = joinPoint.getSignature().getDeclaringTypeName().split("\\.");
-        String className = packages[packages.length - 1];
-        String methodName = joinPoint.getSignature().getName();
-
-        HttpServletRequest request = getRequest();
-        if (request == null) {
-            log.info("[gRPC] {}.{}() call", className, methodName);
-        } else {
-            String httpMethod = request.getMethod();
-            String path = request.getRequestURI();
-
-            log.info("[{} {}] {}.{}() call", httpMethod, path, className, methodName);
-        }
-        return joinPoint.proceed();
     }
 
     // CAUTION) gRPC 는 HTTP/2 통신 이므로 HttpServletRequest 는 사용할 수 없음

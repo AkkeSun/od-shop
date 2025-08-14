@@ -7,7 +7,6 @@ import com.product.application.port.out.ElasticSearchClientPort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductRecommend;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.micrometer.tracing.annotation.NewSpan;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,21 +44,18 @@ class ElasticSearchClientAdapter implements ElasticSearchClientPort {
         ;
     }
 
-    @NewSpan
     @Override
     @CircuitBreaker(name = "elasticsearch", fallbackMethod = "registerFallback")
     public void register(Product product, float[] embedding) {
         client.register(RegisterProductEsRequest.of(product, embedding), product.getId());
     }
 
-    @NewSpan
     @Override
     @CircuitBreaker(name = "elasticsearch", fallbackMethod = "deleteByIdFallback")
     public void deleteById(Long productId) {
         client.deleteById(productId);
     }
 
-    @NewSpan
     @Override
     @CircuitBreaker(name = "elasticsearch", fallbackMethod = "findProductsFallback")
     public List<Product> findProducts(FindProductListCommand command) {
@@ -69,7 +65,6 @@ class ElasticSearchClientAdapter implements ElasticSearchClientPort {
             .map(da -> da._source().toDomain()).toList();
     }
 
-    @NewSpan
     @Override
     @CircuitBreaker(name = "elasticsearch", fallbackMethod = "findByEmbeddingFallback")
     public List<ProductRecommend> findByEmbedding(float[] embedding) {
