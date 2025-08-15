@@ -1,8 +1,7 @@
 package com.order.infrastructure.resolver;
 
-import com.product.domain.model.Account;
-import com.product.infrastructure.resolver.LoginAccount;
-import com.product.infrastructure.util.JwtUtil;
+import com.order.domain.model.Account;
+import com.order.infrastructure.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
