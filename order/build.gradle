@@ -1,9 +1,17 @@
+buildscript {
+    ext {
+        protobufVersion = '4.27.2'
+        protobufPluginVersion = '0.9.4'
+        grpcVersion = '1.65.1'
+    }
+}
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'com.epages.restdocs-api-spec' version '0.19.0'
     id 'org.hidetake.swagger.generator' version '2.19.2'
+    id 'com.google.protobuf' version "${protobufPluginVersion}"
 }
 
 
@@ -49,6 +57,15 @@ dependencies {
     // kafka
     implementation 'org.springframework.kafka:spring-kafka'
 
+    // grpc
+    implementation "com.google.protobuf:protobuf-java-util:3.25.3"
+    implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+    implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
+    implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
+
     implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
     compileOnly 'org.projectlombok:lombok'
@@ -70,6 +87,26 @@ test {
 swaggerSources {
     sample {
         setInputFile(file("${project.buildDir}/api-spec/openapi3.yaml"))
+    }
+}
+
+// ./gradlew clean generateProto
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    clean {
+        delete generatedFilesBaseDir
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
     }
 }
 
