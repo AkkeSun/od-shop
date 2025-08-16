@@ -4,9 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.MessageOrBuilder;
+import com.google.protobuf.util.JsonFormat;
 import java.util.List;
-import org.apache.kafka.shaded.com.google.protobuf.InvalidProtocolBufferException;
-import org.apache.kafka.shaded.com.google.protobuf.MessageOrBuilder;
 
 public class JsonUtil {
 

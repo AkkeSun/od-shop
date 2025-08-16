@@ -1,5 +1,6 @@
 package com.order.adapter.in.controller.reserve_product;
 
+import com.order.applicatoin.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
@@ -12,4 +13,10 @@ record ReserveProductRequest(
     Long quantity
 ) {
 
+    ReserveProductCommandItem toCommandItem() {
+        return ReserveProductCommandItem.builder()
+            .productId(productId)
+            .quantity(quantity)
+            .build();
+    }
 }

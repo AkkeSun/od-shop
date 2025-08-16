@@ -15,6 +15,7 @@ public enum ErrorCode {
     INVALID_ACCESS_TOKEN_BY_SECURITY(3003, "유효한 인증 토큰이 아닙니다"),
 
     // status code 422 (4001 - 4099)
+    Business_GRPC_RESPONSE_ERROR(4001, ""),
 
     // status code 403 (5001 - 5099)
     ACCESS_DENIED(5001, "접근권한이 없습니다"),

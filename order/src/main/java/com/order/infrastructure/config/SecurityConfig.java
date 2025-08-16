@@ -1,6 +1,5 @@
 package com.order.infrastructure.config;
 
-import com.order.infrastructure.filter.AuthorizationFilter;
 import com.order.infrastructure.filter.CustomErrorLogFilter;
 import com.order.infrastructure.filter.JwtAuthenticationFilter;
 import com.order.infrastructure.handler.CustomAccessDeniedHandler;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -26,7 +24,6 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtFilter;
     private final CustomErrorLogFilter errorLogFilter;
-    private final AuthorizationFilter authorizationFilter;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -43,7 +40,9 @@ public class SecurityConfig {
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 
             // --------------- 인가 정책 ---------------
-            .addFilterAfter(authorizationFilter, ExceptionTranslationFilter.class)
+            .authorizeHttpRequests(auth -> {
+                auth.anyRequest().authenticated();
+            })
 
             // --------------- 인증/인가 예외처리 ---------------
             .exceptionHandling(exception -> exception

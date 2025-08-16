@@ -1,3 +1,68 @@
 spring:
   application:
     name: order
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+  datasource:
+    url: jdbc:mysql://140.245.70.130:3306/account?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: akkessun
+    password: sunyang2ek+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: 140.245.70.130
+      port: 6379
+      timeout: 3000
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      redis:
+        slidingWindowSize: 3
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+      kafka:
+        slidingWindowSize: 5
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+    instances:
+      redis:
+        base-config: redis
+      kafka:
+        base-config: kafka
+
+server:
+  port: 8084
+  shutdown: graceful
+
+grpc:
+  client:
+    product:
+      address: 'static://localhost:8083'
+      negotiation-type: plaintext
+
+jwt:
+  token:
+    secret-key: hello-jwt
+
+kafka:
+  host: 152.67.206.159:9092
+  topic:
+    cancel-reserve: cancel-reserve
+
