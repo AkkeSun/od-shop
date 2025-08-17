@@ -1,5 +1,7 @@
 package com.order.applicatoin.service.reserve_product;
 
+import static com.order.infrastructure.util.JsonUtil.toJsonString;
+
 import com.order.applicatoin.port.in.ReserveProductUseCase;
 import com.order.applicatoin.port.in.command.ReserveProductCommand;
 import com.order.applicatoin.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
@@ -25,23 +27,26 @@ class ReserveProductService implements ReserveProductUseCase {
     private final MessageProducerPort messageProducerPort;
 
     @Override
-    public ReserveProductServiceResponse reservation(ReserveProductCommand command) {
-        List<Long> reservationIds = new ArrayList<>();
+    public List<ReserveProductServiceResponse> reservation(ReserveProductCommand command) {
+        List<ReserveProductServiceResponse> responseList = new ArrayList<>();
 
         Long accountId = command.accountId();
         for (ReserveProductCommandItem item : command.items()) {
             try {
-                reservationIds.add(productClientPort.reserveProduct(item, accountId));
+                responseList.add(ReserveProductServiceResponse.builder()
+                    .productId(item.productId())
+                    .reserveId(productClientPort.reserveProduct(item, accountId))
+                    .build());
 
             } catch (StatusRuntimeException e) {
-                for (Long reservationId : reservationIds) {
-                    messageProducerPort.sendMessage(cancelTopic, String.valueOf(reservationId));
+                for (ReserveProductServiceResponse response : responseList) {
+                    messageProducerPort.sendMessage(cancelTopic, toJsonString(response));
                 }
 
                 throw new CustomGrpcResponseError(
                     e.getStatus().getDescription() + " - " + item.productId());
             }
         }
-        return ReserveProductServiceResponse.of(reservationIds);
+        return responseList;
     }
 }

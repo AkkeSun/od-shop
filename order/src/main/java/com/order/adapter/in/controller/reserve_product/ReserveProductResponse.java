@@ -1,17 +1,18 @@
 package com.order.adapter.in.controller.reserve_product;
 
 import com.order.applicatoin.service.reserve_product.ReserveProductServiceResponse;
-import java.util.List;
 import lombok.Builder;
 
 @Builder
 record ReserveProductResponse(
-    List<Long> reserveIds
+    Long productId,
+    Long reserveId
 ) {
 
     static ReserveProductResponse of(ReserveProductServiceResponse serviceResponse) {
         return ReserveProductResponse.builder()
-            .reserveIds(serviceResponse.reservationIds())
+            .productId(serviceResponse.productId())
+            .reserveId(serviceResponse.reserveId())
             .build();
     }
 }

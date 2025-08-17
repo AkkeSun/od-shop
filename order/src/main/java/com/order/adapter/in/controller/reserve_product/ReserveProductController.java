@@ -20,16 +20,18 @@ class ReserveProductController {
     private final ReserveProductUseCase useCase;
 
     @PostMapping("/reservation")
-    ApiResponse<ReserveProductResponse> reserveProducts(
+    ApiResponse<List<ReserveProductResponse>> reserveProducts(
         @RequestBody @Valid List<ReserveProductRequest> request,
         @LoginAccount Account account
     ) {
 
-        ReserveProductServiceResponse serviceResponse = useCase.reservation(
+        List<ReserveProductServiceResponse> serviceResponses = useCase.reservation(
             ReserveProductCommand.builder()
                 .accountId(account.id())
                 .items(request.stream().map(ReserveProductRequest::toCommandItem).toList())
                 .build());
-        return ApiResponse.ok(ReserveProductResponse.of(serviceResponse));
+        return ApiResponse.ok(serviceResponses.stream()
+            .map(ReserveProductResponse::of)
+            .toList());
     }
 }
