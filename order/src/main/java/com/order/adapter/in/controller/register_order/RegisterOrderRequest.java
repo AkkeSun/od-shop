@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record RegisterOrderRequest(
+record RegisterOrderRequest(
     List<Long> reserveIds,
     int totalPrice,
     String receiverName,

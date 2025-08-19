@@ -65,4 +65,5 @@ kafka:
   host: 152.67.206.159:9092
   topic:
     cancel-reserve: cancel-reserve
+    rollback-reserve: rollback-reserve
 

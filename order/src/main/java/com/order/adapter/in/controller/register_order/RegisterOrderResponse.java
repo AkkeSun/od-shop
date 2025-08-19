@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 record RegisterOrderResponse(
     Boolean result,
-    Long orderNum
+    Long orderNumber
 ) {
 
 }
