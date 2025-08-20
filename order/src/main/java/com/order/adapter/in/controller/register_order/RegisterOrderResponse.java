@@ -1,5 +1,6 @@
 package com.order.adapter.in.controller.register_order;
 
+import com.order.applicatoin.service.register_order.RegisterOrderServiceResponse;
 import lombok.Builder;
 
 @Builder
@@ -8,4 +9,10 @@ record RegisterOrderResponse(
     Long orderNumber
 ) {
 
+    static RegisterOrderResponse of(RegisterOrderServiceResponse serviceResponse) {
+        return RegisterOrderResponse.builder()
+            .result(serviceResponse.result())
+            .orderNumber(serviceResponse.orderNumber())
+            .build();
+    }
 }

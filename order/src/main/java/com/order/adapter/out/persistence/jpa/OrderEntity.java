@@ -1,4 +1,4 @@
-package com.order.adapter.out.clinet.persistence.jpa;
+package com.order.adapter.out.persistence.jpa;
 
 import com.order.domain.model.Order;
 import jakarta.persistence.Column;
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "ORDER")
+@Table(name = "`ORDER`")
 @NoArgsConstructor
 class OrderEntity {
 
@@ -46,7 +46,7 @@ class OrderEntity {
     @Column(name = "BUY_STATUS")
     private String buyStatus;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_NUMBER")
     private List<OrderProductEntity> orderProducts = new ArrayList<>();
 
@@ -77,6 +77,7 @@ class OrderEntity {
             .receiverTel(order.receiverTel())
             .receiverAddress(order.receiverAddress())
             .buyStatus(order.buyStatus())
+            .regDateTime(order.regDateTime())
             .build();
     }
 

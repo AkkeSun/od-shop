@@ -1,4 +1,4 @@
-package com.order.adapter.out.clinet.persistence.jpa;
+package com.order.adapter.out.persistence.jpa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +22,7 @@ class OrderProductEntity {
     @Column(name = "ID")
     private Long id;
 
+    @Column(name = "ORDER_NUMBER")
     private Long orderNumber;
 
     @Column(name = "PRODUCT_ID")

@@ -1,4 +1,4 @@
-package com.order.adapter.out.clinet.persistence.jpa;
+package com.order.adapter.out.persistence.jpa;
 
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.domain.model.Order;

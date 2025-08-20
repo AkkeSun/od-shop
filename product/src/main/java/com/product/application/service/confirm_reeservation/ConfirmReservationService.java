@@ -18,7 +18,7 @@ class ConfirmReservationService implements ConfirmReservationUseCase {
     @Override
     @DistributedLock(key = "PRODUCT_QUANTITY", isUniqueKey = true)
     public ConfirmReservationServiceResponse confirmReservation(ConfirmReservationCommand command) {
-        Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "Y");
+        Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");
         ProductReserveHistory reservation = productStoragePort.findReservationById(
             command.reserveId());
 

@@ -39,7 +39,7 @@ class ProductClientAdapter implements ProductClientPort {
     public void confirmReserve(RegisterOrderCommandItem command) {
         confirmReservationService.confirmReservation(ConfirmProductReservationRequest.newBuilder()
             .setReservationId(command.reserveId())
-            .setProductId(command.reserveId())
+            .setProductId(command.productId())
             .build());
     }
 }
