@@ -2,9 +2,9 @@ package com.order.applicatoin.service.register_order;
 
 import static com.order.infrastructure.util.JsonUtil.toJsonString;
 
-import com.order.applicatoin.port.in.RegisterOrderCommand;
-import com.order.applicatoin.port.in.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.applicatoin.port.in.RegisterOrderUseCase;
+import com.order.applicatoin.port.in.command.RegisterOrderCommand;
+import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.applicatoin.port.out.MessageProducerPort;
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.applicatoin.port.out.ProductClientPort;

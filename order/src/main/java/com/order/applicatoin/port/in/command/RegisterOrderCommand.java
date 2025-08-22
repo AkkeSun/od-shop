@@ -1,4 +1,4 @@
-package com.order.applicatoin.port.in;
+package com.order.applicatoin.port.in.command;
 
 import java.util.List;
 import lombok.Builder;

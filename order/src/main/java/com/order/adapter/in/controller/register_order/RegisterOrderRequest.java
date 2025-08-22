@@ -1,7 +1,7 @@
 package com.order.adapter.in.controller.register_order;
 
-import com.order.applicatoin.port.in.RegisterOrderCommand;
-import com.order.applicatoin.port.in.RegisterOrderCommand.RegisterOrderCommandItem;
+import com.order.applicatoin.port.in.command.RegisterOrderCommand;
+import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.domain.model.Account;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

@@ -1,7 +1,7 @@
 package com.order.domain.model;
 
-import com.order.applicatoin.port.in.RegisterOrderCommand;
-import com.order.applicatoin.port.in.RegisterOrderCommand.RegisterOrderCommandItem;
+import com.order.applicatoin.port.in.command.RegisterOrderCommand;
+import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
