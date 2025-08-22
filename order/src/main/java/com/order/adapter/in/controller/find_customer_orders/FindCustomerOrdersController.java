@@ -1,4 +1,4 @@
-package com.order.applicatoin.service.find_customer_orders;
+package com.order.adapter.in.controller.find_customer_orders;
 
 import com.order.infrastructure.response.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.order.applicatoin.service.find_customer_orders;
+package com.order.adapter.in.controller.find_customer_orders;
 
 import lombok.Builder;
 
