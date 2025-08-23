@@ -93,4 +93,19 @@ class OrderEntity {
             .productIds(productIds)
             .build();
     }
+
+    Order toDomain() {
+        return Order.builder()
+            .orderNumber(orderNumber)
+            .customerId(customerId)
+            .totalPrice(totalPrice)
+            .receiverName(receiverName)
+            .receiverTel(receiverTel)
+            .receiverAddress(receiverAddress)
+            .buyStatus(buyStatus)
+            .productIds(orderProducts.stream()
+                .map(OrderProductEntity::getId)
+                .toList())
+            .build();
+    }
 }
