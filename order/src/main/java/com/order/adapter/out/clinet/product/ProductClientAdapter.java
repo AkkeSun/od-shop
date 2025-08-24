@@ -3,11 +3,16 @@ package com.order.adapter.out.clinet.product;
 import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.applicatoin.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import com.order.applicatoin.port.out.ProductClientPort;
+import com.order.domain.model.Product;
 import grpc.product.ConfirmProductReservationRequest;
 import grpc.product.ConfirmProductReservationServiceGrpc.ConfirmProductReservationServiceBlockingStub;
 import grpc.product.CreateProductReservationRequest;
 import grpc.product.CreateProductReservationResponse;
 import grpc.product.CreateProductReservationServiceGrpc.CreateProductReservationServiceBlockingStub;
+import grpc.product.FindProductRequest;
+import grpc.product.FindProductResponse;
+import grpc.product.FindProductServiceGrpc.FindProductServiceBlockingStub;
+import java.util.HashSet;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Component;
@@ -22,6 +27,8 @@ class ProductClientAdapter implements ProductClientPort {
     @GrpcClient("product")
     private ConfirmProductReservationServiceBlockingStub confirmReservationService;
 
+    @GrpcClient("product")
+    private FindProductServiceBlockingStub findProductService;
 
     @Override
     public Long reserveProduct(ReserveProductCommandItem command, Long accountId) {
@@ -41,5 +48,25 @@ class ProductClientAdapter implements ProductClientPort {
             .setReservationId(command.reserveId())
             .setProductId(command.productId())
             .build());
+    }
+
+    @Override
+    public Product findProduct(Long productId) {
+        FindProductResponse response = findProductService.findProduct(
+            FindProductRequest.newBuilder()
+                .setProductId(productId)
+                .build());
+        
+        return Product.builder()
+            .id(response.getProductId())
+            .sellerEmail(response.getSellerEmail())
+            .productName(response.getProductName())
+            .productImgUrl(response.getProductImgUrl())
+            .descriptionImgUrl(response.getDescriptionImgUrl())
+            .productOption(new HashSet<>(response.getProductOptionList()))
+            .price(response.getPrice())
+            .buyQuantity(response.getQuantity())
+            .category(response.getCategory())
+            .build();
     }
 }
