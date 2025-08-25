@@ -104,8 +104,9 @@ class OrderEntity {
             .receiverAddress(receiverAddress)
             .buyStatus(buyStatus)
             .productIds(orderProducts.stream()
-                .map(OrderProductEntity::getId)
+                .map(OrderProductEntity::getProductId)
                 .toList())
+            .regDateTime(regDateTime)
             .build();
     }
 }

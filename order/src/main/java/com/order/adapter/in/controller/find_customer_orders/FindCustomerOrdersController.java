@@ -1,17 +1,26 @@
 package com.order.adapter.in.controller.find_customer_orders;
 
+import com.order.applicatoin.port.in.FindCustomerOrdersUseCase;
+import com.order.applicatoin.service.find_customer_orders.FindCustomerOrdersServiceResponse;
+import com.order.domain.model.Account;
+import com.order.infrastructure.resolver.LoginAccount;
 import com.order.infrastructure.response.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 class FindCustomerOrdersController {
 
-    @GetMapping("/customers/{customerId}/orders")
-    ApiResponse<FindCustomerOrdersResponse> findAll(@PathVariable Long customerId,
-        FindCustomerOrdersRequest request) {
+    private final FindCustomerOrdersUseCase useCase;
 
-        return ApiResponse.ok(null);
+    @GetMapping("/customers/orders")
+    ApiResponse<FindCustomerOrdersResponse> findAll(@LoginAccount Account account,
+        FindCustomerOrdersRequest request) {
+        FindCustomerOrdersServiceResponse serviceResponse = useCase.findAll(
+            request.toCommand(account));
+
+        return ApiResponse.ok(FindCustomerOrdersResponse.of(serviceResponse));
     }
 }
