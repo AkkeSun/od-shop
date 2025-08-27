@@ -4,6 +4,7 @@ import static com.order.infrastructure.util.JsonUtil.toObjectNode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.order.domain.model.Account;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,9 @@ public class LogAspect {
             }
             if (arg.toString().contains("{")) {
                 requestBody = toObjectNode(arg);
+            }
+            if (arg instanceof Account) {
+                userInfo = toObjectNode(arg);
             }
         }
 
