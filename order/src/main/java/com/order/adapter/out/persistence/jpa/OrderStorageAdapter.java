@@ -25,12 +25,12 @@ class OrderStorageAdapter implements OrderStoragePort {
     @Override
     public Order register(Order order) {
         OrderEntity entity = orderRepository.save(OrderEntity.of(order));
-        List<OrderProductEntity> productEntities = order.productIds().stream()
-            .map(productId -> OrderProductEntity.of(entity.getOrderNumber(), productId))
+        List<OrderProductEntity> productEntities = order.products().stream()
+            .map(product -> OrderProductEntity.of(product, entity))
             .toList();
 
         orderProductRepository.saveAll(productEntities);
-        return entity.toDomain(order.productIds());
+        return entity.toDomain(order.products());
     }
 
     @Override

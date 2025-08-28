@@ -9,6 +9,7 @@ import com.order.applicatoin.port.out.MessageProducerPort;
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.applicatoin.port.out.ProductClientPort;
 import com.order.domain.model.Order;
+import com.order.domain.model.OrderProduct;
 import com.order.infrastructure.exception.CustomGrpcResponseError;
 import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
@@ -32,15 +33,14 @@ class RegisterOrderService implements RegisterOrderUseCase {
 
     @Override
     public RegisterOrderServiceResponse register(RegisterOrderCommand command) {
-        List<RegisterOrderCommandItem> confirmReserveIds = new ArrayList<>();
+        List<OrderProduct> confirmReserves = new ArrayList<>();
 
         for (RegisterOrderCommandItem item : command.reserveInfos()) {
             try {
-                clientPort.confirmReserve(item);
-                confirmReserveIds.add(item);
+                confirmReserves.add(clientPort.confirmReserve(item));
 
             } catch (StatusRuntimeException e) {
-                for (RegisterOrderCommandItem confirmItem : confirmReserveIds) {
+                for (OrderProduct confirmItem : confirmReserves) {
                     messageProducerPort.sendMessage(rollbackTopic, toJsonString(confirmItem));
                 }
 
@@ -49,7 +49,7 @@ class RegisterOrderService implements RegisterOrderUseCase {
             }
         }
 
-        Order savedOrder = orderStoragePort.register(Order.of(command));
+        Order savedOrder = orderStoragePort.register(Order.of(command, confirmReserves));
         return RegisterOrderServiceResponse.of(savedOrder);
     }
 }

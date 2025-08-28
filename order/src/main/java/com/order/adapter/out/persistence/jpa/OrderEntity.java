@@ -1,6 +1,7 @@
 package com.order.adapter.out.persistence.jpa;
 
 import com.order.domain.model.Order;
+import com.order.domain.model.OrderProduct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -81,7 +82,7 @@ class OrderEntity {
             .build();
     }
 
-    Order toDomain(List<Long> productIds) {
+    Order toDomain(List<OrderProduct> products) {
         return Order.builder()
             .orderNumber(orderNumber)
             .customerId(customerId)
@@ -90,7 +91,7 @@ class OrderEntity {
             .receiverTel(receiverTel)
             .receiverAddress(receiverAddress)
             .buyStatus(buyStatus)
-            .productIds(productIds)
+            .products(products)
             .build();
     }
 
@@ -103,8 +104,8 @@ class OrderEntity {
             .receiverTel(receiverTel)
             .receiverAddress(receiverAddress)
             .buyStatus(buyStatus)
-            .productIds(orderProducts.stream()
-                .map(OrderProductEntity::getProductId)
+            .products(orderProducts.stream()
+                .map(OrderProductEntity::toProduct)
                 .toList())
             .regDateTime(regDateTime)
             .build();

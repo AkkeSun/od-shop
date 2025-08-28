@@ -1,7 +1,6 @@
 package com.order.domain.model;
 
 import com.order.applicatoin.port.in.command.RegisterOrderCommand;
-import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -15,11 +14,11 @@ public record Order(
     String receiverTel,
     String receiverAddress,
     String buyStatus,
-    List<Long> productIds,
+    List<OrderProduct> products,
     LocalDateTime regDateTime
 ) {
 
-    public static Order of(RegisterOrderCommand command) {
+    public static Order of(RegisterOrderCommand command, List<OrderProduct> products) {
         return Order.builder()
             .customerId(command.accountId())
             .totalPrice(command.totalPrice())
@@ -27,9 +26,7 @@ public record Order(
             .receiverTel(command.receiverTel())
             .receiverAddress(command.receiverAddress())
             .buyStatus("ORDER")
-            .productIds(command.reserveInfos().stream()
-                .map(RegisterOrderCommandItem::productId)
-                .toList())
+            .products(products)
             .regDateTime(LocalDateTime.now())
             .build();
     }

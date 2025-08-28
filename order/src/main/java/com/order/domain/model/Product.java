@@ -15,4 +15,5 @@ public record Product(
     long buyQuantity,
     String category
 ) {
+    
 }

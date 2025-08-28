@@ -3,8 +3,10 @@ package com.order.adapter.out.clinet.product;
 import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.applicatoin.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import com.order.applicatoin.port.out.ProductClientPort;
+import com.order.domain.model.OrderProduct;
 import com.order.domain.model.Product;
 import grpc.product.ConfirmProductReservationRequest;
+import grpc.product.ConfirmProductReservationResponse;
 import grpc.product.ConfirmProductReservationServiceGrpc.ConfirmProductReservationServiceBlockingStub;
 import grpc.product.CreateProductReservationRequest;
 import grpc.product.CreateProductReservationResponse;
@@ -43,11 +45,14 @@ class ProductClientAdapter implements ProductClientPort {
     }
 
     @Override
-    public void confirmReserve(RegisterOrderCommandItem command) {
-        confirmReservationService.confirmReservation(ConfirmProductReservationRequest.newBuilder()
-            .setReservationId(command.reserveId())
-            .setProductId(command.productId())
-            .build());
+    public OrderProduct confirmReserve(RegisterOrderCommandItem command) {
+        ConfirmProductReservationResponse serviceResponse = confirmReservationService
+            .confirmReservation(ConfirmProductReservationRequest.newBuilder()
+                .setReservationId(command.reserveId())
+                .setProductId(command.productId())
+                .build());
+
+        return OrderProduct.of(serviceResponse);
     }
 
     @Override
