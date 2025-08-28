@@ -13,8 +13,9 @@ message ConfirmProductReservationRequest {
 
 message ConfirmProductReservationResponse {
   bool result = 1;
+  int64 productId = 2;
+  int64 sellerId = 3;
 }
-
 
 service ConfirmProductReservationService {
   rpc confirmReservation (ConfirmProductReservationRequest) returns (ConfirmProductReservationResponse);}
