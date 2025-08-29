@@ -39,9 +39,6 @@ class ProductShard1Entity {
     @Column(name = "PRODUCT_IMG")
     private String productImgUrl;
 
-    @Column(name = "PRODUCT_OPTION")
-    private String productOption;
-
     @Column(name = "KEYWORD")
     private String keyword;
 
@@ -76,7 +73,7 @@ class ProductShard1Entity {
     @Builder
     ProductShard1Entity(Category category, String descriptionImgUrl, String keyword,
         long price, Long id, String productImgUrl, long reservedQuantity,
-        String productName, String productOption, long quantity, LocalDate regDate,
+        String productName, long quantity, LocalDate regDate,
         LocalDateTime regDateTime, String sellerEmail, Long sellerId, String deleteYn,
         LocalDateTime updateDateTime) {
         this.category = category;
@@ -87,7 +84,6 @@ class ProductShard1Entity {
         this.reservedQuantity = reservedQuantity;
         this.productImgUrl = productImgUrl;
         this.productName = productName;
-        this.productOption = productOption;
         this.quantity = quantity;
         this.regDate = regDate;
         this.regDateTime = regDateTime;
@@ -104,7 +100,6 @@ class ProductShard1Entity {
             .sellerEmail(domain.getSellerEmail())
             .productName(domain.getProductName())
             .productImgUrl(domain.getProductImgUrl())
-            .productOption(String.join(",", domain.getProductOption()))
             .keyword(String.join(",", domain.getKeywords()))
             .descriptionImgUrl(domain.getDescriptionImgUrl())
             .price(domain.getPrice())
@@ -125,7 +120,6 @@ class ProductShard1Entity {
             .sellerEmail(sellerEmail)
             .productName(productName)
             .productImgUrl(productImgUrl)
-            .productOption(new HashSet<>(List.of(productOption.split(","))))
             .keywords(new HashSet<>(List.of(keyword.split(","))))
             .descriptionImgUrl(descriptionImgUrl)
             .price(price)

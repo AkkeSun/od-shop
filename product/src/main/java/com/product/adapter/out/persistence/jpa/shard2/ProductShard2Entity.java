@@ -39,9 +39,6 @@ class ProductShard2Entity {
     @Column(name = "PRODUCT_IMG")
     private String productImgUrl;
 
-    @Column(name = "PRODUCT_OPTION")
-    private String productOption;
-
     @Column(name = "KEYWORD")
     private String keyword;
 
@@ -75,7 +72,7 @@ class ProductShard2Entity {
 
     @Builder
     ProductShard2Entity(Long id, Long sellerId, long reservedQuantity,
-        String sellerEmail, String productName, String productImgUrl, String productOption,
+        String sellerEmail, String productName, String productImgUrl,
         String keyword, String descriptionImgUrl, long price, long quantity, Category category,
         String deleteYn, LocalDate regDate, LocalDateTime regDateTime,
         LocalDateTime updateDateTime) {
@@ -84,7 +81,6 @@ class ProductShard2Entity {
         this.sellerEmail = sellerEmail;
         this.productName = productName;
         this.productImgUrl = productImgUrl;
-        this.productOption = productOption;
         this.reservedQuantity = reservedQuantity;
         this.keyword = keyword;
         this.descriptionImgUrl = descriptionImgUrl;
@@ -104,7 +100,6 @@ class ProductShard2Entity {
             .sellerEmail(domain.getSellerEmail())
             .productName(domain.getProductName())
             .productImgUrl(domain.getProductImgUrl())
-            .productOption(String.join(",", domain.getProductOption()))
             .keyword(String.join(",", domain.getKeywords()))
             .descriptionImgUrl(domain.getDescriptionImgUrl())
             .price(domain.getPrice())
@@ -125,7 +120,6 @@ class ProductShard2Entity {
             .sellerEmail(sellerEmail)
             .productName(productName)
             .productImgUrl(productImgUrl)
-            .productOption(new HashSet<>(List.of(productOption.split(","))))
             .keywords(new HashSet<>(List.of(keyword.split(","))))
             .descriptionImgUrl(descriptionImgUrl)
             .price(price)

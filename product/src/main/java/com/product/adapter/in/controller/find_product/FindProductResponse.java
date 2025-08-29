@@ -12,7 +12,6 @@ record FindProductResponse(
     String productImgUrl,
     String descriptionImgUrl,
     Set<String> keywords,
-    Set<String> productOption,
     long price,
     long quantity,
     String category,
@@ -27,7 +26,6 @@ record FindProductResponse(
             .productImgUrl(serviceResponse.productImgUrl())
             .descriptionImgUrl(serviceResponse.descriptionImgUrl())
             .keywords(serviceResponse.keywords())
-            .productOption(serviceResponse.productOption())
             .price(serviceResponse.price())
             .quantity(serviceResponse.quantity())
             .category(serviceResponse.category().description())

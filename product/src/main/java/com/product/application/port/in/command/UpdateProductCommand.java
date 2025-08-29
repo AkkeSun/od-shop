@@ -11,7 +11,6 @@ public record UpdateProductCommand(
     String productName,
     String productImgUrl,
     String descriptionImgUrl,
-    Set<String> productOption,
     Set<String> keywords,
     long price
 ) {

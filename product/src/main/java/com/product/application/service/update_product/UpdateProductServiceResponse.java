@@ -26,7 +26,6 @@ public record UpdateProductServiceResponse(
             .productImgUrl(product.getProductImgUrl())
             .descriptionImgUrl(product.getDescriptionImgUrl())
             .keywords(product.getKeywords())
-            .productOption(product.getProductOption())
             .price(product.getPrice())
             .category(product.getCategory())
             .build();

@@ -27,7 +27,6 @@ public record RegisterProductServiceResponse(
             .productImgUrl(product.getProductImgUrl())
             .descriptionImgUrl(product.getDescriptionImgUrl())
             .keywords(product.getKeywords())
-            .productOption(product.getProductOption())
             .price(product.getPrice())
             .quantity(product.getQuantity())
             .category(product.getCategory())

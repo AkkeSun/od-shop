@@ -11,7 +11,6 @@ record RegisterProductResponse(
     String productName,
     String productImgUrl,
     Set<String> keywords,
-    Set<String> productOption,
     String descriptionImgUrl,
     long price,
     long quantity,
@@ -27,7 +26,6 @@ record RegisterProductResponse(
             .productImgUrl(serviceResponse.productImgUrl())
             .descriptionImgUrl(serviceResponse.descriptionImgUrl())
             .keywords(serviceResponse.keywords())
-            .productOption(serviceResponse.productOption())
             .price(serviceResponse.price())
             .quantity(serviceResponse.quantity())
             .category(serviceResponse.category().description())

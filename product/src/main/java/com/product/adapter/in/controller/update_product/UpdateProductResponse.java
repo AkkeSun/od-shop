@@ -11,7 +11,6 @@ record UpdateProductResponse(
     String productName,
     String productImgUrl,
     Set<String> keywords,
-    Set<String> productOption,
     String descriptionImgUrl,
     long price,
     String category
@@ -26,7 +25,6 @@ record UpdateProductResponse(
             .productImgUrl(serviceResponse.productImgUrl())
             .descriptionImgUrl(serviceResponse.descriptionImgUrl())
             .keywords(serviceResponse.keywords())
-            .productOption(serviceResponse.productOption())
             .price(serviceResponse.price())
             .category(serviceResponse.category().description())
             .build();

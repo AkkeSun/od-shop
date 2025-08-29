@@ -24,7 +24,6 @@ public class Product {
     private String productName;
     private String productImgUrl;
     private String descriptionImgUrl;
-    private Set<String> productOption;
     private Set<String> keywords;
     private long price;
     private long quantity;
@@ -46,7 +45,7 @@ public class Product {
     @Builder
     public Product(Category category, String descriptionImgUrl, long hitCount, Set<String> keywords,
         boolean needsEsUpdate, long price, Long id, String productImgUrl, String productName,
-        Set<String> productOption, long quantity, LocalDate regDate, LocalDateTime regDateTime,
+        long quantity, LocalDate regDate, LocalDateTime regDateTime,
         long reviewCount, double reviewScore, long salesCount, String sellerEmail, Long sellerId,
         String deleteYn, double totalScore, LocalDateTime updateDateTime, long reservedQuantity) {
         this.category = category;
@@ -58,7 +57,6 @@ public class Product {
         this.id = id;
         this.productImgUrl = productImgUrl;
         this.productName = productName;
-        this.productOption = productOption;
         this.quantity = quantity;
         this.regDate = regDate;
         this.regDateTime = regDateTime;
@@ -81,7 +79,6 @@ public class Product {
             .productName(command.productName())
             .productImgUrl(command.productImgUrl())
             .descriptionImgUrl(command.descriptionImgUrl())
-            .productOption(command.productOption())
             .price(command.price())
             .quantity(command.quantity())
             .reservedQuantity(0)
@@ -118,17 +115,15 @@ public class Product {
     public String getKeywordQueryDocument() {
         return String.format("""
                     너는 이커머스 상품 정보에서 고객의 검색 의도에 맞는 키워드를 추출하는 SEO 전문가야. \s
-                    아래에 제공되는 '상품명', '상품 카테고리', '상품 옵션' 정보를 바탕으로, 고객들이 검색할 만한 핵심 키워드 10개를 추출해 줘. \s
+                    아래에 제공되는 '상품명', '상품 카테고리' 정보를 바탕으로, 고객들이 검색할 만한 핵심 키워드 10개를 추출해 줘. \s
                     \s
                     * 상품명: %s \s
                     * 상품 카테고리: %s \s
-                    * 상품 옵션: 색상: %s \s
                                 
                     결과는 키워드1, 키워드2, ... 형태로 출력해야 한다. \s
                     상품의 특징, 소재, 스타일, 타겟 고객, 사용 상황을 종합적으로 고려하고, 다른 설명은 절대 붙이지 마라. \s
                 """,
-            productName, category.description(), String.join(", ", productOption)
-        );
+            productName, category.description());
     }
 
     @JsonIgnore
@@ -150,10 +145,6 @@ public class Product {
         if (isDescriptionImgUrlRequired(command.descriptionImgUrl())) {
             this.descriptionImgUrl = command.descriptionImgUrl();
             updateList.add("descriptionImgUrl");
-        }
-        if (isProductOptionRequired(command.productOption())) {
-            this.productOption = command.productOption();
-            updateList.add("productOption");
         }
         if (isKeywordsRequired(command.keywords())) {
             this.keywords = command.keywords();
@@ -215,15 +206,6 @@ public class Product {
     private boolean isDescriptionImgUrlRequired(String newDescriptionImgUrl) {
         return StringUtils.hasText(newDescriptionImgUrl) && !newDescriptionImgUrl.equals(
             this.descriptionImgUrl);
-    }
-
-    @JsonIgnore
-    private boolean isProductOptionRequired(Set<String> newProductOption) {
-        if (newProductOption == null) {
-            return false;
-        }
-        return !(this.productOption.containsAll(newProductOption) &&
-            newProductOption.containsAll(this.productOption));
     }
 
     @JsonIgnore

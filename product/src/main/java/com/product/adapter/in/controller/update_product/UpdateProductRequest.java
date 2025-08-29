@@ -35,7 +35,6 @@ record UpdateProductRequest(
             .productName(productName)
             .productImgUrl(productImgUrl)
             .descriptionImgUrl(descriptionImgUrl)
-            .productOption(productOption)
             .keywords(keywords)
             .price(price)
             .build();
