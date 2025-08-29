@@ -27,7 +27,7 @@ class FindCustomerOrdersService implements FindCustomerOrdersUseCase {
         Page<Order> page = orderStoragePort.findByCustomerId(command);
         for (Order order : page.getContent()) {
             Product product = productClientPort.findProduct(
-                order.products().getFirst().productId());
+                order.products().getFirst().getProductId());
             orderList.add(FindCustomerOrdersServiceResponseItem.of(order, product));
         }
 

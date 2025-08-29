@@ -28,7 +28,7 @@ class FindSoldProductsService implements FindSoldProductsUseCase {
         Page<Order> page = orderStoragePort.findSoldProducts(command);
         for (Order order : page) {
             for (OrderProduct orderProduct : order.products()) {
-                Product product = productClientPort.findProduct(orderProduct.productId());
+                Product product = productClientPort.findProduct(orderProduct.getProductId());
                 orderList.add(FindSoldProductsServiceResponseItem.of(
                     product, orderProduct, order.customerId()));
             }

@@ -52,11 +52,14 @@ class OrderStorageAdapter implements OrderStoragePort {
     @Override
     public Page<Order> findSoldProducts(FindSoldProductsCommand command) {
         Pageable pageable = PageRequest.of(command.page(), command.size());
-        Page<OrderEntity> page = command.isProductIdSearch() ?
-            orderRepository.findBySellerIdAndProductNumber(
-                command.sellerId(), command.query(), pageable) :
-            orderRepository.findBySellerIdAndCustomerId(
+
+        Page<OrderEntity> page = switch (command.searchType()) {
+            case "sellerId" -> orderRepository.findBySellerIdAndProductNumber(
                 command.sellerId(), command.query(), pageable);
+            case "productId" -> orderRepository.findBySellerIdAndCustomerId(
+                command.sellerId(), command.query(), pageable);
+            default -> orderRepository.findBySellerId(command.sellerId(), pageable);
+        };
 
         List<Order> orders = page.getContent().stream()
             .map(OrderEntity::toDomain)

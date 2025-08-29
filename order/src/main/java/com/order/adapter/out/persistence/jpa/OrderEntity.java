@@ -44,9 +44,6 @@ class OrderEntity {
     @Column(name = "RECEIVER_ADDRESS")
     private String receiverAddress;
 
-    @Column(name = "BUY_STATUS")
-    private String buyStatus;
-
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_NUMBER")
     private List<OrderProductEntity> orderProducts = new ArrayList<>();
@@ -64,7 +61,6 @@ class OrderEntity {
         this.receiverName = receiverName;
         this.receiverTel = receiverTel;
         this.receiverAddress = receiverAddress;
-        this.buyStatus = buyStatus;
         this.orderProducts = orderProducts;
         this.regDateTime = regDateTime;
     }

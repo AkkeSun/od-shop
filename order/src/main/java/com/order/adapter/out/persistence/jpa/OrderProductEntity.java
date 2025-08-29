@@ -35,26 +35,31 @@ class OrderProductEntity {
     @Column(name = "BUY_QUANTITY")
     private long buyQuantity;
 
+    @Column(name = "BUY_STATUS")
+    private String buyStatus;
+
     @Column(name = "REG_DATE_TIME")
     private LocalDateTime regDateTime;
 
     @Builder
     public OrderProductEntity(Long id, Long orderNumber, Long productId, Long sellerId,
-        long buyQuantity, LocalDateTime regDateTime) {
+        long buyQuantity, String buyStatus, LocalDateTime regDateTime) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.productId = productId;
         this.sellerId = sellerId;
         this.buyQuantity = buyQuantity;
+        this.buyStatus = buyStatus;
         this.regDateTime = regDateTime;
     }
 
     static OrderProductEntity of(OrderProduct domain, OrderEntity entity) {
         return OrderProductEntity.builder()
             .orderNumber(entity.getOrderNumber())
-            .productId(domain.id())
-            .sellerId(domain.sellerId())
-            .buyQuantity(domain.buyQuantity())
+            .productId(domain.getProductId())
+            .sellerId(domain.getSellerId())
+            .buyQuantity(domain.getBuyQuantity())
+            .buyStatus(domain.getBuyStatus())
             .regDateTime(entity.getRegDateTime())
             .build();
     }
@@ -66,6 +71,7 @@ class OrderProductEntity {
             .productId(productId)
             .sellerId(sellerId)
             .buyQuantity(buyQuantity)
+            .buyStatus(buyStatus)
             .regDateTime(regDateTime)
             .build();
     }

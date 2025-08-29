@@ -10,8 +10,4 @@ public record FindSoldProductsCommand(
     String searchType,
     Long query
 ) {
-
-    public boolean isProductIdSearch() {
-        return searchType.equals("productId");
-    }
 }

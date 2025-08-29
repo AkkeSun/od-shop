@@ -41,6 +41,7 @@ class RegisterOrderService implements RegisterOrderUseCase {
 
             } catch (StatusRuntimeException e) {
                 for (OrderProduct confirmItem : confirmReserves) {
+                    confirmItem.updateCustomerId(confirmItem.getCustomerId());
                     messageProducerPort.sendMessage(rollbackTopic, toJsonString(confirmItem));
                 }
 

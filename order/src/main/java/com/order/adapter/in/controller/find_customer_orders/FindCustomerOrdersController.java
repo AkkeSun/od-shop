@@ -15,7 +15,7 @@ class FindCustomerOrdersController {
 
     private final FindCustomerOrdersUseCase useCase;
 
-    @GetMapping("/customers/orders")
+    @GetMapping("/orders/products")
     ApiResponse<FindCustomerOrdersResponse> findAll(@LoginAccount Account account,
         FindCustomerOrdersRequest request) {
         FindCustomerOrdersServiceResponse serviceResponse = useCase.findAll(

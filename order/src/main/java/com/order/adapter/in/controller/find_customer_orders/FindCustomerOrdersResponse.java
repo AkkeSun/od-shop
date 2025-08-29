@@ -32,9 +32,9 @@ record FindCustomerOrdersResponse(
         String orderDateTime,
         String primaryProductName,
         String primaryProductImg,
+        String primaryProductBuyStatus,
         long totalProductCnt,
-        long totalPrice,
-        String buyStatus
+        long totalPrice
 
     ) {
 
@@ -44,9 +44,9 @@ record FindCustomerOrdersResponse(
                 .orderDateTime(item.orderDateTime())
                 .primaryProductName(item.primaryProductName())
                 .primaryProductImg(item.primaryProductImg())
+                .primaryProductBuyStatus(item.primaryProductBuyStatus())
                 .totalProductCnt(item.totalProductCnt())
                 .totalPrice(item.totalPrice())
-                .buyStatus(item.buyStatus())
                 .build();
         }
     }

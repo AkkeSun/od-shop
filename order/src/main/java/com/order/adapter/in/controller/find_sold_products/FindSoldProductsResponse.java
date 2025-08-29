@@ -1,5 +1,7 @@
 package com.order.adapter.in.controller.find_sold_products;
 
+import com.order.applicatoin.service.find_sold_products.FindSoldProductsServiceResponse;
+import com.order.applicatoin.service.find_sold_products.FindSoldProductsServiceResponse.FindSoldProductsServiceResponseItem;
 import java.util.List;
 import lombok.Builder;
 
@@ -13,6 +15,18 @@ record FindSoldProductsResponse(
 ) {
 
 
+    static FindSoldProductsResponse of(FindSoldProductsServiceResponse serviceResponse) {
+        return FindSoldProductsResponse.builder()
+            .pageNumber(serviceResponse.pageNumber())
+            .pageSize(serviceResponse.pageSize())
+            .totalElements(serviceResponse.totalElements())
+            .totalPages(serviceResponse.totalPages())
+            .orderList(serviceResponse.orderList().stream()
+                .map(FindSellerListItem::of)
+                .toList())
+            .build();
+    }
+
     @Builder
     record FindSellerListItem(
         Long orderProductId,
@@ -24,5 +38,16 @@ record FindSoldProductsResponse(
         String regDateTime
     ) {
 
+        public static FindSellerListItem of(FindSoldProductsServiceResponseItem item) {
+            return FindSellerListItem.builder()
+                .orderProductId(item.orderProductId())
+                .customerId(item.customerId())
+                .productName(item.productName())
+                .productPrice(item.productPrice())
+                .buyQuantity(item.buyQuantity())
+                .buyStatus(item.buyStatus())
+                .regDateTime(item.regDateTime())
+                .build();
+        }
     }
 }

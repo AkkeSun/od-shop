@@ -21,9 +21,9 @@ public record FindCustomerOrdersServiceResponse(
         String orderDateTime,
         String primaryProductName,
         String primaryProductImg,
+        String primaryProductBuyStatus,
         long totalProductCnt,
-        long totalPrice,
-        String buyStatus
+        long totalPrice
     ) {
 
         static FindCustomerOrdersServiceResponseItem of(Order order, Product product) {
@@ -33,9 +33,9 @@ public record FindCustomerOrdersServiceResponse(
                     order.regDateTime().format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss")))
                 .primaryProductName(product.productName())
                 .primaryProductImg(product.productImgUrl())
-                .totalProductCnt(order.productIds().size())
+                .primaryProductBuyStatus(order.products().getFirst().getBuyStatus())
+                .totalProductCnt(order.products().size())
                 .totalPrice(order.totalPrice())
-                .buyStatus(order.buyStatus())
                 .build();
         }
     }

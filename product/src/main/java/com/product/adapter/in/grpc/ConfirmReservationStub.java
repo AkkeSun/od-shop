@@ -39,6 +39,7 @@ public class ConfirmReservationStub extends ConfirmProductReservationServiceImpl
                 .setResult(response.result())
                 .setProductId(response.productId())
                 .setSellerId(response.sellerId())
+                .setBuyQuantity(response.buyQuantity())
                 .build());
             responseObserver.onCompleted();
             log.info("[gRPC] confirmReservation response - {}", toJsonString(response));

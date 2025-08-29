@@ -29,4 +29,11 @@ interface OrderRepository extends JpaRepository<OrderEntity, Long> {
         + " where product.sellerId = :sellerId and product.productId = :productId ")
     Page<OrderEntity> findBySellerIdAndProductNumber(Long sellerId, Long productId,
         Pageable pageable);
+
+    @Query(""
+        + " select order "
+        + " from OrderEntity order "
+        + " join fetch order.orderProducts product "
+        + " where product.sellerId = :sellerId ")
+    Page<OrderEntity> findBySellerId(Long sellerId, Pageable pageable);
 }

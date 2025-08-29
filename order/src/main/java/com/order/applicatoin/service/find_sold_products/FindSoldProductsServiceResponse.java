@@ -43,13 +43,14 @@ public record FindSoldProductsServiceResponse(
         public static FindSoldProductsServiceResponseItem of(Product product,
             OrderProduct orderProduct, Long customerId) {
             return FindSoldProductsServiceResponseItem.builder()
-                .orderProductId(orderProduct.id())
+                .orderProductId(orderProduct.getId())
                 .customerId(customerId)
                 .productName(product.productName())
                 .productPrice(product.price())
-                .buyQuantity(orderProduct.buyQuantity())
-                .buyStatus(orderProduct.buyStatus())
-                .regDateTime(orderProduct.regDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
+                .buyQuantity(orderProduct.getBuyQuantity())
+                .buyStatus(orderProduct.getBuyStatus())
+                .regDateTime(orderProduct.getRegDateTime()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
                 .build();
         }
     }

@@ -15,7 +15,7 @@ message ConfirmProductReservationResponse {
   bool result = 1;
   int64 productId = 2;
   int64 sellerId = 3;
-  int64 buyQuantity = 4;
+  int32 buyQuantity = 4;
 }
 
 service ConfirmProductReservationService {

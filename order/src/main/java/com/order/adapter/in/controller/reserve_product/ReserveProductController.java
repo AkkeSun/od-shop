@@ -19,7 +19,7 @@ class ReserveProductController {
 
     private final ReserveProductUseCase useCase;
 
-    @PostMapping("/reservation")
+    @PostMapping("/orders/reservation")
     ApiResponse<List<ReserveProductResponse>> reserveProducts(
         @RequestBody @Valid List<ReserveProductRequest> request,
         @LoginAccount Account account
