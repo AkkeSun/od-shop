@@ -6,8 +6,8 @@ import lombok.Builder;
 record FindSoldProductsRequest(
     Integer page,
     Integer size,
-    String searchType, // orderNumber, customerId
-    String query
+    String searchType,
+    Long query
 ) {
 
 }

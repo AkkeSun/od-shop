@@ -1,6 +1,7 @@
 package com.order.adapter.out.persistence.jpa;
 
 import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
+import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.domain.model.Order;
 import com.order.infrastructure.exception.CustomNotFoundException;
@@ -42,6 +43,24 @@ class OrderStorageAdapter implements OrderStoragePort {
             .map(OrderEntity::toDomain)
             .toList();
 
+        if (orders.isEmpty()) {
+            throw new CustomNotFoundException(ErrorCode.DoesNotExist_Order);
+        }
+        return new PageImpl<>(orders, pageable, orders.size());
+    }
+
+    @Override
+    public Page<Order> findSoldProducts(FindSoldProductsCommand command) {
+        Pageable pageable = PageRequest.of(command.page(), command.size());
+        Page<OrderEntity> page = command.isProductIdSearch() ?
+            orderRepository.findBySellerIdAndProductNumber(
+                command.sellerId(), command.query(), pageable) :
+            orderRepository.findBySellerIdAndCustomerId(
+                command.sellerId(), command.query(), pageable);
+
+        List<Order> orders = page.getContent().stream()
+            .map(OrderEntity::toDomain)
+            .toList();
         if (orders.isEmpty()) {
             throw new CustomNotFoundException(ErrorCode.DoesNotExist_Order);
         }

@@ -54,7 +54,7 @@ class OrderProductEntity {
             .build();
     }
 
-    public OrderProduct toProduct() {
+    public OrderProduct toDomain() {
         return OrderProduct.builder()
             .id(id)
             .orderNumber(orderNumber)

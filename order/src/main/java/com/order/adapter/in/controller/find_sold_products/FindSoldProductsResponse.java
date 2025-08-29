@@ -15,12 +15,13 @@ record FindSoldProductsResponse(
 
     @Builder
     record FindSellerListItem(
-        Long productNumber,
+        Long orderProductId,
         Long customerId,
         String productName,
         long productPrice,
         long buyQuantity,
-        String buyStatus
+        String buyStatus,
+        String regDateTime
     ) {
 
     }

@@ -10,6 +10,8 @@ public record OrderProduct(
     Long orderNumber,
     Long productId,
     Long sellerId,
+    long buyQuantity,
+    String buyStatus,
     LocalDateTime regDateTime
 ) {
 
