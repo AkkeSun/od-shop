@@ -19,6 +19,8 @@ public record OrderProduct(
         return OrderProduct.builder()
             .productId(serviceResponse.getProductId())
             .sellerId(serviceResponse.getSellerId())
+            .buyQuantity(serviceResponse.getBuyQuantity())
+            .buyStatus("ORDER")
             .build();
     }
 }

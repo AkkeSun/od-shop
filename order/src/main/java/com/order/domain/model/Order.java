@@ -13,7 +13,6 @@ public record Order(
     String receiverName,
     String receiverTel,
     String receiverAddress,
-    String buyStatus,
     List<OrderProduct> products,
     LocalDateTime regDateTime
 ) {
@@ -25,7 +24,6 @@ public record Order(
             .receiverName(command.receiverName())
             .receiverTel(command.receiverTel())
             .receiverAddress(command.receiverAddress())
-            .buyStatus("ORDER")
             .products(products)
             .regDateTime(LocalDateTime.now())
             .build();

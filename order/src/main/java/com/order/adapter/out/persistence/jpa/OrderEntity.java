@@ -77,7 +77,6 @@ class OrderEntity {
             .receiverName(order.receiverName())
             .receiverTel(order.receiverTel())
             .receiverAddress(order.receiverAddress())
-            .buyStatus(order.buyStatus())
             .regDateTime(order.regDateTime())
             .build();
     }
@@ -90,7 +89,6 @@ class OrderEntity {
             .receiverName(receiverName)
             .receiverTel(receiverTel)
             .receiverAddress(receiverAddress)
-            .buyStatus(buyStatus)
             .products(products)
             .build();
     }
@@ -103,7 +101,6 @@ class OrderEntity {
             .receiverName(receiverName)
             .receiverTel(receiverTel)
             .receiverAddress(receiverAddress)
-            .buyStatus(buyStatus)
             .products(orderProducts.stream()
                 .map(OrderProductEntity::toDomain)
                 .toList())
