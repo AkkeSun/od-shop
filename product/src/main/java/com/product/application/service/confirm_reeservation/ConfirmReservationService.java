@@ -24,6 +24,6 @@ class ConfirmReservationService implements ConfirmReservationUseCase {
 
         product.confirmReservation(reservation);
         productStoragePort.confirmReservation(product, reservation);
-        return ConfirmReservationServiceResponse.of(product);
+        return ConfirmReservationServiceResponse.of(product, reservation);
     }
 }
