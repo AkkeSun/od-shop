@@ -14,7 +14,6 @@ import grpc.product.CreateProductReservationServiceGrpc.CreateProductReservation
 import grpc.product.FindProductRequest;
 import grpc.product.FindProductResponse;
 import grpc.product.FindProductServiceGrpc.FindProductServiceBlockingStub;
-import java.util.HashSet;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Component;
@@ -68,7 +67,6 @@ class ProductClientAdapter implements ProductClientPort {
             .productName(response.getProductName())
             .productImgUrl(response.getProductImgUrl())
             .descriptionImgUrl(response.getDescriptionImgUrl())
-            .productOption(new HashSet<>(response.getProductOptionList()))
             .price(response.getPrice())
             .buyQuantity(response.getQuantity())
             .category(response.getCategory())
