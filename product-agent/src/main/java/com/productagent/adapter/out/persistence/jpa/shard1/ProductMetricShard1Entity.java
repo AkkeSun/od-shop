@@ -97,7 +97,6 @@ class ProductMetricShard1Entity {
             .sellerEmail(product.getSellerEmail())
             .productName(product.getProductName())
             .productImgUrl(product.getProductImgUrl())
-            .productOption(new HashSet<>(List.of(product.getProductOption().split(","))))
             .keywords(new HashSet<>(List.of(product.getKeyword().split(","))))
             .descriptionImgUrl(product.getDescriptionImgUrl())
             .price(product.getPrice())

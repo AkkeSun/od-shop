@@ -18,7 +18,6 @@ public class Product {
     private String productName;
     private String productImgUrl;
     private String descriptionImgUrl;
-    private Set<String> productOption;
     private Set<String> keywords;
     private long price;
     private long quantity;
@@ -38,9 +37,8 @@ public class Product {
 
     @Builder
     public Product(Category category, String deleteYn, String descriptionImgUrl, long hitCount,
-        Long id,
-        Set<String> keywords, boolean needsEsUpdate, long price, String productImgUrl,
-        String productName, Set<String> productOption, long quantity, LocalDate regDate,
+        Long id, Set<String> keywords, boolean needsEsUpdate, long price, String productImgUrl,
+        String productName, long quantity, LocalDate regDate,
         LocalDateTime regDateTime, long reviewCount, double reviewScore, long salesCount,
         String sellerEmail, Long sellerId, double totalScore, LocalDateTime updateDateTime) {
         this.category = category;
@@ -53,7 +51,6 @@ public class Product {
         this.price = price;
         this.productImgUrl = productImgUrl;
         this.productName = productName;
-        this.productOption = productOption;
         this.quantity = quantity;
         this.regDate = regDate;
         this.regDateTime = regDateTime;
