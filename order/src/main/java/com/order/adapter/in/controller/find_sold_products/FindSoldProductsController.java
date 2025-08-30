@@ -5,6 +5,7 @@ import com.order.applicatoin.service.find_sold_products.FindSoldProductsServiceR
 import com.order.domain.model.Account;
 import com.order.infrastructure.resolver.LoginAccount;
 import com.order.infrastructure.response.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class FindSoldProductsController {
     private final FindSoldProductsUseCase useCase;
 
     @GetMapping("/orders/sold-products")
-    ApiResponse<FindSoldProductsResponse> findAll(FindSoldProductsRequest request,
+    ApiResponse<FindSoldProductsResponse> findAll(@Valid FindSoldProductsRequest request,
         @LoginAccount Account account) {
         FindSoldProductsServiceResponse serviceResponse = useCase.findAll(
             request.toCommand(account));

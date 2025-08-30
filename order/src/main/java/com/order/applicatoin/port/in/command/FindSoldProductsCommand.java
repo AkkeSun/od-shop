@@ -8,6 +8,6 @@ public record FindSoldProductsCommand(
     Integer page,
     Integer size,
     String searchType,
-    Long query
+    String query
 ) {
 }
