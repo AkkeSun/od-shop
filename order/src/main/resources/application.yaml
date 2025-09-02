@@ -23,6 +23,10 @@ spring:
       host: 140.245.70.130
       port: 6379
       timeout: 3000
+      key:
+        customer-order: customer-order::%s-%s-%s
+      ttl:
+        customer-order: 1800 # 30m
 
 resilience4j:
   circuitbreaker:

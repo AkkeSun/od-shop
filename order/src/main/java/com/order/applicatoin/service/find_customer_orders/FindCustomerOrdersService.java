@@ -1,15 +1,19 @@
 package com.order.applicatoin.service.find_customer_orders;
 
+import static com.order.infrastructure.util.JsonUtil.toJsonString;
+
 import com.order.applicatoin.port.in.FindCustomerOrdersUseCase;
 import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.applicatoin.port.out.ProductClientPort;
+import com.order.applicatoin.port.out.RedisStoragePort;
 import com.order.applicatoin.service.find_customer_orders.FindCustomerOrdersServiceResponse.FindCustomerOrdersServiceResponseItem;
 import com.order.domain.model.Order;
 import com.order.domain.model.Product;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +21,25 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class FindCustomerOrdersService implements FindCustomerOrdersUseCase {
 
+    @Value("${spring.data.redis.key.customer-order}")
+    private String redisKey;
+    @Value("${spring.data.redis.ttl.customer-order}")
+    private long redisTtl;
+    private final RedisStoragePort redisStoragePort;
     private final OrderStoragePort orderStoragePort;
     private final ProductClientPort productClientPort;
 
     @Override
     public FindCustomerOrdersServiceResponse findAll(FindCustomerOrdersCommand command) {
-        List<FindCustomerOrdersServiceResponseItem> orderList = new ArrayList<>();
+        String key = String.format(redisKey, command.customerId(), command.page(), command.size());
+        FindCustomerOrdersServiceResponse response = redisStoragePort.findData(key,
+            FindCustomerOrdersServiceResponse.class);
 
+        if (response != null) {
+            return response;
+        }
+
+        List<FindCustomerOrdersServiceResponseItem> orderList = new ArrayList<>();
         Page<Order> page = orderStoragePort.findByCustomerId(command);
         for (Order order : page.getContent()) {
             Product product = productClientPort.findProduct(
@@ -31,12 +47,10 @@ class FindCustomerOrdersService implements FindCustomerOrdersUseCase {
             orderList.add(FindCustomerOrdersServiceResponseItem.of(order, product));
         }
 
-        return FindCustomerOrdersServiceResponse.builder()
-            .pageNumber(page.getNumber())
-            .pageSize(page.getSize())
-            .totalElements(page.getTotalElements())
-            .totalPages(page.getTotalPages())
-            .orderList(orderList)
-            .build();
+        response = FindCustomerOrdersServiceResponse.of(page, orderList);
+        redisStoragePort.register(key, toJsonString(response), redisTtl);
+
+        return response;
     }
+
 }

@@ -5,6 +5,7 @@ import com.order.domain.model.Product;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.Builder;
+import org.springframework.data.domain.Page;
 
 @Builder
 public record FindCustomerOrdersServiceResponse(
@@ -14,6 +15,17 @@ public record FindCustomerOrdersServiceResponse(
     int totalPages,
     List<FindCustomerOrdersServiceResponseItem> orderList
 ) {
+
+    public static FindCustomerOrdersServiceResponse of(Page<Order> page,
+        List<FindCustomerOrdersServiceResponseItem> orderList) {
+        return FindCustomerOrdersServiceResponse.builder()
+            .pageNumber(page.getNumber())
+            .pageSize(page.getSize())
+            .totalElements(page.getTotalElements())
+            .totalPages(page.getTotalPages())
+            .orderList(orderList)
+            .build();
+    }
 
     @Builder
     public record FindCustomerOrdersServiceResponseItem(
