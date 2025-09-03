@@ -98,20 +98,4 @@ class RedisStorageAdapter implements RedisStoragePort {
 
     private void deleteTokenFallback(List<String> keys, Throwable throwable) {
     }
-
-    private List<String> scanByPattern(String pattern) {
-        RedisConnection redisConnection =
-            redisTemplate.getConnectionFactory().getConnection();
-        ScanOptions scanOptions =
-            ScanOptions.scanOptions().count(50).match(pattern).build();
-        Cursor cursor = redisConnection.scan(scanOptions);
-
-        List<String> redisKeys = new ArrayList<>();
-        while (cursor.hasNext()) {
-            String key = new String((byte[]) cursor.next());
-            redisKeys.add(key);
-        }
-
-        return redisKeys;
-    }
 }
