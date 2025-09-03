@@ -9,4 +9,8 @@ public interface RedisStoragePort {
     <T> List<T> findDataList(String key, Class<T> clazz);
 
     void register(String key, String data, long ttl);
+
+    void delete(List<String> keys);
+
+    List<String> getKeys(String input);
 }

@@ -5,12 +5,16 @@ import static com.order.infrastructure.util.JsonUtil.parseJsonList;
 
 import com.order.applicatoin.port.out.RedisStoragePort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -47,6 +51,34 @@ class RedisStorageAdapter implements RedisStoragePort {
         redisTemplate.opsForValue().set(key, data, ttl, TimeUnit.SECONDS);
     }
 
+    @Override
+    @CircuitBreaker(name = "redis", fallbackMethod = "deleteTokenFallback")
+    public void delete(List<String> keys) {
+        redisTemplate.delete(keys);
+    }
+
+    @Override
+    @CircuitBreaker(name = "redis", fallbackMethod = "getKeysFallback")
+    public List<String> getKeys(String input) {
+        RedisConnection redisConnection =
+            redisTemplate.getConnectionFactory().getConnection();
+        ScanOptions scanOptions =
+            ScanOptions.scanOptions().count(50).match(input).build();
+        Cursor cursor = redisConnection.scan(scanOptions);
+
+        List<String> redisKeys = new ArrayList<>();
+        while (cursor.hasNext()) {
+            String key = new String((byte[]) cursor.next());
+            redisKeys.add(key);
+        }
+
+        return redisKeys;
+    }
+
+    private List<String> getKeysFallback(String input, Throwable throwable) {
+        return new ArrayList<>();
+    }
+
     private <T> T findDataFallback(String key, Class<T> clazz,
         Throwable throwable) {
         log.error("[findRedisDataFallback] {}-{}", key, throwable.getMessage());
@@ -63,4 +95,8 @@ class RedisStorageAdapter implements RedisStoragePort {
         log.error("[registerRedis] {}-{}-{}", key, data, throwable.getMessage());
         System.out.println("check");
     }
+
+    private void deleteTokenFallback(List<String> keys, Throwable throwable) {
+    }
+
 }
