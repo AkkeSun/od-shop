@@ -13,5 +13,5 @@ public interface OrderStoragePort {
 
     Page<Order> findSoldProducts(FindSoldProductsCommand command);
 
-
+    Order findById(Long id);
 }

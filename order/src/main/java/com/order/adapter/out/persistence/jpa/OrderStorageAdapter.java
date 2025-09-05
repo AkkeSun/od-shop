@@ -71,4 +71,11 @@ class OrderStorageAdapter implements OrderStoragePort {
         }
         return new PageImpl<>(orders, pageable, orders.size());
     }
+
+    @Override
+    public Order findById(Long id) {
+        OrderEntity entity = orderRepository.findByOrderNumber(id)
+            .orElseThrow(() -> new CustomNotFoundException(ErrorCode.DoesNotExist_Order));
+        return entity.toDomain();
+    }
 }
