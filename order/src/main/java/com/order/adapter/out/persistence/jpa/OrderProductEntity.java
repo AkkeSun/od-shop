@@ -8,14 +8,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
 @Table(name = "ORDER_PRODUCT")
 @NoArgsConstructor
+@AllArgsConstructor
 class OrderProductEntity {
 
     @Id
@@ -41,17 +44,8 @@ class OrderProductEntity {
     @Column(name = "REG_DATE_TIME")
     private LocalDateTime regDateTime;
 
-    @Builder
-    public OrderProductEntity(Long id, Long orderNumber, Long productId, Long sellerId,
-        long buyQuantity, String buyStatus, LocalDateTime regDateTime) {
-        this.id = id;
-        this.orderNumber = orderNumber;
-        this.productId = productId;
-        this.sellerId = sellerId;
-        this.buyQuantity = buyQuantity;
-        this.buyStatus = buyStatus;
-        this.regDateTime = regDateTime;
-    }
+    @Column(name = "UPD_DATE_TIME")
+    private LocalDateTime updateDateTime;
 
     static OrderProductEntity of(OrderProduct domain, OrderEntity entity) {
         return OrderProductEntity.builder()
@@ -61,10 +55,11 @@ class OrderProductEntity {
             .buyQuantity(domain.getBuyQuantity())
             .buyStatus(domain.getBuyStatus())
             .regDateTime(entity.getRegDateTime())
+            .updateDateTime(domain.getUpdateDateTime())
             .build();
     }
 
-    public OrderProduct toDomain() {
+    OrderProduct toDomain() {
         return OrderProduct.builder()
             .id(id)
             .orderNumber(orderNumber)
@@ -73,6 +68,7 @@ class OrderProductEntity {
             .buyQuantity(buyQuantity)
             .buyStatus(buyStatus)
             .regDateTime(regDateTime)
+            .updateDateTime(updateDateTime)
             .build();
     }
 }

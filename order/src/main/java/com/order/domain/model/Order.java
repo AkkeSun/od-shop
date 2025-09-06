@@ -28,4 +28,8 @@ public record Order(
             .regDateTime(LocalDateTime.now())
             .build();
     }
+
+    public void cancel(LocalDateTime now) {
+        products.forEach(order -> order.cancel(now));
+    }
 }

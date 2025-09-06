@@ -2,12 +2,15 @@ package com.order.domain.model;
 
 import grpc.product.ConfirmProductReservationResponse;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderProduct {
 
     private Long id;
@@ -18,20 +21,7 @@ public class OrderProduct {
     private long buyQuantity;
     private String buyStatus;
     private LocalDateTime regDateTime;
-
-    @Builder
-    public OrderProduct(Long id, Long orderNumber, Long productId, Long customerId, Long sellerId,
-        long buyQuantity,
-        String buyStatus, LocalDateTime regDateTime) {
-        this.id = id;
-        this.orderNumber = orderNumber;
-        this.productId = productId;
-        this.customerId = customerId;
-        this.sellerId = sellerId;
-        this.buyQuantity = buyQuantity;
-        this.buyStatus = buyStatus;
-        this.regDateTime = regDateTime;
-    }
+    private LocalDateTime updateDateTime;
 
     public static OrderProduct of(ConfirmProductReservationResponse serviceResponse) {
         return OrderProduct.builder()
@@ -44,5 +34,10 @@ public class OrderProduct {
 
     public void updateCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public void cancel(LocalDateTime now) {
+        this.buyStatus = "CANCEL";
+        this.updateDateTime = now;
     }
 }
