@@ -4,4 +4,7 @@ public record CancelOrderServiceResponse(
     Boolean result
 ) {
 
+    public static CancelOrderServiceResponse ofSuccess() {
+        return new CancelOrderServiceResponse(true);
+    }
 }

@@ -70,4 +70,5 @@ kafka:
   topic:
     cancel-reserve: cancel-reserve
     rollback-reserve: rollback-reserve
+    cancel-order: cancel-order
 
