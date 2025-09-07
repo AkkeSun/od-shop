@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 class OrderStorageAdapter implements OrderStoragePort {
 
     private final OrderRepository orderRepository;
+    private final OrderHistoryRepository orderHistoryRepository;
     private final OrderProductRepository orderProductRepository;
 
     @Override
@@ -32,6 +33,14 @@ class OrderStorageAdapter implements OrderStoragePort {
 
         orderProductRepository.saveAll(productEntities);
         return entity.toDomain(order.products());
+    }
+
+    @Override
+    public void cancel(Order order) {
+        orderProductRepository.saveAll(order.products().stream()
+            .map(OrderProductEntity::of)
+            .toList());
+        orderHistoryRepository.save(OrderHistoryEntity.ofCancel(order));
     }
 
     @Override

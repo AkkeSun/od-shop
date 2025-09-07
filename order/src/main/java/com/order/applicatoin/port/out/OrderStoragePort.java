@@ -9,6 +9,8 @@ public interface OrderStoragePort {
 
     Order register(Order order);
 
+    void cancel(Order order);
+
     Page<Order> findByCustomerId(FindCustomerOrdersCommand command);
 
     Page<Order> findSoldProducts(FindSoldProductsCommand command);

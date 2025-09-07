@@ -19,11 +19,8 @@ class CancelOrderService implements CancelOrderUseCase {
     @Transactional
     public CancelOrderServiceResponse cancel(CancelOrderCommand command) {
         Order order = orderStoragePort.findById(command.orderId());
-        LocalDateTime now = LocalDateTime.now();
-        order.cancel(now);
-
-        // 상태값 변경 + 히스토리 등록
-        orderStoragePort.register(order);
+        order.cancel(LocalDateTime.now());
+        orderStoragePort.cancel(order);
 
         // 메시지 발송
         return null;

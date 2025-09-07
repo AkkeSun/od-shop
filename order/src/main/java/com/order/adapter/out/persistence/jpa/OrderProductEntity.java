@@ -59,6 +59,18 @@ class OrderProductEntity {
             .build();
     }
 
+    static OrderProductEntity of(OrderProduct domain) {
+        return OrderProductEntity.builder()
+            .orderNumber(domain.getOrderNumber())
+            .productId(domain.getProductId())
+            .sellerId(domain.getSellerId())
+            .buyQuantity(domain.getBuyQuantity())
+            .buyStatus(domain.getBuyStatus())
+            .regDateTime(domain.getRegDateTime())
+            .updateDateTime(domain.getUpdateDateTime())
+            .build();
+    }
+
     OrderProduct toDomain() {
         return OrderProduct.builder()
             .id(id)
