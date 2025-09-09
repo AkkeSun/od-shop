@@ -61,6 +61,7 @@ class OrderProductEntity {
 
     static OrderProductEntity of(OrderProduct domain) {
         return OrderProductEntity.builder()
+            .id(domain.getId())
             .orderNumber(domain.getOrderNumber())
             .productId(domain.getProductId())
             .sellerId(domain.getSellerId())
