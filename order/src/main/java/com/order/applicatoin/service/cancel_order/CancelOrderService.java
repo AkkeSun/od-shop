@@ -25,6 +25,7 @@ class CancelOrderService implements CancelOrderUseCase {
     @Override
     @Transactional
     public CancelOrderServiceResponse cancel(CancelOrderCommand command) {
+        // TODO: 구매한 사용자만 취소할 수 있도록 / 이미 취소된 상품인 경우 예외 처리
         Order order = orderStoragePort.findById(command.orderId());
         order.cancel(LocalDateTime.now());
         orderStoragePort.cancel(order);
