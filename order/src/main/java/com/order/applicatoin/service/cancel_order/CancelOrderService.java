@@ -1,5 +1,7 @@
 package com.order.applicatoin.service.cancel_order;
 
+import static com.order.infrastructure.exception.ErrorCode.Business_ALREADY_CANCEL_ORDCER;
+import static com.order.infrastructure.exception.ErrorCode.Business_NO_CUSTOMER;
 import static com.order.infrastructure.util.JsonUtil.toJsonString;
 
 import com.order.applicatoin.port.in.CancelOrderUseCase;
@@ -7,6 +9,7 @@ import com.order.applicatoin.port.in.command.CancelOrderCommand;
 import com.order.applicatoin.port.out.MessageProducerPort;
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.domain.model.Order;
+import com.order.infrastructure.exception.CustomBusinessException;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +28,14 @@ class CancelOrderService implements CancelOrderUseCase {
     @Override
     @Transactional
     public CancelOrderServiceResponse cancel(CancelOrderCommand command) {
-        // TODO: 구매한 사용자만 취소할 수 있도록 / 이미 취소된 상품인 경우 예외 처리
         Order order = orderStoragePort.findById(command.orderId());
+        if (!order.isCustomer(command.account())) {
+            throw new CustomBusinessException(Business_NO_CUSTOMER);
+        }
+        if (order.isCanceled()) {
+            throw new CustomBusinessException(Business_ALREADY_CANCEL_ORDCER);
+        }
+
         order.cancel(LocalDateTime.now());
         orderStoragePort.cancel(order);
         messageProducerPort.sendMessage(topicName, toJsonString(order.products()));

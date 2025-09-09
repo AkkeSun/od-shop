@@ -18,6 +18,9 @@ public enum ErrorCode {
 
     // status code 422 (4001 - 4099)
     Business_GRPC_RESPONSE_ERROR(4001, ""),
+    Business_ALREADY_CANCEL_ORDCER(4002, "이미 취소처리된 상품 입니다"),
+    Business_NO_CUSTOMER(4003, "상품을 구매한 사용자만 요청을 처리할 수 있습니다"),
+
 
     // status code 403 (5001 - 5099)
     ACCESS_DENIED(5001, "접근권한이 없습니다"),

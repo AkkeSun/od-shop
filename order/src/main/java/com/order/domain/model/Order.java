@@ -32,4 +32,17 @@ public record Order(
     public void cancel(LocalDateTime now) {
         products.forEach(order -> order.cancel(now));
     }
+
+    public boolean isCustomer(Account account) {
+        return this.customerId.equals(account.id());
+    }
+
+    public boolean isCanceled() {
+        for (OrderProduct product : products) {
+            if (product.getBuyStatus().equals("CANCEL")) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
