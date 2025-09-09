@@ -16,7 +16,7 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN(3002, "유효한 리프레시 토큰이 아닙니다"),
     INVALID_ACCESS_TOKEN_BY_SECURITY(3003, "유효한 인증 토큰이 아닙니다"),
 
-    // status code 422 (4001 - 4099)
+    // status code 500 (4001 - 4099)
     Business_GRPC_RESPONSE_ERROR(4001, ""),
     Business_ALREADY_CANCEL_ORDCER(4002, "이미 취소처리된 상품 입니다"),
     Business_NO_CUSTOMER(4003, "상품을 구매한 사용자만 요청을 처리할 수 있습니다"),
