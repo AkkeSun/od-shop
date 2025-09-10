@@ -85,11 +85,11 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandlerLog
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(CustomBusinessException.class)
     ApiResponse<Object> notFoundException(CustomBusinessException e) {
         return ApiResponse.of(
-            HttpStatus.UNPROCESSABLE_ENTITY,
+            HttpStatus.INTERNAL_SERVER_ERROR,
             ErrorResponse.builder()
                 .errorCode(e.getErrorCode().getCode())
                 .errorMessage(e.getErrorCode().getMessage())
