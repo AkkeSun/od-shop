@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class FindProductController {
 
-    private final FindProductUseCase findProductUseCase;
+    private final FindProductUseCase useCase;
 
     @GetMapping("/products/{productId}")
     ApiResponse<FindProductResponse> findProduct(@PathVariable Long productId) {
-        FindProductServiceResponse serviceResponse = findProductUseCase.findProduct(
+        FindProductServiceResponse serviceResponse = useCase.findProduct(
             FindProductCommand.ofApiCall(productId));
+
         return ApiResponse.ok(FindProductResponse.of(serviceResponse));
     }
 }

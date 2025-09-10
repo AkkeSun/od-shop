@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class FindProductListController {
 
-    private final FindProductListUseCase findProductListUseCase;
+    private final FindProductListUseCase useCase;
 
     @GetMapping("/products")
     ApiResponse<FindProductListResponse> findProductList(
-        @Validated(ValidationSequence.class) FindProductListRequest request) {
-
-        FindProductListServiceResponse serviceResponse = findProductListUseCase.findProductList(
+        @Validated(ValidationSequence.class) FindProductListRequest request
+    ) {
+        FindProductListServiceResponse serviceResponse = useCase.findProductList(
             request.toCommand());
+
         return ApiResponse.ok(FindProductListResponse.of(serviceResponse));
     }
 }

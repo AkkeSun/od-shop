@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class UpdateProductController {
 
-    private final UpdateProductUseCase updateProductUseCase;
+    private final UpdateProductUseCase useCase;
 
     @PutMapping("/products/{productId}")
     ApiResponse<UpdateProductResponse> updateProduct(
@@ -25,7 +25,7 @@ class UpdateProductController {
         @RequestBody @Validated(ValidationSequence.class) UpdateProductRequest request,
         @LoginAccount Account account
     ) {
-        UpdateProductServiceResponse serviceResponse = updateProductUseCase
+        UpdateProductServiceResponse serviceResponse = useCase
             .updateProduct(request.toCommand(account, productId));
 
         return ApiResponse.ok(UpdateProductResponse.of(serviceResponse));

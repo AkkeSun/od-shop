@@ -16,15 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class RegisterProductController {
 
-    private final RegisterProductUseCase registerProductUseCase;
+    private final RegisterProductUseCase useCase;
 
     @PostMapping("/products")
     ApiResponse<RegisterProductResponse> registerProduct(
         @Validated(ValidationSequence.class) @RequestBody RegisterProductRequest request,
-        @LoginAccount Account account) {
-
-        RegisterProductServiceResponse serviceResponse = registerProductUseCase
+        @LoginAccount Account account
+    ) {
+        RegisterProductServiceResponse serviceResponse = useCase
             .registerProduct(request.toCommand(account));
+
         return ApiResponse.ok(RegisterProductResponse.of(serviceResponse));
     }
 }

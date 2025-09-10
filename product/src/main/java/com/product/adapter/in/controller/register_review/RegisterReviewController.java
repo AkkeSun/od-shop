@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class RegisterReviewController {
 
-    private final RegisterReviewUseCase registerReviewUseCase;
+    private final RegisterReviewUseCase useCase;
 
     @PostMapping("/products/{productId}/reviews")
     ApiResponse<RegisterReviewResponse> registerReview(
@@ -25,7 +25,7 @@ class RegisterReviewController {
         @LoginAccount Account account,
         @PathVariable Long productId
     ) {
-        RegisterReviewServiceResponse serviceResponse = registerReviewUseCase.registerReview(
+        RegisterReviewServiceResponse serviceResponse = useCase.registerReview(
             request.toCommand(productId, account));
 
         return ApiResponse.ok(RegisterReviewResponse.of(serviceResponse));

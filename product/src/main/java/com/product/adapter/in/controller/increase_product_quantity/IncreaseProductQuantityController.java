@@ -27,8 +27,6 @@ class IncreaseProductQuantityController {
         IncreaseProductQuantityServiceResponse serviceResponse = useCase
             .update(request.of(productId, account));
 
-        return ApiResponse.ok(IncreaseProductQuantityResponse.builder()
-            .result(serviceResponse.result())
-            .build());
+        return ApiResponse.ok(IncreaseProductQuantityResponse.of(serviceResponse));
     }
 }

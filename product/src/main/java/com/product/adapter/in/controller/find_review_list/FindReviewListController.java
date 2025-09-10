@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class FindReviewListController {
 
-    private final FindReviewListUseCase findReviewListUseCase;
+    private final FindReviewListUseCase useCase;
 
     @GetMapping("/products/{productId}/reviews")
     ApiResponse<FindReviewListResponse> findReviewList(
-        FindReviewListRequest request, @PathVariable Long productId
+        FindReviewListRequest request,
+        @PathVariable Long productId
     ) {
-        FindReviewListServiceResponse serviceResponse = findReviewListUseCase.findReviewList(
+        FindReviewListServiceResponse serviceResponse = useCase.findReviewList(
             request.toCommand(productId));
 
         return ApiResponse.ok(FindReviewListResponse.of(serviceResponse));

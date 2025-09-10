@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class FindRecommendProductController {
 
-    private final FindRecommendProductUseCase findRecommendProductUseCase;
+    private final FindRecommendProductUseCase useCase;
 
     @GetMapping("/products/recommendations")
     ApiResponse<FindRecommendProductResponse> findRecommendProducts(
         @Validated(ValidationSequence.class) FindRecommendProductRequest request,
-        @LoginAccount Account account) {
-
-        FindRecommendProductServiceResponse serviceResponse = findRecommendProductUseCase
+        @LoginAccount Account account
+    ) {
+        FindRecommendProductServiceResponse serviceResponse = useCase
             .findRecommendProductList(request.toCommand(account));
 
         return ApiResponse.ok(FindRecommendProductResponse.of(serviceResponse));

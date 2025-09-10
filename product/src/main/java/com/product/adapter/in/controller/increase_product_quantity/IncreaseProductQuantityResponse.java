@@ -1,10 +1,14 @@
 package com.product.adapter.in.controller.increase_product_quantity;
 
-import lombok.Builder;
+import com.product.application.service.Increase_product_quantity.IncreaseProductQuantityServiceResponse;
 
-@Builder
 record IncreaseProductQuantityResponse(
     Boolean result
 ) {
 
+    static IncreaseProductQuantityResponse of(
+        IncreaseProductQuantityServiceResponse serviceResponse
+    ) {
+        return new IncreaseProductQuantityResponse(serviceResponse.result());
+    }
 }

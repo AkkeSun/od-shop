@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class DeleteProductController {
 
-    private final DeleteProductUseCase deleteProductUseCase;
+    private final DeleteProductUseCase useCase;
 
     @DeleteMapping("/products/{productId}")
-    ApiResponse<DeleteProductResponse> deleteProduct(@PathVariable Long productId,
-        @LoginAccount Account account) {
-        DeleteProductServiceResponse serviceResponse = deleteProductUseCase
-            .deleteProduct(productId, account);
+    ApiResponse<DeleteProductResponse> deleteProduct(
+        @PathVariable Long productId,
+        @LoginAccount Account account
+    ) {
+        DeleteProductServiceResponse serviceResponse = useCase.deleteProduct(productId, account);
 
         return ApiResponse.ok(DeleteProductResponse.of(serviceResponse));
     }
