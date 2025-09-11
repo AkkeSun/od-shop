@@ -2,6 +2,7 @@ package com.order.applicatoin.service.exists_customer_order;
 
 import com.order.applicatoin.port.in.ExistsCustomerOrderUseCase;
 import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
+import com.order.applicatoin.port.out.OrderStoragePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +10,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class ExistsCustomerOrderService implements ExistsCustomerOrderUseCase {
 
+    private final OrderStoragePort orderStoragePort;
+    
     @Override
     public ExistsCustomerOrderServiceResponse exists(ExistsCustomerOrderCommand command) {
-        return null;
+        boolean result = orderStoragePort.existsCustomerIdAndProductId(command);
+        return ExistsCustomerOrderServiceResponse.of(result);
     }
 }

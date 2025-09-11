@@ -1,5 +1,6 @@
 package com.order.adapter.out.persistence.jpa;
 
+import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
 import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
 import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
 import com.order.applicatoin.port.out.OrderStoragePort;
@@ -86,5 +87,11 @@ class OrderStorageAdapter implements OrderStoragePort {
         OrderEntity entity = orderRepository.findByOrderNumber(id)
             .orElseThrow(() -> new CustomNotFoundException(ErrorCode.DoesNotExist_Order));
         return entity.toDomain();
+    }
+
+    @Override
+    public boolean existsCustomerIdAndProductId(ExistsCustomerOrderCommand command) {
+        return orderRepository.existsByCustomerIdAndOrderProductsProductIdAndOrderProductsBuyStatusIn(
+            command.customerId(), command.productId(), List.of("ORDER", "COMPLETE"));
     }
 }

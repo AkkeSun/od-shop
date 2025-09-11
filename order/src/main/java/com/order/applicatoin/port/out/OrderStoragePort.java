@@ -1,5 +1,6 @@
 package com.order.applicatoin.port.out;
 
+import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
 import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
 import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
 import com.order.domain.model.Order;
@@ -16,4 +17,6 @@ public interface OrderStoragePort {
     Page<Order> findSoldProducts(FindSoldProductsCommand command);
 
     Order findById(Long id);
+
+    boolean existsCustomerIdAndProductId(ExistsCustomerOrderCommand command);
 }

@@ -1,5 +1,6 @@
 package com.order.adapter.out.persistence.jpa;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,4 +53,7 @@ interface OrderRepository extends JpaRepository<OrderEntity, Long> {
         + " join fetch order.orderProducts product "
         + " where order.orderNumber = :orderNumber ")
     Optional<OrderEntity> findByOrderNumber(Long orderNumber);
+
+    boolean existsByCustomerIdAndOrderProductsProductIdAndOrderProductsBuyStatusIn(
+        Long customerId, Long productId, List<String> statuses);
 }
