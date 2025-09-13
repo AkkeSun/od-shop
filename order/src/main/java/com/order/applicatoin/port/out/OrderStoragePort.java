@@ -2,8 +2,10 @@ package com.order.applicatoin.port.out;
 
 import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
 import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
+import com.order.applicatoin.port.in.command.FindOrderProductIdsCommand;
 import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
 import com.order.domain.model.Order;
+import java.util.List;
 import org.springframework.data.domain.Page;
 
 public interface OrderStoragePort {
@@ -19,4 +21,6 @@ public interface OrderStoragePort {
     Order findById(Long id);
 
     boolean existsCustomerIdAndProductId(ExistsCustomerOrderCommand command);
+
+    List<Long> findOrderProductIds(FindOrderProductIdsCommand command);
 }

@@ -12,7 +12,7 @@ message FindOrderProductIdsRequest {
 }
 
 message FindOrderProductIdsResponse {
-  bool exists = 1;
+  repeated int64 productIds = 1;
 }
 
 service FindOrderProductIdsService {
