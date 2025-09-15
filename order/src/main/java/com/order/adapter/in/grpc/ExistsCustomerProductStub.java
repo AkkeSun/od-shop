@@ -1,26 +1,29 @@
 package com.order.adapter.in.grpc;
 
+import static com.order.infrastructure.util.GrpcUtil.sendErrorResponse;
 import static com.order.infrastructure.util.JsonUtil.toJsonString;
 
 import com.order.applicatoin.port.in.ExistsCustomerOrderUseCase;
 import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
 import com.order.applicatoin.service.exists_customer_order.ExistsCustomerOrderServiceResponse;
-import com.order.infrastructure.util.GrpcUtil;
 import grpc.product.ExistsCustomerProductRequest;
 import grpc.product.ExistsCustomerProductResponse;
 import grpc.product.ExistsCustomerProductServiceGrpc.ExistsCustomerProductServiceImplBase;
-import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 @Slf4j
 @GrpcService
-@RequiredArgsConstructor
 class ExistsCustomerProductStub extends ExistsCustomerProductServiceImplBase {
 
+    private final String methodName;
     private final ExistsCustomerOrderUseCase useCase;
+
+    ExistsCustomerProductStub(ExistsCustomerOrderUseCase useCase) {
+        this.useCase = useCase;
+        this.methodName = "existsCustomerProduct";
+    }
 
     @Override
     public void exists(
@@ -28,7 +31,7 @@ class ExistsCustomerProductStub extends ExistsCustomerProductServiceImplBase {
         StreamObserver<ExistsCustomerProductResponse> responseObserver
     ) {
         try {
-            log.info("[gRPC] existsCustomerProduct request - {}", toJsonString(request));
+            log.info("[gRPC] {} request - {}", methodName, toJsonString(request));
             ExistsCustomerOrderServiceResponse response = useCase.exists(
                 ExistsCustomerOrderCommand.builder()
                     .productId(request.getProductId())
@@ -39,15 +42,10 @@ class ExistsCustomerProductStub extends ExistsCustomerProductServiceImplBase {
                 .setExists(response.exists())
                 .build());
             responseObserver.onCompleted();
-            log.info("[gRPC] existsCustomerProduct response - {}", toJsonString(response));
+            log.info("[gRPC] {} response - {}", methodName, toJsonString(response));
 
         } catch (Exception e) {
-            Status status = GrpcUtil.getStatus(e);
-            log.info("[gRPC] existsCustomerProduct error - {}", toJsonString(status));
-
-            responseObserver.onError(status
-                .withDescription(status.getDescription())
-                .asRuntimeException());
+            sendErrorResponse(e, responseObserver, methodName);
         }
     }
 }
