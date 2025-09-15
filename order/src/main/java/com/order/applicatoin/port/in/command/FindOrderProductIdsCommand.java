@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record FindOrderProductIdsCommand(
     Long customerId,
-    int limit
+    long limit
 ) {
 
 }
