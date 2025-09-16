@@ -51,6 +51,10 @@ server:
 grpc:
   server:
     port: 8083
+  client:
+    order:
+      address: 'static://localhost:8085'
+      negotiation-type: plaintext
 
 logging:
   level:
