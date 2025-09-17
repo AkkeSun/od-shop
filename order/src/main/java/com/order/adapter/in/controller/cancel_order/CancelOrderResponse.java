@@ -6,7 +6,7 @@ record CancelOrderResponse(
     Boolean result
 ) {
 
-    public static CancelOrderResponse of(CancelOrderServiceResponse serviceResponse) {
+    static CancelOrderResponse of(CancelOrderServiceResponse serviceResponse) {
         return new CancelOrderResponse(serviceResponse.result());
     }
 }
