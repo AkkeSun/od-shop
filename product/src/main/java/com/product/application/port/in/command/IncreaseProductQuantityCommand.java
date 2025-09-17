@@ -10,4 +10,7 @@ public record IncreaseProductQuantityCommand(
     Account account
 ) {
 
+    public boolean isRefundRequest() {
+        return account == null;
+    }
 }

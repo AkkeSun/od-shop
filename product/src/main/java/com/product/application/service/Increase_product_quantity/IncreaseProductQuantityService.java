@@ -28,7 +28,7 @@ public class IncreaseProductQuantityService implements IncreaseProductQuantityUs
     @DistributedLock(key = "PRODUCT_QUANTITY", isUniqueKey = true)
     public IncreaseProductQuantityServiceResponse update(IncreaseProductQuantityCommand command) {
         Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");
-        if (!product.isSeller(command.account().id())) {
+        if (!command.isRefundRequest() || !product.isSeller(command.account().id())) {
             throw new CustomAuthorizationException(ACCESS_DENIED);
         }
 
