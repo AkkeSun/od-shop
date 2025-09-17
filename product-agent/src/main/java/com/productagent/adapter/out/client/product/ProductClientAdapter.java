@@ -2,7 +2,7 @@ package com.productagent.adapter.out.client.product;
 
 import com.productagent.application.port.out.ProductClientPort;
 import com.productagent.domain.model.RefundProductMessage;
-import grpc.product.ProductServiceGrpc.ProductServiceBlockingStub;
+import grpc.product.UpdateProductQuantityServiceGrpc.UpdateProductQuantityServiceBlockingStub;
 import io.grpc.StatusRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 class ProductClientAdapter implements ProductClientPort {
 
     @GrpcClient("product")
-    private ProductServiceBlockingStub product;
+    private UpdateProductQuantityServiceBlockingStub product;
 
     @Override
     public void updateProductQuantity(RefundProductMessage message) {
