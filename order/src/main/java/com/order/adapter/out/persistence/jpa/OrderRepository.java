@@ -61,7 +61,7 @@ interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     @Query("""
           select product.productId
           from OrderEntity order
-          join fetch order.orderProducts product
+          join order.orderProducts product
           where order.customerId = :customerId
           order by product.id desc
         """)
