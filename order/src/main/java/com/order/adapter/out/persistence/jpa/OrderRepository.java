@@ -63,7 +63,9 @@ interface OrderRepository extends JpaRepository<OrderEntity, Long> {
           from OrderEntity order
           join order.orderProducts product
           where order.customerId = :customerId
+          and product.buyStatus in :statuses
           order by product.id desc
         """)
-    List<Long> findProductIdsByCustomerId(Long customerId, Pageable pageable);
+    List<Long> findProductIdsByCustomerIdAndOrderProductsBuyStatusIn(Long customerId,
+        Pageable pageable, List<String> statuses);
 }

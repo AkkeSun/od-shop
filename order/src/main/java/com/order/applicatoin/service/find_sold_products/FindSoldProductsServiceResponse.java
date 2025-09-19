@@ -1,6 +1,5 @@
 package com.order.applicatoin.service.find_sold_products;
 
-import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import com.order.domain.model.Product;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +17,7 @@ public record FindSoldProductsServiceResponse(
 ) {
 
 
-    public static FindSoldProductsServiceResponse of(Page<Order> page,
+    public static FindSoldProductsServiceResponse of(Page<OrderProduct> page,
         List<FindSoldProductsServiceResponseItem> orderList) {
         return FindSoldProductsServiceResponse.builder()
             .pageNumber(page.getNumber())

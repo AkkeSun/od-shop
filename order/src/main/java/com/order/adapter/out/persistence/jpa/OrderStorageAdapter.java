@@ -6,6 +6,7 @@ import com.order.applicatoin.port.in.command.FindOrderProductIdsCommand;
 import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.domain.model.Order;
+import com.order.domain.model.OrderProduct;
 import com.order.infrastructure.exception.CustomNotFoundException;
 import com.order.infrastructure.exception.ErrorCode;
 import jakarta.transaction.Transactional;
@@ -61,26 +62,22 @@ class OrderStorageAdapter implements OrderStoragePort {
     }
 
     @Override
-    public Page<Order> findSoldProducts(FindSoldProductsCommand command) {
+    public Page<OrderProduct> findSoldProducts(FindSoldProductsCommand command) {
         Pageable pageable = PageRequest.of(command.page(), command.size());
 
-        Page<OrderEntity> page = switch (command.searchType()) {
-            case "productId" -> orderRepository.findBySellerIdAndProductNumber(
-                command.sellerId(), Long.valueOf(command.query()), pageable);
-            case "customerId" -> orderRepository.findBySellerIdAndCustomerId(
-                command.sellerId(), Long.valueOf(command.query()), pageable);
-            case "buyStatus" -> orderRepository.findBySellerIdAndBuyStatus(
-                command.sellerId(), command.query(), pageable);
-            default -> orderRepository.findBySellerId(command.sellerId(), pageable);
-        };
-
-        List<Order> orders = page.getContent().stream()
-            .map(OrderEntity::toDomain)
-            .toList();
-        if (orders.isEmpty()) {
+        try {
+            return switch (command.searchType()) {
+                case "productId" -> orderProductRepository.findBySellerIdAndProductNumber(
+                    command.sellerId(), Long.valueOf(command.query()), pageable);
+                case "customerId" -> orderProductRepository.findBySellerIdAndCustomerId(
+                    command.sellerId(), Long.valueOf(command.query()), pageable);
+                case "buyStatus" -> orderProductRepository.findBySellerIdAndBuyStatus(
+                    command.sellerId(), command.query(), pageable);
+                default -> orderProductRepository.findBySellerId(command.sellerId(), pageable);
+            };
+        } catch (Exception e) {
             throw new CustomNotFoundException(ErrorCode.DoesNotExist_Order);
         }
-        return new PageImpl<>(orders, pageable, orders.size());
     }
 
     @Override
@@ -98,8 +95,8 @@ class OrderStorageAdapter implements OrderStoragePort {
 
     @Override
     public List<Long> findOrderProductIds(FindOrderProductIdsCommand command) {
-        List<Long> productIds = orderRepository.findProductIdsByCustomerId(
-            command.customerId(), PageRequest.of(0, command.limit()));
+        List<Long> productIds = orderRepository.findProductIdsByCustomerIdAndOrderProductsBuyStatusIn(
+            command.customerId(), PageRequest.of(0, command.limit()), List.of("ORDER", "COMPLETE"));
         if (productIds.isEmpty()) {
             throw new CustomNotFoundException(ErrorCode.DoesNotExist_Order);
         }

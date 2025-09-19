@@ -5,7 +5,6 @@ import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.applicatoin.port.out.ProductClientPort;
 import com.order.applicatoin.service.find_sold_products.FindSoldProductsServiceResponse.FindSoldProductsServiceResponseItem;
-import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import com.order.domain.model.Product;
 import java.util.ArrayList;
@@ -24,15 +23,12 @@ class FindSoldProductsService implements FindSoldProductsUseCase {
     @Override
     public FindSoldProductsServiceResponse findAll(FindSoldProductsCommand command) {
         List<FindSoldProductsServiceResponseItem> orderList = new ArrayList<>();
-
-        Page<Order> page = orderStoragePort.findSoldProducts(command);
-        for (Order order : page) {
-            for (OrderProduct orderProduct : order.products()) {
+        Page<OrderProduct> page = orderStoragePort.findSoldProducts(command);
+        for (OrderProduct orderProduct : page) {
                 Product product = productClientPort.findProduct(orderProduct.getProductId());
                 orderList.add(FindSoldProductsServiceResponseItem.of(
-                    product, orderProduct, order.customerId()));
+                    product, orderProduct, orderProduct.getCustomerId()));
             }
-        }
 
         return FindSoldProductsServiceResponse.of(page, orderList);
     }

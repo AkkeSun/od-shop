@@ -5,6 +5,7 @@ import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
 import com.order.applicatoin.port.in.command.FindOrderProductIdsCommand;
 import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
 import com.order.domain.model.Order;
+import com.order.domain.model.OrderProduct;
 import java.util.List;
 import org.springframework.data.domain.Page;
 
@@ -15,8 +16,8 @@ public interface OrderStoragePort {
     void cancel(Order order);
 
     Page<Order> findByCustomerId(FindCustomerOrdersCommand command);
-
-    Page<Order> findSoldProducts(FindSoldProductsCommand command);
+    
+    Page<OrderProduct> findSoldProducts(FindSoldProductsCommand command);
 
     Order findById(Long id);
 
