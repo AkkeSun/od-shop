@@ -13,6 +13,7 @@ public record RegisterOrderCommand(
     String receiverAddress
 ) {
 
+    @Builder
     public record RegisterOrderCommandItem(
         Long productId,
         Long reserveId

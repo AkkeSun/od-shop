@@ -13,7 +13,7 @@ import lombok.Builder;
 record RegisterOrderRequest(
 
     @NotEmpty(message = "예약 정보는 필수값 입니다")
-    List<RegisterOrderCommandItem> reserveInfos,
+    List<RegisterOrderRequestItem> reserveInfos,
 
     @NotNull(message = "총 금액은 필수값 입니다")
     Integer totalPrice,
@@ -32,11 +32,24 @@ record RegisterOrderRequest(
     RegisterOrderCommand toCommand(Account account) {
         return RegisterOrderCommand.builder()
             .accountId(account.id())
-            .reserveInfos(reserveInfos)
+            .reserveInfos(reserveInfos.stream()
+                .map(item -> RegisterOrderCommandItem.builder()
+                    .productId(item.productId)
+                    .reserveId(item.reserveId)
+                    .build())
+                .toList())
             .totalPrice(totalPrice)
             .receiverName(receiverName)
             .receiverTel(receiverTel)
             .receiverAddress(receiverAddress)
             .build();
+    }
+
+    @Builder
+    record RegisterOrderRequestItem(
+        Long productId,
+        Long reserveId
+    ) {
+
     }
 }
