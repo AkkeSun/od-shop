@@ -18,4 +18,5 @@ public class IntegrationTestSupport {
 
     @MockBean(name = "shadedNettyGrpcServerLifecycle") // grpc mock 처리
     private Object grpcServerLifecycle;
+
 }
