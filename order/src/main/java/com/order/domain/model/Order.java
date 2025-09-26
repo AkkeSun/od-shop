@@ -40,9 +40,9 @@ public record Order(
     public boolean isCanceled() {
         for (OrderProduct product : products) {
             if (product.getBuyStatus().equals("CANCEL")) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }
