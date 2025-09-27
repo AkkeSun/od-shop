@@ -10,8 +10,12 @@ import com.order.domain.model.OrderProduct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
+@Slf4j
 public class FakeOrderStoragePort implements OrderStoragePort {
 
     public List<Order> database = new ArrayList<>();
@@ -54,7 +58,11 @@ public class FakeOrderStoragePort implements OrderStoragePort {
 
     @Override
     public Page<Order> findByCustomerId(FindCustomerOrdersCommand command) {
-        return null;
+        log.info("db call");
+        List<Order> response = database.stream()
+            .filter(order -> order.customerId().equals(command.customerId()))
+            .toList();
+        return new PageImpl<>(response, PageRequest.of(0, 10), 1);
     }
 
     @Override
