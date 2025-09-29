@@ -25,10 +25,10 @@ class FindSoldProductsService implements FindSoldProductsUseCase {
         List<FindSoldProductsServiceResponseItem> orderList = new ArrayList<>();
         Page<OrderProduct> page = orderStoragePort.findSoldProducts(command);
         for (OrderProduct orderProduct : page) {
-                Product product = productClientPort.findProduct(orderProduct.getProductId());
-                orderList.add(FindSoldProductsServiceResponseItem.of(
-                    product, orderProduct, orderProduct.getCustomerId()));
-            }
+            Product product = productClientPort.findProduct(orderProduct.getProductId());
+            orderList.add(FindSoldProductsServiceResponseItem.of(
+                product, orderProduct, orderProduct.getCustomerId()));
+        }
 
         return FindSoldProductsServiceResponse.of(page, orderList);
     }

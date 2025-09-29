@@ -32,6 +32,7 @@ public class FakeOrderStoragePort implements OrderStoragePort {
                 .sellerId(product.getSellerId())
                 .buyQuantity(product.getBuyQuantity())
                 .buyStatus(product.getBuyStatus())
+                .regDateTime(product.getRegDateTime())
                 .build());
         }
         Order savedOrder = Order.builder()
@@ -67,7 +68,15 @@ public class FakeOrderStoragePort implements OrderStoragePort {
 
     @Override
     public Page<OrderProduct> findSoldProducts(FindSoldProductsCommand command) {
-        return null;
+        List<OrderProduct> response = new ArrayList<>();
+        for (Order order : database) {
+            for (OrderProduct product : order.products()) {
+                if (product.getSellerId().equals(command.sellerId())) {
+                    response.add(product);
+                }
+            }
+        }
+        return new PageImpl<>(response, PageRequest.of(0, 10), 1);
     }
 
     @Override
