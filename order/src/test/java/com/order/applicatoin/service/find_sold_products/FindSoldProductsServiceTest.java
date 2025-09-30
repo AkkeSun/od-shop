@@ -1,12 +1,12 @@
 package com.order.applicatoin.service.find_sold_products;
 
 import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
-import com.order.applicatoin.service.FakeProductClientPort;
 import com.order.applicatoin.service.find_sold_products.FindSoldProductsServiceResponse.FindSoldProductsServiceResponseItem;
 import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import com.order.domain.model.Product;
 import com.order.fakeClass.FakeOrderStoragePort;
+import com.order.fakeClass.FakeProductClientPort;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

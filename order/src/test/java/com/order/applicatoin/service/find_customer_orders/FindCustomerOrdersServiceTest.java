@@ -3,12 +3,12 @@ package com.order.applicatoin.service.find_customer_orders;
 import static com.order.infrastructure.util.JsonUtil.toJsonString;
 
 import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
-import com.order.applicatoin.service.FakeProductClientPort;
 import com.order.applicatoin.service.find_customer_orders.FindCustomerOrdersServiceResponse.FindCustomerOrdersServiceResponseItem;
 import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import com.order.domain.model.Product;
 import com.order.fakeClass.FakeOrderStoragePort;
+import com.order.fakeClass.FakeProductClientPort;
 import com.order.fakeClass.FakeRedisStoragePort;
 import java.time.LocalDateTime;
 import java.util.List;
