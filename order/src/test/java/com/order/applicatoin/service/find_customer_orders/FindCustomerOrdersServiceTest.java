@@ -12,6 +12,7 @@ import com.order.fakeClass.FakeProductClientPort;
 import com.order.fakeClass.FakeRedisStoragePort;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ class FindCustomerOrdersServiceTest {
     private final FakeOrderStoragePort orderStoragePort;
     private final FakeProductClientPort productClientPort;
 
+    @BeforeEach
     void setup() {
         redisStoragePort.database.clear();
     }

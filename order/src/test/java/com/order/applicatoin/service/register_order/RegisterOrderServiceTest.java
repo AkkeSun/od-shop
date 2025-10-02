@@ -10,6 +10,7 @@ import com.order.fakeClass.FakeOrderStoragePort;
 import com.order.fakeClass.FakeProductClientPort;
 import com.order.infrastructure.exception.CustomGrpcResponseError;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,12 @@ class RegisterOrderServiceTest {
     FakeProductClientPort productClientPort;
     FakeOrderStoragePort orderStoragePort;
     DummyMessageProducerPort messageProducerPort;
+
+    @BeforeEach
+    void setup() {
+        productClientPort.mapDatabase.clear();
+        orderStoragePort.database.clear();
+    }
 
     RegisterOrderServiceTest() {
         this.productClientPort = new FakeProductClientPort();

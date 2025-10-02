@@ -9,6 +9,7 @@ import com.order.fakeClass.FakeOrderStoragePort;
 import com.order.fakeClass.FakeProductClientPort;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,12 @@ class FindSoldProductsServiceTest {
         this.orderStoragePort = new FakeOrderStoragePort();
         this.productClientPort = new FakeProductClientPort();
         this.service = new FindSoldProductsService(orderStoragePort, productClientPort);
+    }
+
+    @BeforeEach
+    void setup() {
+        productClientPort.mapDatabase.clear();
+        orderStoragePort.database.clear();
     }
 
     @Nested
