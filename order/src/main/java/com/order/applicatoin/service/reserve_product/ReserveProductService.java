@@ -7,7 +7,6 @@ import com.order.applicatoin.port.in.command.ReserveProductCommand;
 import com.order.applicatoin.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import com.order.applicatoin.port.out.MessageProducerPort;
 import com.order.applicatoin.port.out.ProductClientPort;
-import com.order.applicatoin.port.out.RedisStoragePort;
 import com.order.infrastructure.exception.CustomGrpcResponseError;
 import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
@@ -22,11 +21,6 @@ class ReserveProductService implements ReserveProductUseCase {
 
     @Value("${kafka.topic.cancel-reserve}")
     private String cancelTopic;
-
-    @Value("${spring.data.redis.key.customer-order}")
-    private String redisKey;
-
-    private final RedisStoragePort redisStoragePort;
 
     private final ProductClientPort productClientPort;
 
@@ -53,8 +47,6 @@ class ReserveProductService implements ReserveProductUseCase {
                     e.getStatus().getDescription() + " - " + item.productId());
             }
         }
-
-        redisStoragePort.delete(redisStoragePort.getKeys("customer-order::" + accountId + "*"));
         return responseList;
     }
 }

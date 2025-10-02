@@ -8,6 +8,7 @@ import com.order.domain.model.Order;
 import com.order.fakeClass.DummyMessageProducerPort;
 import com.order.fakeClass.FakeOrderStoragePort;
 import com.order.fakeClass.FakeProductClientPort;
+import com.order.fakeClass.FakeRedisStoragePort;
 import com.order.infrastructure.exception.CustomGrpcResponseError;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,7 @@ class RegisterOrderServiceTest {
     RegisterOrderService service;
     FakeProductClientPort productClientPort;
     FakeOrderStoragePort orderStoragePort;
+    FakeRedisStoragePort redisStoragePort;
     DummyMessageProducerPort messageProducerPort;
 
     @BeforeEach
@@ -35,8 +37,9 @@ class RegisterOrderServiceTest {
     RegisterOrderServiceTest() {
         this.productClientPort = new FakeProductClientPort();
         this.orderStoragePort = new FakeOrderStoragePort();
+        this.redisStoragePort = new FakeRedisStoragePort();
         this.messageProducerPort = new DummyMessageProducerPort();
-        service = new RegisterOrderService(productClientPort, orderStoragePort,
+        service = new RegisterOrderService(redisStoragePort, productClientPort, orderStoragePort,
             messageProducerPort);
     }
 

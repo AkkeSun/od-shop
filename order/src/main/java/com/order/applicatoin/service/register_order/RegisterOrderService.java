@@ -8,6 +8,7 @@ import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderC
 import com.order.applicatoin.port.out.MessageProducerPort;
 import com.order.applicatoin.port.out.OrderStoragePort;
 import com.order.applicatoin.port.out.ProductClientPort;
+import com.order.applicatoin.port.out.RedisStoragePort;
 import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import com.order.infrastructure.exception.CustomGrpcResponseError;
@@ -24,6 +25,8 @@ class RegisterOrderService implements RegisterOrderUseCase {
 
     @Value("${kafka.topic.rollback-reserve}")
     private String rollbackTopic;
+
+    private final RedisStoragePort redisStoragePort;
 
     private final ProductClientPort clientPort;
 
@@ -51,6 +54,9 @@ class RegisterOrderService implements RegisterOrderUseCase {
         }
 
         Order savedOrder = orderStoragePort.register(Order.of(command, confirmReserves));
+        redisStoragePort.delete(redisStoragePort.getKeys(
+            String.format("customer-order::%s*", savedOrder.customerId())));
+
         return RegisterOrderServiceResponse.of(savedOrder);
     }
 }
