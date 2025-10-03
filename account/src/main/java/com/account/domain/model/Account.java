@@ -10,13 +10,16 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Account {
 
     private Long id;
@@ -36,21 +39,7 @@ public class Account {
     private LocalDateTime regDateTime;
 
     private String regDate;
-
-    @Builder
-    public Account(Long id, String email, String password, String username, String userTel,
-        String address, List<Role> roles, LocalDateTime regDateTime, String regDate) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.username = username;
-        this.userTel = userTel;
-        this.address = address;
-        this.roles = roles;
-        this.regDateTime = regDateTime;
-        this.regDate = regDate;
-    }
-
+    
     public static Account of(Claims claims) {
         return Account.builder()
             .email(claims.getSubject())

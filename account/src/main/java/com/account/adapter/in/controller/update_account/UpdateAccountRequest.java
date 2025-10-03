@@ -1,21 +1,23 @@
 package com.account.adapter.in.controller.update_account;
 
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;
+import com.account.infrastructure.request.BaseRequest;
 import com.account.infrastructure.validation.ValidPassword;
 import com.account.infrastructure.validation.ValidUserTel;
 import com.account.infrastructure.validation.ValidationGroups.CustomGroups;
 import com.account.infrastructure.validation.ValidationGroups.SizeGroups;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @ValidPassword(groups = CustomGroups.class)
-class UpdateAccountRequest {
+class UpdateAccountRequest extends BaseRequest {
 
     private String password;
 
@@ -29,17 +31,7 @@ class UpdateAccountRequest {
 
     @Size(max = 100, message = "주소는 100자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
     private String address;
-
-    @Builder
-    UpdateAccountRequest(String password, String passwordCheck, String username,
-        String userTel, String address) {
-        this.password = password;
-        this.passwordCheck = passwordCheck;
-        this.username = username;
-        this.userTel = userTel;
-        this.address = address;
-    }
-
+    
     UpdateAccountCommand toCommand(Long accountId) {
         return UpdateAccountCommand.builder()
             .accountId(accountId)
@@ -49,14 +41,5 @@ class UpdateAccountRequest {
             .userTel(userTel)
             .address(address)
             .build();
-    }
-
-    @Override
-    public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return super.toString();
-        }
     }
 }
