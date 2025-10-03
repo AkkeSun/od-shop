@@ -1,5 +1,6 @@
 package com.account.infrastructure.exception;
 
+import com.account.infrastructure.aop.ExceptionHandlerLog;
 import com.account.infrastructure.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ExceptionAdvice {
         return ApiResponse.of(
             HttpStatus.BAD_REQUEST,
             ErrorResponse.builder()
-                .errorCode(1001)
+                .errorCode(1099)
                 .errorMessage(e.getBindingResult().getAllErrors().getFirst().getDefaultMessage())
                 .build()
         );
@@ -38,7 +39,7 @@ public class ExceptionAdvice {
         return ApiResponse.of(
             HttpStatus.BAD_REQUEST,
             ErrorResponse.builder()
-                .errorCode(1001)
+                .errorCode(1099)
                 .errorMessage(e.getBindingResult().getAllErrors().getFirst().getDefaultMessage())
                 .build()
         );
@@ -50,12 +51,13 @@ public class ExceptionAdvice {
         return ApiResponse.of(
             HttpStatus.BAD_REQUEST,
             ErrorResponse.builder()
-                .errorCode(1001)
+                .errorCode(1099)
                 .errorMessage(e.getErrorCode().getMessage())
                 .build()
         );
     }
 
+    @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(CustomNotFoundException.class)
     ApiResponse<Object> notFoundException(CustomNotFoundException e) {
@@ -80,6 +82,7 @@ public class ExceptionAdvice {
         );
     }
 
+    @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(CustomBusinessException.class)
     ApiResponse<Object> notFoundException(CustomBusinessException e) {
@@ -92,6 +95,7 @@ public class ExceptionAdvice {
         );
     }
 
+    @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     ApiResponse<Object> notFoundException(Exception e) {

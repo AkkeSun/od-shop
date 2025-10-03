@@ -1,5 +1,7 @@
 package com.account.infrastructure.filter;
 
+import static com.account.infrastructure.util.JsonUtil.extractJsonField;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.servlet.FilterChain;
@@ -31,11 +33,9 @@ public class ApiCallLogFilter extends OncePerRequestFilter {
         String responseBody = new String(wrappedResponse.getContentAsByteArray(),
             StandardCharsets.UTF_8);
 
-        // -- Filter, Intercepter Level Exception Check ---
-        if (responseBody.contains("BAD_REQUEST") ||
-            (responseBody.contains("UNAUTHORIZED") && responseBody.contains("errorCode\":3003")) ||
-            responseBody.contains("FORBIDDEN") && responseBody.contains("errorCode\":5002")) {
-
+        // -- Filter, Interceptor Level Exception Check ---
+        String errorCode = extractJsonField(responseBody, "data", "errorCode");
+        if (errorCode.endsWith("99")) {
             try {
                 String method = request.getMethod();
                 String uri = request.getRequestURI();

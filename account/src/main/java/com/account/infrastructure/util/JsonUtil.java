@@ -1,6 +1,7 @@
 package com.account.infrastructure.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
@@ -36,5 +37,17 @@ public class JsonUtil {
 
     public static ObjectNode toObjectNode(Object obj) {
         return objectMapper.valueToTree(obj);
+    }
+
+    public static String extractJsonField(String json, String... path) {
+        try {
+            JsonNode node = objectMapper.readTree(json);
+            for (String key : path) {
+                node = node.path(key);
+            }
+            return node.isMissingNode() ? "" : node.asText();
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

@@ -25,7 +25,7 @@ public class LogAspect {
     private void controllerMethods() {
     }
 
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.ExceptionHandler))")
+    @Pointcut("@annotation(com.account.infrastructure.aop.ExceptionHandlerLog))")
     private void controllerAdviceMethods() {
     }
 
