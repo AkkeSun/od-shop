@@ -16,7 +16,10 @@ public class FakeProductClientPort implements ProductClientPort {
 
     @Override
     public Long reserveProduct(ReserveProductCommandItem command, Long accountId) {
-        return 0L;
+        if (command.productId() == 99L) {
+            throw new StatusRuntimeException(Status.NOT_FOUND);
+        }
+        return 15L;
     }
 
     @Override
