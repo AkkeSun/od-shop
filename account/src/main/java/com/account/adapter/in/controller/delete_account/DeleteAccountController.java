@@ -15,6 +15,7 @@ class DeleteAccountController {
 
     private final DeleteAccountUseCase deleteAccountUseCase;
 
+    //test
     @DeleteMapping("/accounts")
     ApiResponse<DeleteAccountResponse> deleteAccount(@LoginAccount Account account) {
         DeleteAccountServiceResponse serviceResponse = deleteAccountUseCase
