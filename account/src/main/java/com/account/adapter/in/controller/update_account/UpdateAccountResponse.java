@@ -2,6 +2,7 @@ package com.account.adapter.in.controller.update_account;
 
 import com.account.applicaiton.service.update_account.UpdateAccountServiceResponse;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,17 +10,13 @@ import lombok.ToString;
 
 @Getter
 @ToString
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 class UpdateAccountResponse {
 
     private String updateYn;
     private List<String> updateList;
-
-    @Builder
-    UpdateAccountResponse(String updateYn, List<String> updateList) {
-        this.updateYn = updateYn;
-        this.updateList = updateList;
-    }
 
     static UpdateAccountResponse of(UpdateAccountServiceResponse serviceResponse) {
         return UpdateAccountResponse.builder()
