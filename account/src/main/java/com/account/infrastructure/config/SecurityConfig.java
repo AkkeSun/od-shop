@@ -49,7 +49,7 @@ public class SecurityConfig {
                 auth.requestMatchers(HttpMethod.POST, "/accounts").permitAll()
                     .requestMatchers("/test/**").permitAll()
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/accounts/docs/**").permitAll()
+                    .requestMatchers("/docs/**").permitAll()
                     .requestMatchers("/actuator/**").permitAll()
                     .anyRequest().authenticated();
             })
