@@ -39,7 +39,7 @@ jwt:
     secret-key: hello-jwt
 
 kafka:
-  host: localhost:9092
+  host: 152.67.206.159:9092
   topic:
     history: account-history
     delete: delete-account

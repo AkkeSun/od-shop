@@ -3,7 +3,7 @@ name: od-shop
 on:
   push:
     branches:
-      - master
+      - master-test
     paths:
       - 'account/**'
 
