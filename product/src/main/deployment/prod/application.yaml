@@ -1,0 +1,121 @@
+spring:
+  application:
+    name: product-service
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+  datasource:
+    shard1:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: akkessun
+      password: ENC(BlWM+FZglaP3eCZQRUcq/YNGKv77wW7Y)
+      url: jdbc:mysql://140.245.70.130:3306/product1?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      hikari:
+        maximum-pool-size=30
+        minimum-idle=10
+        connection-timeout=100000
+    shard2:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: akkessun
+      password: ENC(BlWM+FZglaP3eCZQRUcq/YNGKv77wW7Y)
+      url: jdbc:mysql://140.245.70.130:3306/product2?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      hikari:
+        maximum-pool-size=30
+        minimum-idle=10
+        connection-timeout=100000
+
+  data:
+    redis:
+      host: 140.245.70.130
+      port: 6379
+      timeout: 3000
+      key:
+        product-recommend: product-recommend::%s-%s
+        personal-recommend: product-recommend::%s-%s-%s
+      ttl:
+        product-recommend: 86400 # 1 day
+        personal-recommend: 3600 # 1 hour
+
+server:
+  shutdown: graceful
+
+grpc:
+  server:
+    port: 8081
+  client:
+    order:
+      address: 'static://localhost:18083'
+      negotiation-type: plaintext
+
+logging:
+  level:
+    org.springframework.transaction.interceptor: DEBUG
+    org.springframework.transaction.support: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+jwt:
+  token:
+    secret-key: hello-jwt
+
+kafka:
+  host: 152.67.206.159:9092
+  topic:
+    history: product-history
+    click: product-click
+    search: product-search
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      redis:
+        slidingWindowSize: 3
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+      kafka:
+        slidingWindowSize: 5
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+      default:
+        slidingWindowSize: 3
+        failureRateThreshold: 100
+        waitDurationInOpenState: 1m
+        slow-call-duration-threshold: 3s
+        slow-call-rate-threshold: 100
+        permitted-number-of-calls-in-half-open-state: 5
+    instances:
+      redis:
+        base-config: redis
+      kafka:
+        base-config: kafka
+      elasticsearch:
+        base-config: default
+      gemini:
+        base-config: default
+
+service-constant:
+  aes:
+    secret-key: testKey
+  snowflake:
+    dataCenterId: 0
+    workerId: 1
+  external:
+    elasticsearch:
+      host: http://152.67.206.159:9200
+    gemini:
+      host: https://generativelanguage.googleapis.com
+      token: ENC(aKOk5MZ8d46rBr9g4sqa1JsG6yLQHz/sID/2VOV77I1wVrg2Rn8OxbumtQkwE5L6)
