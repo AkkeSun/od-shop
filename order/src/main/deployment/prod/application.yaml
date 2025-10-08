@@ -59,7 +59,7 @@ grpc:
     port: 8081
   client:
     product:
-      address: 'static://152.67.206.159:18082'
+      address: 'static://localhost:18082'
       negotiation-type: plaintext
 
 jwt:

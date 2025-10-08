@@ -226,7 +226,7 @@ jobs:
           
           echo ">>> Starting new container..."
           sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p "$PORT" "$USERNAME@$IP" \
-            "docker run -d --name account-api -p 8081:8080 ${IMAGE_NAME}:${IMAGE_TAG}"
+            "docker run -d --name account-api -p 8081:8080 --network od-shop ${IMAGE_NAME}:${IMAGE_TAG}"
 
   ################### [CD] product-api ###################
   cd-product-api:
@@ -259,7 +259,7 @@ jobs:
 
           echo ">>> Starting new container..."
           sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p "$PORT" "$USERNAME@$IP" \
-            "docker run -d --name product-api -p 8082:8080 -p 18082:8081 ${IMAGE_NAME}:${IMAGE_TAG}"
+            "docker run -d --name product-api -p 8082:8080 -p 18082:8081 --network od-shop ${IMAGE_NAME}:${IMAGE_TAG}"
 
   ################### [CD] order-api ###################
   cd-order-api:
@@ -292,4 +292,4 @@ jobs:
 
           echo ">>> Starting new container..."
           sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p "$PORT" "$USERNAME@$IP" \
-            "docker run -d --name order-api -p 8083:8080 -p 18083:8081 ${IMAGE_NAME}:${IMAGE_TAG}"
+            "docker run -d --name order-api -p 8083:8080 -p 18083:8081 --network od-shop ${IMAGE_NAME}:${IMAGE_TAG}"

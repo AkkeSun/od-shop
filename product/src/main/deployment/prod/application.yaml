@@ -52,7 +52,7 @@ grpc:
     port: 8081
   client:
     order:
-      address: 'static://152.67.206.159:18083'
+      address: 'static://localhost:18083'
       negotiation-type: plaintext
 
 logging:
