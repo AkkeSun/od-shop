@@ -8,12 +8,15 @@ import com.product.infrastructure.validation.ValidSortType;
 import com.product.infrastructure.validation.groups.ValidationGroups.CustomGroups;
 import com.product.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 class FindProductListRequest {
 
     @NotBlank(message = "검색어는 필수값 입니다", groups = NotBlankGroups.class)
@@ -30,17 +33,6 @@ class FindProductListRequest {
     private int page;
 
     private int size;
-
-    @Builder
-    FindProductListRequest(String query, String sortType, String category, int page,
-        int size,
-        boolean isDesc) {
-        this.query = query;
-        this.sortType = sortType;
-        this.category = category;
-        this.page = page;
-        this.size = size;
-    }
 
     FindProductListCommand toCommand() {
         return FindProductListCommand.builder()
