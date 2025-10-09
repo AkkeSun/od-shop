@@ -13,6 +13,7 @@ public class TestController {
 
     @GetMapping("/test")
     void test() {
+        //test
         useCase.update();
     }
 }
