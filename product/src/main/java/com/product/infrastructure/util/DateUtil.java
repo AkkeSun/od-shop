@@ -1,6 +1,8 @@
 package com.product.infrastructure.util;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -8,15 +10,10 @@ public class DateUtil {
 
 
     public static String getCurrentDateTime() {
-        return LocalDateTime.now()
-            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.KOREA));
+        return ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+            .format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"));
     }
-
-    public static String getCurrentDate() {
-        return LocalDateTime.now()
-            .format(DateTimeFormatter.ofPattern("yyyyMMdd", Locale.KOREA));
-    }
-
+    
     public static String formatDateTime(LocalDateTime dateTime) {
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.KOREA));
     }
