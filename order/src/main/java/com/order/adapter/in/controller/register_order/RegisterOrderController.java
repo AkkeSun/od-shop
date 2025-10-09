@@ -18,8 +18,10 @@ class RegisterOrderController {
     private final RegisterOrderUseCase useCase;
 
     @PostMapping("/orders")
-    ApiResponse<RegisterOrderResponse> register(@RequestBody @Valid RegisterOrderRequest request,
-        @LoginAccount Account account) {
+    ApiResponse<RegisterOrderResponse> register(
+        @RequestBody @Valid RegisterOrderRequest request,
+        @LoginAccount Account account
+    ) {
         RegisterOrderServiceResponse serviceResponse = useCase.register(request.toCommand(account));
 
         return ApiResponse.ok(RegisterOrderResponse.of(serviceResponse));

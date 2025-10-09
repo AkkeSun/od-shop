@@ -18,8 +18,10 @@ class CancelOrderController {
     private final CancelOrderUseCase useCase;
 
     @DeleteMapping("/orders/{orderId}")
-    ApiResponse<CancelOrderResponse> cancel(@LoginAccount Account account,
-        @PathVariable Long orderId) {
+    ApiResponse<CancelOrderResponse> cancel(
+        @LoginAccount Account account,
+        @PathVariable Long orderId
+    ) {
         CancelOrderServiceResponse serviceResponse = useCase.cancel(CancelOrderCommand.builder()
             .orderId(orderId)
             .account(account)

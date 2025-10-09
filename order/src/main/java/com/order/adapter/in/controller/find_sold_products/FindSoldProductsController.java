@@ -17,8 +17,10 @@ public class FindSoldProductsController {
     private final FindSoldProductsUseCase useCase;
 
     @GetMapping("/orders/sold-products")
-    ApiResponse<FindSoldProductsResponse> findAll(@Valid FindSoldProductsRequest request,
-        @LoginAccount Account account) {
+    ApiResponse<FindSoldProductsResponse> findAll(
+        @Valid FindSoldProductsRequest request,
+        @LoginAccount Account account
+    ) {
         FindSoldProductsServiceResponse serviceResponse = useCase.findAll(
             request.toCommand(account));
 
