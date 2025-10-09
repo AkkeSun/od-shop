@@ -11,4 +11,4 @@ ENV OTEL_EXPORTER_OTLP_ENDPOINT=http://49.168.86.72:4318
 ENV OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 ENV OTEL_INSTRUMENTATION_LOGGING_EXPERIMENTAL_ENABLED=true
 
-ENTRYPOINT ["java", "-javaagent:/opentelemetry-javaagent.jar", "-Xms128m", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-javaagent:/opentelemetry-javaagent.jar", "-Xms128m", "-Xmx512m", "-jar", "/app.jar"]
