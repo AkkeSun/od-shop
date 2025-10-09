@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: account-agent-service
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+  datasource:
+    url: jdbc:mysql://140.245.70.130:3306/account?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: akkessun
+    password: ENC(BlWM+FZglaP3eCZQRUcq/YNGKv77wW7Y)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: 140.245.70.130
+      port: 6379
+      timeout: 3000
+    mongodb:
+      uri: mongodb://akkessun:sunyang2ek+@140.245.70.130:27017/account
+
+server:
+  shutdown: graceful
+
+kafka:
+  host: 152.67.206.159:9092
