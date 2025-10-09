@@ -20,6 +20,7 @@ class UpdateProductQuantityConsumer {
         concurrency = "1"
     )
     void deleteProduct(@Payload String payload) {
+        //test
         log.info("[update-product-quantity] <== {}", payload);
         useCase.updateQuantity(payload);
     }
