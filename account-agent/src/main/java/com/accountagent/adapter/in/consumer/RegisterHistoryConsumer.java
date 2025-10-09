@@ -23,9 +23,9 @@ class RegisterHistoryConsumer {
         concurrency = "1"
     )
     void registerHistory(@Payload String payload) {
-        log.info("[account-history] <== " + payload);
+        log.info("[account-history] <== {}", payload);
         RegisterHistoryServiceResponse response = registerHistoryUseCase.registerHistory(payload);
-        log.info("[account-history] result - " + response.result());
+        log.info("[account-history] result - {}", response.result());
     }
 
     @KafkaListener(

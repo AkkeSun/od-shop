@@ -20,6 +20,7 @@ class DeleteProductConsumer {
         concurrency = "1"
     )
     void deleteProduct(@Payload String payload) {
+        //test
         log.info("[delete-product] <== {}", payload);
         deleteProductUseCase.delete(payload);
     }
