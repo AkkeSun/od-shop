@@ -13,6 +13,7 @@ class DeleteLogScheduler {
 
     private final DeleteLogUseCase deleteLogUseCase;
 
+    //test
     @Scheduled(cron = "0 0 7 * * *")
     void deleteLog() {
         String regDate = LocalDate.now().minusDays(90)

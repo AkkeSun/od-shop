@@ -458,7 +458,7 @@ jobs:
           PORT: ${{ secrets.PROD_02_PORT }}
           USERNAME: ${{ secrets.PROD_USERNAME }}
           PASSWORD: ${{ secrets.PROD_PASSWORD }}
-          IMAGE_TAG: ${{ needs.ci-account-agent.outputs.image_tag }}
+          IMAGE_TAG: ${{ needs.ci-product-agent.outputs.image_tag }}
           IMAGE_NAME: akkessun/product-agent
         run: |
           echo ">>> Pulling Docker image..."

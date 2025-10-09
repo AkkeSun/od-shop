@@ -14,6 +14,7 @@ class DeleteProductConsumer {
 
     private final DeleteProductUseCase deleteProductUseCase;
 
+    //test
     @KafkaListener(
         topics = "delete-product",
         containerFactory = "defaultContainerFactory",
