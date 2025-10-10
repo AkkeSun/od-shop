@@ -8,6 +8,7 @@ import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.domain.model.Account;
+import com.account.domain.model.AccountHistory;
 import com.account.domain.model.DeleteAccountLog;
 import com.account.infrastructure.exception.CustomNotFoundException;
 import java.util.List;
@@ -45,7 +46,8 @@ class DeleteAccountService implements DeleteAccountUseCase {
         redisStoragePort.delete(keys);
 
         messageProducerPort.sendMessage(deleteTopic, toJsonString(DeleteAccountLog.of(account)));
-        messageProducerPort.sendMessage(historyTopic, toJsonString(DeleteAccountLog.of(account)));
+        messageProducerPort.sendMessage(historyTopic,
+            toJsonString(AccountHistory.createAccountHistoryForDelete(account.getId())));
 
         return DeleteAccountServiceResponse.ofSuccess(account);
     }
