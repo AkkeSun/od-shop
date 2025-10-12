@@ -29,7 +29,7 @@ class FindCustomerOrdersRequestTest {
 
             // then
             assert command.customerId().equals(account.id());
-            assert command.size().equals(request.size());
+            assert command.size().equals(request.getSize());
             assert command.page() == 0;
         }
 
@@ -51,7 +51,7 @@ class FindCustomerOrdersRequestTest {
             // then
             assert command.customerId().equals(account.id());
             assert command.size() == 10;
-            assert command.page().equals(request.page());
+            assert command.page().equals(request.getPage());
         }
     }
 }
