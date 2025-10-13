@@ -114,7 +114,7 @@ class UpdateAccountControllerTest extends ControllerTestSupport {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("비밀번호와 비밀번호 확인이 일치하지 않습니다."))
                 .andDo(print());
         }
@@ -145,7 +145,7 @@ class UpdateAccountControllerTest extends ControllerTestSupport {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("올바른 전화번호 형식이 아닙니다."))
                 .andDo(print());
         }
@@ -172,7 +172,7 @@ class UpdateAccountControllerTest extends ControllerTestSupport {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("이름은 10자 이하로 입력 가능 합니다."))
                 .andDo(print());
         }
@@ -199,7 +199,7 @@ class UpdateAccountControllerTest extends ControllerTestSupport {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("주소는 100자 이하로 입력 가능 합니다."))
                 .andDo(print());
         }
