@@ -26,7 +26,6 @@ class ProductTest {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .price(10000L)
                 .quantity(100L)
                 .category("DIGITAL")
@@ -43,7 +42,6 @@ class ProductTest {
             assert product.getProductName().equals(command.productName());
             assert product.getProductImgUrl().equals(command.productImgUrl());
             assert product.getDescriptionImgUrl().equals(command.descriptionImgUrl());
-            assert product.getProductOption().equals(command.productOption());
             assert product.getPrice() == command.price();
             assert product.getQuantity() == command.quantity();
             assert product.getCategory().equals(Category.DIGITAL);
@@ -107,7 +105,6 @@ class ProductTest {
                     .productName("Old Product Name")
                     .productImgUrl("http://example.com/old_product.jpg")
                     .descriptionImgUrl("http://example.com/old_description.jpg")
-                    .productOption(Set.of("OldOption1", "OldOption2"))
                     .keywords(Set.of("old_keyword1", "old_keyword2"))
                     .price(10000L)
                     .build();
@@ -116,7 +113,6 @@ class ProductTest {
                     .productName("New Product Name")
                     .productImgUrl("http://example.com/new_product.jpg")
                     .descriptionImgUrl("http://example.com/new_description.jpg")
-                    .productOption(Set.of("NewOption1", "NewOption2"))
                     .keywords(Set.of("new_keyword1", "new_keyword2"))
                     .price(20000L)
                     .build();
@@ -126,13 +122,12 @@ class ProductTest {
 
                 // then
                 assert result.containsAll(
-                    List.of("productName", "productImgUrl", "descriptionImgUrl", "productOption",
+                    List.of("productName", "productImgUrl", "descriptionImgUrl",
                         "keywords", "price"));
                 assert product.getProductName().equals("New Product Name");
                 assert product.getProductImgUrl().equals("http://example.com/new_product.jpg");
                 assert product.getDescriptionImgUrl()
                     .equals("http://example.com/new_description.jpg");
-                assert product.getProductOption().equals(Set.of("NewOption1", "NewOption2"));
                 assert product.getKeywords().equals(Set.of("new_keyword1", "new_keyword2"));
                 assert product.getPrice() == 20000L;
                 assert product.isNeedsEsUpdate();

@@ -45,7 +45,6 @@ class IncreaseProductQuantityServiceTest {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(quantity)
@@ -70,13 +69,13 @@ class IncreaseProductQuantityServiceTest {
             fakeProductStoragePort.database.add(product);
 
             IncreaseProductQuantityCommand command = IncreaseProductQuantityCommand.builder()
-                .productId(1L)
                 .quantity(10)
                 .account(Account.builder().id(1L).build())
                 .build();
 
             // when
-            IncreaseProductQuantityServiceResponse response = service.update(command);
+            IncreaseProductQuantityServiceResponse response = service.update(product.getId(),
+                command);
             Product updatedProduct = fakeProductStoragePort.findByIdAndDeleteYn(1L, "N");
 
             // then
@@ -93,14 +92,13 @@ class IncreaseProductQuantityServiceTest {
             fakeProductStoragePort.database.add(product);
 
             IncreaseProductQuantityCommand command = IncreaseProductQuantityCommand.builder()
-                .productId(1L)
                 .quantity(10)
                 .account(Account.builder().id(2L).build())
                 .build();
 
             // when
             CustomAuthorizationException result = assertThrows(CustomAuthorizationException.class,
-                () -> service.update(command));
+                () -> service.update(product.getId(), command));
 
             // then
             assert result.getErrorCode().equals(ErrorCode.ACCESS_DENIED);

@@ -13,7 +13,6 @@ public record UpdateProductServiceResponse(
     String productImgUrl,
     String descriptionImgUrl,
     Set<String> keywords,
-    Set<String> productOption,
     long price,
     Category category
 ) {

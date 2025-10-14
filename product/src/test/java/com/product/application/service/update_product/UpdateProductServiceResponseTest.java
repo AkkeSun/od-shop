@@ -24,7 +24,6 @@ class UpdateProductServiceResponseTest {
                 .productImgUrl("productImgUrl")
                 .descriptionImgUrl("descriptionImgUrl")
                 .keywords(Set.of("keyword1", "keyword2"))
-                .productOption(Set.of("option1", "option2"))
                 .price(1000L)
                 .category(Category.TOTAL)
                 .build();
@@ -39,7 +38,6 @@ class UpdateProductServiceResponseTest {
             assert response.productImgUrl().equals(product.getProductImgUrl());
             assert response.descriptionImgUrl().equals(product.getDescriptionImgUrl());
             assert response.keywords().equals(product.getKeywords());
-            assert response.productOption().equals(product.getProductOption());
             assert response.price() == product.getPrice();
             assert response.category().equals(product.getCategory());
             assert response.category() == Category.TOTAL;

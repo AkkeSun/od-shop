@@ -58,7 +58,6 @@ public class FindProductDocsTest extends RestDocsSupport {
                 .quantity(30)
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("Keyword1", "Keyword2"))
                 .regDateTime("2025-05-01 12:00:00")
                 .build();
@@ -88,8 +87,6 @@ public class FindProductDocsTest extends RestDocsSupport {
                     .description("상품 이미지 URL"),
                 fieldWithPath("data.descriptionImgUrl").type(JsonFieldType.STRING)
                     .description("설명 이미지 URL"),
-                fieldWithPath("data.productOption").type(JsonFieldType.ARRAY)
-                    .description("상품 옵션 목록"),
                 fieldWithPath("data.keywords").type(JsonFieldType.ARRAY)
                     .description("키워드 목록"),
                 fieldWithPath("data.regDateTime").type(JsonFieldType.STRING)

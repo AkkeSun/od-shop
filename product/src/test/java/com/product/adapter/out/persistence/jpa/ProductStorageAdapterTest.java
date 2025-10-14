@@ -47,7 +47,6 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             assert result.getProductName().equals(product.getProductName());
             assert result.getProductImgUrl().equals(product.getProductImgUrl());
             assert result.getDescriptionImgUrl().equals(product.getDescriptionImgUrl());
-            assert result.getProductOption().equals(product.getProductOption());
             assert result.getKeywords().equals(product.getKeywords());
             assert result.getCategory().equals(product.getCategory());
             assert result.getPrice() == product.getPrice();
@@ -75,7 +74,6 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             assert result.getProductName().equals(product.getProductName());
             assert result.getProductImgUrl().equals(product.getProductImgUrl());
             assert result.getDescriptionImgUrl().equals(product.getDescriptionImgUrl());
-            assert result.getProductOption().equals(product.getProductOption());
             assert result.getKeywords().equals(product.getKeywords());
             assert result.getCategory().equals(product.getCategory());
             assert result.getPrice() == product.getPrice();
@@ -147,7 +145,6 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                 assert result.getProductName().equals(product.getProductName());
                 assert result.getProductImgUrl().equals(product.getProductImgUrl());
                 assert result.getDescriptionImgUrl().equals(product.getDescriptionImgUrl());
-                assert result.getProductOption().equals(product.getProductOption());
                 assert result.getKeywords().equals(product.getKeywords());
                 assert result.getCategory().equals(product.getCategory());
                 assert result.getPrice() == product.getPrice();
@@ -175,7 +172,6 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
                 assert result.getProductName().equals(product.getProductName());
                 assert result.getProductImgUrl().equals(product.getProductImgUrl());
                 assert result.getDescriptionImgUrl().equals(product.getDescriptionImgUrl());
-                assert result.getProductOption().equals(product.getProductOption());
                 assert result.getKeywords().equals(product.getKeywords());
                 assert result.getCategory().equals(product.getCategory());
                 assert result.getPrice() == product.getPrice();
@@ -253,7 +249,6 @@ class ProductStorageAdapterTest extends IntegrationTestSupport {
             .productName("Test Product")
             .productImgUrl("http://example.com/product.jpg")
             .descriptionImgUrl("http://example.com/description.jpg")
-            .productOption(Set.of("Option1", "Option2"))
             .keywords(Set.of("keyword1", "keyword2"))
             .price(10000L)
             .quantity(100L)

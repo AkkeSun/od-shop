@@ -41,8 +41,10 @@ public class DistributedLockAspect {
                 distributedLock.timeUnit());
 
             if (!available) {
+                log.info("lock error");
                 return false;
             }
+            log.info("lock success");
             return aopForTransaction.proceed(joinPoint);
         } catch (InterruptedException | RedisConnectionException | RedisTimeoutException e) {
             log.error("[DistributedLockAspect] {}", e.getMessage());

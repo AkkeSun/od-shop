@@ -5,7 +5,6 @@ import lombok.Builder;
 
 @Builder
 public record IncreaseProductQuantityCommand(
-    Long productId,
     long quantity,
     Account account
 ) {

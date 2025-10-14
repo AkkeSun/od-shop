@@ -12,7 +12,6 @@ import com.product.ControllerTestSupport;
 import com.product.application.service.register_product.RegisterProductServiceResponse;
 import com.product.domain.model.Category;
 import com.product.infrastructure.exception.ErrorCode;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             RegisterProductServiceResponse response = RegisterProductServiceResponse.builder()
                 .productId(12345L)
@@ -51,7 +49,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .price(request.price())
                 .quantity(request.quantity())
                 .category(Category.valueOf(request.category()))
-                .productOption(request.productOption())
                 .build();
             String authorization = "testToken";
             given(registerProductUseCase.registerProduct(any())).willReturn(response);
@@ -148,7 +145,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -182,7 +178,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -216,7 +211,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -250,7 +244,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -284,7 +277,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -318,7 +310,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -352,7 +343,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -386,7 +376,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(10)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -420,7 +409,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(20)
                 .productImgUrl(null)
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -454,7 +442,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(20)
                 .productImgUrl("")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -488,7 +475,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(20)
                 .productImgUrl("test".repeat(13))
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -522,7 +508,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(20)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl(null)
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -556,7 +541,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(20)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -590,7 +574,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .quantity(20)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("test".repeat(13))
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
             String authorization = "testToken";
 
@@ -609,40 +592,6 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.data").exists())
                 .andExpect(jsonPath("$.data.errorCode").value(1001))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 설명 이미지는 50자 이하여야 합니다"))
-                .andDo(print());
-        }
-
-        @Test
-        @WithMockUser(roles = "SELLER")
-        @DisplayName("[error] 판매 권한을 가진 사용자가 상품 옵션을 입력하지 않았을 때 400코드와 에러 메시지를 응답한다.")
-        void error17() throws Exception {
-            // given
-            RegisterProductRequest request = RegisterProductRequest.builder()
-                .productName("상품명")
-                .category("AUTOMOTIVE")
-                .price(10000)
-                .quantity(20)
-                .productImgUrl("상품 이미지")
-                .descriptionImgUrl("상품 설명")
-                .productOption(null)
-                .build();
-            String authorization = "testToken";
-
-            // when
-            ResultActions actions = mockMvc.perform(post("/products")
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", authorization)
-                .content(objectMapper.writeValueAsString(request))
-            );
-
-            // then
-            actions.andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.httpStatus").value(400))
-                .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
-                .andExpect(jsonPath("$.data.errorMessage").value("상품 옵션은 필수값 입니다"))
                 .andDo(print());
         }
     }

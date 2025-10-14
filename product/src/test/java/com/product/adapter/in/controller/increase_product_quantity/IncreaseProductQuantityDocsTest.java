@@ -55,7 +55,7 @@ public class IncreaseProductQuantityDocsTest extends RestDocsSupport {
                 .build();
             String authorization = "Bearer testToken";
             Long productId = 10L;
-            given(useCase.update(any()))
+            given(useCase.update(any(), any()))
                 .willReturn(IncreaseProductQuantityServiceResponse.builder()
                     .result(true)
                     .build());
@@ -84,7 +84,7 @@ public class IncreaseProductQuantityDocsTest extends RestDocsSupport {
                 .build();
             String authorization = "Bearer testToken";
             Long productId = 10L;
-            given(useCase.update(any()))
+            given(useCase.update(any(), any()))
                 .willThrow(new CustomAuthenticationException(ErrorCode.INVALID_ACCESS_TOKEN));
 
             // when // then
@@ -101,7 +101,7 @@ public class IncreaseProductQuantityDocsTest extends RestDocsSupport {
                 .build();
             String authorization = "Bearer testToken";
             Long productId = 10L;
-            given(useCase.update(any()))
+            given(useCase.update(any(), any()))
                 .willThrow(new CustomAuthorizationException(ErrorCode.ACCESS_DENIED));
 
             // when // then
@@ -134,7 +134,7 @@ public class IncreaseProductQuantityDocsTest extends RestDocsSupport {
                 .build();
             String authorization = "Bearer testToken";
             Long productId = 10L;
-            given(useCase.update(any()))
+            given(useCase.update(any(), any()))
                 .willThrow(new CustomNotFoundException(ErrorCode.DoesNotExist_PRODUCT_INFO));
 
             // when // then

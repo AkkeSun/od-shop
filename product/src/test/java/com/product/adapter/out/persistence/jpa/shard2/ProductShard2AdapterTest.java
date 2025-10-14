@@ -41,7 +41,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
@@ -70,8 +69,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
             assert productEntity.getProductName().equals(product.getProductName());
             assert productEntity.getProductImgUrl().equals(product.getProductImgUrl());
             assert productEntity.getDescriptionImgUrl().equals(product.getDescriptionImgUrl());
-            assert productEntity.getProductOption()
-                .equals(String.join(",", product.getProductOption()));
             assert productEntity.getKeyword()
                 .equals(String.join(",", product.getKeywords()));
             assert productEntity.getCategory().equals(product.getCategory());
@@ -103,7 +100,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
@@ -149,7 +145,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
@@ -175,7 +170,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
             assert result.getProductName().equals(product.getProductName());
             assert result.getProductImgUrl().equals(product.getProductImgUrl());
             assert result.getDescriptionImgUrl().equals(product.getDescriptionImgUrl());
-            assert result.getProductOption().equals(product.getProductOption());
             assert result.getKeywords().equals(product.getKeywords());
             assert result.getCategory().equals(product.getCategory());
             assert result.getPrice() == product.getPrice();
@@ -211,7 +205,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
@@ -234,7 +227,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .productName("Test Product2")
                 .productImgUrl("http://example.com/product2.jpg")
                 .descriptionImgUrl("http://example.com/description2.jpg")
-                .productOption(Set.of("Option3", "Option4"))
                 .keywords(Set.of("keyword3", "keyword4"))
                 .price(10000L)
                 .quantity(100L)
@@ -261,7 +253,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
             assert result.getProductName().equals(product.getProductName());
             assert result.getProductImgUrl().equals(product.getProductImgUrl());
             assert result.getDescriptionImgUrl().equals(product.getDescriptionImgUrl());
-            assert result.getProductOption().equals(product.getProductOption());
             assert result.getKeywords().equals(product.getKeywords());
             assert result.getCategory().equals(product.getCategory());
             assert result.getPrice() == product.getPrice();
@@ -273,7 +264,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
             assert result2.getProductName().equals(product2.getProductName());
             assert result2.getProductImgUrl().equals(product2.getProductImgUrl());
             assert result2.getDescriptionImgUrl().equals(product2.getDescriptionImgUrl());
-            assert result2.getProductOption().equals(product2.getProductOption());
             assert result2.getKeywords().equals(product2.getKeywords());
             assert result2.getCategory().equals(product2.getCategory());
             assert result2.getPrice() == product2.getPrice();
@@ -298,7 +288,6 @@ class ProductShard2AdapterTest extends IntegrationTestSupport {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)

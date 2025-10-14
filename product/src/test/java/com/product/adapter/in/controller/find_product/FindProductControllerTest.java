@@ -38,7 +38,6 @@ class FindProductControllerTest extends ControllerTestSupport {
                 .quantity(30)
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("Keyword1", "Keyword2"))
                 .regDateTime("2025-05-01 12:00:00")
                 .build();
@@ -62,7 +61,6 @@ class FindProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.data.productImgUrl").value(serviceResponse.productImgUrl()))
                 .andExpect(
                     jsonPath("$.data.descriptionImgUrl").value(serviceResponse.descriptionImgUrl()))
-                .andExpect(jsonPath("$.data.productOption").isArray())
                 .andExpect(jsonPath("$.data.keywords").isArray());
         }
     }

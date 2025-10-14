@@ -44,7 +44,6 @@ public class IncreaseProductQuantityLockTest extends IntegrationTestSupport {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100)
@@ -61,7 +60,6 @@ public class IncreaseProductQuantityLockTest extends IntegrationTestSupport {
                 .build();
             productStoragePort.register(product);
             IncreaseProductQuantityCommand command = IncreaseProductQuantityCommand.builder()
-                .productId(product.getId())
                 .account(Account.builder().id(1L).build())
                 .quantity(1)
                 .build();
@@ -79,7 +77,7 @@ public class IncreaseProductQuantityLockTest extends IntegrationTestSupport {
                 executor.execute(() -> {
                     try {
                         RequestContextHolder.setRequestAttributes(requestAttributes);
-                        service.update(command);
+                        service.update(product.getId(), command);
                     } catch (Exception e) {
                         e.getStackTrace();
                     } finally {

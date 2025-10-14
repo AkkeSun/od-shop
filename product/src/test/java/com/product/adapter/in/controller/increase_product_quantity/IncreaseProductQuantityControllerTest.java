@@ -34,7 +34,7 @@ class IncreaseProductQuantityControllerTest extends ControllerTestSupport {
                 .quantity(10)
                 .build();
             String authorization = "testToken";
-            when(increaseProductQuantityUseCase.update(any()))
+            when(increaseProductQuantityUseCase.update(any(), any()))
                 .thenReturn(IncreaseProductQuantityServiceResponse.builder()
                     .result(true)
                     .build());

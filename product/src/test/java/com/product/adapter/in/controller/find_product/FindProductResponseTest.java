@@ -41,7 +41,6 @@ class FindProductResponseTest {
             assert response.quantity() == serviceResponse.quantity();
             assert response.productImgUrl().equals(serviceResponse.productImgUrl());
             assert response.descriptionImgUrl().equals(serviceResponse.descriptionImgUrl());
-            assert response.productOption().equals(serviceResponse.productOption());
             assert response.keywords().equals(serviceResponse.keywords());
             assert response.regDateTime().equals(serviceResponse.regDateTime());
         }

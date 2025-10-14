@@ -12,9 +12,8 @@ record IncreaseProductQuantityRequest(
     int quantity
 ) {
 
-    IncreaseProductQuantityCommand of(Long productId, Account account) {
+    IncreaseProductQuantityCommand of(Account account) {
         return IncreaseProductQuantityCommand.builder()
-            .productId(productId)
             .quantity(quantity)
             .account(account)
             .build();

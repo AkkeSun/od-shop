@@ -66,7 +66,6 @@ public class UpdateProductDocsTest extends RestDocsSupport {
                 .productImgUrl(request.productImgUrl())
                 .descriptionImgUrl(request.descriptionImgUrl())
                 .keywords(request.keywords())
-                .productOption(request.productOption())
                 .price(request.price())
                 .category(Category.TOTAL)
                 .build());
@@ -92,8 +91,6 @@ public class UpdateProductDocsTest extends RestDocsSupport {
                 .description("상품 설명 이미지 URL"),
             fieldWithPath("data.keywords").type(JsonFieldType.ARRAY)
                 .description("상품 키워드"),
-            fieldWithPath("data.productOption").type(JsonFieldType.ARRAY)
-                .description("상품 옵션"),
             fieldWithPath("data.price").type(JsonFieldType.NUMBER)
                 .description("상품 가격"),
             fieldWithPath("data.category").type(JsonFieldType.STRING)

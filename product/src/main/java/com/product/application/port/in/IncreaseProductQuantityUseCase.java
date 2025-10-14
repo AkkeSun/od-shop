@@ -5,5 +5,6 @@ import com.product.application.service.Increase_product_quantity.IncreaseProduct
 
 public interface IncreaseProductQuantityUseCase {
 
-    IncreaseProductQuantityServiceResponse update(IncreaseProductQuantityCommand command);
+    IncreaseProductQuantityServiceResponse update(Long productId,
+        IncreaseProductQuantityCommand command);
 }

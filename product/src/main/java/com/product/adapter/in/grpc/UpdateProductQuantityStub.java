@@ -33,8 +33,8 @@ class UpdateProductQuantityStub extends UpdateProductQuantityServiceImplBase {
         try {
             log.info("[gRPC] {} request - {}", methodName, toJsonString(request));
             IncreaseProductQuantityServiceResponse response = useCase.update(
+                request.getProductId(),
                 IncreaseProductQuantityCommand.builder()
-                    .productId(request.getProductId())
                     .quantity(request.getQuantity())
                     .build());
 

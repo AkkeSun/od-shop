@@ -16,7 +16,6 @@ class IncreaseProductQuantityRequestTest {
         @DisplayName("[success] IncreaseProductQuantityCommand 를 잘 생성하는지 확인한다")
         void of() {
             // given
-            Long productId = 1L;
             Account account = Account.builder()
                 .id(1L)
                 .build();
@@ -25,10 +24,9 @@ class IncreaseProductQuantityRequestTest {
                 .build();
 
             // when
-            IncreaseProductQuantityCommand command = request.of(productId, account);
+            IncreaseProductQuantityCommand command = request.of(account);
 
             // then
-            assert command.productId().equals(productId);
             assert command.quantity() == request.quantity();
             assert command.account().equals(account);
         }

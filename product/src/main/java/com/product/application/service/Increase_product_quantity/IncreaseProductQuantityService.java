@@ -12,9 +12,11 @@ import com.product.domain.model.ProductHistory;
 import com.product.infrastructure.aop.DistributedLock;
 import com.product.infrastructure.exception.CustomAuthorizationException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class IncreaseProductQuantityService implements IncreaseProductQuantityUseCase {
@@ -26,9 +28,11 @@ public class IncreaseProductQuantityService implements IncreaseProductQuantityUs
 
     @Override
     @DistributedLock(key = "PRODUCT_QUANTITY", isUniqueKey = true)
-    public IncreaseProductQuantityServiceResponse update(IncreaseProductQuantityCommand command) {
-        Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");
-        if (!command.isRefundRequest() || !product.isSeller(command.account().id())) {
+    public IncreaseProductQuantityServiceResponse update(
+        Long productId, IncreaseProductQuantityCommand command
+    ) {
+        Product product = productStoragePort.findByIdAndDeleteYn(productId, "N");
+        if (!command.isRefundRequest() && !product.isSeller(command.account().id())) {
             throw new CustomAuthorizationException(ACCESS_DENIED);
         }
 
@@ -37,6 +41,7 @@ public class IncreaseProductQuantityService implements IncreaseProductQuantityUs
         
         messageProducerPort.sendMessage(historyTopic, toJsonString(
             ProductHistory.createProductHistoryForUpdateQuantity(product, command.quantity())));
+        log.error(String.valueOf(product.getQuantity()));
         return IncreaseProductQuantityServiceResponse.ofSuccess();
     }
 }

@@ -40,7 +40,6 @@ class RegisterProductResponseTest {
             assert response.productImgUrl().equals(serviceResponse.productImgUrl());
             assert response.descriptionImgUrl().equals(serviceResponse.descriptionImgUrl());
             assert response.keywords().equals(serviceResponse.keywords());
-            assert response.productOption().equals(serviceResponse.productOption());
             assert response.price() == serviceResponse.price();
             assert response.quantity() == serviceResponse.quantity();
             assert response.category().equals(serviceResponse.category().description());

@@ -2,7 +2,6 @@ package com.product.adapter.in.controller.register_product;
 
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.domain.model.Account;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,6 @@ class RegisterProductRequestTest {
                 .quantity(30)
                 .productImgUrl("상품 이미지")
                 .descriptionImgUrl("상품 설명")
-                .productOption(Set.of("옵션1", "옵션2"))
                 .build();
 
             // when
@@ -38,7 +36,6 @@ class RegisterProductRequestTest {
             assert command.quantity() == request.quantity();
             assert command.productImgUrl().equals(request.productImgUrl());
             assert command.descriptionImgUrl().equals(request.descriptionImgUrl());
-            assert command.productOption().equals(request.productOption());
         }
     }
 }

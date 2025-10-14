@@ -26,7 +26,6 @@ class RegisterProductServiceResponseTest {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .keywords(Set.of("keyword1", "keyword2"))
                 .price(10000L)
                 .quantity(100L)
@@ -45,7 +44,6 @@ class RegisterProductServiceResponseTest {
             assert response.productImgUrl().equals(product.getProductImgUrl());
             assert response.descriptionImgUrl().equals(product.getDescriptionImgUrl());
             assert response.keywords().equals(product.getKeywords());
-            assert response.productOption().equals(product.getProductOption());
             assert response.price() == product.getPrice();
             assert response.quantity() == product.getQuantity();
             assert response.category().equals(product.getCategory());

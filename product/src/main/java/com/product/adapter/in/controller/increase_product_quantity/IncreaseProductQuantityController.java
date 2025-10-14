@@ -25,7 +25,7 @@ class IncreaseProductQuantityController {
         @LoginAccount Account account, @PathVariable Long productId
     ) {
         IncreaseProductQuantityServiceResponse serviceResponse = useCase
-            .update(request.of(productId, account));
+            .update(productId, request.of(account));
 
         return ApiResponse.ok(IncreaseProductQuantityResponse.of(serviceResponse));
     }

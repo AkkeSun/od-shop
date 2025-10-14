@@ -10,7 +10,6 @@ import com.product.fakeClass.DummySnowflakeGenerator;
 import com.product.fakeClass.FakeElasticSearchClientPort;
 import com.product.fakeClass.FakeProductStoragePort;
 import com.product.infrastructure.exception.CustomBusinessException;
-import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -55,7 +54,6 @@ class RegisterProductServiceTest {
                 .productName("Test Product")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .price(10000L)
                 .quantity(100L)
                 .category("DIGITAL")
@@ -69,7 +67,6 @@ class RegisterProductServiceTest {
             assert response.productName().equals(command.productName());
             assert response.productImgUrl().equals(command.productImgUrl());
             assert response.descriptionImgUrl().equals(command.descriptionImgUrl());
-            assert response.productOption().equals(command.productOption());
             assert response.price() == command.price();
             assert response.quantity() == command.quantity();
             assert response.category().name().equals(command.category());
@@ -87,7 +84,6 @@ class RegisterProductServiceTest {
                 .productName("error")
                 .productImgUrl("http://example.com/product.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
-                .productOption(Set.of("Option1", "Option2"))
                 .price(10000L)
                 .quantity(100L)
                 .category("DIGITAL")
