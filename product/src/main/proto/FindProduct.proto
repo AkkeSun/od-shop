@@ -17,7 +17,6 @@ message FindProductResponse {
   string productImgUrl = 4;
   string descriptionImgUrl = 5;
   repeated string keywords = 6;
-  repeated string productOption = 7;
   int64 price = 8;
   int64 quantity = 9;
   string category = 10;
