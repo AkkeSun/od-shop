@@ -41,7 +41,7 @@ class FindProductStub extends FindProductServiceImplBase {
                 .setSellerEmail(response.sellerEmail())
                 .setProductName(response.productName())
                 .setProductImgUrl(response.productImgUrl())
-                .setDescriptionImgUrl(response.productName())
+                .setDescriptionImgUrl(response.descriptionImgUrl())
                 .addAllKeywords(new ArrayList<>(response.keywords()))
                 .setPrice(response.price())
                 .setQuantity(response.quantity())
