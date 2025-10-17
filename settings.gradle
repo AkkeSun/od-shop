@@ -1,5 +1,5 @@
 rootProject.name = 'od-shop'
-
+include 'common'
 include 'account'
 include 'account-agent'
 include 'product'
