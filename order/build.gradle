@@ -124,11 +124,11 @@ protobuf {
 // ./gradlew openapi3 copyOasToSwagger
 openapi3 {
     servers = [
-            { url = "http://localhost:8081" }
+            { url = "https://api.odlab.kr" }
     ]
-    title = "Account API"
-    description = "사용자 정보와 토큰을 관리하는 API 입니다"
-    outputFileNamePrefix = 'account-api'
+    title = "Order API"
+    description = "주문 정보를 관리하는 API 입니다"
+    outputFileNamePrefix = 'order-api'
     version = "0.0.1"
     format = "yaml"
     outputDirectory = "src/main/resources/static/docs"
@@ -136,7 +136,7 @@ openapi3 {
 
 tasks.register('copyOasToSwagger', DefaultTask) {
     doLast {
-        def openapi3File = file("src/main/resources/static/docs/account-api.yaml")
+        def openapi3File = file("src/main/resources/static/docs/order-api.yaml")
         def securitySchemesContent = "  securitySchemes:\n" +             \
                                                  "    APIKey:\n" +             \
                                                  "      type: apiKey\n" +             \
