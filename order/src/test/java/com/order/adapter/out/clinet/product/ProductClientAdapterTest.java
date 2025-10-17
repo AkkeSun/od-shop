@@ -3,7 +3,7 @@ package com.order.adapter.out.clinet.product;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.order.adapter.IntegrationTestSupport;
+import com.order.IntegrationTestSupport;
 import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.applicatoin.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import com.order.domain.model.OrderProduct;

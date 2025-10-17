@@ -2,7 +2,7 @@ package com.order.adapter.out.persistence.jpa;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.order.adapter.IntegrationTestSupport;
+import com.order.IntegrationTestSupport;
 import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
 import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
 import com.order.applicatoin.port.in.command.FindOrderProductIdsCommand;

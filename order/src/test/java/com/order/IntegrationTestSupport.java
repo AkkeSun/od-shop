@@ -1,4 +1,4 @@
-package com.order.adapter;
+package com.order;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.junit.jupiter.api.extension.ExtendWith;
