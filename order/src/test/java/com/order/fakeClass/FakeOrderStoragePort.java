@@ -1,10 +1,10 @@
 package com.order.fakeClass;
 
-import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
-import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
-import com.order.applicatoin.port.in.command.FindOrderProductIdsCommand;
-import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
-import com.order.applicatoin.port.out.OrderStoragePort;
+import com.order.application.port.in.command.ExistsCustomerOrderCommand;
+import com.order.application.port.in.command.FindCustomerOrdersCommand;
+import com.order.application.port.in.command.FindOrderProductIdsCommand;
+import com.order.application.port.in.command.FindSoldProductsCommand;
+import com.order.application.port.out.OrderStoragePort;
 import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import java.util.ArrayList;

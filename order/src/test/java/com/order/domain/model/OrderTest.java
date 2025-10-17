@@ -2,7 +2,7 @@ package com.order.domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.order.applicatoin.port.in.command.RegisterOrderCommand;
+import com.order.application.port.in.command.RegisterOrderCommand;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

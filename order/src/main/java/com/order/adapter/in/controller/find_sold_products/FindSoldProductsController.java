@@ -1,7 +1,7 @@
 package com.order.adapter.in.controller.find_sold_products;
 
-import com.order.applicatoin.port.in.FindSoldProductsUseCase;
-import com.order.applicatoin.service.find_sold_products.FindSoldProductsServiceResponse;
+import com.order.application.port.in.FindSoldProductsUseCase;
+import com.order.application.service.find_sold_products.FindSoldProductsServiceResponse;
 import com.order.domain.model.Account;
 import com.order.infrastructure.resolver.LoginAccount;
 import com.order.infrastructure.response.ApiResponse;

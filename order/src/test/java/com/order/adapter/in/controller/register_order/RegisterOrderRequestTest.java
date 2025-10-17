@@ -1,8 +1,8 @@
 package com.order.adapter.in.controller.register_order;
 
 import com.order.adapter.in.controller.register_order.RegisterOrderRequest.RegisterOrderRequestItem;
-import com.order.applicatoin.port.in.command.RegisterOrderCommand;
-import com.order.applicatoin.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
+import com.order.application.port.in.command.RegisterOrderCommand;
+import com.order.application.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.domain.model.Account;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

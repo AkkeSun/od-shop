@@ -1,7 +1,7 @@
 package com.order.adapter.in.controller.find_sold_products;
 
-import com.order.applicatoin.service.find_sold_products.FindSoldProductsServiceResponse;
-import com.order.applicatoin.service.find_sold_products.FindSoldProductsServiceResponse.FindSoldProductsServiceResponseItem;
+import com.order.application.service.find_sold_products.FindSoldProductsServiceResponse;
+import com.order.application.service.find_sold_products.FindSoldProductsServiceResponse.FindSoldProductsServiceResponseItem;
 import java.util.List;
 import lombok.Builder;
 

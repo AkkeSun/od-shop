@@ -1,6 +1,6 @@
 package com.order.fakeClass;
 
-import com.order.applicatoin.port.out.MessageProducerPort;
+import com.order.application.port.out.MessageProducerPort;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

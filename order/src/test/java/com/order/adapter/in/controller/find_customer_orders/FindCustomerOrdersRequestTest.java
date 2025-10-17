@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.find_customer_orders;
 
-import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
+import com.order.application.port.in.command.FindCustomerOrdersCommand;
 import com.order.domain.model.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

@@ -3,7 +3,7 @@ package com.order.adapter.out.persistence.redis;
 import static com.order.infrastructure.util.JsonUtil.parseJson;
 import static com.order.infrastructure.util.JsonUtil.parseJsonList;
 
-import com.order.applicatoin.port.out.RedisStoragePort;
+import com.order.application.port.out.RedisStoragePort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.ArrayList;
 import java.util.Collections;

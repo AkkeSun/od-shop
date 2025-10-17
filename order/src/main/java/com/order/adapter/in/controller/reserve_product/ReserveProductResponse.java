@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.reserve_product;
 
-import com.order.applicatoin.service.reserve_product.ReserveProductServiceResponse;
+import com.order.application.service.reserve_product.ReserveProductServiceResponse;
 import lombok.Builder;
 
 @Builder

@@ -3,9 +3,9 @@ package com.order.adapter.in.grpc;
 import static com.order.infrastructure.util.GrpcUtil.sendErrorResponse;
 import static com.order.infrastructure.util.JsonUtil.toJsonString;
 
-import com.order.applicatoin.port.in.ExistsCustomerOrderUseCase;
-import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
-import com.order.applicatoin.service.exists_customer_order.ExistsCustomerOrderServiceResponse;
+import com.order.application.port.in.ExistsCustomerOrderUseCase;
+import com.order.application.port.in.command.ExistsCustomerOrderCommand;
+import com.order.application.service.exists_customer_order.ExistsCustomerOrderServiceResponse;
 import grpc.product.ExistsCustomerProductRequest;
 import grpc.product.ExistsCustomerProductResponse;
 import grpc.product.ExistsCustomerProductServiceGrpc.ExistsCustomerProductServiceImplBase;

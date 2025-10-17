@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.register_order;
 
-import com.order.applicatoin.service.register_order.RegisterOrderServiceResponse;
+import com.order.application.service.register_order.RegisterOrderServiceResponse;
 import lombok.Builder;
 
 @Builder

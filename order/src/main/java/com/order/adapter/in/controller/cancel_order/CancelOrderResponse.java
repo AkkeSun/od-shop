@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.cancel_order;
 
-import com.order.applicatoin.service.cancel_order.CancelOrderServiceResponse;
+import com.order.application.service.cancel_order.CancelOrderServiceResponse;
 
 record CancelOrderResponse(
     Boolean result

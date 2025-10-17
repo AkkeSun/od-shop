@@ -1,7 +1,7 @@
 package com.order.adapter.in.controller.register_order;
 
-import com.order.applicatoin.port.in.RegisterOrderUseCase;
-import com.order.applicatoin.service.register_order.RegisterOrderServiceResponse;
+import com.order.application.port.in.RegisterOrderUseCase;
+import com.order.application.service.register_order.RegisterOrderServiceResponse;
 import com.order.domain.model.Account;
 import com.order.infrastructure.resolver.LoginAccount;
 import com.order.infrastructure.response.ApiResponse;

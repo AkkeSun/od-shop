@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.register_order;
 
-import com.order.applicatoin.service.register_order.RegisterOrderServiceResponse;
+import com.order.application.service.register_order.RegisterOrderServiceResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

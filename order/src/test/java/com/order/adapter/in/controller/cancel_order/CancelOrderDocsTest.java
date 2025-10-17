@@ -17,8 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.order.RestDocsSupport;
-import com.order.applicatoin.port.in.CancelOrderUseCase;
-import com.order.applicatoin.service.cancel_order.CancelOrderServiceResponse;
+import com.order.application.port.in.CancelOrderUseCase;
+import com.order.application.service.cancel_order.CancelOrderServiceResponse;
 import com.order.infrastructure.exception.CustomAuthenticationException;
 import com.order.infrastructure.exception.CustomBusinessException;
 import com.order.infrastructure.exception.CustomNotFoundException;

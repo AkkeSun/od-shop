@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.reserve_product;
 
-import com.order.applicatoin.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
+import com.order.application.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -3,10 +3,10 @@ package com.order.adapter.out.persistence.jpa;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.order.IntegrationTestSupport;
-import com.order.applicatoin.port.in.command.ExistsCustomerOrderCommand;
-import com.order.applicatoin.port.in.command.FindCustomerOrdersCommand;
-import com.order.applicatoin.port.in.command.FindOrderProductIdsCommand;
-import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
+import com.order.application.port.in.command.ExistsCustomerOrderCommand;
+import com.order.application.port.in.command.FindCustomerOrdersCommand;
+import com.order.application.port.in.command.FindOrderProductIdsCommand;
+import com.order.application.port.in.command.FindSoldProductsCommand;
 import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import com.order.infrastructure.exception.CustomNotFoundException;

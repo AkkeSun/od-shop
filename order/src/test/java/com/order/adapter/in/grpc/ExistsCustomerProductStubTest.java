@@ -4,8 +4,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import com.order.applicatoin.port.in.ExistsCustomerOrderUseCase;
-import com.order.applicatoin.service.exists_customer_order.ExistsCustomerOrderServiceResponse;
+import com.order.application.port.in.ExistsCustomerOrderUseCase;
+import com.order.application.service.exists_customer_order.ExistsCustomerOrderServiceResponse;
 import grpc.product.ExistsCustomerProductRequest;
 import grpc.product.ExistsCustomerProductResponse;
 import io.grpc.stub.StreamObserver;

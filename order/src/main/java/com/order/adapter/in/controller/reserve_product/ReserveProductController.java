@@ -1,8 +1,8 @@
 package com.order.adapter.in.controller.reserve_product;
 
-import com.order.applicatoin.port.in.ReserveProductUseCase;
-import com.order.applicatoin.port.in.command.ReserveProductCommand;
-import com.order.applicatoin.service.reserve_product.ReserveProductServiceResponse;
+import com.order.application.port.in.ReserveProductUseCase;
+import com.order.application.port.in.command.ReserveProductCommand;
+import com.order.application.service.reserve_product.ReserveProductServiceResponse;
 import com.order.domain.model.Account;
 import com.order.infrastructure.resolver.LoginAccount;
 import com.order.infrastructure.response.ApiResponse;

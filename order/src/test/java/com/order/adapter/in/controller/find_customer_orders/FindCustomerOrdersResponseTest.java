@@ -1,8 +1,8 @@
 package com.order.adapter.in.controller.find_customer_orders;
 
 import com.order.adapter.in.controller.find_customer_orders.FindCustomerOrdersResponse.FindOrderListItem;
-import com.order.applicatoin.service.find_customer_orders.FindCustomerOrdersServiceResponse;
-import com.order.applicatoin.service.find_customer_orders.FindCustomerOrdersServiceResponse.FindCustomerOrdersServiceResponseItem;
+import com.order.application.service.find_customer_orders.FindCustomerOrdersServiceResponse;
+import com.order.application.service.find_customer_orders.FindCustomerOrdersServiceResponse.FindCustomerOrdersServiceResponseItem;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

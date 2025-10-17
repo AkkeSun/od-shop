@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.cancel_order;
 
-import com.order.applicatoin.service.cancel_order.CancelOrderServiceResponse;
+import com.order.application.service.cancel_order.CancelOrderServiceResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

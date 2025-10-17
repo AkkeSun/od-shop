@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.reserve_product;
 
-import com.order.applicatoin.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
+import com.order.application.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 

@@ -4,7 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import com.order.applicatoin.port.in.FindOrderProductIdsUseCase;
+import com.order.application.port.in.FindOrderProductIdsUseCase;
 import grpc.product.FindOrderProductIdsRequest;
 import grpc.product.FindOrderProductIdsResponse;
 import io.grpc.stub.StreamObserver;

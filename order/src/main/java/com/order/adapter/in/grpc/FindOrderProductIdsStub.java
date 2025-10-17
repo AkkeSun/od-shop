@@ -3,8 +3,8 @@ package com.order.adapter.in.grpc;
 import static com.order.infrastructure.util.GrpcUtil.sendErrorResponse;
 import static com.order.infrastructure.util.JsonUtil.toJsonString;
 
-import com.order.applicatoin.port.in.FindOrderProductIdsUseCase;
-import com.order.applicatoin.port.in.command.FindOrderProductIdsCommand;
+import com.order.application.port.in.FindOrderProductIdsUseCase;
+import com.order.application.port.in.command.FindOrderProductIdsCommand;
 import grpc.product.FindOrderProductIdsRequest;
 import grpc.product.FindOrderProductIdsResponse;
 import grpc.product.FindOrderProductIdsServiceGrpc.FindOrderProductIdsServiceImplBase;

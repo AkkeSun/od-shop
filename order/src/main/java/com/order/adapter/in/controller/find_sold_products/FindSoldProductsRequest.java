@@ -1,6 +1,6 @@
 package com.order.adapter.in.controller.find_sold_products;
 
-import com.order.applicatoin.port.in.command.FindSoldProductsCommand;
+import com.order.application.port.in.command.FindSoldProductsCommand;
 import com.order.domain.model.Account;
 import com.order.infrastructure.validation.ValidSearchType;
 import lombok.AllArgsConstructor;
