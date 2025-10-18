@@ -26,3 +26,12 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// 루트 프로젝트는 실행 가능한 jar가 아니므로 bootJar 비활성화
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = false
+}
