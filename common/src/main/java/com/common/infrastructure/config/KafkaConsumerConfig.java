@@ -1,4 +1,4 @@
-package com.accountagent.infrastructure.config;
+package com.common.infrastructure.config;
 
 import java.util.HashMap;
 import java.util.Map;

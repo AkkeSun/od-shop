@@ -1,4 +1,4 @@
-package com.accountagent.infrastructure.config;
+package com.accountagent.infrastructure;
 
 
 import org.springframework.context.annotation.Bean;

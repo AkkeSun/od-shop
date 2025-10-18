@@ -1,4 +1,4 @@
-package com.accountagent.infrastructure.config;
+package com.accountagent.infrastructure;
 
 import com.mongodb.client.MongoClient;
 import net.javacrumbs.shedlock.core.LockProvider;
