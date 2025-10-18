@@ -1,6 +1,6 @@
 package com.product.adapter.out.client.elasticsearch;
 
-import static com.product.infrastructure.util.DateUtil.formatDateTime;
+import static com.common.infrastructure.util.DateUtil.formatDateTime;
 
 import com.product.domain.model.Product;
 import lombok.Builder;

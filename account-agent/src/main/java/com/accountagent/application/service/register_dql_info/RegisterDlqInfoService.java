@@ -1,6 +1,6 @@
 package com.accountagent.application.service.register_dql_info;
 
-import static com.accountagent.infrastructure.util.DateUtil.getCurrentDateTime;
+import static com.common.infrastructure.util.DateUtil.getCurrentDateTime;
 
 import com.accountagent.application.port.in.RegisterDqlInfoUseCase;
 import com.accountagent.application.port.out.LogStoragePort;

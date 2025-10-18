@@ -1,6 +1,6 @@
 package com.account.domain.model;
 
-import static com.account.infrastructure.util.DateUtil.getCurrentDate;
+import static com.common.infrastructure.util.DateUtil.getCurrentDate;
 
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;

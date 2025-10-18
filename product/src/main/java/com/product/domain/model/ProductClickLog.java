@@ -1,6 +1,6 @@
 package com.product.domain.model;
 
-import static com.product.infrastructure.util.DateUtil.getCurrentDateTime;
+import static com.common.infrastructure.util.DateUtil.getCurrentDateTime;
 
 import lombok.Builder;
 

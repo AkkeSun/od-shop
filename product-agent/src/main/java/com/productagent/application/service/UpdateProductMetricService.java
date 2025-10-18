@@ -2,6 +2,7 @@ package com.productagent.application.service;
 
 import static com.productagent.infrastructure.constant.CollectionName.METRIC_UPDATE_TIME;
 
+import com.common.infrastructure.util.DateUtil;
 import com.productagent.application.port.in.UpdateProductMetricUseCase;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.application.port.out.OrderClientPort;
@@ -12,7 +13,6 @@ import com.productagent.domain.model.Order;
 import com.productagent.domain.model.Product;
 import com.productagent.domain.model.ProductClickLog;
 import com.productagent.domain.model.Review;
-import com.productagent.infrastructure.util.DateUtil;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;

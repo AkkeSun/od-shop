@@ -1,6 +1,6 @@
 package com.productagent.infrastructure.constant;
 
-import static com.productagent.infrastructure.util.DateUtil.getCurrentDate;
+import static com.common.infrastructure.util.DateUtil.getCurrentDate;
 
 public class CollectionName {
 

@@ -1,6 +1,6 @@
 package com.product.adapter.out.client.elasticsearch;
 
-import static com.product.infrastructure.util.DateUtil.parseDateTime;
+import static com.common.infrastructure.util.DateUtil.parseDateTime;
 
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;

@@ -1,13 +1,13 @@
 package com.productagent.adapter.out.persistence.mongo;
 
+import static com.common.infrastructure.util.DateUtil.formatDate;
+import static com.common.infrastructure.util.DateUtil.parseDateTime;
 import static com.productagent.infrastructure.constant.CollectionName.METRIC_UPDATE_TIME;
-import static com.productagent.infrastructure.util.DateUtil.formatDate;
-import static com.productagent.infrastructure.util.DateUtil.parseDateTime;
 
+import com.common.infrastructure.util.DateUtil;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.domain.model.MetricUpdateTime;
 import com.productagent.domain.model.ProductClickLog;
-import com.productagent.infrastructure.util.DateUtil;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -52,7 +52,7 @@ class LogStorageAdapter implements LogStoragePort {
 
     @Override
     public void dropCollection(LocalDateTime targetDate) {
-        String date = DateUtil.formatDate(targetDate);
+        String date = formatDate(targetDate);
         mongoTemplate.dropCollection("history_" + date);
         mongoTemplate.dropCollection("click_" + date);
         mongoTemplate.dropCollection("search_" + date);

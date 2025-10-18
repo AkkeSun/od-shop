@@ -1,7 +1,7 @@
 package com.productagent.adapter.out.client.elasticsearch;
 
 
-import static com.productagent.infrastructure.util.DateUtil.formatDateTime;
+import static com.common.infrastructure.util.DateUtil.formatDateTime;
 
 import com.productagent.domain.model.Product;
 import lombok.Builder;

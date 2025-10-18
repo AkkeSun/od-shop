@@ -1,6 +1,7 @@
 package com.product.domain.model;
 
-import com.product.infrastructure.util.DateUtil;
+import static com.common.infrastructure.util.DateUtil.getCurrentDateTime;
+
 import lombok.Builder;
 
 @Builder
@@ -12,7 +13,7 @@ public record SearchLog(
     public static SearchLog of(String query) {
         return SearchLog.builder()
             .query(query)
-            .regDateTime(DateUtil.getCurrentDateTime())
+            .regDateTime(getCurrentDateTime())
             .build();
     }
 }

@@ -1,6 +1,6 @@
 package com.product.domain.model;
 
-import static com.product.infrastructure.util.DateUtil.formatDateTime;
+import static com.common.infrastructure.util.DateUtil.formatDateTime;
 
 import java.time.LocalDateTime;
 import java.util.List;

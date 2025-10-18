@@ -1,6 +1,6 @@
 package com.productagent.domain.model;
 
-import com.productagent.infrastructure.util.DateUtil;
+import com.common.infrastructure.util.DateUtil;
 import lombok.Builder;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 

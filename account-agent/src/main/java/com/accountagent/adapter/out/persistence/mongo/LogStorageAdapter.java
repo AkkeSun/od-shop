@@ -1,6 +1,6 @@
 package com.accountagent.adapter.out.persistence.mongo;
 
-import static com.accountagent.infrastructure.util.DateUtil.getCurrentDate;
+import static com.common.infrastructure.util.DateUtil.getCurrentDate;
 
 import com.accountagent.application.port.out.LogStoragePort;
 import com.accountagent.domain.model.AccountHistory;
