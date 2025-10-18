@@ -1,8 +1,10 @@
 package com.account.applicaiton.service.register_account;
 
-import static com.account.infrastructure.exception.ErrorCode.Business_SAVED_ACCOUNT_INFO;
-import static com.account.infrastructure.exception.ErrorCode.INVALID_ROLE;
+import static com.common.infrastructure.exception.ErrorCode.Business_SAVED_ACCOUNT_INFO;
+import static com.common.infrastructure.exception.ErrorCode.INVALID_ROLE;
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JwtUtil.createAccessToken;
+import static com.common.infrastructure.util.JwtUtil.createRefreshToken;
 
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
@@ -12,10 +14,9 @@ import com.account.applicaiton.port.out.RoleStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
-import com.account.infrastructure.exception.CustomBusinessException;
-import com.account.infrastructure.exception.CustomValidationException;
-import com.account.infrastructure.util.JwtUtil;
-import com.account.infrastructure.util.UserAgentUtil;
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.exception.CustomValidationException;
+import com.common.infrastructure.util.UserAgentUtil;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -36,7 +37,6 @@ class RegisterAccountService implements RegisterAccountUseCase {
     private String tokenRedisKey;
     @Value("${spring.data.redis.ttl.refresh-token}")
     private Long refreshTokenTtl;
-    private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RoleStoragePort roleStoragePort;
     private final RedisStoragePort redisStoragePort;
@@ -58,7 +58,7 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .accountId(savedAccount.getId())
             .email(savedAccount.getEmail())
             .userAgent(userAgentUtil.getUserAgent())
-            .refreshToken(jwtUtil.createRefreshToken(savedAccount.getEmail()))
+            .refreshToken(createRefreshToken(savedAccount.getEmail()))
             .roles(command.roles())
             .build();
 
@@ -69,7 +69,8 @@ class RegisterAccountService implements RegisterAccountUseCase {
         );
 
         return RegisterAccountServiceResponse.builder()
-            .accessToken(jwtUtil.createAccessToken(savedAccount))
+            .accessToken(createAccessToken(savedAccount.getEmail(), savedAccount.getId(),
+                savedAccount.getRoleString()))
             .refreshToken(refreshTokenInfo.getRefreshToken())
             .build();
     }

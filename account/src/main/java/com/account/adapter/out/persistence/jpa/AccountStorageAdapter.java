@@ -1,10 +1,10 @@
 package com.account.adapter.out.persistence.jpa;
 
-import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
+import static com.common.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
 
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.domain.model.Account;
-import com.account.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.CustomNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

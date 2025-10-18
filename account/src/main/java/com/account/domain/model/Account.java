@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -105,5 +106,11 @@ public class Account {
     @JsonIgnore
     private boolean isAddressUpdateRequired(String newAddress) {
         return StringUtils.hasText(newAddress) && !newAddress.equals(this.address);
+    }
+
+    public String getRoleString() {
+        return roles.stream()
+            .map(Role::name)
+            .collect(Collectors.joining(","));
     }
 }

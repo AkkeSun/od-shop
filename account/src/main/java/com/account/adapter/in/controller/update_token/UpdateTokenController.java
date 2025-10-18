@@ -2,7 +2,7 @@ package com.account.adapter.in.controller.update_token;
 
 import com.account.applicaiton.port.in.UpdateTokenUseCase;
 import com.account.applicaiton.service.update_token.UpdateTokenServiceResponse;
-import com.account.infrastructure.response.ApiResponse;
+import com.common.infrastructure.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,8 +16,7 @@ class UpdateTokenController {
     private final UpdateTokenUseCase registerTokenByRefreshUseCase;
 
     @PutMapping("/auth")
-    ApiResponse<UpdateTokenResponse> update(
-        @RequestBody @Valid UpdateTokenRequest request) {
+    ApiResponse<UpdateTokenResponse> update(@RequestBody @Valid UpdateTokenRequest request) {
         UpdateTokenServiceResponse serviceResponse = registerTokenByRefreshUseCase
             .update(request.getRefreshToken());
 

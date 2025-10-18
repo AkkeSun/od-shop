@@ -1,6 +1,7 @@
 package com.account.adapter.in.controller.update_token;
 
-import com.account.infrastructure.request.BaseRequest;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +12,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-class UpdateTokenRequest extends BaseRequest {
+class UpdateTokenRequest {
 
     @NotBlank(message = "리프레시 토큰은 필수값 입니다.")
     private String refreshToken;
 
+    @Override
+    public String toString() {
+        return toJsonString(this);
+    }
 }

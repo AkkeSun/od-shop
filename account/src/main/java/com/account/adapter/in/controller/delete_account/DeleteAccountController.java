@@ -2,9 +2,9 @@ package com.account.adapter.in.controller.delete_account;
 
 import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.service.delete_account.DeleteAccountServiceResponse;
-import com.account.domain.model.Account;
-import com.account.infrastructure.resolver.LoginAccount;
-import com.account.infrastructure.response.ApiResponse;
+import com.common.infrastructure.resolver.LoginAccount;
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +16,9 @@ class DeleteAccountController {
     private final DeleteAccountUseCase deleteAccountUseCase;
 
     @DeleteMapping("/accounts")
-    ApiResponse<DeleteAccountResponse> deleteAccount(@LoginAccount Account account) {
+    ApiResponse<DeleteAccountResponse> deleteAccount(@LoginAccount LoginAccountInfo loginInfo) {
         DeleteAccountServiceResponse serviceResponse = deleteAccountUseCase
-            .deleteAccount(account);
+            .deleteAccount(loginInfo);
 
         return ApiResponse.ok(DeleteAccountResponse.of(serviceResponse));
     }

@@ -1,11 +1,12 @@
 package com.account.adapter.in.controller.update_account;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
+
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;
-import com.account.infrastructure.request.BaseRequest;
-import com.account.infrastructure.validation.ValidPassword;
-import com.account.infrastructure.validation.ValidUserTel;
-import com.account.infrastructure.validation.ValidationGroups.CustomGroups;
-import com.account.infrastructure.validation.ValidationGroups.SizeGroups;
+import com.common.infrastructure.validation.ValidPassword;
+import com.common.infrastructure.validation.ValidUserTel;
+import com.common.infrastructure.validation.ValidationGroups.CustomGroups;
+import com.common.infrastructure.validation.ValidationGroups.SizeGroups;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ValidPassword(groups = CustomGroups.class)
-class UpdateAccountRequest extends BaseRequest {
+class UpdateAccountRequest {
 
     private String password;
 
@@ -41,5 +42,10 @@ class UpdateAccountRequest extends BaseRequest {
             .userTel(userTel)
             .address(address)
             .build();
+    }
+
+    @Override
+    public String toString() {
+        return toJsonString(this);
     }
 }

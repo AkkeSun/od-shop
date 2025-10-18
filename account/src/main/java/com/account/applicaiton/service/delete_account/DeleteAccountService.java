@@ -1,16 +1,16 @@
 package com.account.applicaiton.service.delete_account;
 
-import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
+import static com.common.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.applicaiton.port.out.RedisStoragePort;
-import com.account.domain.model.Account;
 import com.account.domain.model.AccountHistory;
 import com.account.domain.model.DeleteAccountLog;
-import com.account.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,22 +33,22 @@ class DeleteAccountService implements DeleteAccountUseCase {
     private final MessageProducerPort messageProducerPort;
 
     @Override
-    public DeleteAccountServiceResponse deleteAccount(Account account) {
+    public DeleteAccountServiceResponse deleteAccount(LoginAccountInfo loginInfo) {
 
-        if (!accountStoragePort.existsByEmail(account.getEmail())) {
+        if (!accountStoragePort.existsByEmail(loginInfo.getEmail())) {
             throw new CustomNotFoundException(DoesNotExist_ACCOUNT_INFO);
         }
 
-        accountStoragePort.deleteById(account.getId());
+        accountStoragePort.deleteById(loginInfo.getId());
 
         List<String> keys = redisStoragePort.getKeys(
-            String.format(tokenRedisKey, account.getEmail(), "*"));
+            String.format(tokenRedisKey, loginInfo.getEmail(), "*"));
         redisStoragePort.delete(keys);
 
-        messageProducerPort.sendMessage(deleteTopic, toJsonString(DeleteAccountLog.of(account)));
+        messageProducerPort.sendMessage(deleteTopic, toJsonString(DeleteAccountLog.of(loginInfo)));
         messageProducerPort.sendMessage(historyTopic,
-            toJsonString(AccountHistory.createAccountHistoryForDelete(account.getId())));
+            toJsonString(AccountHistory.createAccountHistoryForDelete(loginInfo.getId())));
 
-        return DeleteAccountServiceResponse.ofSuccess(account);
+        return DeleteAccountServiceResponse.ofSuccess(loginInfo);
     }
 }

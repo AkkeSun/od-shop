@@ -1,6 +1,8 @@
 package com.account.applicaiton.service.register_token;
 
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JwtUtil.createAccessToken;
+import static com.common.infrastructure.util.JwtUtil.createRefreshToken;
 
 import com.account.applicaiton.port.in.RegisterTokenUseCase;
 import com.account.applicaiton.port.in.command.RegisterTokenCommand;
@@ -11,8 +13,7 @@ import com.account.domain.model.Account;
 import com.account.domain.model.LoginLog;
 import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
-import com.account.infrastructure.util.JwtUtil;
-import com.account.infrastructure.util.UserAgentUtil;
+import com.common.infrastructure.util.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,6 @@ class RegisterTokenService implements RegisterTokenUseCase {
     private String tokenRedisKey;
     @Value("${spring.data.redis.ttl.refresh-token}")
     private Long refreshTokenTtl;
-    private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
     private final AccountStoragePort accountStoragePort;
@@ -44,7 +44,7 @@ class RegisterTokenService implements RegisterTokenUseCase {
             .accountId(account.getId())
             .email(account.getEmail())
             .userAgent(userAgentUtil.getUserAgent())
-            .refreshToken(jwtUtil.createRefreshToken(command.email()))
+            .refreshToken(createRefreshToken(command.email()))
             .roles(account.getRoles().stream()
                 .map(Role::name)
                 .toList())
@@ -58,7 +58,8 @@ class RegisterTokenService implements RegisterTokenUseCase {
         messageProducerPort.sendMessage(loginTopic, toJsonString(LoginLog.of(account)));
 
         return RegisterTokenServiceResponse.builder()
-            .accessToken(jwtUtil.createAccessToken(account))
+            .accessToken(createAccessToken(
+                account.getEmail(), account.getId(), account.getRoleString()))
             .refreshToken(refreshTokenInfo.getRefreshToken())
             .build();
     }

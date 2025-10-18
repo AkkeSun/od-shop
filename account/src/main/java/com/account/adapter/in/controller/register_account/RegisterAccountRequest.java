@@ -1,12 +1,13 @@
 package com.account.adapter.in.controller.register_account;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
+
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
-import com.account.infrastructure.request.BaseRequest;
-import com.account.infrastructure.validation.ValidPassword;
-import com.account.infrastructure.validation.ValidUserTel;
-import com.account.infrastructure.validation.ValidationGroups.CustomGroups;
-import com.account.infrastructure.validation.ValidationGroups.NotBlankGroups;
-import com.account.infrastructure.validation.ValidationGroups.SizeGroups;
+import com.common.infrastructure.validation.ValidPassword;
+import com.common.infrastructure.validation.ValidUserTel;
+import com.common.infrastructure.validation.ValidationGroups.CustomGroups;
+import com.common.infrastructure.validation.ValidationGroups.NotBlankGroups;
+import com.common.infrastructure.validation.ValidationGroups.SizeGroups;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ValidPassword(groups = CustomGroups.class)
-class RegisterAccountRequest extends BaseRequest {
+class RegisterAccountRequest {
 
     @NotBlank(message = "이메일은 필수값 입니다.", groups = NotBlankGroups.class)
     @Size(max = 50, message = "이메일은 50자 이하로 입력 가능 합니다.", groups = SizeGroups.class)
@@ -54,5 +55,10 @@ class RegisterAccountRequest extends BaseRequest {
             .address(address)
             .roles(roles)
             .build();
+    }
+
+    @Override
+    public String toString() {
+        return toJsonString(this);
     }
 }

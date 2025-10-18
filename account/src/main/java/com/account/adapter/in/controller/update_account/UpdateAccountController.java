@@ -2,10 +2,10 @@ package com.account.adapter.in.controller.update_account;
 
 import com.account.applicaiton.port.in.UpdateAccountUseCase;
 import com.account.applicaiton.service.update_account.UpdateAccountServiceResponse;
-import com.account.domain.model.Account;
-import com.account.infrastructure.resolver.LoginAccount;
-import com.account.infrastructure.response.ApiResponse;
-import com.account.infrastructure.validation.ValidationSequence;
+import com.common.infrastructure.resolver.LoginAccount;
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.response.ApiResponse;
+import com.common.infrastructure.validation.ValidationSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,9 +21,10 @@ class UpdateAccountController {
     @PutMapping("/accounts")
     ApiResponse<UpdateAccountResponse> updateAccount(
         @RequestBody @Validated(ValidationSequence.class) UpdateAccountRequest request,
-        @LoginAccount Account account) {
+        @LoginAccount LoginAccountInfo loginInfo
+    ) {
         UpdateAccountServiceResponse serviceResponse = updateAccountUseCase
-            .updateAccount(request.toCommand(account.getId()));
+            .updateAccount(request.toCommand(loginInfo.getId()));
 
         return ApiResponse.ok(UpdateAccountResponse.of(serviceResponse));
     }

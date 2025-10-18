@@ -1,9 +1,9 @@
 package com.account.applicaiton.port.in;
 
 import com.account.applicaiton.service.find_account.FindAccountServiceResponse;
-import com.account.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 
 public interface FindAccountInfoUseCase {
 
-    FindAccountServiceResponse findAccountInfo(Account account);
+    FindAccountServiceResponse findAccountInfo(LoginAccountInfo loginInfo);
 }

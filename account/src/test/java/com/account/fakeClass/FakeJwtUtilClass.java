@@ -1,7 +1,6 @@
 package com.account.fakeClass;
 
 import com.account.domain.model.Account;
-import com.account.infrastructure.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 
 public class FakeJwtUtilClass implements JwtUtil {

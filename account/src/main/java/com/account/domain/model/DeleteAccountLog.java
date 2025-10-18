@@ -1,6 +1,6 @@
 package com.account.domain.model;
 
-import java.util.stream.Collectors;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import lombok.Builder;
 
 @Builder
@@ -9,12 +9,10 @@ public record DeleteAccountLog(
     String roles
 ) {
 
-    public static DeleteAccountLog of(Account account) {
+    public static DeleteAccountLog of(LoginAccountInfo account) {
         return DeleteAccountLog.builder()
             .accountId(account.getId())
-            .roles(account.getRoles().stream()
-                .map(Role::name)
-                .collect(Collectors.joining(",")))
+            .roles(String.join(",", account.getRoles()))
             .build();
     }
 }

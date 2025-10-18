@@ -1,9 +1,9 @@
 package com.account.applicaiton.port.in;
 
 import com.account.applicaiton.service.delete_token.DeleteTokenServiceResponse;
-import com.account.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 
 public interface DeleteTokenUseCase {
 
-    DeleteTokenServiceResponse deleteToken(Account account);
+    DeleteTokenServiceResponse deleteToken(LoginAccountInfo loginInfo);
 }

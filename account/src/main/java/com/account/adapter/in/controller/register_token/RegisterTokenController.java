@@ -2,7 +2,7 @@ package com.account.adapter.in.controller.register_token;
 
 import com.account.applicaiton.port.in.RegisterTokenUseCase;
 import com.account.applicaiton.service.register_token.RegisterTokenServiceResponse;
-import com.account.infrastructure.response.ApiResponse;
+import com.common.infrastructure.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,8 @@ class RegisterTokenController {
 
     @PostMapping("/auth")
     ApiResponse<RegisterTokenResponse> registerToken(
-        @RequestBody @Valid RegisterTokenRequest request) {
+        @RequestBody @Valid RegisterTokenRequest request
+    ) {
         RegisterTokenServiceResponse serviceResponse = registerTokenUseCase
             .registerToken(request.toCommand());
 

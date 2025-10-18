@@ -26,15 +26,8 @@ public class RefreshTokenInfo {
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
-
-    public Account toAccount() {
-        return Account.builder()
-            .id(accountId)
-            .email(email)
-            .roles(roles.stream()
-                .map(role -> Role.builder().name(role).build())
-                .toList()
-            )
-            .build();
+    
+    public String getRoleString() {
+        return String.join(",", roles);
     }
 }

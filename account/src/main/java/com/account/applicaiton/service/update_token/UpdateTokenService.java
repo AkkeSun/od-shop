@@ -1,14 +1,17 @@
 package com.account.applicaiton.service.update_token;
 
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JwtUtil.createAccessToken;
+import static com.common.infrastructure.util.JwtUtil.createRefreshToken;
+import static com.common.infrastructure.util.JwtUtil.getEmail;
+import static com.common.infrastructure.util.JwtUtil.validateTokenExceptExpiration;
 
 import com.account.applicaiton.port.in.UpdateTokenUseCase;
 import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.domain.model.RefreshTokenInfo;
-import com.account.infrastructure.exception.CustomAuthenticationException;
-import com.account.infrastructure.exception.ErrorCode;
-import com.account.infrastructure.util.JwtUtil;
-import com.account.infrastructure.util.UserAgentUtil;
+import com.common.infrastructure.exception.CustomAuthenticationException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.util.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,17 +29,16 @@ class UpdateTokenService implements UpdateTokenUseCase {
     private String tokenRedisKey;
     @Value("${spring.data.redis.ttl.refresh-token}")
     private Long refreshTokenTtl;
-    private final JwtUtil jwtUtil;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
 
     @Override
     public UpdateTokenServiceResponse update(String refreshToken) {
-        if (!jwtUtil.validateTokenExceptExpiration(refreshToken)) {
+        if (!validateTokenExceptExpiration(refreshToken)) {
             throw new CustomAuthenticationException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
 
-        String email = jwtUtil.getEmail(refreshToken);
+        String email = getEmail(refreshToken);
         String userAgent = userAgentUtil.getUserAgent();
         String redisKey = String.format(tokenRedisKey, email, userAgent);
 
@@ -46,11 +48,11 @@ class UpdateTokenService implements UpdateTokenUseCase {
             throw new CustomAuthenticationException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
 
-        tokenInfo.updateRefreshToken(jwtUtil.createRefreshToken(email));
+        tokenInfo.updateRefreshToken(createRefreshToken(email));
         redisStoragePort.register(redisKey, toJsonString(tokenInfo), refreshTokenTtl);
 
         return UpdateTokenServiceResponse.builder()
-            .accessToken(jwtUtil.createAccessToken(tokenInfo.toAccount()))
+            .accessToken(createAccessToken(email, tokenInfo.getId(), tokenInfo.getRoleString()))
             .refreshToken(tokenInfo.getRefreshToken())
             .build();
     }

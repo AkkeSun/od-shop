@@ -2,7 +2,7 @@ package com.account.applicaiton.service.delete_token;
 
 import com.account.applicaiton.port.in.DeleteTokenUseCase;
 import com.account.applicaiton.port.out.RedisStoragePort;
-import com.account.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ class DeleteTokenService implements DeleteTokenUseCase {
     private final RedisStoragePort redisStoragePort;
 
     @Override
-    public DeleteTokenServiceResponse deleteToken(Account account) {
+    public DeleteTokenServiceResponse deleteToken(LoginAccountInfo account) {
         List<String> keys = redisStoragePort.getKeys(
             String.format(tokenRedisKey, account.getEmail(), "*"));
 
