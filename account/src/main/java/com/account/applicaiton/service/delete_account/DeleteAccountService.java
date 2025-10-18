@@ -1,7 +1,7 @@
 package com.account.applicaiton.service.delete_account;
 
 import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
-import static com.account.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.port.out.AccountStoragePort;

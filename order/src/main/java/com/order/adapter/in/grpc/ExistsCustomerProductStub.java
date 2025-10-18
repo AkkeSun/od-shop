@@ -1,7 +1,8 @@
 package com.order.adapter.in.grpc;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 import static com.order.infrastructure.util.GrpcUtil.sendErrorResponse;
-import static com.order.infrastructure.util.JsonUtil.toJsonString;
+import static com.order.infrastructure.util.GrpcUtil.tGrpcRequestJson;
 
 import com.order.application.port.in.ExistsCustomerOrderUseCase;
 import com.order.application.port.in.command.ExistsCustomerOrderCommand;
@@ -31,7 +32,7 @@ class ExistsCustomerProductStub extends ExistsCustomerProductServiceImplBase {
         StreamObserver<ExistsCustomerProductResponse> responseObserver
     ) {
         try {
-            log.info("[gRPC] {} request - {}", methodName, toJsonString(request));
+            log.info("[gRPC] {} request - {}", methodName, tGrpcRequestJson(request));
             ExistsCustomerOrderServiceResponse response = useCase.exists(
                 ExistsCustomerOrderCommand.builder()
                     .productId(request.getProductId())

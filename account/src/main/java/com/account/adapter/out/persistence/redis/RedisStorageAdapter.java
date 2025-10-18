@@ -1,7 +1,7 @@
 package com.account.adapter.out.persistence.redis;
 
-import static com.account.infrastructure.util.JsonUtil.parseJson;
-import static com.account.infrastructure.util.JsonUtil.parseJsonList;
+import static com.common.infrastructure.util.JsonUtil.parseJson;
+import static com.common.infrastructure.util.JsonUtil.parseJsonList;
 
 import com.account.applicaiton.port.out.RedisStoragePort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;

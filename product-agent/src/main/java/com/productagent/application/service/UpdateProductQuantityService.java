@@ -1,9 +1,10 @@
 package com.productagent.application.service;
 
+import static com.common.infrastructure.util.JsonUtil.parseJson;
+
 import com.productagent.application.port.in.UpdateProductQuantityUseCase;
 import com.productagent.application.port.out.ProductClientPort;
 import com.productagent.domain.model.RefundProductMessage;
-import com.productagent.infrastructure.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ class UpdateProductQuantityService implements UpdateProductQuantityUseCase {
 
     @Override
     public void updateQuantity(String payload) {
-        RefundProductMessage message = JsonUtil.parseJson(payload, RefundProductMessage.class);
+        RefundProductMessage message = parseJson(payload, RefundProductMessage.class);
         productClientPort.updateProductQuantity(message);
     }
 }

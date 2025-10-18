@@ -2,7 +2,7 @@ package com.account.applicaiton.service.register_account;
 
 import static com.account.infrastructure.exception.ErrorCode.Business_SAVED_ACCOUNT_INFO;
 import static com.account.infrastructure.exception.ErrorCode.INVALID_ROLE;
-import static com.account.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;

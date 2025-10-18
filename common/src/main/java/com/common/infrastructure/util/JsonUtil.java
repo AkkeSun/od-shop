@@ -1,14 +1,28 @@
-package com.account.infrastructure.util;
+package com.common.infrastructure.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class JsonUtil {
 
-    private final static ObjectMapper objectMapper = new ObjectMapper();
+    private final static ObjectMapper objectMapper;
+
+    static {
+        objectMapper = new ObjectMapper();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        JavaTimeModule module = new JavaTimeModule();
+        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(formatter));
+        objectMapper.registerModule(module);
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    }
 
     public static <T> T parseJson(String json, Class<T> valueType) {
         try {

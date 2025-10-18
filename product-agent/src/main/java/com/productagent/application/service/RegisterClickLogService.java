@@ -1,11 +1,12 @@
 package com.productagent.application.service;
 
+import static com.common.infrastructure.util.JsonUtil.parseJson;
+
 import com.productagent.application.port.in.RegisterClickLogUseCase;
 import com.productagent.application.port.out.LogStoragePort;
 import com.productagent.domain.model.Product;
 import com.productagent.domain.model.ProductClickLog;
 import com.productagent.infrastructure.constant.CollectionName;
-import com.productagent.infrastructure.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ class RegisterClickLogService implements RegisterClickLogUseCase {
 
         for (ConsumerRecord<String, String> record : records) {
             String payload = record.value();
-            ProductClickLog clickLog = JsonUtil.parseJson(payload, ProductClickLog.class);
+            ProductClickLog clickLog = parseJson(payload, ProductClickLog.class);
             if (ObjectUtils.isEmpty(clickLog)) {
                 log.error("[registerClickLogService] parsingFailed - {} ", payload);
                 continue;

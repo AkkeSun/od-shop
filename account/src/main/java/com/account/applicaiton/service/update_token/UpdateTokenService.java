@@ -1,6 +1,6 @@
 package com.account.applicaiton.service.update_token;
 
-import static com.account.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.UpdateTokenUseCase;
 import com.account.applicaiton.port.out.RedisStoragePort;

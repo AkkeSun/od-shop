@@ -1,8 +1,8 @@
 package com.order.application.service.cancel_order;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 import static com.order.infrastructure.exception.ErrorCode.Business_ALREADY_CANCEL_ORDCER;
 import static com.order.infrastructure.exception.ErrorCode.Business_NO_CUSTOMER;
-import static com.order.infrastructure.util.JsonUtil.toJsonString;
 
 import com.order.application.port.in.CancelOrderUseCase;
 import com.order.application.port.in.command.CancelOrderCommand;

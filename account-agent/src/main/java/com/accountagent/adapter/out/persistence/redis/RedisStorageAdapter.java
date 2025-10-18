@@ -1,6 +1,6 @@
 package com.accountagent.adapter.out.persistence.redis;
 
-import static com.accountagent.infrastructure.util.JsonUtil.parseJson;
+import static com.common.infrastructure.util.JsonUtil.parseJson;
 
 import com.accountagent.application.port.out.RedisStoragePort;
 import com.accountagent.domain.model.AccountHistory;

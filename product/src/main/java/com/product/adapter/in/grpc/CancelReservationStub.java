@@ -1,5 +1,6 @@
 package com.product.adapter.in.grpc;
 
+import static com.product.infrastructure.util.GrpcUtil.tGrpcRequestJson;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.CancelReservationUseCase;
@@ -27,7 +28,7 @@ public class CancelReservationStub extends CancelProductReservationServiceImplBa
         StreamObserver<CancelProductReservationResponse> responseObserver) {
         try {
 
-            log.info("[gRPC] cancelReservation request - {}", toJsonString(request));
+            log.info("[gRPC] cancelReservation request - {}", tGrpcRequestJson(request));
 
             CancelReservationServiceResponse response = useCase.cancel(CancelReservationCommand.builder()
                     .productId(request.getProductId())

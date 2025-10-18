@@ -3,7 +3,6 @@ package com.order.adapter.out.persistence.redis;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.order.IntegrationTestSupport;
-import com.order.infrastructure.util.JsonUtil;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,9 +1,10 @@
 package com.accountagent.application.service.register_login_log;
 
+import static com.common.infrastructure.util.JsonUtil.parseJson;
+
 import com.accountagent.application.port.in.RegisterLoginLogUseCase;
 import com.accountagent.application.port.out.LogStoragePort;
 import com.accountagent.domain.model.LoginLog;
-import com.accountagent.infrastructure.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ class RegisterLoginLogService implements RegisterLoginLogUseCase {
 
     @Override
     public RegisterLoginLogServiceResponse registerLoginLog(String payload) {
-        LoginLog loginLog = JsonUtil.parseJson(payload, LoginLog.class);
+        LoginLog loginLog = parseJson(payload, LoginLog.class);
         logStoragePort.registerLoginLog(loginLog);
         return RegisterLoginLogServiceResponse.builder().result("Y").build();
     }

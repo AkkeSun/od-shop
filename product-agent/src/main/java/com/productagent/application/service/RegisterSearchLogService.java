@@ -1,6 +1,6 @@
 package com.productagent.application.service;
 
-import static com.productagent.infrastructure.util.JsonUtil.parseJson;
+import static com.common.infrastructure.util.JsonUtil.parseJson;
 
 import com.productagent.application.port.in.RegisterSearchLogUseCase;
 import com.productagent.application.port.out.LogStoragePort;

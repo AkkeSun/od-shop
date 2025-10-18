@@ -2,6 +2,9 @@ package com.product.infrastructure.util;
 
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.MessageOrBuilder;
+import com.google.protobuf.util.JsonFormat;
 import com.product.infrastructure.exception.CustomAuthenticationException;
 import com.product.infrastructure.exception.CustomAuthorizationException;
 import com.product.infrastructure.exception.CustomBusinessException;
@@ -49,5 +52,15 @@ public class GrpcUtil {
         }
         return Status.INTERNAL
             .withDescription(e.getMessage());
+    }
+
+    public static String tGrpcRequestJson(MessageOrBuilder message) {
+        try {
+            return JsonFormat.printer()
+                .omittingInsignificantWhitespace()
+                .print(message);
+        } catch (InvalidProtocolBufferException e) {
+            return "";
+        }
     }
 }

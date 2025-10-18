@@ -1,6 +1,6 @@
 package com.account.applicaiton.service.register_token;
 
-import static com.account.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.RegisterTokenUseCase;
 import com.account.applicaiton.port.in.command.RegisterTokenCommand;

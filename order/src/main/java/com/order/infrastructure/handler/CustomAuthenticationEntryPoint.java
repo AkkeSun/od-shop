@@ -1,6 +1,6 @@
 package com.order.infrastructure.handler;
 
-import static com.order.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.order.infrastructure.exception.ErrorCode;
 import com.order.infrastructure.exception.ErrorResponse;

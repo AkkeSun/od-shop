@@ -10,7 +10,6 @@ import com.account.applicaiton.port.in.UpdateTokenUseCase;
 import com.account.infrastructure.config.SecurityConfig;
 import com.account.infrastructure.filter.ApiCallLogFilter;
 import com.account.infrastructure.filter.JwtAuthenticationFilter;
-import com.account.infrastructure.util.JsonUtil;
 import com.account.infrastructure.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

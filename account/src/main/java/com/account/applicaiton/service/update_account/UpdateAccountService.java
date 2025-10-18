@@ -1,7 +1,7 @@
 package com.account.applicaiton.service.update_account;
 
 import static com.account.domain.model.AccountHistory.createAccountHistoryForUpdate;
-import static com.account.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.applicaiton.port.in.UpdateAccountUseCase;
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;

@@ -1,5 +1,6 @@
 package com.product.adapter.in.grpc;
 
+import static com.product.infrastructure.util.GrpcUtil.tGrpcRequestJson;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.FindProductUseCase;
@@ -29,7 +30,7 @@ class FindProductStub extends FindProductServiceImplBase {
         StreamObserver<FindProductResponse> responseObserver) {
         try {
 
-            log.info("[gRPC] findProduct request - {}", toJsonString(request));
+            log.info("[gRPC] findProduct request - {}", tGrpcRequestJson(request));
 
             FindProductServiceResponse response = useCase.findProduct(FindProductCommand.builder()
                 .productId(request.getProductId())

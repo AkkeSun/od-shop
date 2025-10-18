@@ -11,7 +11,6 @@ import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
 import com.account.infrastructure.exception.CustomAuthenticationException;
 import com.account.infrastructure.exception.ErrorCode;
-import com.account.infrastructure.util.JsonUtil;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

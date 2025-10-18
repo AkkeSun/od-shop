@@ -5,7 +5,6 @@ import static com.account.infrastructure.util.JsonUtil.parseJson;
 import com.account.IntegrationTestSupport;
 import com.account.domain.model.Account;
 import com.account.domain.model.RefreshTokenInfo;
-import com.account.infrastructure.util.JsonUtil;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

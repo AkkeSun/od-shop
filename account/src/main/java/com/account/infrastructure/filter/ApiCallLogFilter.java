@@ -1,6 +1,6 @@
 package com.account.infrastructure.filter;
 
-import static com.account.infrastructure.util.JsonUtil.extractJsonField;
+import static com.common.infrastructure.util.JsonUtil.extractJsonField;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;

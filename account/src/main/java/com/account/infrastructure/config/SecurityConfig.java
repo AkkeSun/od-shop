@@ -1,6 +1,6 @@
 package com.account.infrastructure.config;
 
-import static com.account.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.account.infrastructure.exception.ErrorCode;
 import com.account.infrastructure.exception.ErrorResponse;

@@ -1,7 +1,8 @@
 package com.order.adapter.in.grpc;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 import static com.order.infrastructure.util.GrpcUtil.sendErrorResponse;
-import static com.order.infrastructure.util.JsonUtil.toJsonString;
+import static com.order.infrastructure.util.GrpcUtil.tGrpcRequestJson;
 
 import com.order.application.port.in.FindOrderProductIdsUseCase;
 import com.order.application.port.in.command.FindOrderProductIdsCommand;
@@ -31,7 +32,7 @@ class FindOrderProductIdsStub extends FindOrderProductIdsServiceImplBase {
         StreamObserver<FindOrderProductIdsResponse> responseObserver
     ) {
         try {
-            log.info("[gRPC] {} request - {}", methodName, toJsonString(request));
+            log.info("[gRPC] {} request - {}", methodName, tGrpcRequestJson(request));
             List<Long> response = useCase.findOrderProductIds(
                 FindOrderProductIdsCommand.builder()
                     .customerId(request.getCustomerId())

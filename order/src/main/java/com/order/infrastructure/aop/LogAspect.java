@@ -1,6 +1,6 @@
 package com.order.infrastructure.aop;
 
-import static com.order.infrastructure.util.JsonUtil.toObjectNode;
+import static com.common.infrastructure.util.JsonUtil.toObjectNode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;

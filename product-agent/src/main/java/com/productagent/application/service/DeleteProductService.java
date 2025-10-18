@@ -1,11 +1,12 @@
 package com.productagent.application.service;
 
+import static com.common.infrastructure.util.JsonUtil.parseJson;
+
 import com.productagent.application.port.in.DeleteProductUseCase;
 import com.productagent.application.port.out.ElasticSearchClientPort;
 import com.productagent.application.port.out.ProductStoragePort;
 import com.productagent.application.port.out.ReviewStoragePort;
 import com.productagent.domain.model.DeleteAccountLog;
-import com.productagent.infrastructure.util.JsonUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ class DeleteProductService implements DeleteProductUseCase {
 
     @Override
     public void delete(String payload) {
-        DeleteAccountLog account = JsonUtil.parseJson(payload, DeleteAccountLog.class);
+        DeleteAccountLog account = parseJson(payload, DeleteAccountLog.class);
         if (account.isSeller()) {
             List<Long> productIds = productStoragePort.findIdBySellerId(account.accountId());
             productStoragePort.deleteBySellerId(account.accountId());
