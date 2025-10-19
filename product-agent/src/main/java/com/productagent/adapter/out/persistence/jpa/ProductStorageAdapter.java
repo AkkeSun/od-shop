@@ -1,6 +1,6 @@
 package com.productagent.adapter.out.persistence.jpa;
 
-import static com.productagent.infrastructure.util.ShardKeyUtil.isShard1;
+import static com.common.infrastructure.util.ShardKeyUtil.isShard1;
 
 import com.productagent.adapter.out.persistence.jpa.shard1.ProductShard1Adapter;
 import com.productagent.adapter.out.persistence.jpa.shard2.ProductShard2Adapter;
