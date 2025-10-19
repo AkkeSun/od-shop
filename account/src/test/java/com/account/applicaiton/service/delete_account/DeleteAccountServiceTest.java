@@ -6,10 +6,10 @@ import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
-import com.account.infrastructure.exception.CustomNotFoundException;
-import com.account.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,13 +27,11 @@ class DeleteAccountServiceTest {
     DeleteAccountService service;
     FakeRedisStoragePortClass fakeCachePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
-    FakeJwtUtilClass fakeJwtUtilClass;
     DummyMessageProducerPortClass dummyMessageProducerPortClass;
 
     DeleteAccountServiceTest() {
         fakeCachePortClass = new FakeRedisStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
-        fakeJwtUtilClass = new FakeJwtUtilClass();
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
 
         service = new DeleteAccountService(
@@ -71,10 +69,14 @@ class DeleteAccountServiceTest {
                 .password("1234")
                 .build();
             fakeAccountStorageClass.register(account);
-            String authentication = fakeJwtUtilClass.createAccessToken(account);
 
             // when
-            DeleteAccountServiceResponse response = service.deleteAccount(account);
+            DeleteAccountServiceResponse response = service.deleteAccount(LoginAccountInfo
+                .builder()
+                .id(account.getId())
+                .email(account.getEmail())
+                .roles(List.of("ROLE_CUSTOMER"))
+                .build());
 
             // then
             assert response.result().equals("Y");
@@ -88,12 +90,9 @@ class DeleteAccountServiceTest {
         @Test
         @DisplayName("[error] 조회된 사용자 정보가 없다면 예외를 응답하는지 확인한다.")
         void error1() {
-            // given
-            String authentication = "error";
-
             // when
             CustomNotFoundException exception = assertThrows(CustomNotFoundException.class,
-                () -> service.deleteAccount(new Account()));
+                () -> service.deleteAccount(new LoginAccountInfo()));
 
             // then
             assert exception.getErrorCode().equals(ErrorCode.DoesNotExist_ACCOUNT_INFO);

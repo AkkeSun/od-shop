@@ -17,9 +17,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.DeleteAccountUseCase;
 import com.account.applicaiton.service.delete_account.DeleteAccountServiceResponse;
-import com.account.infrastructure.exception.CustomAuthenticationException;
-import com.account.infrastructure.exception.CustomNotFoundException;
-import com.account.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.CustomAuthenticationException;
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.ErrorCode;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import org.junit.jupiter.api.DisplayName;

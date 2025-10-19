@@ -14,8 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.RegisterAccountUseCase;
 import com.account.applicaiton.service.register_account.RegisterAccountServiceResponse;
-import com.account.infrastructure.exception.CustomValidationException;
-import com.account.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.CustomValidationException;
+import com.common.infrastructure.exception.ErrorCode;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;

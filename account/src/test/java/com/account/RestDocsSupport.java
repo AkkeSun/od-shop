@@ -1,6 +1,6 @@
 package com.account;
 
-import com.account.infrastructure.exception.ExceptionAdvice;
+import com.common.infrastructure.exception.ExceptionAdvice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

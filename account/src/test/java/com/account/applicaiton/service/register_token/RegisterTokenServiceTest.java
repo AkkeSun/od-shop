@@ -5,9 +5,9 @@ import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
+import com.common.infrastructure.util.JwtUtil;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,21 +23,18 @@ import org.springframework.test.util.ReflectionTestUtils;
 class RegisterTokenServiceTest {
 
     RegisterTokenService service;
-    FakeJwtUtilClass fakeJwtUtilClass;
     FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass fakeUserAgentUtilClass;
     DummyMessageProducerPortClass dummyMessageProducerPortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     RegisterTokenServiceTest() {
-        fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         fakeUserAgentUtilClass = new StubUserAgentUtilClass();
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
         service = new RegisterTokenService(
-            fakeJwtUtilClass,
             fakeUserAgentUtilClass,
             fakeRedisStoragePortClass,
             fakeAccountStorageClass,
@@ -81,8 +78,9 @@ class RegisterTokenServiceTest {
             RegisterTokenServiceResponse response = service.registerToken(command);
 
             // then
-            assert response.accessToken().equals("valid token - " + account.getEmail());
-            assert response.refreshToken().equals("valid refresh token - " + account.getEmail());
+            assert JwtUtil.validateTokenExceptExpiration(response.accessToken());
+            assert account.getEmail().equals(JwtUtil.getEmail(response.accessToken()));
+            assert account.getId().equals(JwtUtil.getAccountId(response.accessToken()));
             assert output.toString().contains("FakeCachePortClass registerToken");
             assert output.toString().contains("[account-login] ==>");
         }

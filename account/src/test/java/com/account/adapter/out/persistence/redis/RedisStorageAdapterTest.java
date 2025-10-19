@@ -1,10 +1,11 @@
 package com.account.adapter.out.persistence.redis;
 
-import static com.account.infrastructure.util.JsonUtil.parseJson;
+import static com.common.infrastructure.util.JsonUtil.parseJson;
 
 import com.account.IntegrationTestSupport;
 import com.account.domain.model.Account;
 import com.account.domain.model.RefreshTokenInfo;
+import com.common.infrastructure.util.JsonUtil;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

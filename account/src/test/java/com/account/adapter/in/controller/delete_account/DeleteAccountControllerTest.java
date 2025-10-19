@@ -1,6 +1,6 @@
 package com.account.adapter.in.controller.delete_account;
 
-import static com.account.infrastructure.exception.ErrorCode.INVALID_ACCESS_TOKEN;
+import static com.common.infrastructure.exception.ErrorCode.INVALID_ACCESS_TOKEN;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.account.ControllerTestSupport;
 import com.account.applicaiton.service.delete_account.DeleteAccountServiceResponse;
-import com.account.infrastructure.exception.ErrorResponse;
-import com.account.infrastructure.response.ApiResponse;
+import com.common.infrastructure.exception.ErrorResponse;
+import com.common.infrastructure.response.ApiResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -52,7 +52,8 @@ class UpdateTokenService implements UpdateTokenUseCase {
         redisStoragePort.register(redisKey, toJsonString(tokenInfo), refreshTokenTtl);
 
         return UpdateTokenServiceResponse.builder()
-            .accessToken(createAccessToken(email, tokenInfo.getId(), tokenInfo.getRoleString()))
+            .accessToken(createAccessToken(
+                email, tokenInfo.getAccountId(), tokenInfo.getRoleString()))
             .refreshToken(tokenInfo.getRefreshToken())
             .build();
     }

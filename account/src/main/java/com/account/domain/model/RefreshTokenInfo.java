@@ -1,5 +1,6 @@
 package com.account.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,8 @@ public class RefreshTokenInfo {
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
-    
+
+    @JsonIgnore
     public String getRoleString() {
         return String.join(",", roles);
     }

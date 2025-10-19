@@ -7,12 +7,12 @@ import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.FakeRoleStoragePort;
 import com.account.fakeClass.StubUserAgentUtilClass;
-import com.account.infrastructure.exception.CustomBusinessException;
-import com.account.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.util.JwtUtil;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,21 +28,17 @@ import org.springframework.test.util.ReflectionTestUtils;
 class RegisterAccountServiceTest {
 
     RegisterAccountService service;
-    FakeJwtUtilClass fakeJwtUtilClass;
     FakeRoleStoragePort fakeRoleStoragePort;
     FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass stubUserAgentUtilClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     RegisterAccountServiceTest() {
-        fakeJwtUtilClass = new FakeJwtUtilClass();
-        fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         fakeRoleStoragePort = new FakeRoleStoragePort();
         stubUserAgentUtilClass = new StubUserAgentUtilClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
-
+        fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         service = new RegisterAccountService(
-            fakeJwtUtilClass,
             stubUserAgentUtilClass,
             fakeRoleStoragePort,
             fakeRedisStoragePortClass,
@@ -78,8 +74,11 @@ class RegisterAccountServiceTest {
             RegisterAccountServiceResponse response = service.registerAccount(command);
 
             // then
-            assert response.accessToken().equals("valid token - new email");
-            assert response.refreshToken().equals("valid refresh token - new email");
+            Account savedAccount = fakeAccountStorageClass.accountList.getFirst();
+            assert savedAccount.getEmail().equals(command.email());
+            assert savedAccount.getAddress().equals(command.address());
+            assert savedAccount.getUserTel().equals(command.userTel());
+            assert JwtUtil.validateTokenExceptExpiration(response.accessToken());
             assert output.toString().contains("FakeCachePortClass registerToken");
         }
 

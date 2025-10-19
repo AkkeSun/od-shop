@@ -1,16 +1,17 @@
 package com.account.applicaiton.service.update_token;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.account.domain.model.Account;
 import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
-import com.account.infrastructure.exception.CustomAuthenticationException;
-import com.account.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.CustomAuthenticationException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.util.JwtUtil;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,19 +27,16 @@ import org.springframework.test.util.ReflectionTestUtils;
 class UpdateTokenByRefreshServiceTest {
 
     UpdateTokenService service;
-    FakeJwtUtilClass fakeJwtUtilClass;
     FakeRedisStoragePortClass fakeRedisStoragePortClass;
     StubUserAgentUtilClass fakeUserAgentUtilClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     UpdateTokenByRefreshServiceTest() {
-        fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeRedisStoragePortClass = new FakeRedisStoragePortClass();
         fakeUserAgentUtilClass = new StubUserAgentUtilClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
         service = new UpdateTokenService(
-            fakeJwtUtilClass,
             fakeUserAgentUtilClass,
             fakeRedisStoragePortClass
         );
@@ -73,7 +71,7 @@ class UpdateTokenByRefreshServiceTest {
         @DisplayName("[success] 리프레시 토큰이 캐시에 저장되어 있고 유효 하다면 인증 토큰을 갱신한 후 응답한다.")
         void success1(CapturedOutput output) {
             // given
-            String refreshToken = "valid refresh token - od@test.com";
+            String refreshToken = JwtUtil.createRefreshToken("od@test.com");
             RefreshTokenInfo token = RefreshTokenInfo.builder()
                 .accountId(1L)
                 .email("od@test.com")
@@ -82,14 +80,15 @@ class UpdateTokenByRefreshServiceTest {
                 .roles(List.of("ROLE_CUSTOMER"))
                 .build();
             String key = String.format("token::%s-%s", token.getEmail(), token.getUserAgent());
-            fakeRedisStoragePortClass.register(key, JsonUtil.toJsonString(token), 10L);
+            fakeRedisStoragePortClass.register(key, toJsonString(token), 10L);
 
             // when
             UpdateTokenServiceResponse serviceResponse = service.update(refreshToken);
 
             // then
-            assert serviceResponse.accessToken().equals("valid token - od@test.com");
-            assert serviceResponse.refreshToken().equals("valid refresh token - od@test.com");
+            assert JwtUtil.validateTokenExceptExpiration(serviceResponse.accessToken());
+            assert JwtUtil.getEmail(serviceResponse.accessToken()).equals(token.getEmail());
+            assert JwtUtil.getAccountId(serviceResponse.accessToken()).equals(token.getAccountId());
             assert output.toString().contains("FakeCachePortClass registerToken");
         }
 
@@ -107,7 +106,7 @@ class UpdateTokenByRefreshServiceTest {
                 .roles(List.of("ROLE_CUSTOMER"))
                 .build();
             String key = String.format("token::%s-%s", token.getEmail(), token.getUserAgent());
-            fakeRedisStoragePortClass.register(key, JsonUtil.toJsonString(token), 10L);
+            fakeRedisStoragePortClass.register(key, toJsonString(token), 10L);
 
             // when
             CustomAuthenticationException exception = assertThrows(

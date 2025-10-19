@@ -1,6 +1,6 @@
 package com.account.adapter.in.controller.update_account;
 
-import static com.account.infrastructure.exception.ErrorCode.INVALID_ACCESS_TOKEN;
+import static com.common.infrastructure.exception.ErrorCode.INVALID_ACCESS_TOKEN;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;

@@ -1,6 +1,6 @@
 package com.account.adapter.in.controller.register_token;
 
-import static com.account.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
+import static com.common.infrastructure.exception.ErrorCode.DoesNotExist_ACCOUNT_INFO;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.account.RestDocsSupport;
 import com.account.applicaiton.port.in.RegisterTokenUseCase;
 import com.account.applicaiton.service.register_token.RegisterTokenServiceResponse;
-import com.account.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.CustomNotFoundException;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;

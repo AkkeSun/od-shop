@@ -3,7 +3,7 @@ package com.account.applicaiton.service.find_account;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeJwtUtilClass;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,11 +14,9 @@ import org.junit.jupiter.api.Test;
 class FindAccountServiceTest {
 
     FindAccountService service;
-    FakeJwtUtilClass fakeJwtUtilClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     FindAccountServiceTest() {
-        fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         service = new FindAccountService(
             fakeAccountStorageClass
@@ -50,10 +48,13 @@ class FindAccountServiceTest {
                 .password("1234")
                 .build();
             fakeAccountStorageClass.register(account);
-            String authentication = fakeJwtUtilClass.createAccessToken(account);
 
             // when
-            FindAccountServiceResponse response = service.findAccountInfo(account);
+            FindAccountServiceResponse response = service.findAccountInfo(
+                LoginAccountInfo.builder()
+                    .email(account.getEmail())
+                    .id(account.getId())
+                    .build());
 
             // then
             assert response.id().equals(account.getId());

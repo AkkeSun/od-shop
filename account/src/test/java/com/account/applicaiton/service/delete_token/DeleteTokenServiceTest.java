@@ -3,8 +3,8 @@ package com.account.applicaiton.service.delete_token;
 import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
-import com.account.fakeClass.FakeJwtUtilClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -19,12 +19,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 class DeleteTokenServiceTest {
 
     DeleteTokenService service;
-    FakeJwtUtilClass fakeJwtUtilClass;
     FakeRedisStoragePortClass fakeCachePortClass;
     FakeAccountStorageClass fakeAccountStorageClass;
 
     DeleteTokenServiceTest() {
-        fakeJwtUtilClass = new FakeJwtUtilClass();
         fakeCachePortClass = new FakeRedisStoragePortClass();
         fakeAccountStorageClass = new FakeAccountStorageClass();
         service = new DeleteTokenService(
@@ -52,10 +50,11 @@ class DeleteTokenServiceTest {
                 .password("1234")
                 .build();
             fakeAccountStorageClass.register(account);
-            String authentication = "valid token - " + account.getEmail();
 
             // when
-            DeleteTokenServiceResponse result = service.deleteToken(account);
+            DeleteTokenServiceResponse result = service.deleteToken(LoginAccountInfo.builder()
+                .email(account.getEmail())
+                .build());
 
             // then
             assert result.result().equals("Y");

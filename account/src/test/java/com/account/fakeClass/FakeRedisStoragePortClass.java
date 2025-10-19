@@ -1,6 +1,9 @@
 package com.account.fakeClass;
 
+import static com.common.infrastructure.util.JsonUtil.parseJson;
+
 import com.account.applicaiton.port.out.RedisStoragePort;
+import com.common.infrastructure.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +19,7 @@ public class FakeRedisStoragePortClass implements RedisStoragePort {
     public <T> T findData(String key, Class<T> clazz) {
         String s = redisData.get(key);
         if (s != null) {
-            return JsonUtil.parseJson(s, clazz);
+            return parseJson(s, clazz);
         }
         return null;
     }

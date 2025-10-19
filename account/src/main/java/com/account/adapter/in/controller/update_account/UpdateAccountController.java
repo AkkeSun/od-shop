@@ -5,7 +5,7 @@ import com.account.applicaiton.service.update_account.UpdateAccountServiceRespon
 import com.common.infrastructure.resolver.LoginAccount;
 import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.common.infrastructure.response.ApiResponse;
-import com.common.infrastructure.validation.ValidationSequence;
+import com.common.infrastructure.validation.groups.ValidationSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PutMapping;
