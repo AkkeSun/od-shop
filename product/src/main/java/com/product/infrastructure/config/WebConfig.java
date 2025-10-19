@@ -1,6 +1,6 @@
 package com.product.infrastructure.config;
 
-import com.product.infrastructure.resolver.LoginAccountResolver;
+import com.common.infrastructure.resolver.LoginAccountResolver;
 import java.util.List;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

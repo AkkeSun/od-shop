@@ -4,8 +4,6 @@ import com.product.IntegrationTestSupport;
 import com.product.application.port.in.command.IncreaseProductQuantityCommand;
 import com.product.application.port.out.MessageProducerPort;
 import com.product.application.port.out.ProductStoragePort;
-import com.product.domain.model.Account;
-import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -1,10 +1,10 @@
 package com.product.adapter.in.controller.find_recommend_product;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
+
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
 import com.product.application.port.in.command.FindRecommendProductCommand;
-import com.product.domain.model.Account;
-import com.product.infrastructure.validation.ValidDateType;
-import com.product.infrastructure.validation.groups.ValidationGroups.CustomGroups;
-import com.product.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,14 +17,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 class FindRecommendProductRequest {
 
-    @ValidDateType(groups = CustomGroups.class)
     @NotBlank(message = "검색 날짜는 필수값 입니다", groups = NotBlankGroups.class)
     private String searchDate;
 
-    FindRecommendProductCommand toCommand(Account account) {
+    FindRecommendProductCommand toCommand(LoginAccountInfo loginInfo) {
         return FindRecommendProductCommand.builder()
-            .accountId(account == null ? null : account.id())
+            .accountId(loginInfo == null ? null : loginInfo.getId())
             .searchDate(searchDate)
             .build();
+    }
+
+    @Override
+    public String toString() {
+        return toJsonString(this);
     }
 }

@@ -1,15 +1,15 @@
 package com.product.application.port.in.command;
 
-import com.product.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import lombok.Builder;
 
 @Builder
 public record IncreaseProductQuantityCommand(
     long quantity,
-    Account account
+    LoginAccountInfo loginInfo
 ) {
 
     public boolean isRefundRequest() {
-        return account == null;
+        return loginInfo == null;
     }
 }

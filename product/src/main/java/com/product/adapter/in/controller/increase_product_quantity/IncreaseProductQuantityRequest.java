@@ -1,8 +1,10 @@
 package com.product.adapter.in.controller.increase_product_quantity;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
+
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.validation.groups.ValidationGroups.SizeGroups;
 import com.product.application.port.in.command.IncreaseProductQuantityCommand;
-import com.product.domain.model.Account;
-import com.product.infrastructure.validation.groups.ValidationGroups.SizeGroups;
 import jakarta.validation.constraints.Min;
 import lombok.Builder;
 
@@ -12,10 +14,15 @@ record IncreaseProductQuantityRequest(
     int quantity
 ) {
 
-    IncreaseProductQuantityCommand of(Account account) {
+    IncreaseProductQuantityCommand of(LoginAccountInfo loginInfo) {
         return IncreaseProductQuantityCommand.builder()
             .quantity(quantity)
-            .account(account)
+            .loginInfo(loginInfo)
             .build();
+    }
+
+    @Override
+    public String toString() {
+        return toJsonString(this);
     }
 }

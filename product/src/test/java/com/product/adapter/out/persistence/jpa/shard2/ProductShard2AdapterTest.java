@@ -3,7 +3,6 @@ package com.product.adapter.out.persistence.jpa.shard2;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.IntegrationTestSupport;
-import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomNotFoundException;
 import com.product.infrastructure.exception.ErrorCode;

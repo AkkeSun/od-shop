@@ -1,7 +1,7 @@
 package com.product.infrastructure.aop;
 
-import com.product.infrastructure.exception.CustomServerException;
-import com.product.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -48,7 +48,7 @@ public class DistributedLockAspect {
             return aopForTransaction.proceed(joinPoint);
         } catch (InterruptedException | RedisConnectionException | RedisTimeoutException e) {
             log.error("[DistributedLockAspect] {}", e.getMessage());
-            throw new CustomServerException(ErrorCode.SERVER_DISTRIBUTE_LOCK);
+            throw new CustomBusinessException(ErrorCode.Business_DISTRIBUTE_LOCK);
         } finally {
             if (rLock.isHeldByCurrentThread()) {
                 rLock.unlock();

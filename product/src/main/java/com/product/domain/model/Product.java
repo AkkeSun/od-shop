@@ -74,8 +74,8 @@ public class Product {
     public static Product of(RegisterProductCommand command, Long id) {
         return Product.builder()
             .id(id)
-            .sellerId(command.account().id())
-            .sellerEmail(command.account().email())
+            .sellerId(command.loginInfo().getId())
+            .sellerEmail(command.loginInfo().getEmail())
             .productName(command.productName())
             .productImgUrl(command.productImgUrl())
             .descriptionImgUrl(command.descriptionImgUrl())

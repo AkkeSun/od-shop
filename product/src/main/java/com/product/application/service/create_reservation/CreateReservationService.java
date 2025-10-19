@@ -1,14 +1,16 @@
 package com.product.application.service.create_reservation;
 
-import static com.product.infrastructure.exception.ErrorCode.Business_OUT_OF_STOCK;
+import static com.common.infrastructure.exception.ErrorCode.Business_OUT_OF_STOCK;
 
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.util.ShardKeyUtil;
+import com.common.infrastructure.util.SnowflakeGenerator;
 import com.product.application.port.in.CreateReservationUseCase;
 import com.product.application.port.in.command.CreateReservationCommand;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductReserveHistory;
 import com.product.infrastructure.aop.DistributedLock;
-import com.product.infrastructure.exception.CustomBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

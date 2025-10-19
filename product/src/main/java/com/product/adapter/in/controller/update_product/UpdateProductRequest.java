@@ -1,10 +1,10 @@
 package com.product.adapter.in.controller.update_product;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
+
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.validation.groups.ValidationGroups.SizeGroups;
 import com.product.application.port.in.command.UpdateProductCommand;
-import com.product.domain.model.Account;
-import com.product.infrastructure.validation.groups.ValidationGroups.SizeGroups;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
 import lombok.Builder;
@@ -28,9 +28,9 @@ record UpdateProductRequest(
     String descriptionImgUrl
 ) {
 
-    UpdateProductCommand toCommand(Account account, Long productId) {
+    UpdateProductCommand toCommand(LoginAccountInfo loginInfo, Long productId) {
         return UpdateProductCommand.builder()
-            .account(account)
+            .loginInfo(loginInfo)
             .productId(productId)
             .productName(productName)
             .productImgUrl(productImgUrl)
@@ -42,10 +42,6 @@ record UpdateProductRequest(
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return "";
-        }
+        return toJsonString(this);
     }
 }

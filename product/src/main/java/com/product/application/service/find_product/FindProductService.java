@@ -1,6 +1,6 @@
 package com.product.application.service.find_product;
 
-import static com.product.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.in.command.FindProductCommand;

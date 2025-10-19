@@ -2,7 +2,7 @@ package com.product.adapter.in.grpc;
 
 import static com.common.infrastructure.util.GrpcUtil.getGrpcRequestJson;
 import static com.common.infrastructure.util.GrpcUtil.sendErrorResponse;
-import static com.product.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.IncreaseProductQuantityUseCase;
 import com.product.application.port.in.command.IncreaseProductQuantityCommand;

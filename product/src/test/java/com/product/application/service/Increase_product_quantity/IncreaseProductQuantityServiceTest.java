@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.application.port.in.IncreaseProductQuantityUseCase;
 import com.product.application.port.in.command.IncreaseProductQuantityCommand;
-import com.product.domain.model.Account;
-import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
 import com.product.fakeClass.FakeProductStoragePort;

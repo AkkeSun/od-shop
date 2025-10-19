@@ -1,8 +1,8 @@
 package com.product.application.service.find_product;
 
+import com.common.infrastructure.util.DateUtil;
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
-import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import lombok.Builder;
 
@@ -32,8 +32,7 @@ public record FindProductServiceResponse(
             .price(product.getPrice())
             .quantity(product.getQuantity())
             .category(product.getCategory())
-            .regDateTime(
-                product.getRegDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+            .regDateTime(DateUtil.formatDateTime(product.getRegDateTime()))
             .build();
     }
 }

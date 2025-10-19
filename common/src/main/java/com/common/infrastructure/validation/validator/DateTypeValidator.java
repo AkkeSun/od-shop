@@ -1,6 +1,6 @@
-package com.product.infrastructure.validation.validator;
+package com.common.infrastructure.validation.validator;
 
-import com.product.infrastructure.validation.ValidDateType;
+import com.common.infrastructure.validation.ValidDateType;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDate;

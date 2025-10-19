@@ -1,7 +1,6 @@
 package com.product.adapter.in.controller.register_product;
 
 import com.product.application.service.register_product.RegisterProductServiceResponse;
-import com.product.domain.model.Category;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

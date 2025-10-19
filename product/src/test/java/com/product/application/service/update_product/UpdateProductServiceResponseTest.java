@@ -1,6 +1,5 @@
 package com.product.application.service.update_product;
 
-import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;

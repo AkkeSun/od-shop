@@ -1,6 +1,6 @@
 package com.product.adapter.out.client.elasticsearch;
 
-import static com.product.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.command.FindProductListCommand;
 import com.product.application.port.out.ElasticSearchClientPort;

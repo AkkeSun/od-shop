@@ -5,7 +5,6 @@ import com.product.adapter.out.persistence.jpa.shard1.ReviewShard1Adapter;
 import com.product.adapter.out.persistence.jpa.shard2.ReviewShard2Adapter;
 import com.product.application.port.in.command.FindReviewListCommand;
 import com.product.application.port.in.command.RegisterReviewCommand;
-import com.product.domain.model.Account;
 import com.product.domain.model.Review;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

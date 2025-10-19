@@ -1,8 +1,8 @@
 package com.product.adapter.out.persistence.redis;
 
 
-import static com.product.infrastructure.util.JsonUtil.parseJson;
-import static com.product.infrastructure.util.JsonUtil.parseJsonList;
+import static com.common.infrastructure.util.JsonUtil.parseJson;
+import static com.common.infrastructure.util.JsonUtil.parseJsonList;
 
 import com.product.application.port.out.RedisStoragePort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;

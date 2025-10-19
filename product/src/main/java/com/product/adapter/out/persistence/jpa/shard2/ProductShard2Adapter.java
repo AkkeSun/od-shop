@@ -1,12 +1,12 @@
 package com.product.adapter.out.persistence.jpa.shard2;
 
-import static com.product.infrastructure.exception.ErrorCode.DoesNotExist_PRODUCT_RESERVE_INFO;
+import static com.common.infrastructure.exception.ErrorCode.DoesNotExist_PRODUCT_RESERVE_INFO;
 
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.ErrorCode;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductReserveHistory;
-import com.product.infrastructure.exception.CustomNotFoundException;
-import com.product.infrastructure.exception.ErrorCode;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

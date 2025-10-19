@@ -1,7 +1,6 @@
 package com.product.adapter.in.controller.increase_product_quantity;
 
 import com.product.application.port.in.command.IncreaseProductQuantityCommand;
-import com.product.domain.model.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

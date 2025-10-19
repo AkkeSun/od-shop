@@ -33,7 +33,7 @@ public class ReviewShard1Adapter implements ReviewStoragePort {
 
     @Override
     public boolean existsByCustomerIdAndProductId(RegisterReviewCommand command) {
-        return repository.existsByCustomerIdAndProductId(command.account().id(),
+        return repository.existsByCustomerIdAndProductId(command.loginInfo().getId(),
             command.productId());
     }
 

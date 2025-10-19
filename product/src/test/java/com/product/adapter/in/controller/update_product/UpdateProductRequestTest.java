@@ -1,8 +1,6 @@
 package com.product.adapter.in.controller.update_product;
 
-import com.product.adapter.in.controller.update_product.UpdateProductRequest;
 import com.product.application.port.in.command.UpdateProductCommand;
-import com.product.domain.model.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

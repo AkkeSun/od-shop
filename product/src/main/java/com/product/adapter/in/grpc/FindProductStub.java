@@ -1,7 +1,7 @@
 package com.product.adapter.in.grpc;
 
 import static com.common.infrastructure.util.GrpcUtil.getGrpcRequestJson;
-import static com.product.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.common.infrastructure.util.GrpcUtil;
 import com.product.application.port.in.FindProductUseCase;

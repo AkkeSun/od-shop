@@ -1,5 +1,6 @@
 package com.product.adapter.out.persistence.jpa;
 
+import com.common.infrastructure.util.ShardKeyUtil;
 import com.product.adapter.out.persistence.jpa.shard1.ProductShard1Adapter;
 import com.product.adapter.out.persistence.jpa.shard2.ProductShard2Adapter;
 import com.product.application.port.out.ProductStoragePort;

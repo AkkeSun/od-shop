@@ -3,7 +3,6 @@ package com.product.application.service.find_recommend_product;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.command.FindRecommendProductCommand;
-import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductRecommend;
 import com.product.fakeClass.DummyGeminiClientPort;

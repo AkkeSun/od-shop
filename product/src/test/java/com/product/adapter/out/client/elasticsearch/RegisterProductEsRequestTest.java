@@ -1,6 +1,5 @@
 package com.product.adapter.out.client.elasticsearch;
 
-import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import java.time.LocalDateTime;
 import java.util.Set;

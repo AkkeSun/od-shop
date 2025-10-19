@@ -1,12 +1,12 @@
 package com.product.application.port.in.command;
 
-import com.product.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import java.util.Set;
 import lombok.Builder;
 
 @Builder
 public record UpdateProductCommand(
-    Account account,
+    LoginAccountInfo loginInfo,
     Long productId,
     String productName,
     String productImgUrl,

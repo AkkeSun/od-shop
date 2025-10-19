@@ -1,10 +1,10 @@
 package com.product.infrastructure.config;
 
+import com.common.infrastructure.filter.ApiCallLogFilter;
+import com.common.infrastructure.filter.JwtAuthenticationFilter;
+import com.common.infrastructure.handler.CustomAccessDeniedHandler;
+import com.common.infrastructure.handler.CustomAuthenticationEntryPoint;
 import com.product.infrastructure.filter.AuthorizationFilter;
-import com.product.infrastructure.filter.CustomErrorLogFilter;
-import com.product.infrastructure.filter.JwtAuthenticationFilter;
-import com.product.infrastructure.handler.CustomAccessDeniedHandler;
-import com.product.infrastructure.handler.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtFilter;
-    private final CustomErrorLogFilter errorLogFilter;
+    private final ApiCallLogFilter apiCallLogFilter;
     private final AuthorizationFilter authorizationFilter;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
@@ -39,7 +39,7 @@ public class SecurityConfig {
             .sessionManagement(session -> {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             })
-            .addFilterBefore(errorLogFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(apiCallLogFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 
             // --------------- 인가 정책 ---------------

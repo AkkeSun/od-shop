@@ -19,7 +19,6 @@ import com.epages.restdocs.apispec.Schema;
 import com.product.RestDocsSupport;
 import com.product.application.port.in.RegisterProductUseCase;
 import com.product.application.service.register_product.RegisterProductServiceResponse;
-import com.product.domain.model.Category;
 import com.product.infrastructure.exception.CustomAuthenticationException;
 import com.product.infrastructure.exception.CustomAuthorizationException;
 import com.product.infrastructure.exception.ErrorCode;

@@ -1,17 +1,17 @@
 package com.product.application.service.update_product;
 
-import static com.product.infrastructure.exception.ErrorCode.ACCESS_DENIED;
-import static com.product.infrastructure.exception.ErrorCode.Business_DoesNotExist_UPDATE_INFO;
-import static com.product.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.exception.ErrorCode.ACCESS_DENIED;
+import static com.common.infrastructure.exception.ErrorCode.Business_DoesNotExist_UPDATE_INFO;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
+import com.common.infrastructure.exception.CustomAuthorizationException;
+import com.common.infrastructure.exception.CustomBusinessException;
 import com.product.application.port.in.UpdateProductUseCase;
 import com.product.application.port.in.command.UpdateProductCommand;
 import com.product.application.port.out.MessageProducerPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductHistory;
-import com.product.infrastructure.exception.CustomAuthorizationException;
-import com.product.infrastructure.exception.CustomBusinessException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +29,7 @@ class UpdateProductService implements UpdateProductUseCase {
     @Override
     public UpdateProductServiceResponse updateProduct(UpdateProductCommand command) {
         Product product = productStoragePort.findByIdAndDeleteYn(command.productId(), "N");
-        if (!product.isSeller(command.account().id())) {
+        if (!product.isSeller(command.loginInfo().getId())) {
             throw new CustomAuthorizationException(ACCESS_DENIED);
         }
 

@@ -3,7 +3,6 @@ package com.product.application.service.update_product;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.application.port.in.command.UpdateProductCommand;
-import com.product.domain.model.Account;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
 import com.product.fakeClass.FakeProductStoragePort;

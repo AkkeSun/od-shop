@@ -3,7 +3,6 @@ package com.product.application.service.delete_product;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.application.port.out.ReviewStoragePort;
-import com.product.domain.model.Account;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
 import com.product.fakeClass.FakeElasticSearchClientPort;

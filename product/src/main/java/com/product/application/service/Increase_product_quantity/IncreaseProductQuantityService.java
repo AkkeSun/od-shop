@@ -1,8 +1,9 @@
 package com.product.application.service.Increase_product_quantity;
 
-import static com.product.infrastructure.exception.ErrorCode.ACCESS_DENIED;
-import static com.product.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.exception.ErrorCode.ACCESS_DENIED;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
+import com.common.infrastructure.exception.CustomAuthorizationException;
 import com.product.application.port.in.IncreaseProductQuantityUseCase;
 import com.product.application.port.in.command.IncreaseProductQuantityCommand;
 import com.product.application.port.out.MessageProducerPort;
@@ -10,7 +11,6 @@ import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductHistory;
 import com.product.infrastructure.aop.DistributedLock;
-import com.product.infrastructure.exception.CustomAuthorizationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,7 @@ public class IncreaseProductQuantityService implements IncreaseProductQuantityUs
         Long productId, IncreaseProductQuantityCommand command
     ) {
         Product product = productStoragePort.findByIdAndDeleteYn(productId, "N");
-        if (!command.isRefundRequest() && !product.isSeller(command.account().id())) {
+        if (!command.isRefundRequest() && !product.isSeller(command.loginInfo().getId())) {
             throw new CustomAuthorizationException(ACCESS_DENIED);
         }
 

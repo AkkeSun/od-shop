@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.product.ControllerTestSupport;
 import com.product.application.service.register_product.RegisterProductServiceResponse;
-import com.product.domain.model.Category;
 import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

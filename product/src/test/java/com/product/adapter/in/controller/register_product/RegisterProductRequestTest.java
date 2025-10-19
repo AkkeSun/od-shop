@@ -1,7 +1,6 @@
 package com.product.adapter.in.controller.register_product;
 
 import com.product.application.port.in.command.RegisterProductCommand;
-import com.product.domain.model.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

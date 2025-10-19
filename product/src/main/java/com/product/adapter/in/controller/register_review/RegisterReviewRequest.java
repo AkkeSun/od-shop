@@ -1,11 +1,11 @@
 package com.product.adapter.in.controller.register_review;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
+
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
+import com.common.infrastructure.validation.groups.ValidationGroups.SizeGroups;
 import com.product.application.port.in.command.RegisterReviewCommand;
-import com.product.domain.model.Account;
-import com.product.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
-import com.product.infrastructure.validation.groups.ValidationGroups.SizeGroups;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -26,10 +26,10 @@ record RegisterReviewRequest(
     Double score
 ) {
 
-    RegisterReviewCommand toCommand(Long productId, Account account) {
+    RegisterReviewCommand toCommand(Long productId, LoginAccountInfo loginInfo) {
         return RegisterReviewCommand.builder()
             .productId(productId)
-            .account(account)
+            .loginInfo(loginInfo)
             .score(score)
             .review(review)
             .build();
@@ -37,10 +37,6 @@ record RegisterReviewRequest(
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return "";
-        }
+        return toJsonString(this);
     }
 }

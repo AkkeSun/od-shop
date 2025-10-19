@@ -82,6 +82,20 @@ public class ExceptionAdvice {
         );
     }
 
+
+    @ExceptionHandlerLog
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(CustomAuthorizationException.class)
+    ApiResponse<Object> customAuthenticationException(CustomAuthorizationException e) {
+        return ApiResponse.of(
+            HttpStatus.FORBIDDEN,
+            ErrorResponse.builder()
+                .errorCode(e.getErrorCode().getCode())
+                .errorMessage(e.getErrorCode().getMessage())
+                .build()
+        );
+    }
+
     @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(CustomBusinessException.class)

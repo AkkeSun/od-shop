@@ -1,11 +1,11 @@
 package com.product.adapter.in.controller.register_review;
 
+import com.common.infrastructure.resolver.LoginAccount;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.common.infrastructure.response.ApiResponse;
+import com.common.infrastructure.validation.groups.ValidationSequence;
 import com.product.application.port.in.RegisterReviewUseCase;
 import com.product.application.service.register_review.RegisterReviewServiceResponse;
-import com.product.domain.model.Account;
-import com.product.infrastructure.resolver.LoginAccount;
-import com.product.infrastructure.validation.groups.ValidationSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +22,11 @@ class RegisterReviewController {
     @PostMapping("/products/{productId}/reviews")
     ApiResponse<RegisterReviewResponse> registerReview(
         @Validated(ValidationSequence.class) @RequestBody RegisterReviewRequest request,
-        @LoginAccount Account account,
+        @LoginAccount LoginAccountInfo loginInfo,
         @PathVariable Long productId
     ) {
         RegisterReviewServiceResponse serviceResponse = useCase.registerReview(
-            request.toCommand(productId, account));
+            request.toCommand(productId, loginInfo));
 
         return ApiResponse.ok(RegisterReviewResponse.of(serviceResponse));
     }

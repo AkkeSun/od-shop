@@ -1,6 +1,5 @@
 package com.product.application.service.register_product;
 
-import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

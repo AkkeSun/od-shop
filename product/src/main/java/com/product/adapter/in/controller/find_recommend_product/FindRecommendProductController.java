@@ -1,11 +1,11 @@
 package com.product.adapter.in.controller.find_recommend_product;
 
+import com.common.infrastructure.resolver.LoginAccount;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.common.infrastructure.response.ApiResponse;
+import com.common.infrastructure.validation.groups.ValidationSequence;
 import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.service.find_recommend_product.FindRecommendProductServiceResponse;
-import com.product.domain.model.Account;
-import com.product.infrastructure.resolver.LoginAccount;
-import com.product.infrastructure.validation.groups.ValidationSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +20,10 @@ class FindRecommendProductController {
     @GetMapping("/products/recommendations")
     ApiResponse<FindRecommendProductResponse> findRecommendProducts(
         @Validated(ValidationSequence.class) FindRecommendProductRequest request,
-        @LoginAccount Account account
+        @LoginAccount LoginAccountInfo loginInfo
     ) {
         FindRecommendProductServiceResponse serviceResponse = useCase
-            .findRecommendProductList(request.toCommand(account));
+            .findRecommendProductList(request.toCommand(loginInfo));
 
         return ApiResponse.ok(FindRecommendProductResponse.of(serviceResponse));
     }

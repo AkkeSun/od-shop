@@ -1,13 +1,13 @@
 package com.product.adapter.in.controller.register_product;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
+
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.validation.Contains;
+import com.common.infrastructure.validation.groups.ValidationGroups.CustomGroups;
+import com.common.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
+import com.common.infrastructure.validation.groups.ValidationGroups.SizeGroups;
 import com.product.application.port.in.command.RegisterProductCommand;
-import com.product.domain.model.Account;
-import com.product.infrastructure.validation.ValidCategory;
-import com.product.infrastructure.validation.groups.ValidationGroups.CustomGroups;
-import com.product.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
-import com.product.infrastructure.validation.groups.ValidationGroups.SizeGroups;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,7 +19,9 @@ record RegisterProductRequest(
     @NotBlank(message = "상품명은 필수값 입니다", groups = NotBlankGroups.class)
     String productName,
 
-    @ValidCategory(groups = CustomGroups.class)
+    @Contains(
+        values = {"DIGITAL", "FASHION", "SPORTS", "FOOD", "LIFE", "TOTAL"},
+        groups = CustomGroups.class, message = "존재하지 않은 카테고리 입니다")
     @NotBlank(message = "카테고리는 필수값 입니다", groups = SizeGroups.class)
     String category,
 
@@ -38,9 +40,9 @@ record RegisterProductRequest(
     String descriptionImgUrl
 ) {
 
-    RegisterProductCommand toCommand(Account account) {
+    RegisterProductCommand toCommand(LoginAccountInfo loginInfo) {
         return RegisterProductCommand.builder()
-            .account(account)
+            .loginInfo(loginInfo)
             .productName(productName)
             .productImgUrl(productImgUrl)
             .descriptionImgUrl(descriptionImgUrl)
@@ -52,10 +54,6 @@ record RegisterProductRequest(
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return "";
-        }
+        return toJsonString(this);
     }
 }

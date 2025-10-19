@@ -1,7 +1,6 @@
 package com.product.adapter.in.controller.update_product;
 
 import com.product.application.service.update_product.UpdateProductServiceResponse;
-import com.product.domain.model.Category;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

@@ -1,11 +1,11 @@
 package com.product.application.port.in.command;
 
-import com.product.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import lombok.Builder;
 
 @Builder
 public record RegisterReviewCommand(
-    Account account,
+    LoginAccountInfo loginInfo,
     Long productId,
     double score,
     String review

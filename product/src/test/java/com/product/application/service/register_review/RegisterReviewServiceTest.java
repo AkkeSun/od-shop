@@ -3,7 +3,6 @@ package com.product.application.service.register_review;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.application.port.in.command.RegisterReviewCommand;
-import com.product.domain.model.Account;
 import com.product.domain.model.Product;
 import com.product.domain.model.Review;
 import com.product.fakeClass.DummyOrderClientPort;

@@ -1,9 +1,9 @@
 package com.product.application.service.find_recommend_product;
 
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 import static com.product.domain.model.RecommendType.PERSONAL;
 import static com.product.domain.model.RecommendType.POPULAR;
 import static com.product.domain.model.RecommendType.TREND;
-import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.port.in.command.FindRecommendProductCommand;

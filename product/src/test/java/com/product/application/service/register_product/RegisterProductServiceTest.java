@@ -4,7 +4,6 @@ import static com.product.infrastructure.exception.ErrorCode.Business_ES_PRODUCT
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.product.application.port.in.command.RegisterProductCommand;
-import com.product.domain.model.Account;
 import com.product.fakeClass.DummyGeminiClientPort;
 import com.product.fakeClass.DummySnowflakeGenerator;
 import com.product.fakeClass.FakeElasticSearchClientPort;

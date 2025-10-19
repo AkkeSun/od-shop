@@ -1,11 +1,11 @@
 package com.product.application.port.in.command;
 
-import com.product.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import lombok.Builder;
 
 @Builder
 public record RegisterProductCommand(
-    Account account,
+    LoginAccountInfo loginInfo,
     String productName,
     String productImgUrl,
     String descriptionImgUrl,

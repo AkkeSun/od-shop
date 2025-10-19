@@ -19,7 +19,6 @@ import com.product.RestDocsSupport;
 import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.in.command.FindProductCommand;
 import com.product.application.service.find_product.FindProductServiceResponse;
-import com.product.domain.model.Category;
 import com.product.infrastructure.exception.CustomNotFoundException;
 import com.product.infrastructure.exception.ErrorCode;
 import java.util.Set;

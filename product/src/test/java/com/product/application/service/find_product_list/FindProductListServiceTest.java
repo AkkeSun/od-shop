@@ -1,7 +1,6 @@
 package com.product.application.service.find_product_list;
 
 import com.product.application.port.in.command.FindProductListCommand;
-import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.domain.model.SortType;
 import com.product.fakeClass.DummyMessageProducerPort;

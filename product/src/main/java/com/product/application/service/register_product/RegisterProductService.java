@@ -1,15 +1,16 @@
 package com.product.application.service.register_product;
 
 
-import static com.product.infrastructure.exception.ErrorCode.Business_ES_PRODUCT_SAVE;
+import static com.common.infrastructure.exception.ErrorCode.Business_ES_PRODUCT_SAVE;
 
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.util.SnowflakeGenerator;
 import com.product.application.port.in.RegisterProductUseCase;
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.application.port.out.ElasticSearchClientPort;
 import com.product.application.port.out.GeminiClientPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
-import com.product.infrastructure.exception.CustomBusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
