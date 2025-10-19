@@ -10,7 +10,6 @@ import com.product.application.port.out.GeminiClientPort;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomBusinessException;
-import com.product.infrastructure.util.SnowflakeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

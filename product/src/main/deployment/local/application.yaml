@@ -109,8 +109,6 @@ resilience4j:
         base-config: default
 
 service-constant:
-  aes:
-    secret-key: testKey
   snowflake:
     dataCenterId: 0
     workerId: 1

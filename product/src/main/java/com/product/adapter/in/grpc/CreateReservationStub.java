@@ -1,12 +1,12 @@
 package com.product.adapter.in.grpc;
 
-import static com.product.infrastructure.util.GrpcUtil.tGrpcRequestJson;
+import static com.common.infrastructure.util.GrpcUtil.getGrpcRequestJson;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
+import com.common.infrastructure.util.GrpcUtil;
 import com.product.application.port.in.CreateReservationUseCase;
 import com.product.application.port.in.command.CreateReservationCommand;
 import com.product.application.service.create_reservation.CreateReservationServiceResponse;
-import com.product.infrastructure.util.GrpcUtil;
 import grpc.product.CreateProductReservationRequest;
 import grpc.product.CreateProductReservationResponse;
 import grpc.product.CreateProductReservationServiceGrpc.CreateProductReservationServiceImplBase;
@@ -29,7 +29,7 @@ class CreateReservationStub extends CreateProductReservationServiceImplBase {
         StreamObserver<CreateProductReservationResponse> responseObserver) {
         try {
 
-            log.info("[gRPC] createReservation request - {}", tGrpcRequestJson(request));
+            log.info("[gRPC] createReservation request - {}", getGrpcRequestJson(request));
             CreateReservationServiceResponse response = useCase.reserve(
                 CreateReservationCommand.builder()
                 .productId(request.getProductId())

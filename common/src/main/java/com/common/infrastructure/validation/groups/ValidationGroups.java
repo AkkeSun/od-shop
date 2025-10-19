@@ -1,4 +1,4 @@
-package com.order.infrastructure.validation.groups;
+package com.common.infrastructure.validation.groups;
 
 public class ValidationGroups {
 

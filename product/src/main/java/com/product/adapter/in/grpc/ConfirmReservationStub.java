@@ -1,12 +1,12 @@
 package com.product.adapter.in.grpc;
 
-import static com.product.infrastructure.util.GrpcUtil.tGrpcRequestJson;
+import static com.common.infrastructure.util.GrpcUtil.getGrpcRequestJson;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
+import com.common.infrastructure.util.GrpcUtil;
 import com.product.application.port.in.ConfirmReservationUseCase;
 import com.product.application.port.in.command.ConfirmReservationCommand;
 import com.product.application.service.confirm_reeservation.ConfirmReservationServiceResponse;
-import com.product.infrastructure.util.GrpcUtil;
 import grpc.product.ConfirmProductReservationRequest;
 import grpc.product.ConfirmProductReservationResponse;
 import grpc.product.ConfirmProductReservationServiceGrpc.ConfirmProductReservationServiceImplBase;
@@ -28,7 +28,7 @@ public class ConfirmReservationStub extends ConfirmProductReservationServiceImpl
         StreamObserver<ConfirmProductReservationResponse> responseObserver) {
         try {
 
-            log.info("[gRPC] confirmReservation request - {}", tGrpcRequestJson(request));
+            log.info("[gRPC] confirmReservation request - {}", getGrpcRequestJson(request));
 
             ConfirmReservationServiceResponse response = useCase.confirmReservation(
                 ConfirmReservationCommand.builder()

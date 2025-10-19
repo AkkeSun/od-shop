@@ -1,4 +1,4 @@
-package com.order.infrastructure.exception;
+package com.common.infrastructure.exception;
 
 import lombok.Getter;
 

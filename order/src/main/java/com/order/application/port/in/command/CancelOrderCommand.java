@@ -1,12 +1,12 @@
 package com.order.application.port.in.command;
 
-import com.order.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import lombok.Builder;
 
 @Builder
 public record CancelOrderCommand(
     Long orderId,
-    Account account
+    LoginAccountInfo account
 ) {
 
 }

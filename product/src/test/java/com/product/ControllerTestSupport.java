@@ -15,7 +15,6 @@ import com.product.application.port.in.RegisterReviewUseCase;
 import com.product.application.port.in.UpdateProductUseCase;
 import com.product.application.port.out.AuthorizationStoragePort;
 import com.product.domain.model.AuthorizationRule;
-import com.product.infrastructure.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

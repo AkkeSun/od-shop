@@ -1,11 +1,11 @@
 package com.order.adapter.in.controller.reserve_product;
 
+import com.common.infrastructure.resolver.LoginAccount;
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.response.ApiResponse;
 import com.order.application.port.in.ReserveProductUseCase;
 import com.order.application.port.in.command.ReserveProductCommand;
 import com.order.application.service.reserve_product.ReserveProductServiceResponse;
-import com.order.domain.model.Account;
-import com.order.infrastructure.resolver.LoginAccount;
-import com.order.infrastructure.response.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ class ReserveProductController {
     @PostMapping("/orders/reservation")
     ApiResponse<List<ReserveProductResponse>> reserveProducts(
         @RequestBody @Valid List<ReserveProductRequest> request,
-        @LoginAccount Account account
+        @LoginAccount LoginAccountInfo loginInfo
     ) {
 
         List<ReserveProductServiceResponse> serviceResponses = useCase.reservation(
             ReserveProductCommand.builder()
-                .accountId(account.id())
+                .accountId(loginInfo.getId())
                 .items(request.stream().map(ReserveProductRequest::toCommandItem).toList())
                 .build());
         return ApiResponse.ok(serviceResponses.stream()

@@ -1,7 +1,7 @@
 package com.product.adapter.in.grpc;
 
-import static com.product.infrastructure.util.GrpcUtil.sendErrorResponse;
-import static com.product.infrastructure.util.GrpcUtil.tGrpcRequestJson;
+import static com.common.infrastructure.util.GrpcUtil.getGrpcRequestJson;
+import static com.common.infrastructure.util.GrpcUtil.sendErrorResponse;
 import static com.product.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.IncreaseProductQuantityUseCase;
@@ -32,7 +32,7 @@ class UpdateProductQuantityStub extends UpdateProductQuantityServiceImplBase {
         StreamObserver<UpdateProductQuantityStubResponse> responseObserver
     ) {
         try {
-            log.info("[gRPC] {} request - {}", methodName, tGrpcRequestJson(request));
+            log.info("[gRPC] {} request - {}", methodName, getGrpcRequestJson(request));
             IncreaseProductQuantityServiceResponse response = useCase.update(
                 request.getProductId(),
                 IncreaseProductQuantityCommand.builder()

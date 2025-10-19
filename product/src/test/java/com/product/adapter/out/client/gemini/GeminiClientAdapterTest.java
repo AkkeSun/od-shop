@@ -5,7 +5,6 @@ import com.product.adapter.out.client.gemini.GeminiEmbeddingResponse.GeminiEmbed
 import com.product.adapter.out.client.gemini.GeminiQueryResponse.GeminiQueryCandidate;
 import com.product.adapter.out.client.gemini.GeminiQueryResponse.GeminiQueryCandidate.GeminiQueryCandidateContent;
 import com.product.adapter.out.client.gemini.GeminiQueryResponse.GeminiQueryCandidate.GeminiQueryCandidateContent.GeminiQueryCandidateContentPart;
-import com.product.infrastructure.util.JsonUtil;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.mockwebserver.MockResponse;

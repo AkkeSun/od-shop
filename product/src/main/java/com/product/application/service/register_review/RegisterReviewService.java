@@ -12,7 +12,6 @@ import com.product.domain.model.Product;
 import com.product.domain.model.Review;
 import com.product.infrastructure.exception.CustomAuthorizationException;
 import com.product.infrastructure.exception.CustomBusinessException;
-import com.product.infrastructure.util.SnowflakeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

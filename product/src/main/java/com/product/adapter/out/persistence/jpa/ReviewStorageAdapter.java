@@ -6,7 +6,6 @@ import com.product.application.port.in.command.FindReviewListCommand;
 import com.product.application.port.in.command.RegisterReviewCommand;
 import com.product.application.port.out.ReviewStoragePort;
 import com.product.domain.model.Review;
-import com.product.infrastructure.util.ShardKeyUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;

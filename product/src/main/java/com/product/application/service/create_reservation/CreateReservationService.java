@@ -9,8 +9,6 @@ import com.product.domain.model.Product;
 import com.product.domain.model.ProductReserveHistory;
 import com.product.infrastructure.aop.DistributedLock;
 import com.product.infrastructure.exception.CustomBusinessException;
-import com.product.infrastructure.util.ShardKeyUtil;
-import com.product.infrastructure.util.SnowflakeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.product.infrastructure.util;
+package com.common.infrastructure.util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class SnowflakeGeneratorImpl implements SnowflakeGenerator {
     private final long sequenceMask = ~(-1L << sequenceBits);        // 최대 4095
 
     private long sequence = 0L;
-    
+
     private long lastTimestamp = -1L;
 
     public synchronized long nextId() {

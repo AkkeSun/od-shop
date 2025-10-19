@@ -1,7 +1,7 @@
 package com.order.adapter.in.controller.find_customer_orders;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.order.application.port.in.command.FindCustomerOrdersCommand;
-import com.order.domain.model.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,11 +16,11 @@ class FindCustomerOrdersRequest {
     private Integer page;
     private Integer size;
 
-    FindCustomerOrdersCommand toCommand(Account account) {
+    FindCustomerOrdersCommand toCommand(LoginAccountInfo loginInfo) {
         return FindCustomerOrdersCommand.builder()
             .page(page == null ? 0 : page)
             .size(size == null ? 10 : size)
-            .customerId(account.id())
+            .customerId(loginInfo.getId())
             .build();
     }
 }

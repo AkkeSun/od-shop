@@ -1,5 +1,6 @@
 package com.order.domain.model;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.order.application.port.in.command.RegisterOrderCommand;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,8 +34,8 @@ public record Order(
         products.forEach(order -> order.cancel(now));
     }
 
-    public boolean isCustomer(Account account) {
-        return this.customerId.equals(account.id());
+    public boolean isCustomer(LoginAccountInfo loginInfo) {
+        return this.customerId.equals(loginInfo.getId());
     }
 
     public boolean isCanceled() {

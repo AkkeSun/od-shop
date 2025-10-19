@@ -1,15 +1,15 @@
-package com.order.infrastructure.util;
+package com.common.infrastructure.util;
 
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
+import com.common.infrastructure.exception.CustomAuthenticationException;
+import com.common.infrastructure.exception.CustomAuthorizationException;
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.CustomServerException;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageOrBuilder;
 import com.google.protobuf.util.JsonFormat;
-import com.order.infrastructure.exception.CustomAuthenticationException;
-import com.order.infrastructure.exception.CustomAuthorizationException;
-import com.order.infrastructure.exception.CustomBusinessException;
-import com.order.infrastructure.exception.CustomNotFoundException;
-import com.order.infrastructure.exception.CustomServerException;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ public class GrpcUtil {
             .withDescription(e.getMessage());
     }
 
-    public static String tGrpcRequestJson(MessageOrBuilder message) {
+    public static String getGrpcRequestJson(MessageOrBuilder message) {
         try {
             return JsonFormat.printer()
                 .omittingInsignificantWhitespace()

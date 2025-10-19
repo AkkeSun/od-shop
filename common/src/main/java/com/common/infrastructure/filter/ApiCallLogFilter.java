@@ -1,7 +1,10 @@
 package com.common.infrastructure.filter;
 
 import static com.common.infrastructure.util.JsonUtil.extractJsonField;
+import static com.common.infrastructure.util.JsonUtil.toObjectNode;
+import static com.common.infrastructure.util.JwtUtil.getClaims;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.servlet.FilterChain;
@@ -43,7 +46,8 @@ public class ApiCallLogFilter extends OncePerRequestFilter {
                 ObjectNode requestInfo = new ObjectMapper().createObjectNode();
                 ObjectNode requestParam = new ObjectMapper().createObjectNode();
                 ObjectNode requestBody = new ObjectMapper().createObjectNode();
-
+                ObjectNode userInfo = new ObjectMapper().createObjectNode();
+                
                 // request parameter
                 request.getParameterMap().forEach((key, value) -> {
                     requestParam.put(key, String.join(",", value));
@@ -57,11 +61,20 @@ public class ApiCallLogFilter extends OncePerRequestFilter {
                 } catch (Exception ignored) {
                 }
 
+                // user info
+                String token = request.getHeader("Authorization");
+                if (token != null) {
+                    try {
+                        userInfo = toObjectNode(LoginAccountInfo.of(getClaims(token)));
+                    } catch (Exception ignore) {
+                    }
+                }
+
                 requestInfo.put("param", requestParam);
                 requestInfo.put("body", requestBody);
+                requestInfo.put("userInfo", userInfo);
 
-                // todo : 수정
-                if (!uri.equals("/accounts/docs/account-api.yaml")) {
+                if (!request.getRequestURI().contains("/docs") && !uri.equals("/favicon.ico")) {
                     log.info("[{} {}] request - {}", method, uri, requestInfo);
                     log.info("[{} {}] response - {}", method, uri, responseBody);
                 }

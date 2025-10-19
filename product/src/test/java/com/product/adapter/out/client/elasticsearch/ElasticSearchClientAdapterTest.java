@@ -11,7 +11,6 @@ import com.product.application.port.in.command.FindProductListCommand;
 import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.domain.model.SortType;
-import com.product.infrastructure.util.JsonUtil;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

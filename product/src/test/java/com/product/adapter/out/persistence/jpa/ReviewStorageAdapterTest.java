@@ -7,7 +7,6 @@ import com.product.application.port.in.command.FindReviewListCommand;
 import com.product.application.port.in.command.RegisterReviewCommand;
 import com.product.domain.model.Account;
 import com.product.domain.model.Review;
-import com.product.infrastructure.util.ShardKeyUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

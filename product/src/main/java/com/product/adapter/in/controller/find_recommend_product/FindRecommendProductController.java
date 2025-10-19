@@ -1,10 +1,10 @@
 package com.product.adapter.in.controller.find_recommend_product;
 
+import com.common.infrastructure.response.ApiResponse;
 import com.product.application.port.in.FindRecommendProductUseCase;
 import com.product.application.service.find_recommend_product.FindRecommendProductServiceResponse;
 import com.product.domain.model.Account;
 import com.product.infrastructure.resolver.LoginAccount;
-import com.product.infrastructure.response.ApiResponse;
 import com.product.infrastructure.validation.groups.ValidationSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;

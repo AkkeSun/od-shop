@@ -97,6 +97,20 @@ public class ExceptionAdvice {
 
     @ExceptionHandlerLog
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(CustomGrpcResponseError.class)
+    ApiResponse<Object> grpcException(CustomGrpcResponseError e) {
+        return ApiResponse.of(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            ErrorResponse.builder()
+                .errorCode(ErrorCode.Business_GRPC_RESPONSE_ERROR.getCode())
+                .errorMessage(e.getErrorMessage())
+                .build()
+        );
+    }
+
+
+    @ExceptionHandlerLog
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     ApiResponse<Object> notFoundException(Exception e) {
         return ApiResponse.of(

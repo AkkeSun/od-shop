@@ -1,5 +1,6 @@
 package com.order.adapter.out.client.product;
 
+import com.common.infrastructure.exception.CustomGrpcResponseError;
 import com.order.application.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.application.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import com.order.application.port.out.ProductClientPort;
@@ -56,20 +57,24 @@ class ProductClientAdapter implements ProductClientPort {
 
     @Override
     public Product findProduct(Long productId) {
-        FindProductResponse response = findProductService.findProduct(
-            FindProductRequest.newBuilder()
-                .setProductId(productId)
-                .build());
-        
-        return Product.builder()
-            .id(response.getProductId())
-            .sellerEmail(response.getSellerEmail())
-            .productName(response.getProductName())
-            .productImgUrl(response.getProductImgUrl())
-            .descriptionImgUrl(response.getDescriptionImgUrl())
-            .price(response.getPrice())
-            .buyQuantity(response.getQuantity())
-            .category(response.getCategory())
-            .build();
+        try {
+            FindProductResponse response = findProductService.findProduct(
+                FindProductRequest.newBuilder()
+                    .setProductId(productId)
+                    .build());
+
+            return Product.builder()
+                .id(response.getProductId())
+                .sellerEmail(response.getSellerEmail())
+                .productName(response.getProductName())
+                .productImgUrl(response.getProductImgUrl())
+                .descriptionImgUrl(response.getDescriptionImgUrl())
+                .price(response.getPrice())
+                .buyQuantity(response.getQuantity())
+                .category(response.getCategory())
+                .build();
+        } catch (Exception e) {
+            throw new CustomGrpcResponseError(e.getMessage());
+        }
     }
 }

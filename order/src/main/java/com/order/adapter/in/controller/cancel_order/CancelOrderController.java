@@ -1,11 +1,11 @@
 package com.order.adapter.in.controller.cancel_order;
 
+import com.common.infrastructure.resolver.LoginAccount;
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.response.ApiResponse;
 import com.order.application.port.in.CancelOrderUseCase;
 import com.order.application.port.in.command.CancelOrderCommand;
 import com.order.application.service.cancel_order.CancelOrderServiceResponse;
-import com.order.domain.model.Account;
-import com.order.infrastructure.resolver.LoginAccount;
-import com.order.infrastructure.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +19,12 @@ class CancelOrderController {
 
     @DeleteMapping("/orders/{orderId}")
     ApiResponse<CancelOrderResponse> cancel(
-        @LoginAccount Account account,
+        @LoginAccount LoginAccountInfo loginInfo,
         @PathVariable Long orderId
     ) {
         CancelOrderServiceResponse serviceResponse = useCase.cancel(CancelOrderCommand.builder()
             .orderId(orderId)
-            .account(account)
+            .account(loginInfo)
             .build());
 
         return ApiResponse.ok(CancelOrderResponse.of(serviceResponse));

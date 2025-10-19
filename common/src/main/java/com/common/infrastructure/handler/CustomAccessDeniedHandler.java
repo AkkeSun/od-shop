@@ -1,10 +1,10 @@
-package com.order.infrastructure.handler;
+package com.common.infrastructure.handler;
 
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
-import com.order.infrastructure.exception.ErrorCode;
-import com.order.infrastructure.exception.ErrorResponse;
-import com.order.infrastructure.response.ApiResponse;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.ErrorResponse;
+import com.common.infrastructure.response.ApiResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

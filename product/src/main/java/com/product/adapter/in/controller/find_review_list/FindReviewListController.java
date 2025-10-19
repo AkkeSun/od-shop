@@ -1,8 +1,8 @@
 package com.product.adapter.in.controller.find_review_list;
 
+import com.common.infrastructure.response.ApiResponse;
 import com.product.application.port.in.FindReviewListUseCase;
 import com.product.application.service.find_review_list.FindReviewListServiceResponse;
-import com.product.infrastructure.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

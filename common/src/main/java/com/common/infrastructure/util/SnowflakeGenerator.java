@@ -1,4 +1,4 @@
-package com.product.infrastructure.util;
+package com.common.infrastructure.util;
 
 public interface SnowflakeGenerator {
 

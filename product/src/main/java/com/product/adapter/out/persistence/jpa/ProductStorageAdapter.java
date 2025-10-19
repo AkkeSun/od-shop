@@ -5,7 +5,6 @@ import com.product.adapter.out.persistence.jpa.shard2.ProductShard2Adapter;
 import com.product.application.port.out.ProductStoragePort;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductReserveHistory;
-import com.product.infrastructure.util.ShardKeyUtil;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;

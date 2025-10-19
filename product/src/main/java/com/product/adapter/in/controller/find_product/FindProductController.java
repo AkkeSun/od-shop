@@ -1,9 +1,9 @@
 package com.product.adapter.in.controller.find_product;
 
+import com.common.infrastructure.response.ApiResponse;
 import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.in.command.FindProductCommand;
 import com.product.application.service.find_product.FindProductServiceResponse;
-import com.product.infrastructure.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

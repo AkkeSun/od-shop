@@ -1,6 +1,5 @@
 package com.product;
 
-import com.product.infrastructure.util.SnowflakeGenerator;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

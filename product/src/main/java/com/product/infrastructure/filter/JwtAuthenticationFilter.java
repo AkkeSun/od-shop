@@ -1,6 +1,5 @@
 package com.product.infrastructure.filter;
 
-import com.product.infrastructure.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

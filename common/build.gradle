@@ -29,11 +29,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
+    implementation 'commons-codec:commons-codec:1.16.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+    implementation 'org.apache.tomcat:annotations-api:6.0.53'
 
     // kafka
     implementation 'org.springframework.kafka:spring-kafka'
@@ -41,6 +42,11 @@ dependencies {
     // springboot 3 jwt
     implementation "io.jsonwebtoken:jjwt:0.9.1"
     implementation "javax.xml.bind:jaxb-api:2.3.0"
+
+    // grpc
+    implementation "com.google.protobuf:protobuf-java-util:3.25.3"
+    implementation "io.grpc:grpc-stub:1.65.1"
+    implementation "io.grpc:grpc-protobuf:1.65.1"
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

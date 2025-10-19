@@ -9,7 +9,6 @@ import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.infrastructure.exception.CustomNotFoundException;
 import com.product.infrastructure.exception.ErrorCode;
-import com.product.infrastructure.util.ShardKeyUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;

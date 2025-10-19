@@ -5,7 +5,6 @@ import static com.product.infrastructure.util.JsonUtil.parseJson;
 import com.product.IntegrationTestSupport;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductHistory;
-import com.product.infrastructure.util.JsonUtil;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

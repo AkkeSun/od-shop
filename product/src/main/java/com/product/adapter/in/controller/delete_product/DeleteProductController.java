@@ -1,10 +1,10 @@
 package com.product.adapter.in.controller.delete_product;
 
+import com.common.infrastructure.response.ApiResponse;
 import com.product.application.port.in.DeleteProductUseCase;
 import com.product.application.service.delete_product.DeleteProductServiceResponse;
 import com.product.domain.model.Account;
 import com.product.infrastructure.resolver.LoginAccount;
-import com.product.infrastructure.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

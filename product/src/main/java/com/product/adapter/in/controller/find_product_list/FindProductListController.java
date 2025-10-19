@@ -1,8 +1,8 @@
 package com.product.adapter.in.controller.find_product_list;
 
+import com.common.infrastructure.response.ApiResponse;
 import com.product.application.port.in.FindProductListUseCase;
 import com.product.application.service.find_product_list.FindProductListServiceResponse;
-import com.product.infrastructure.response.ApiResponse;
 import com.product.infrastructure.validation.groups.ValidationSequence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;

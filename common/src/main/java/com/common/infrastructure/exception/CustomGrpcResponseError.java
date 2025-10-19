@@ -1,4 +1,4 @@
-package com.order.infrastructure.exception;
+package com.common.infrastructure.exception;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import lombok.Getter;
 public class CustomGrpcResponseError extends RuntimeException {
 
     private final String errorMessage;
-    
+
     public CustomGrpcResponseError(String errorMessage) {
         this.errorMessage = errorMessage;
     }

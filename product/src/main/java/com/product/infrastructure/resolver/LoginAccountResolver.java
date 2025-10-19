@@ -1,7 +1,6 @@
 package com.product.infrastructure.resolver;
 
 import com.product.domain.model.Account;
-import com.product.infrastructure.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

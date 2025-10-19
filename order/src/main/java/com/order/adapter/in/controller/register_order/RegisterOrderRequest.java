@@ -1,8 +1,8 @@
 package com.order.adapter.in.controller.register_order;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.order.application.port.in.command.RegisterOrderCommand;
 import com.order.application.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
-import com.order.domain.model.Account;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -29,9 +29,9 @@ record RegisterOrderRequest(
 
 ) {
 
-    RegisterOrderCommand toCommand(Account account) {
+    RegisterOrderCommand toCommand(LoginAccountInfo loginInfo) {
         return RegisterOrderCommand.builder()
-            .accountId(account.id())
+            .accountId(loginInfo.getId())
             .reserveInfos(reserveInfos.stream()
                 .map(item -> RegisterOrderCommandItem.builder()
                     .productId(item.productId)
