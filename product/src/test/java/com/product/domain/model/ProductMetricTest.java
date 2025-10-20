@@ -1,4 +1,5 @@
 package com.product.domain.model;
+import com.product.domain.model.Category;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
