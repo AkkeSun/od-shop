@@ -1,4 +1,5 @@
 package com.product.adapter.in.controller.find_product;
+import com.product.domain.model.Category;
 
 import com.product.application.service.find_product.FindProductServiceResponse;
 import java.util.Set;

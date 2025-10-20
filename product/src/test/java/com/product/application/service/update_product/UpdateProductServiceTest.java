@@ -2,13 +2,14 @@ package com.product.application.service.update_product;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.exception.CustomAuthorizationException;
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.UpdateProductCommand;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
 import com.product.fakeClass.FakeProductStoragePort;
-import com.product.infrastructure.exception.CustomAuthorizationException;
-import com.product.infrastructure.exception.CustomBusinessException;
-import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class UpdateProductServiceTest {
         void error() {
             // given
             Long ProductId = 1L;
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .email("test@gmail.com")
                 .id(2L)
                 .build();
@@ -48,7 +49,7 @@ class UpdateProductServiceTest {
                 .build());
             UpdateProductCommand command = UpdateProductCommand.builder()
                 .productId(ProductId)
-                .account(account)
+                .loginInfo(loginInfo)
                 .price(1000L)
                 .build();
 
@@ -65,17 +66,17 @@ class UpdateProductServiceTest {
         void error2() {
             // given
             Long ProductId = 1L;
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .email("test@gmail.com")
                 .id(2L)
                 .build();
             UpdateProductCommand command = UpdateProductCommand.builder()
                 .productId(ProductId)
-                .account(account)
+                .loginInfo(loginInfo)
                 .build();
             productStoragePort.register(Product.builder()
                 .id(ProductId)
-                .sellerId(account.id())
+                .sellerId(loginInfo.getId())
                 .deleteYn("N")
                 .build());
 
@@ -92,18 +93,18 @@ class UpdateProductServiceTest {
         void success() {
             // given
             Long ProductId = 1L;
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .email("test@gmail.com")
                 .id(2L)
                 .build();
             UpdateProductCommand command = UpdateProductCommand.builder()
                 .productId(ProductId)
-                .account(account)
+                .loginInfo(loginInfo)
                 .price(10000L)
                 .build();
             productStoragePort.register(Product.builder()
                 .id(ProductId)
-                .sellerId(account.id())
+                .sellerId(loginInfo.getId())
                 .deleteYn("N")
                 .build());
 

@@ -26,7 +26,7 @@ public class FakeReviewStoragePort implements ReviewStoragePort {
     @Override
     public boolean existsByCustomerIdAndProductId(RegisterReviewCommand command) {
         return !database.stream()
-            .filter(data -> data.customerId().equals(command.account().id()))
+            .filter(data -> data.customerId().equals(command.loginInfo().getId()))
             .filter(data -> data.productId().equals(command.productId()))
             .toList().isEmpty();
     }

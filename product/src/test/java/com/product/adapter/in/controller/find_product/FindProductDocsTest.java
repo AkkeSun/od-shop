@@ -1,4 +1,5 @@
 package com.product.adapter.in.controller.find_product;
+import com.product.domain.model.Category;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
@@ -19,8 +20,8 @@ import com.product.RestDocsSupport;
 import com.product.application.port.in.FindProductUseCase;
 import com.product.application.port.in.command.FindProductCommand;
 import com.product.application.service.find_product.FindProductServiceResponse;
-import com.product.infrastructure.exception.CustomNotFoundException;
-import com.product.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.ErrorCode;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

@@ -1,5 +1,6 @@
 package com.product.domain.model;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.application.port.in.command.UpdateProductCommand;
 import java.util.List;
@@ -19,7 +20,7 @@ class ProductTest {
         void success() {
             // given
             RegisterProductCommand command = RegisterProductCommand.builder()
-                .account(Account.builder()
+                .loginInfo(LoginAccountInfo.builder()
                     .id(10L)
                     .email("test@gmail.com")
                     .build())
@@ -37,8 +38,8 @@ class ProductTest {
 
             // then
             assert product.getId().equals(id);
-            assert product.getSellerId().equals(command.account().id());
-            assert product.getSellerEmail().equals(command.account().email());
+            assert product.getSellerId().equals(command.loginInfo().getId());
+            assert product.getSellerEmail().equals(command.loginInfo().getEmail());
             assert product.getProductName().equals(command.productName());
             assert product.getProductImgUrl().equals(command.productImgUrl());
             assert product.getDescriptionImgUrl().equals(command.descriptionImgUrl());

@@ -33,7 +33,7 @@ class FindProductListRequest {
         values = {"PRICE_ASC", "PRICE_DESC", "SALES_COUNT_ASC", "SALES_COUNT_DESC",
             "REVIEW_CNT_ASC", "REVIEW_CNT_DESC", "REG_DATE_TIME_ASC", "REG_DATE_TIME_DESC",
             "TOTAL_SCORE_ASC", "TOTAL_SCORE_DESC"},
-        groups = CustomGroups.class, message = "존재하지 않은 카테고리 입니다")
+        groups = CustomGroups.class, message = "존재하지 않은 정렬 타입 입니다")
     @NotBlank(message = "정렬 타입은 필수값 입니다", groups = NotBlankGroups.class)
     private String sortType;
 

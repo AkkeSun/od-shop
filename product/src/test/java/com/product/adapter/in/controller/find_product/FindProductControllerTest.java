@@ -1,4 +1,5 @@
 package com.product.adapter.in.controller.find_product;
+import com.product.domain.model.Category;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

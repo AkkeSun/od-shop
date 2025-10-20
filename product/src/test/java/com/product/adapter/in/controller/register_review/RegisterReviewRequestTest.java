@@ -1,5 +1,6 @@
 package com.product.adapter.in.controller.register_review;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.RegisterReviewCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,7 +17,7 @@ class RegisterReviewRequestTest {
         void success() {
             // given
             Long productId = 1L;
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(2L)
                 .email("email")
                 .build();
@@ -26,12 +27,12 @@ class RegisterReviewRequestTest {
                 .build();
 
             // when
-            RegisterReviewCommand command = request.toCommand(productId, account);
+            RegisterReviewCommand command = request.toCommand(productId, loginInfo);
 
             // then
             assert command.productId().equals(productId);
-            assert command.account().id().equals(account.id());
-            assert command.account().email().equals(account.email());
+            assert command.loginInfo().getId().equals(loginInfo.getId());
+            assert command.loginInfo().getEmail().equals(loginInfo.getEmail());
             assert command.score() == request.score();
             assert command.review().equals(request.review());
         }

@@ -8,9 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.common.infrastructure.exception.ErrorCode;
 import com.product.ControllerTestSupport;
 import com.product.application.service.Increase_product_quantity.IncreaseProductQuantityServiceResponse;
-import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -109,7 +109,7 @@ class IncreaseProductQuantityControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 수량은 1 이상 이어야 합니다"))
                 .andDo(print());
         }

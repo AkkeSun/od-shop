@@ -2,12 +2,14 @@ package com.product.adapter.out.client.elasticsearch;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.util.JsonUtil;
 import com.product.IntegrationTestSupport;
 import com.product.adapter.out.client.elasticsearch.FindProductsEsResponse.Hit;
 import com.product.adapter.out.client.elasticsearch.FindProductsEsResponse.Hit.DocumentSource;
 import com.product.adapter.out.client.elasticsearch.FindProductsEsResponse.HitsWrapper;
 import com.product.adapter.out.client.elasticsearch.FindProductsEsResponse.Total;
 import com.product.application.port.in.command.FindProductListCommand;
+import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.domain.model.SortType;
 import java.io.IOException;

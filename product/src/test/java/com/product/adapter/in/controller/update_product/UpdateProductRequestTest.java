@@ -1,5 +1,6 @@
 package com.product.adapter.in.controller.update_product;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.UpdateProductCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,17 +22,17 @@ class UpdateProductRequestTest {
                 .productImgUrl("http://example.com/image.jpg")
                 .descriptionImgUrl("http://example.com/description.jpg")
                 .build();
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(10L)
                 .email("test@gmail.com")
                 .build();
             Long productId = 1L;
 
             // when
-            UpdateProductCommand command = request.toCommand(account, productId);
+            UpdateProductCommand command = request.toCommand(loginInfo, productId);
 
             // then
-            assert command.account().id().equals(account.id());
+            assert command.loginInfo().getId().equals(loginInfo.getId());
             assert command.productId().equals(productId);
             assert command.productName().equals(request.productName());
             assert command.productImgUrl().equals(request.productImgUrl());

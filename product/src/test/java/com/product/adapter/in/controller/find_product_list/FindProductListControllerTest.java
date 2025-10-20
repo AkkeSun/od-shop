@@ -96,7 +96,7 @@ class FindProductListControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("검색어는 필수값 입니다"))
                 .andDo(print());
         }
@@ -124,7 +124,7 @@ class FindProductListControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("검색어는 필수값 입니다"))
                 .andDo(print());
         }
@@ -151,7 +151,7 @@ class FindProductListControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("카테고리는 필수값 입니다"))
                 .andDo(print());
         }
@@ -179,7 +179,7 @@ class FindProductListControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("카테고리는 필수값 입니다"))
                 .andDo(print());
         }
@@ -207,7 +207,7 @@ class FindProductListControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("존재하지 않은 카테고리 입니다"))
                 .andDo(print());
         }
@@ -234,7 +234,7 @@ class FindProductListControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("정렬 타입은 필수값 입니다"))
                 .andDo(print());
         }
@@ -262,7 +262,7 @@ class FindProductListControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("정렬 타입은 필수값 입니다"))
                 .andDo(print());
         }
@@ -290,7 +290,7 @@ class FindProductListControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("존재하지 않은 정렬 타입 입니다"))
                 .andDo(print());
         }

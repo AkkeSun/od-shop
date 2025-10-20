@@ -1,5 +1,7 @@
 package com.product.fakeClass;
 
+import com.common.infrastructure.util.SnowflakeGenerator;
+
 public class DummySnowflakeGenerator implements SnowflakeGenerator {
 
     @Override

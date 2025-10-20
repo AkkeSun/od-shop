@@ -1,4 +1,5 @@
 package com.product.application.service.find_product;
+import com.product.domain.model.Category;
 
 import com.product.application.port.in.command.FindProductCommand;
 import com.product.domain.model.Product;

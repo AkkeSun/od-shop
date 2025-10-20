@@ -1,6 +1,7 @@
 package com.product.adapter.out.persistence.redis;
 
-import static com.product.infrastructure.util.JsonUtil.parseJson;
+import static com.common.infrastructure.util.JsonUtil.parseJson;
+import com.common.infrastructure.util.JsonUtil;
 
 import com.product.IntegrationTestSupport;
 import com.product.domain.model.Product;

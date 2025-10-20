@@ -1,5 +1,6 @@
 package com.product.fakeClass;
 
+import com.common.infrastructure.util.JsonUtil;
 import com.product.application.port.out.RedisStoragePort;
 import java.util.Collections;
 import java.util.HashMap;

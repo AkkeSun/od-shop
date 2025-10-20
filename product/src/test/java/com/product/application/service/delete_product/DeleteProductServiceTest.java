@@ -2,14 +2,15 @@ package com.product.application.service.delete_product;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.exception.CustomAuthorizationException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.out.ReviewStoragePort;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
 import com.product.fakeClass.FakeElasticSearchClientPort;
 import com.product.fakeClass.FakeProductStoragePort;
 import com.product.fakeClass.FakeReviewStoragePort;
-import com.product.infrastructure.exception.CustomAuthorizationException;
-import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -53,7 +54,7 @@ class DeleteProductServiceTest {
         void error() {
             // given
             Long ProductId = 1L;
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .email("test@gmail.com")
                 .id(2L)
                 .build();
@@ -67,7 +68,7 @@ class DeleteProductServiceTest {
 
             // when
             CustomAuthorizationException result = assertThrows(CustomAuthorizationException.class,
-                () -> deleteProductService.deleteProduct(ProductId, account));
+                () -> deleteProductService.deleteProduct(ProductId, loginInfo));
 
             // then
             assert result.getErrorCode().equals(ErrorCode.ACCESS_DENIED);
@@ -78,21 +79,21 @@ class DeleteProductServiceTest {
         void success() {
             // given
             Long productId = 1L;
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .email("test@gmail.com")
                 .id(2L)
                 .build();
             productStoragePort.register(
                 Product.builder()
                     .id(productId)
-                    .sellerId(account.id())
+                    .sellerId(loginInfo.getId())
                     .deleteYn("N")
                     .build()
             );
 
             // when
             DeleteProductServiceResponse serviceResponse = deleteProductService
-                .deleteProduct(productId, account);
+                .deleteProduct(productId, loginInfo);
 
             // then
             assert serviceResponse.result();

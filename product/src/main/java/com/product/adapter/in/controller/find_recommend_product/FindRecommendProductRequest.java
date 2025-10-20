@@ -3,6 +3,8 @@ package com.product.adapter.in.controller.find_recommend_product;
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.validation.ValidDateType;
+import com.common.infrastructure.validation.groups.ValidationGroups.CustomGroups;
 import com.common.infrastructure.validation.groups.ValidationGroups.NotBlankGroups;
 import com.product.application.port.in.command.FindRecommendProductCommand;
 import jakarta.validation.constraints.NotBlank;
@@ -17,6 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 class FindRecommendProductRequest {
 
+    @ValidDateType(message = "유효하지 않은 검색 날짜 입니다", groups = CustomGroups.class)
     @NotBlank(message = "검색 날짜는 필수값 입니다", groups = NotBlankGroups.class)
     private String searchDate;
 

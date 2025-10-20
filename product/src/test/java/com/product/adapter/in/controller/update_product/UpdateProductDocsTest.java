@@ -1,4 +1,5 @@
 package com.product.adapter.in.controller.update_product;
+import com.product.domain.model.Category;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,10 +22,10 @@ import com.epages.restdocs.apispec.Schema;
 import com.product.RestDocsSupport;
 import com.product.application.port.in.UpdateProductUseCase;
 import com.product.application.service.update_product.UpdateProductServiceResponse;
-import com.product.infrastructure.exception.CustomAuthenticationException;
-import com.product.infrastructure.exception.CustomAuthorizationException;
-import com.product.infrastructure.exception.CustomNotFoundException;
-import com.product.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.exception.CustomAuthenticationException;
+import com.common.infrastructure.exception.CustomAuthorizationException;
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.ErrorCode;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

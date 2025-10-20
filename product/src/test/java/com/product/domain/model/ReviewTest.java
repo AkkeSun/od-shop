@@ -1,5 +1,6 @@
 package com.product.domain.model;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.RegisterReviewCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,7 +18,7 @@ class ReviewTest {
             // given
             RegisterReviewCommand command = RegisterReviewCommand.builder()
                 .productId(10L)
-                .account(Account.builder().id(1L).email("od").build())
+                .loginInfo(LoginAccountInfo.builder().id(1L).email("od").build())
                 .score(5.0)
                 .review("This is a test comment")
                 .build();
@@ -29,8 +30,8 @@ class ReviewTest {
             // then
             assert review.id().equals(id);
             assert review.productId().equals(command.productId());
-            assert review.customerId().equals(command.account().id());
-            assert review.customerEmail().equals(command.account().email());
+            assert review.customerId().equals(command.loginInfo().getId());
+            assert review.customerEmail().equals(command.loginInfo().getEmail());
             assert review.score() == review.score();
             assert review.review().equals(command.review());
             assert review.regDate() != null;

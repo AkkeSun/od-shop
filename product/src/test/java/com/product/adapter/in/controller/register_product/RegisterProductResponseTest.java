@@ -1,4 +1,5 @@
 package com.product.adapter.in.controller.register_product;
+import com.product.domain.model.Category;
 
 import com.product.application.service.register_product.RegisterProductServiceResponse;
 import java.util.Set;

@@ -8,9 +8,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.common.infrastructure.exception.ErrorCode;
 import com.product.ControllerTestSupport;
 import com.product.application.service.register_product.RegisterProductServiceResponse;
-import com.product.infrastructure.exception.ErrorCode;
+import com.product.domain.model.Category;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -160,7 +161,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품명은 필수값 입니다"))
                 .andDo(print());
         }
@@ -193,7 +194,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품명은 필수값 입니다"))
                 .andDo(print());
         }
@@ -226,7 +227,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품명은 50자 이하여야 합니다"))
                 .andDo(print());
         }
@@ -259,7 +260,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("카테고리는 필수값 입니다"))
                 .andDo(print());
         }
@@ -292,7 +293,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("카테고리는 필수값 입니다"))
                 .andDo(print());
         }
@@ -325,7 +326,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("존재하지 않은 카테고리 입니다"))
                 .andDo(print());
         }
@@ -358,7 +359,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("금액은 필수값 입니다"))
                 .andDo(print());
         }
@@ -391,7 +392,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 수량은 20 이상이어야 합니다"))
                 .andDo(print());
         }
@@ -424,7 +425,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 이미지는 필수값 입니다"))
                 .andDo(print());
         }
@@ -457,7 +458,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 이미지는 필수값 입니다"))
                 .andDo(print());
         }
@@ -490,7 +491,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 이미지는 50자 이하여야 합니다"))
                 .andDo(print());
         }
@@ -523,7 +524,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 설명 이미지는 필수값 입니다"))
                 .andDo(print());
         }
@@ -556,7 +557,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 설명 이미지는 필수값 입니다"))
                 .andDo(print());
         }
@@ -589,7 +590,7 @@ class RegisterProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("상품 설명 이미지는 50자 이하여야 합니다"))
                 .andDo(print());
         }

@@ -8,9 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.common.infrastructure.exception.ErrorCode;
 import com.product.ControllerTestSupport;
 import com.product.application.service.register_review.RegisterReviewServiceResponse;
-import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -143,7 +143,7 @@ class RegisterReviewControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("리뷰는 필수값 입니다."))
                 .andDo(print());
         }
@@ -176,7 +176,7 @@ class RegisterReviewControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("리뷰는 필수값 입니다."))
                 .andDo(print());
         }
@@ -209,7 +209,7 @@ class RegisterReviewControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("리뷰는 10자 이상 50자 이하여야 합니다."))
                 .andDo(print());
         }
@@ -242,7 +242,7 @@ class RegisterReviewControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("리뷰는 10자 이상 50자 이하여야 합니다."))
                 .andDo(print());
         }
@@ -275,7 +275,7 @@ class RegisterReviewControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("점수는 필수값 입니다."))
                 .andDo(print());
         }
@@ -308,7 +308,7 @@ class RegisterReviewControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("점수는 0.5 이상 5.0 이하여야 합니다."))
                 .andDo(print());
         }
@@ -341,7 +341,7 @@ class RegisterReviewControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("점수는 0.5 이상 5.0 이하여야 합니다."))
                 .andDo(print());
         }

@@ -73,7 +73,7 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
                 .andExpect(jsonPath("$.data.errorMessage").value("검색 날짜는 필수값 입니다"))
                 .andDo(print());
         }
@@ -102,8 +102,8 @@ class FindRecommendProductControllerTest extends ControllerTestSupport {
                 .andExpect(jsonPath("$.httpStatus").value(400))
                 .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.errorCode").value(1001))
-                .andExpect(jsonPath("$.data.errorMessage").value("유효한 날짜 형식이 아닙니다"))
+                .andExpect(jsonPath("$.data.errorCode").value(1099))
+                .andExpect(jsonPath("$.data.errorMessage").value("유효하지 않은 검색 날짜 입니다"))
                 .andDo(print());
         }
     }

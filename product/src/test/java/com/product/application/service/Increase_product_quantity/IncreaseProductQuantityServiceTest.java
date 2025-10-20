@@ -2,13 +2,15 @@ package com.product.application.service.Increase_product_quantity;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.exception.CustomAuthorizationException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.IncreaseProductQuantityUseCase;
 import com.product.application.port.in.command.IncreaseProductQuantityCommand;
+import com.product.domain.model.Category;
 import com.product.domain.model.Product;
 import com.product.fakeClass.DummyMessageProducerPort;
 import com.product.fakeClass.FakeProductStoragePort;
-import com.product.infrastructure.exception.CustomAuthorizationException;
-import com.product.infrastructure.exception.ErrorCode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -68,7 +70,7 @@ class IncreaseProductQuantityServiceTest {
 
             IncreaseProductQuantityCommand command = IncreaseProductQuantityCommand.builder()
                 .quantity(10)
-                .account(Account.builder().id(1L).build())
+                .loginInfo(LoginAccountInfo.builder().id(1L).build())
                 .build();
 
             // when
@@ -91,7 +93,7 @@ class IncreaseProductQuantityServiceTest {
 
             IncreaseProductQuantityCommand command = IncreaseProductQuantityCommand.builder()
                 .quantity(10)
-                .account(Account.builder().id(2L).build())
+                .loginInfo(LoginAccountInfo.builder().id(2L).build())
                 .build();
 
             // when

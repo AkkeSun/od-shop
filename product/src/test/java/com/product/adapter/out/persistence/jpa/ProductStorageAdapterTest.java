@@ -2,12 +2,14 @@ package com.product.adapter.out.persistence.jpa;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.util.ShardKeyUtil;
 import com.product.IntegrationTestSupport;
 import com.product.adapter.out.persistence.jpa.shard1.ProductShard1Adapter;
 import com.product.adapter.out.persistence.jpa.shard2.ProductShard2Adapter;
+import com.product.domain.model.Category;
 import com.product.domain.model.Product;
-import com.product.infrastructure.exception.CustomNotFoundException;
-import com.product.infrastructure.exception.ErrorCode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;

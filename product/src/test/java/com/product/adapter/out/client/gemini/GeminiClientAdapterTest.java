@@ -1,5 +1,6 @@
 package com.product.adapter.out.client.gemini;
 
+import com.common.infrastructure.util.JsonUtil;
 import com.product.IntegrationTestSupport;
 import com.product.adapter.out.client.gemini.GeminiEmbeddingResponse.GeminiEmbedding;
 import com.product.adapter.out.client.gemini.GeminiQueryResponse.GeminiQueryCandidate;

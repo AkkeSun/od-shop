@@ -1,4 +1,5 @@
 package com.product.adapter.in.controller.update_product;
+import com.product.domain.model.Category;
 
 import com.product.application.service.update_product.UpdateProductServiceResponse;
 import java.util.Set;

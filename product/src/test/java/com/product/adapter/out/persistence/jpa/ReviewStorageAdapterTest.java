@@ -1,5 +1,7 @@
 package com.product.adapter.out.persistence.jpa;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.util.ShardKeyUtil;
 import com.product.IntegrationTestSupport;
 import com.product.adapter.out.persistence.jpa.shard1.ReviewShard1Adapter;
 import com.product.adapter.out.persistence.jpa.shard2.ReviewShard2Adapter;
@@ -194,7 +196,7 @@ class ReviewStorageAdapterTest extends IntegrationTestSupport {
             boolean result = shard1Adapter.existsByCustomerIdAndProductId(
                 RegisterReviewCommand.builder()
                     .productId(comment.productId())
-                    .account(Account.builder().id(comment.customerId()).build())
+                    .loginInfo(LoginAccountInfo.builder().id(comment.customerId()).build())
                     .build());
 
             // then
@@ -212,7 +214,7 @@ class ReviewStorageAdapterTest extends IntegrationTestSupport {
             boolean result = shard2Adapter.existsByCustomerIdAndProductId(
                 RegisterReviewCommand.builder()
                     .productId(comment.productId())
-                    .account(Account.builder().id(comment.customerId()).build())
+                    .loginInfo(LoginAccountInfo.builder().id(comment.customerId()).build())
                     .build());
 
             // then

@@ -15,6 +15,7 @@ import com.product.application.port.in.RegisterReviewUseCase;
 import com.product.application.port.in.UpdateProductUseCase;
 import com.product.application.port.out.AuthorizationStoragePort;
 import com.product.domain.model.AuthorizationRule;
+import com.product.infrastructure.aop.DistributedLockAspect;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,9 +34,6 @@ public class ControllerTestSupport {
 
     @Autowired
     protected ObjectMapper objectMapper;
-
-    @MockBean
-    protected JwtUtil jwtUtil;
 
     @MockBean
     protected RegisterProductUseCase registerProductUseCase;
@@ -75,6 +73,9 @@ public class ControllerTestSupport {
 
     @Autowired
     private AuthorizationStoragePort authorizationStoragePort;
+
+    @MockBean
+    private DistributedLockAspect distributedLockAspect;
 
     @BeforeEach
     void setup() {

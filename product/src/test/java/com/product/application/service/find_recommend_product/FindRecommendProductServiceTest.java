@@ -1,6 +1,7 @@
 package com.product.application.service.find_recommend_product;
+import com.product.domain.model.Category;
 
-import static com.product.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.product.application.port.in.command.FindRecommendProductCommand;
 import com.product.domain.model.Product;

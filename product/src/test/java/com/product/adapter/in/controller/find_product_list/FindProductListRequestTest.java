@@ -1,4 +1,5 @@
 package com.product.adapter.in.controller.find_product_list;
+import com.product.domain.model.Category;
 
 import com.product.application.port.in.command.FindProductListCommand;
 import com.product.domain.model.SortType;

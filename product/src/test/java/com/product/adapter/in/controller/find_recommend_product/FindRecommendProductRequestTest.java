@@ -1,5 +1,6 @@
 package com.product.adapter.in.controller.find_recommend_product;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.FindRecommendProductCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,14 +20,14 @@ class FindRecommendProductRequestTest {
             FindRecommendProductRequest request = FindRecommendProductRequest.builder()
                 .searchDate("20250501")
                 .build();
-            Account account = Account.builder().id(10L).build();
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder().id(10L).build();
 
             // when
-            FindRecommendProductCommand command = request.toCommand(account);
+            FindRecommendProductCommand command = request.toCommand(loginInfo);
 
             // then
             assert command.searchDate().equals(request.getSearchDate());
-            assert command.accountId().equals(account.id());
+            assert command.accountId().equals(loginInfo.getId());
         }
 
     }

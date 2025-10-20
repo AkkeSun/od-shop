@@ -2,6 +2,10 @@ package com.product.application.service.register_review;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.exception.CustomAuthorizationException;
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.exception.ErrorCode;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.RegisterReviewCommand;
 import com.product.domain.model.Product;
 import com.product.domain.model.Review;
@@ -9,9 +13,6 @@ import com.product.fakeClass.DummyOrderClientPort;
 import com.product.fakeClass.DummySnowflakeGenerator;
 import com.product.fakeClass.FakeProductStoragePort;
 import com.product.fakeClass.FakeReviewStoragePort;
-import com.product.infrastructure.exception.CustomAuthorizationException;
-import com.product.infrastructure.exception.CustomBusinessException;
-import com.product.infrastructure.exception.ErrorCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -56,7 +57,7 @@ class RegisterReviewServiceTest {
             fakeProductStoragePort.database.add(product);
             RegisterReviewCommand command = RegisterReviewCommand.builder()
                 .productId(product.getId())
-                .account(Account.builder().id(1L)
+                .loginInfo(LoginAccountInfo.builder().id(1L)
                     .email("od")
                     .build())
                 .review("comment")
@@ -82,7 +83,7 @@ class RegisterReviewServiceTest {
             fakeProductStoragePort.database.add(product);
             RegisterReviewCommand command = RegisterReviewCommand.builder()
                 .productId(product.getId())
-                .account(Account.builder().id(2L)
+                .loginInfo(LoginAccountInfo.builder().id(2L)
                     .email("od")
                     .build())
                 .review("comment")
@@ -109,7 +110,7 @@ class RegisterReviewServiceTest {
             fakeProductStoragePort.database.add(product);
             RegisterReviewCommand command = RegisterReviewCommand.builder()
                 .productId(product.getId())
-                .account(Account.builder().id(1L)
+                .loginInfo(LoginAccountInfo.builder().id(1L)
                     .email("od")
                     .build())
                 .review("comment")

@@ -1,14 +1,15 @@
 package com.product.application.service.register_product;
 
-import static com.product.infrastructure.exception.ErrorCode.Business_ES_PRODUCT_SAVE;
+import static com.common.infrastructure.exception.ErrorCode.Business_ES_PRODUCT_SAVE;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.RegisterProductCommand;
 import com.product.fakeClass.DummyGeminiClientPort;
 import com.product.fakeClass.DummySnowflakeGenerator;
 import com.product.fakeClass.FakeElasticSearchClientPort;
 import com.product.fakeClass.FakeProductStoragePort;
-import com.product.infrastructure.exception.CustomBusinessException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -46,7 +47,7 @@ class RegisterProductServiceTest {
         void success() {
             // given
             RegisterProductCommand command = RegisterProductCommand.builder()
-                .account(Account.builder()
+                .loginInfo(LoginAccountInfo.builder()
                     .id(1L)
                     .email("test@gmail.com")
                     .build())
@@ -62,7 +63,7 @@ class RegisterProductServiceTest {
             RegisterProductServiceResponse response = service.registerProduct(command);
 
             // then
-            assert response.sellerEmail().equals(command.account().email());
+            assert response.sellerEmail().equals(command.loginInfo().getEmail());
             assert response.productName().equals(command.productName());
             assert response.productImgUrl().equals(command.productImgUrl());
             assert response.descriptionImgUrl().equals(command.descriptionImgUrl());
@@ -76,7 +77,7 @@ class RegisterProductServiceTest {
         void error() {
             // given
             RegisterProductCommand command = RegisterProductCommand.builder()
-                .account(Account.builder()
+                .loginInfo(LoginAccountInfo.builder()
                     .id(1L)
                     .email("test@gmail.com")
                     .build())
