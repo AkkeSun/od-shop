@@ -117,8 +117,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          cd account
-          docker buildx build --platform linux/arm64 -t akkessun/account-api:$IMAGE_TAG . --push
+          docker buildx build --platform linux/arm64 -f account/Dockerfile -t akkessun/account-api:$IMAGE_TAG . --push
 
   ################### [CI] product-api ###################
   ci-product-api:
@@ -164,8 +163,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          cd product
-          docker buildx build --platform linux/arm64 -t akkessun/product-api:$IMAGE_TAG . --push
+          docker buildx build --platform linux/arm64 -f product/Dockerfile -t akkessun/product-api:$IMAGE_TAG . --push
   
 
   ################### [CI] order-api ###################
@@ -212,8 +210,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          cd order
-          docker buildx build --platform linux/arm64 -t akkessun/order-api:$IMAGE_TAG . --push
+          docker buildx build --platform linux/arm64 -f order/Dockerfile -t akkessun/order-api:$IMAGE_TAG . --push
 
   ################### [CI] account-agent ###################
   ci-account-agent:
@@ -259,8 +256,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          cd account-agent
-          docker buildx build --platform linux/arm64 -t akkessun/account-agent:$IMAGE_TAG . --push
+          docker buildx build --platform linux/arm64 -f account-agent/Dockerfile -t akkessun/account-agent:$IMAGE_TAG . --push
 
   ################### [CI] product-agent ###################
   ci-product-agent:
@@ -306,8 +302,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          cd product-agent
-          docker buildx build --platform linux/arm64 -t akkessun/product-agent:$IMAGE_TAG . --push
+          docker buildx build --platform linux/arm64 -f product-agent/Dockerfile -t akkessun/product-agent:$IMAGE_TAG . --push
 
   ################### [CD] account-api ###################
   cd-account-api:

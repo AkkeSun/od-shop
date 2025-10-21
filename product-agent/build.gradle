@@ -122,7 +122,7 @@ protobuf {
 }
 
 bootJar {
-    archiveFileName = "${rootProject.name}.jar"
+    archiveFileName = "product-agent.jar"
 }
 
 jar {

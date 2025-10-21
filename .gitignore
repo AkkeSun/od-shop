@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### claude ###
+CLAUDE.md
+HEXAGONAL_TEST_GUIDE.md
+REFACTOR.md

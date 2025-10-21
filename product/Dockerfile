@@ -1,7 +1,6 @@
 FROM eclipse-temurin:21-jdk-jammy
-ARG JAR_FILE=build/libs/product.jar
-COPY ${JAR_FILE} /app.jar
-COPY opentelemetry-javaagent.jar /opentelemetry-javaagent.jar
+COPY product/build/libs/product.jar /app.jar
+COPY product/opentelemetry-javaagent.jar /opentelemetry-javaagent.jar
 
 ENV OTEL_LOGS_EXPORTER=otlp
 ENV OTEL_RESOURCE_ATTRIBUTES=service.name=product

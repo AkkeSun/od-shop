@@ -160,7 +160,7 @@ tasks.register('copyOasToSwagger', DefaultTask) {
 }
 
 bootJar {
-    archiveFileName = "${rootProject.name}.jar"
+    archiveFileName = "order.jar"
 }
 
 jar {
