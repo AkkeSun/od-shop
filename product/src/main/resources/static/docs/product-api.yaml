@@ -2003,3 +2003,10 @@ components:
       in: header
 security:
   - APIKey: []
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: Authorization
+      in: header
+security:
+  - APIKey: []
