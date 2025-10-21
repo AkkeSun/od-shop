@@ -7,6 +7,7 @@ import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
+import com.account.fakeClass.TestPropertiesHelper;
 import com.common.infrastructure.util.JwtUtil;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
 class RegisterTokenServiceTest {
@@ -35,14 +35,13 @@ class RegisterTokenServiceTest {
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
         service = new RegisterTokenService(
+            TestPropertiesHelper.createRedisProperties(),
+            TestPropertiesHelper.createKafkaProperties(),
             fakeUserAgentUtilClass,
             fakeRedisStoragePortClass,
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
         );
-        ReflectionTestUtils.setField(service, "loginTopic", "account-login");
-        ReflectionTestUtils.setField(service, "tokenRedisKey", "token::%s-%s");
-        ReflectionTestUtils.setField(service, "refreshTokenTtl", 99999999L);
     }
 
     @BeforeEach

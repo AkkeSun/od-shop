@@ -9,12 +9,12 @@ import static com.common.infrastructure.util.JwtUtil.validateTokenExceptExpirati
 import com.account.applicaiton.port.in.UpdateTokenUseCase;
 import com.account.applicaiton.port.out.RedisStoragePort;
 import com.account.domain.model.RefreshTokenInfo;
+import com.account.infrastructure.properties.RedisProperties;
 import com.common.infrastructure.exception.CustomAuthenticationException;
 import com.common.infrastructure.exception.ErrorCode;
 import com.common.infrastructure.util.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -25,10 +25,7 @@ import org.springframework.util.ObjectUtils;
 @RequiredArgsConstructor
 class UpdateTokenService implements UpdateTokenUseCase {
 
-    @Value("${spring.data.redis.key.token}")
-    private String tokenRedisKey;
-    @Value("${spring.data.redis.ttl.refresh-token}")
-    private Long refreshTokenTtl;
+    private final RedisProperties redisProperties;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
 
@@ -40,7 +37,7 @@ class UpdateTokenService implements UpdateTokenUseCase {
 
         String email = getEmail(refreshToken);
         String userAgent = userAgentUtil.getUserAgent();
-        String redisKey = String.format(tokenRedisKey, email, userAgent);
+        String redisKey = String.format(redisProperties.key().token(), email, userAgent);
 
         RefreshTokenInfo tokenInfo = redisStoragePort.findData(redisKey, RefreshTokenInfo.class);
 
@@ -49,7 +46,8 @@ class UpdateTokenService implements UpdateTokenUseCase {
         }
 
         tokenInfo.updateRefreshToken(createRefreshToken(email));
-        redisStoragePort.register(redisKey, toJsonString(tokenInfo), refreshTokenTtl);
+        redisStoragePort.register(redisKey, toJsonString(tokenInfo),
+            redisProperties.ttl().refreshToken());
 
         return UpdateTokenServiceResponse.builder()
             .accessToken(createAccessToken(

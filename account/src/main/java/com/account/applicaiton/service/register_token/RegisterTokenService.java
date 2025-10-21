@@ -13,9 +13,10 @@ import com.account.domain.model.Account;
 import com.account.domain.model.LoginLog;
 import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
+import com.account.infrastructure.properties.KafkaTopicProperties;
+import com.account.infrastructure.properties.RedisProperties;
 import com.common.infrastructure.util.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class RegisterTokenService implements RegisterTokenUseCase {
 
-    @Value("${kafka.topic.login}")
-    private String loginTopic;
-    @Value("${spring.data.redis.key.token}")
-    private String tokenRedisKey;
-    @Value("${spring.data.redis.ttl.refresh-token}")
-    private Long refreshTokenTtl;
+    private final RedisProperties redisProperties;
+    private final KafkaTopicProperties topicProperties;
     private final UserAgentUtil userAgentUtil;
     private final RedisStoragePort redisStoragePort;
     private final AccountStoragePort accountStoragePort;
@@ -51,11 +48,13 @@ class RegisterTokenService implements RegisterTokenUseCase {
             .build();
 
         redisStoragePort.register(
-            String.format(tokenRedisKey, account.getEmail(), refreshTokenInfo.getUserAgent()),
+            String.format(redisProperties.key().token(), account.getEmail(),
+                refreshTokenInfo.getUserAgent()),
             toJsonString(refreshTokenInfo),
-            refreshTokenTtl
+            redisProperties.ttl().refreshToken()
         );
-        messageProducerPort.sendMessage(loginTopic, toJsonString(LoginLog.of(account)));
+        messageProducerPort.sendMessage(topicProperties.login(),
+            toJsonString(LoginLog.of(account)));
 
         return RegisterTokenServiceResponse.builder()
             .accessToken(createAccessToken(

@@ -9,6 +9,7 @@ import com.account.domain.model.Role;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
 import com.account.fakeClass.StubUserAgentUtilClass;
+import com.account.fakeClass.TestPropertiesHelper;
 import com.common.infrastructure.exception.CustomAuthenticationException;
 import com.common.infrastructure.exception.ErrorCode;
 import com.common.infrastructure.util.JwtUtil;
@@ -21,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
 class UpdateTokenByRefreshServiceTest {
@@ -37,14 +37,10 @@ class UpdateTokenByRefreshServiceTest {
         fakeAccountStorageClass = new FakeAccountStorageClass();
 
         service = new UpdateTokenService(
+            TestPropertiesHelper.createRedisProperties(),
             fakeUserAgentUtilClass,
             fakeRedisStoragePortClass
         );
-
-        ReflectionTestUtils
-            .setField(service, "tokenRedisKey", "token::%s-%s");
-        ReflectionTestUtils
-            .setField(service, "refreshTokenTtl", 99999999L);
     }
 
     @BeforeEach

@@ -14,6 +14,7 @@ import com.account.applicaiton.port.out.RoleStoragePort;
 import com.account.domain.model.Account;
 import com.account.domain.model.RefreshTokenInfo;
 import com.account.domain.model.Role;
+import com.account.infrastructure.properties.RedisProperties;
 import com.common.infrastructure.exception.CustomBusinessException;
 import com.common.infrastructure.exception.CustomValidationException;
 import com.common.infrastructure.util.UserAgentUtil;
@@ -23,7 +24,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,10 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class RegisterAccountService implements RegisterAccountUseCase {
 
-    @Value("${spring.data.redis.key.token}")
-    private String tokenRedisKey;
-    @Value("${spring.data.redis.ttl.refresh-token}")
-    private Long refreshTokenTtl;
+    private final RedisProperties redisProperties;
     private final UserAgentUtil userAgentUtil;
     private final RoleStoragePort roleStoragePort;
     private final RedisStoragePort redisStoragePort;
@@ -63,9 +60,10 @@ class RegisterAccountService implements RegisterAccountUseCase {
             .build();
 
         redisStoragePort.register(
-            String.format(tokenRedisKey, savedAccount.getEmail(), refreshTokenInfo.getUserAgent()),
+            String.format(redisProperties.key().token(), savedAccount.getEmail(),
+                refreshTokenInfo.getUserAgent()),
             toJsonString(refreshTokenInfo),
-            refreshTokenTtl
+            redisProperties.ttl().refreshToken()
         );
 
         return RegisterAccountServiceResponse.builder()

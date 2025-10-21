@@ -5,6 +5,7 @@ import com.account.domain.model.Account;
 import com.account.domain.model.Role;
 import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
+import com.account.fakeClass.TestPropertiesHelper;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
 class UpdateAccountServiceTest {
@@ -28,11 +28,10 @@ class UpdateAccountServiceTest {
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
 
         updateAccountService = new UpdateAccountService(
+            TestPropertiesHelper.createKafkaProperties(),
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
         );
-
-        ReflectionTestUtils.setField(updateAccountService, "historyTopic", "account-history");
     }
 
     @BeforeEach

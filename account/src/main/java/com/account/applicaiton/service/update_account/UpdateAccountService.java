@@ -9,9 +9,9 @@ import com.account.applicaiton.port.out.AccountStoragePort;
 import com.account.applicaiton.port.out.MessageProducerPort;
 import com.account.domain.model.Account;
 import com.account.domain.model.AccountHistory;
+import com.account.infrastructure.properties.KafkaTopicProperties;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class UpdateAccountService implements UpdateAccountUseCase {
 
-    @Value("${kafka.topic.history}")
-    private String historyTopic;
+    private final KafkaTopicProperties topicProperties;
     private final AccountStoragePort accountStoragePort;
     private final MessageProducerPort messageProducerPort;
 
@@ -38,7 +37,8 @@ class UpdateAccountService implements UpdateAccountUseCase {
             String.join(",", updateList));
 
         accountStoragePort.update(account);
-        messageProducerPort.sendMessage(historyTopic, toJsonString(history));
+        messageProducerPort.sendMessage(topicProperties.history(),
+            toJsonString(history));
 
         return UpdateAccountServiceResponse.ofSuccess(updateList);
     }

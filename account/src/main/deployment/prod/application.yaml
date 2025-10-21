@@ -34,10 +34,6 @@ spring:
 server:
   shutdown: graceful
 
-jwt:
-  token:
-    secret-key: hello-jwt
-
 kafka:
   host: 152.67.206.159:9092
   topic:

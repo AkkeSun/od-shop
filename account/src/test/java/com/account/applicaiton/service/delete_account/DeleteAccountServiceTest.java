@@ -7,6 +7,7 @@ import com.account.domain.model.Role;
 import com.account.fakeClass.DummyMessageProducerPortClass;
 import com.account.fakeClass.FakeAccountStorageClass;
 import com.account.fakeClass.FakeRedisStoragePortClass;
+import com.account.fakeClass.TestPropertiesHelper;
 import com.common.infrastructure.exception.CustomNotFoundException;
 import com.common.infrastructure.exception.ErrorCode;
 import com.common.infrastructure.resolver.LoginAccountInfo;
@@ -19,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(OutputCaptureExtension.class)
 class DeleteAccountServiceTest {
@@ -35,14 +35,12 @@ class DeleteAccountServiceTest {
         dummyMessageProducerPortClass = new DummyMessageProducerPortClass();
 
         service = new DeleteAccountService(
+            TestPropertiesHelper.createKafkaProperties(),
+            TestPropertiesHelper.createRedisProperties(),
             fakeCachePortClass,
             fakeAccountStorageClass,
             dummyMessageProducerPortClass
         );
-
-        ReflectionTestUtils.setField(service, "historyTopic", "account-history");
-        ReflectionTestUtils.setField(service, "deleteTopic", "delete-account");
-        ReflectionTestUtils.setField(service, "tokenRedisKey", "token::%s-%s");
     }
 
     @BeforeEach
