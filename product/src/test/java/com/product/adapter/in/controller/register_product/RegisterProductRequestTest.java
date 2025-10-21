@@ -1,5 +1,6 @@
 package com.product.adapter.in.controller.register_product;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.product.application.port.in.command.RegisterProductCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -26,7 +27,7 @@ class RegisterProductRequestTest {
                 .build();
 
             // when
-            RegisterProductCommand command = request.toCommand(Account.builder().build());
+            RegisterProductCommand command = request.toCommand(LoginAccountInfo.builder().build());
 
             // then
             assert command.productName().equals(request.productName());

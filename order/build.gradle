@@ -124,7 +124,7 @@ protobuf {
     }
 }
 
-// ./gradlew openapi3 copyOasToSwagger
+// ./gradlew :order:openapi3 :order:copyOasToSwagger
 openapi3 {
     servers = [
             { url = "https://api.odlab.kr" }

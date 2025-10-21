@@ -6,7 +6,7 @@ import com.order.application.port.in.command.ReserveProductCommand;
 import com.order.application.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import com.order.fakeClass.DummyMessageProducerPort;
 import com.order.fakeClass.FakeProductClientPort;
-import com.order.infrastructure.exception.CustomGrpcResponseError;
+import com.common.infrastructure.exception.CustomGrpcResponseError;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

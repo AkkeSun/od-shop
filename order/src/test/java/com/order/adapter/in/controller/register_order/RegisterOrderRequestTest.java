@@ -3,7 +3,7 @@ package com.order.adapter.in.controller.register_order;
 import com.order.adapter.in.controller.register_order.RegisterOrderRequest.RegisterOrderRequestItem;
 import com.order.application.port.in.command.RegisterOrderCommand;
 import com.order.application.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
-import com.order.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,7 +23,7 @@ class RegisterOrderRequestTest {
                 .productId(10L)
                 .reserveId(20L)
                 .build();
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(20L)
                 .build();
             RegisterOrderRequest request = RegisterOrderRequest.builder()
@@ -35,10 +35,10 @@ class RegisterOrderRequestTest {
                 .build();
 
             // when
-            RegisterOrderCommand result = request.toCommand(account);
+            RegisterOrderCommand result = request.toCommand(loginInfo);
 
             // then
-            assert result.accountId().equals(account.id());
+            assert result.accountId().equals(loginInfo.getId());
             assert result.totalPrice() == request.totalPrice();
             assert result.receiverName().equals(request.receiverName());
             assert result.receiverTel().equals(request.receiverTel());

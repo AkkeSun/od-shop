@@ -1,16 +1,16 @@
 package com.order.application.service.cancel_order;
 
-import static com.order.infrastructure.exception.ErrorCode.Business_ALREADY_CANCEL_ORDCER;
-import static com.order.infrastructure.exception.ErrorCode.Business_NO_CUSTOMER;
+import static com.common.infrastructure.exception.ErrorCode.Business_ALREADY_CANCEL_ORDCER;
+import static com.common.infrastructure.exception.ErrorCode.Business_NO_CUSTOMER;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.order.application.port.in.command.CancelOrderCommand;
-import com.order.domain.model.Account;
 import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import com.order.fakeClass.DummyMessageProducerPort;
 import com.order.fakeClass.FakeOrderStoragePort;
-import com.order.infrastructure.exception.CustomBusinessException;
+import com.common.infrastructure.exception.CustomBusinessException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +57,7 @@ class CancelOrderServiceTest {
                 )).build());
             CancelOrderCommand command = CancelOrderCommand.builder()
                 .orderId(order.orderNumber())
-                .account(Account.builder()
+                .account(LoginAccountInfo.builder()
                     .id(100L)
                     .build())
                 .build();
@@ -89,7 +89,7 @@ class CancelOrderServiceTest {
                 )).build());
             CancelOrderCommand command = CancelOrderCommand.builder()
                 .orderId(order.orderNumber())
-                .account(Account.builder()
+                .account(LoginAccountInfo.builder()
                     .id(10L)
                     .build())
                 .build();
@@ -121,7 +121,7 @@ class CancelOrderServiceTest {
                 )).build());
             CancelOrderCommand command = CancelOrderCommand.builder()
                 .orderId(order.orderNumber())
-                .account(Account.builder()
+                .account(LoginAccountInfo.builder()
                     .id(10L)
                     .build())
                 .build();

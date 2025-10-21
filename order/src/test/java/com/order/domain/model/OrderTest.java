@@ -2,6 +2,7 @@ package com.order.domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.order.application.port.in.command.RegisterOrderCommand;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -118,12 +119,12 @@ class OrderTest {
                 .totalPrice(50000)
                 .build();
 
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(1L)
                 .build();
 
             // when
-            boolean result = order.isCustomer(account);
+            boolean result = order.isCustomer(loginInfo);
 
             // then
             assertThat(result).isTrue();
@@ -138,12 +139,12 @@ class OrderTest {
                 .totalPrice(50000)
                 .build();
 
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(2L)
                 .build();
 
             // when
-            boolean result = order.isCustomer(account);
+            boolean result = order.isCustomer(loginInfo);
 
             // then
             assertThat(result).isFalse();

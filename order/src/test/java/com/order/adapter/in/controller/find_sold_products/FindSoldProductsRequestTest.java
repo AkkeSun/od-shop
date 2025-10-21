@@ -1,7 +1,7 @@
 package com.order.adapter.in.controller.find_sold_products;
 
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import com.order.application.port.in.command.FindSoldProductsCommand;
-import com.order.domain.model.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,17 +22,17 @@ class FindSoldProductsRequestTest {
                     .searchType("searchType")
                     .query("query")
                     .build();
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(12L)
                 .build();
 
             // when
-            FindSoldProductsCommand command = request.toCommand(account);
+            FindSoldProductsCommand command = request.toCommand(loginInfo);
 
             // then
             assert command.searchType().equals(request.getSearchType());
             assert command.query().equals(request.getQuery());
-            assert command.sellerId().equals(account.id());
+            assert command.sellerId().equals(loginInfo.getId());
             assert command.size().equals(request.getSize());
             assert command.page() == 0;
         }
@@ -47,17 +47,17 @@ class FindSoldProductsRequestTest {
                     .searchType("searchType")
                     .query("query")
                     .build();
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(12L)
                 .build();
 
             // when
-            FindSoldProductsCommand command = request.toCommand(account);
+            FindSoldProductsCommand command = request.toCommand(loginInfo);
 
             // then
             assert command.searchType().equals(request.getSearchType());
             assert command.query().equals(request.getQuery());
-            assert command.sellerId().equals(account.id());
+            assert command.sellerId().equals(loginInfo.getId());
             assert command.size().equals(10);
             assert command.page().equals(request.getPage());
         }

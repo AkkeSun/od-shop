@@ -133,7 +133,7 @@ swaggerSources {
     }
 }
 
-// ./gradlew openapi3 copyOasToSwagger
+// ./gradlew :product:openapi3 :product:copyOasToSwagger
 openapi3 {
     servers = [
             { url = "https://api.odlab.kr" }

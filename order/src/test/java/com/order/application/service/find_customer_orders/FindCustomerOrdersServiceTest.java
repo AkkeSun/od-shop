@@ -1,6 +1,6 @@
 package com.order.application.service.find_customer_orders;
 
-import static com.order.infrastructure.util.JsonUtil.toJsonString;
+import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.order.application.port.in.command.FindCustomerOrdersCommand;
 import com.order.application.service.find_customer_orders.FindCustomerOrdersServiceResponse.FindCustomerOrdersServiceResponseItem;

@@ -1,8 +1,10 @@
 package com.order.adapter.out.client.product;
 
+import static io.grpc.Status.INTERNAL;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import com.common.infrastructure.exception.CustomGrpcResponseError;
 import com.order.IntegrationTestSupport;
 import com.order.application.port.in.command.RegisterOrderCommand.RegisterOrderCommandItem;
 import com.order.application.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
@@ -80,7 +82,7 @@ class ProductClientAdapterTest extends IntegrationTestSupport {
         void error() {
             // given
             when(mockReservationService.createReserve(any()))
-                .thenThrow(io.grpc.Status.INTERNAL.asRuntimeException());
+                .thenThrow(INTERNAL.asRuntimeException());
             Long accountId = 1L;
             ReserveProductCommandItem command = ReserveProductCommandItem.builder()
                 .productId(-1L)
@@ -131,7 +133,7 @@ class ProductClientAdapterTest extends IntegrationTestSupport {
         void error() {
             // given
             when(mockConfirmReservationService.confirmReservation(any()))
-                .thenThrow(io.grpc.Status.INTERNAL.asRuntimeException());
+                .thenThrow(INTERNAL.asRuntimeException());
             RegisterOrderCommandItem command = RegisterOrderCommandItem.builder()
                 .productId(10L)
                 .reserveId(3L)
@@ -186,14 +188,14 @@ class ProductClientAdapterTest extends IntegrationTestSupport {
         void error() {
             // given
             when(mockFindProductService.findProduct(any()))
-                .thenThrow(io.grpc.Status.INTERNAL.asRuntimeException());
+                .thenThrow(INTERNAL.asRuntimeException());
 
             // when & then
             try {
                 adapter.findProduct(10L);
                 assert false;
-            } catch (io.grpc.StatusRuntimeException e) {
-                assert e.getStatus().getCode() == io.grpc.Status.Code.INTERNAL;
+            } catch (CustomGrpcResponseError e) {
+                assert e.getErrorMessage().equals("INTERNAL");
             }
         }
     }

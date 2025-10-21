@@ -2,6 +2,8 @@ package com.order.adapter.out.persistence.jpa;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.common.infrastructure.exception.CustomNotFoundException;
+import com.common.infrastructure.exception.ErrorCode;
 import com.order.IntegrationTestSupport;
 import com.order.application.port.in.command.ExistsCustomerOrderCommand;
 import com.order.application.port.in.command.FindCustomerOrdersCommand;
@@ -9,8 +11,7 @@ import com.order.application.port.in.command.FindOrderProductIdsCommand;
 import com.order.application.port.in.command.FindSoldProductsCommand;
 import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
-import com.order.infrastructure.exception.CustomNotFoundException;
-import com.order.infrastructure.exception.ErrorCode;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -106,6 +107,7 @@ class OrderStorageAdapterTest extends IntegrationTestSupport {
                 .size(10)
                 .customerId(10L)
                 .build()).getContent().getFirst();
+            savedOrder.cancel(LocalDateTime.now());
 
             // when
             adapter.cancel(savedOrder);

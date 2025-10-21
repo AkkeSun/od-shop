@@ -1,7 +1,7 @@
 package com.order.adapter.in.controller.find_customer_orders;
 
 import com.order.application.port.in.command.FindCustomerOrdersCommand;
-import com.order.domain.model.Account;
+import com.common.infrastructure.resolver.LoginAccountInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,15 +20,15 @@ class FindCustomerOrdersRequestTest {
                 FindCustomerOrdersRequest.builder()
                     .size(10)
                     .build();
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(12L)
                 .build();
 
             // when
-            FindCustomerOrdersCommand command = request.toCommand(account);
+            FindCustomerOrdersCommand command = request.toCommand(loginInfo);
 
             // then
-            assert command.customerId().equals(account.id());
+            assert command.customerId().equals(loginInfo.getId());
             assert command.size().equals(request.getSize());
             assert command.page() == 0;
         }
@@ -41,15 +41,15 @@ class FindCustomerOrdersRequestTest {
                 FindCustomerOrdersRequest.builder()
                     .page(10)
                     .build();
-            Account account = Account.builder()
+            LoginAccountInfo loginInfo = LoginAccountInfo.builder()
                 .id(12L)
                 .build();
 
             // when
-            FindCustomerOrdersCommand command = request.toCommand(account);
+            FindCustomerOrdersCommand command = request.toCommand(loginInfo);
 
             // then
-            assert command.customerId().equals(account.id());
+            assert command.customerId().equals(loginInfo.getId());
             assert command.size() == 10;
             assert command.page().equals(request.getPage());
         }

@@ -2,6 +2,7 @@ package com.order.adapter.out.persistence.redis;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.common.infrastructure.util.JsonUtil;
 import com.order.IntegrationTestSupport;
 import java.util.List;
 import lombok.AllArgsConstructor;

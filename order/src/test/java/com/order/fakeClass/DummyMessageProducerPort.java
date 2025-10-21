@@ -8,6 +8,7 @@ public class DummyMessageProducerPort implements MessageProducerPort {
 
     @Override
     public void sendMessage(String topic, String message) {
+        log.info("DummyMessageProducerPort");
         log.info(message);
     }
 }

@@ -1,7 +1,7 @@
 package com.order;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.order.infrastructure.exception.ExceptionAdvice;
+import com.common.infrastructure.exception.ExceptionAdvice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.restdocs.RestDocumentationContextProvider;
