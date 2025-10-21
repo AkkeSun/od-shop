@@ -75,7 +75,7 @@ paths:
                         "username" : "od",
                         "userTel" : "01012341234",
                         "address" : "서울특별시 송파구",
-                        "role" : "ROLE_CUSTOMER",
+                        "roles" : [ "ROLE_CUSTOMER" ],
                         "regDate" : "20241212"
                       }
                     }
@@ -193,7 +193,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "비밀번호와 비밀번호 확인이 일치하지 않습니다."
                       }
                     }
@@ -203,7 +203,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "올바른 전화번호 형식이 아닙니다."
                       }
                     }
@@ -242,7 +242,7 @@ paths:
                     "email" : "test@gmail.com",
                     "password" : "",
                     "passwordCheck" : "1234",
-                    "role" : "ROLE_CUSTOMER",
+                    "roles" : [ "ROLE_CUSTOMER" ],
                     "username" : "od",
                     "userTel" : "01012345678",
                     "address" : "서울시 강남구"
@@ -253,7 +253,7 @@ paths:
                     "email" : "test@gmail.com",
                     "password" : "1234",
                     "passwordCheck" : "1234",
-                    "role" : "",
+                    "roles" : null,
                     "username" : "od",
                     "userTel" : "01012345678",
                     "address" : "서울시 강남구"
@@ -264,7 +264,7 @@ paths:
                     "email" : "test@gmail.com",
                     "password" : "1234",
                     "passwordCheck" : "1234",
-                    "role" : "error",
+                    "roles" : [ "ERROR" ],
                     "username" : "od",
                     "userTel" : "01012345678",
                     "address" : "서울시 강남구"
@@ -275,7 +275,7 @@ paths:
                     "email" : "test@gmail.com",
                     "password" : "1234",
                     "passwordCheck" : "",
-                    "role" : "ROLE_CUSTOMER",
+                    "roles" : [ "ROLE_CUSTOMER" ],
                     "username" : "od",
                     "userTel" : "01012345678",
                     "address" : "서울시 강남구"
@@ -286,7 +286,7 @@ paths:
                     "email" : "test@gmail.com",
                     "password" : "1234",
                     "passwordCheck" : "1234",
-                    "role" : "ROLE_CUSTOMER",
+                    "roles" : [ "ROLE_CUSTOMER" ],
                     "username" : "od",
                     "userTel" : "111",
                     "address" : "서울시 강남구"
@@ -297,7 +297,7 @@ paths:
                     "email" : "od@test.com",
                     "password" : "1234",
                     "passwordCheck" : "1234",
-                    "role" : "ROLE_CUSTOMER",
+                    "roles" : [ "ROLE_CUSTOMER" ],
                     "username" : "od",
                     "userTel" : "01012345678",
                     "address" : "서울시 강남구"
@@ -308,7 +308,7 @@ paths:
                     "email" : "test@gmail.com",
                     "password" : "1234",
                     "passwordCheck" : "12345",
-                    "role" : "ROLE_CUSTOMER",
+                    "roles" : [ "ROLE_CUSTOMER" ],
                     "username" : "od",
                     "userTel" : "01012345678",
                     "address" : "서울시 강남구"
@@ -327,7 +327,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "비밀번호는 필수값 입니다."
                       }
                     }
@@ -337,7 +337,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "권한은 필수값 입니다."
                       }
                     }
@@ -347,8 +347,8 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
-                        "errorMessage" : "유효하지 않은 권한 입니다."
+                        "errorCode" : 1099,
+                        "errorMessage" : "유효하지 않은 권한 입니다"
                       }
                     }
                 '[register-account] 비밀번호 확인 미입력':
@@ -357,7 +357,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "비밀번호 확인은 필수값 입니다."
                       }
                     }
@@ -367,7 +367,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "올바른 전화번호 형식이 아닙니다."
                       }
                     }
@@ -377,7 +377,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "비밀번호와 비밀번호 확인이 일치하지 않습니다."
                       }
                     }
@@ -525,7 +525,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "리프레시 토큰은 필수값 입니다."
                       }
                     }
@@ -631,7 +631,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "이메일은 필수값 입니다."
                       }
                     }
@@ -641,7 +641,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "비밀번호는 필수값 입니다."
                       }
                     }
@@ -688,6 +688,59 @@ components:
         refreshToken:
           type: string
           description: 리프레시 토큰
+    '[response] find-account-info':
+      title: "[response] find-account-info"
+      required:
+      - data
+      - httpStatus
+      - message
+      type: object
+      properties:
+        data:
+          required:
+          - address
+          - email
+          - id
+          - regDate
+          - roles
+          - userTel
+          - username
+          type: object
+          properties:
+            address:
+              type: string
+              description: 사용자 주소
+            roles:
+              type: array
+              description: 사용자 권한
+              items:
+                oneOf:
+                - type: object
+                - type: boolean
+                - type: string
+                - type: number
+            regDate:
+              type: string
+              description: 등록일
+            userTel:
+              type: string
+              description: 사용자 전화번호
+            id:
+              type: number
+              description: 사용자 아이디
+            email:
+              type: string
+              description: 사용자 이메일
+            username:
+              type: string
+              description: 사용자 이름
+          description: 응답 데이터
+        httpStatus:
+          type: number
+          description: 상태 코드
+        message:
+          type: string
+          description: 상태 메시지
     '[request] update-account':
       title: "[request] update-account"
       required:
@@ -759,53 +812,6 @@ components:
         email:
           type: string
           description: 이메일
-    '[response] find-account-info':
-      title: "[response] find-account-info"
-      required:
-      - data
-      - httpStatus
-      - message
-      type: object
-      properties:
-        data:
-          required:
-          - address
-          - email
-          - id
-          - regDate
-          - role
-          - userTel
-          - username
-          type: object
-          properties:
-            role:
-              type: string
-              description: 사용자 권한
-            address:
-              type: string
-              description: 사용자 주소
-            regDate:
-              type: string
-              description: 등록일
-            userTel:
-              type: string
-              description: 사용자 전화번호
-            id:
-              type: number
-              description: 사용자 아이디
-            email:
-              type: string
-              description: 사용자 이메일
-            username:
-              type: string
-              description: 사용자 이름
-          description: 응답 데이터
-        httpStatus:
-          type: number
-          description: 상태 코드
-        message:
-          type: string
-          description: 상태 메시지
     '[response] delete-token':
       title: "[response] delete-token"
       required:
@@ -829,6 +835,47 @@ components:
         message:
           type: string
           description: 상태 메시지
+    '[request] register-account':
+      title: "[request] register-account"
+      required:
+      - email
+      - password
+      - passwordCheck
+      - roles
+      type: object
+      properties:
+        password:
+          type: string
+          description: 비밀번호
+        address:
+          type: string
+          description: 주소 (100자 미만)
+          nullable: true
+        passwordCheck:
+          type: string
+          description: 비밀번호 확인
+        roles:
+          description: "권한 (ROLE_CUSTOMER, ROLE_SELLER)"
+          oneOf:
+          - type: array
+            items:
+              oneOf:
+              - type: object
+              - type: boolean
+              - type: string
+              - type: number
+          - null
+        userTel:
+          type: string
+          description: 전화번호 (01012341234 패턴)
+          nullable: true
+        email:
+          type: string
+          description: 이메일 (50자 미만)
+        username:
+          type: string
+          description: 이름 (10자 미만)
+          nullable: true
     '[response] register-account':
       title: "[response] register-account"
       required:
@@ -856,39 +903,6 @@ components:
         message:
           type: string
           description: 상태 메시지
-    '[request] register-account':
-      title: "[request] register-account"
-      required:
-      - email
-      - password
-      - passwordCheck
-      - role
-      type: object
-      properties:
-        password:
-          type: string
-          description: 비밀번호
-        address:
-          type: string
-          description: 주소 (100자 미만)
-          nullable: true
-        role:
-          type: string
-          description: "권한 (ROLE_CUSTOMER, ROLE_SELLER)"
-        passwordCheck:
-          type: string
-          description: 비밀번호 확인
-        userTel:
-          type: string
-          description: 전화번호 (01012341234 패턴)
-          nullable: true
-        email:
-          type: string
-          description: 이메일 (50자 미만)
-        username:
-          type: string
-          description: 이름 (10자 미만)
-          nullable: true
     '[response] register-token':
       title: "[response] register-token"
       required:
@@ -970,11 +984,3 @@ components:
         message:
           type: string
           description: 상태 메시지
-
-  securitySchemes:
-    APIKey:
-      type: apiKey
-      name: Authorization
-      in: header
-security:
-  - APIKey: []
