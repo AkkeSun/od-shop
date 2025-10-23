@@ -12,19 +12,18 @@ import com.order.application.port.out.ProductClientPort;
 import com.order.application.port.out.RedisStoragePort;
 import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
+import com.order.infrastructure.properties.KafkaTopicProperties;
 import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 class RegisterOrderService implements RegisterOrderUseCase {
 
-    @Value("${kafka.topic.rollback-reserve}")
-    private String rollbackTopic;
+    private final KafkaTopicProperties kafkaTopicProperties;
 
     private final RedisStoragePort redisStoragePort;
 
@@ -45,7 +44,7 @@ class RegisterOrderService implements RegisterOrderUseCase {
             } catch (StatusRuntimeException e) {
                 for (OrderProduct confirmItem : confirmReserves) {
                     confirmItem.updateCustomerId(confirmItem.getCustomerId());
-                    messageProducerPort.sendMessage(rollbackTopic, toJsonString(confirmItem));
+                    messageProducerPort.sendMessage(kafkaTopicProperties.rollbackReserve(), toJsonString(confirmItem));
                 }
 
                 throw new CustomGrpcResponseError(

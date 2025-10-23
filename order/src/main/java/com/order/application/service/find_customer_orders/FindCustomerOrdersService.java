@@ -10,10 +10,10 @@ import com.order.application.port.out.RedisStoragePort;
 import com.order.application.service.find_customer_orders.FindCustomerOrdersServiceResponse.FindCustomerOrdersServiceResponseItem;
 import com.order.domain.model.Order;
 import com.order.domain.model.Product;
+import com.order.infrastructure.properties.RedisProperties;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +21,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class FindCustomerOrdersService implements FindCustomerOrdersUseCase {
 
-    @Value("${spring.data.redis.key.customer-order}")
-    private String redisKey;
-    @Value("${spring.data.redis.ttl.customer-order}")
-    private long redisTtl;
+    private final RedisProperties redisProperties;
     private final RedisStoragePort redisStoragePort;
     private final OrderStoragePort orderStoragePort;
     private final ProductClientPort productClientPort;
 
     @Override
     public FindCustomerOrdersServiceResponse findAll(FindCustomerOrdersCommand command) {
-        String key = String.format(redisKey, command.customerId(), command.page(), command.size());
+        String key = String.format(redisProperties.key().customerOrder(), command.customerId(), command.page(), command.size());
         FindCustomerOrdersServiceResponse response = redisStoragePort.findData(key,
             FindCustomerOrdersServiceResponse.class);
 
@@ -48,7 +45,7 @@ class FindCustomerOrdersService implements FindCustomerOrdersUseCase {
         }
 
         response = FindCustomerOrdersServiceResponse.of(page, orderList);
-        redisStoragePort.register(key, toJsonString(response), redisTtl);
+        redisStoragePort.register(key, toJsonString(response), redisProperties.ttl().customerOrder());
 
         return response;
     }

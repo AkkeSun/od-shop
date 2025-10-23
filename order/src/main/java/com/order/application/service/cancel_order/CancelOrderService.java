@@ -10,18 +10,17 @@ import com.order.application.port.in.command.CancelOrderCommand;
 import com.order.application.port.out.MessageProducerPort;
 import com.order.application.port.out.OrderStoragePort;
 import com.order.domain.model.Order;
+import com.order.infrastructure.properties.KafkaTopicProperties;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 class CancelOrderService implements CancelOrderUseCase {
 
-    @Value("${kafka.topic.cancel-order}")
-    private String topicName;
+    private final KafkaTopicProperties kafkaTopicProperties;
     private final OrderStoragePort orderStoragePort;
     private final MessageProducerPort messageProducerPort;
 
@@ -38,7 +37,7 @@ class CancelOrderService implements CancelOrderUseCase {
 
         order.cancel(LocalDateTime.now());
         orderStoragePort.cancel(order);
-        messageProducerPort.sendMessage(topicName, toJsonString(order.products()));
+        messageProducerPort.sendMessage(kafkaTopicProperties.cancelOrder(), toJsonString(order.products()));
         return CancelOrderServiceResponse.ofSuccess();
     }
 }

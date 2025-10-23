@@ -8,19 +8,18 @@ import com.order.application.port.in.command.ReserveProductCommand;
 import com.order.application.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import com.order.application.port.out.MessageProducerPort;
 import com.order.application.port.out.ProductClientPort;
+import com.order.infrastructure.properties.KafkaTopicProperties;
 import io.grpc.StatusRuntimeException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 class ReserveProductService implements ReserveProductUseCase {
 
-    @Value("${kafka.topic.cancel-reserve}")
-    private String cancelTopic;
+    private final KafkaTopicProperties kafkaTopicProperties;
 
     private final ProductClientPort productClientPort;
 
@@ -40,7 +39,7 @@ class ReserveProductService implements ReserveProductUseCase {
 
             } catch (StatusRuntimeException e) {
                 for (ReserveProductServiceResponse response : responseList) {
-                    messageProducerPort.sendMessage(cancelTopic, toJsonString(response));
+                    messageProducerPort.sendMessage(kafkaTopicProperties.cancelReserve(), toJsonString(response));
                 }
 
                 throw new CustomGrpcResponseError(
