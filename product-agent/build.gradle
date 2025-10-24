@@ -44,11 +44,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
-    // observability
-    implementation 'io.micrometer:micrometer-registry-prometheus'
-    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
-    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
-
     // kafka
     implementation 'org.springframework.kafka:spring-kafka'
 
