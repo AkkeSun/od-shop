@@ -4,7 +4,6 @@ package com.productagent.adapter.out.client.elasticsearch;
 import com.productagent.application.port.out.ElasticSearchClientPort;
 import com.productagent.domain.model.Product;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.micrometer.tracing.annotation.NewSpan;
 import java.time.Duration;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -40,14 +39,12 @@ class ElasticSearchClientAdapter implements ElasticSearchClientPort {
         ;
     }
 
-    @NewSpan
     @Override
     @CircuitBreaker(name = "elasticsearch", fallbackMethod = "registerFallback")
     public void register(Product product, float[] embedding) {
         client.register(RegisterProductEsRequest.of(product, embedding), product.getId());
     }
 
-    @NewSpan
     @Override
     @CircuitBreaker(name = "elasticsearch", fallbackMethod = "deleteByIdFallback")
     public void deleteByIds(List<Long> productIds) {
