@@ -4,7 +4,7 @@ import com.accountagent.domain.model.DlqLog;
 
 class DlqLogMapper {
 
-    public static DlqLogDocument toDocument(DlqLog domain) {
+    static DlqLogDocument toDocument(DlqLog domain) {
         return DlqLogDocument.builder()
             .topic(domain.topic())
             .payload(domain.payload())

@@ -4,7 +4,7 @@ import com.accountagent.domain.model.LoginLog;
 
 class LoginLogMapper {
 
-    public static LoginLogDocument toDocument(LoginLog domain) {
+    static LoginLogDocument toDocument(LoginLog domain) {
         return LoginLogDocument.builder()
             .accountId(domain.accountId())
             .email(domain.email())

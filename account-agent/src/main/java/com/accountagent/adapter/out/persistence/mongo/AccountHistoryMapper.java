@@ -4,7 +4,7 @@ import com.accountagent.domain.model.AccountHistory;
 
 class AccountHistoryMapper {
 
-    public static AccountHistoryDocument toDocument(AccountHistory domain) {
+    static AccountHistoryDocument toDocument(AccountHistory domain) {
         return AccountHistoryDocument.builder()
             .accountId(domain.accountId())
             .type(domain.type())
