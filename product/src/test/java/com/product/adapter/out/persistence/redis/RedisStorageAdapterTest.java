@@ -1,8 +1,8 @@
 package com.product.adapter.out.persistence.redis;
 
 import static com.common.infrastructure.util.JsonUtil.parseJson;
-import com.common.infrastructure.util.JsonUtil;
 
+import com.common.infrastructure.util.JsonUtil;
 import com.product.IntegrationTestSupport;
 import com.product.domain.model.Product;
 import com.product.domain.model.ProductHistory;
@@ -26,6 +26,7 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
     @AfterEach
     void reset() {
         circuitBreakerRegistry.circuitBreaker("redis").reset();
+        redisTemplate.getConnectionFactory().getConnection().serverCommands().flushDb();
     }
 
     @Nested
@@ -45,9 +46,6 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
 
             // then
             assert product.getId().equals(result.getId());
-
-            // clean
-            redisTemplate.delete(key);
         }
 
         @Test
@@ -77,9 +75,6 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
             // then
             assert result == null;
             assert output.toString().contains("[findRedisDataFallback] findDataTest3");
-
-            // clean
-            redisTemplate.delete(key);
         }
     }
 
@@ -100,9 +95,6 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
 
             // then
             assert result.getFirst().getId().equals(products.getFirst().getId());
-
-            // clean
-            redisTemplate.delete(key);
         }
 
         @Test
@@ -132,9 +124,6 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
             // then
             assert result.isEmpty();
             assert output.toString().contains("[findDataListFallback] findDataListTest3");
-
-            // clean
-            redisTemplate.delete(key);
         }
     }
 
@@ -155,9 +144,6 @@ class RedisStorageAdapterTest extends IntegrationTestSupport {
 
             // then
             assert result.getId().equals(product.getId());
-
-            // clean
-            redisTemplate.delete(key);
         }
     }
 }
