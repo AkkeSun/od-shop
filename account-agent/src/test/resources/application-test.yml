@@ -1,0 +1,14 @@
+spring:
+  data:
+    mongodb:
+      database: test_account_agent
+    redis:
+      host: localhost
+      port: 9999
+
+spring.kafka:
+  bootstrap-servers: localhost:9092
+  consumer:
+    group-id: test-group
+    auto-offset-reset: earliest
+    enable-auto-commit: false
