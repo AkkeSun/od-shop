@@ -10,6 +10,8 @@ import com.order.domain.model.Product;
 import com.order.fakeClass.FakeOrderStoragePort;
 import com.order.fakeClass.FakeProductClientPort;
 import com.order.fakeClass.FakeRedisStoragePort;
+import com.order.fakeClass.TestPropertiesHelper;
+import com.order.infrastructure.properties.RedisProperties;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +27,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 class FindCustomerOrdersServiceTest {
 
     private final String key;
+    private final RedisProperties redisProperties;
     private final FindCustomerOrdersService service;
     private final FakeRedisStoragePort redisStoragePort;
     private final FakeOrderStoragePort orderStoragePort;
@@ -37,13 +40,12 @@ class FindCustomerOrdersServiceTest {
 
     FindCustomerOrdersServiceTest() {
         key = "customer-order::%s-%s-%s";
+        redisProperties = TestPropertiesHelper.createRedisProperties();
         redisStoragePort = new FakeRedisStoragePort();
         orderStoragePort = new FakeOrderStoragePort();
         productClientPort = new FakeProductClientPort();
         service = new FindCustomerOrdersService(
-            redisStoragePort, orderStoragePort, productClientPort);
-        ReflectionTestUtils.setField(service, "redisKey", key);
-        ReflectionTestUtils.setField(service, "redisTtl", 10000);
+            redisProperties, redisStoragePort, orderStoragePort, productClientPort);
     }
 
     @Nested

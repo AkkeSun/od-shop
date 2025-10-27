@@ -12,7 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 @ExtendWith(OutputCaptureExtension.class)
-@Import(EmbeddedRedisConfig.class)
 public class IntegrationTestSupport {
 
     @Autowired

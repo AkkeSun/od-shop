@@ -10,7 +10,9 @@ import com.order.domain.model.Order;
 import com.order.domain.model.OrderProduct;
 import com.order.fakeClass.DummyMessageProducerPort;
 import com.order.fakeClass.FakeOrderStoragePort;
+import com.order.fakeClass.TestPropertiesHelper;
 import com.common.infrastructure.exception.CustomBusinessException;
+import com.order.infrastructure.properties.KafkaTopicProperties;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,13 +22,15 @@ import org.junit.jupiter.api.Test;
 class CancelOrderServiceTest {
 
     private final CancelOrderService service;
+    private final KafkaTopicProperties kafkaTopicProperties;
     private final FakeOrderStoragePort orderStoragePort;
     private final DummyMessageProducerPort messageProducerPort;
 
     CancelOrderServiceTest() {
+        kafkaTopicProperties = TestPropertiesHelper.createKafkaProperties();
         orderStoragePort = new FakeOrderStoragePort();
         messageProducerPort = new DummyMessageProducerPort();
-        service = new CancelOrderService(orderStoragePort, messageProducerPort);
+        service = new CancelOrderService(kafkaTopicProperties, orderStoragePort, messageProducerPort);
     }
 
     @BeforeEach

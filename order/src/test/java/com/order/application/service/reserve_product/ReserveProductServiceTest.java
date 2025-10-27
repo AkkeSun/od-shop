@@ -6,7 +6,9 @@ import com.order.application.port.in.command.ReserveProductCommand;
 import com.order.application.port.in.command.ReserveProductCommand.ReserveProductCommandItem;
 import com.order.fakeClass.DummyMessageProducerPort;
 import com.order.fakeClass.FakeProductClientPort;
+import com.order.fakeClass.TestPropertiesHelper;
 import com.common.infrastructure.exception.CustomGrpcResponseError;
+import com.order.infrastructure.properties.KafkaTopicProperties;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,14 +23,15 @@ import org.springframework.test.util.ReflectionTestUtils;
 class ReserveProductServiceTest {
 
     ReserveProductService service;
+    KafkaTopicProperties kafkaTopicProperties;
     FakeProductClientPort productClientPort;
     DummyMessageProducerPort messageProducerPort;
 
     ReserveProductServiceTest() {
+        this.kafkaTopicProperties = TestPropertiesHelper.createKafkaProperties();
         this.messageProducerPort = new DummyMessageProducerPort();
         this.productClientPort = new FakeProductClientPort();
-        this.service = new ReserveProductService(productClientPort, messageProducerPort);
-        ReflectionTestUtils.setField(service, "cancelTopic", "cancel-reserve");
+        this.service = new ReserveProductService(kafkaTopicProperties, productClientPort, messageProducerPort);
     }
 
     @BeforeEach

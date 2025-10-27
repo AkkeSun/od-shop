@@ -9,7 +9,9 @@ import com.order.fakeClass.DummyMessageProducerPort;
 import com.order.fakeClass.FakeOrderStoragePort;
 import com.order.fakeClass.FakeProductClientPort;
 import com.order.fakeClass.FakeRedisStoragePort;
+import com.order.fakeClass.TestPropertiesHelper;
 import com.common.infrastructure.exception.CustomGrpcResponseError;
+import com.order.infrastructure.properties.KafkaTopicProperties;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +25,7 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 class RegisterOrderServiceTest {
 
     RegisterOrderService service;
+    KafkaTopicProperties kafkaTopicProperties;
     FakeProductClientPort productClientPort;
     FakeOrderStoragePort orderStoragePort;
     FakeRedisStoragePort redisStoragePort;
@@ -35,12 +38,13 @@ class RegisterOrderServiceTest {
     }
 
     RegisterOrderServiceTest() {
+        this.kafkaTopicProperties = TestPropertiesHelper.createKafkaProperties();
         this.productClientPort = new FakeProductClientPort();
         this.orderStoragePort = new FakeOrderStoragePort();
         this.redisStoragePort = new FakeRedisStoragePort();
         this.messageProducerPort = new DummyMessageProducerPort();
-        service = new RegisterOrderService(redisStoragePort, productClientPort, orderStoragePort,
-            messageProducerPort);
+        service = new RegisterOrderService(kafkaTopicProperties, redisStoragePort, productClientPort,
+            orderStoragePort, messageProducerPort);
     }
 
     @Nested

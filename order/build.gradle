@@ -77,7 +77,7 @@ dependencies {
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'it.ozimov:embedded-redis:0.7.2'
+    testImplementation 'com.github.codemonstur:embedded-redis:1.4.3'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
