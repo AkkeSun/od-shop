@@ -4,7 +4,7 @@ info:
   description: 사용자 정보와 토큰을 관리하는 API 입니다
   version: 0.0.1
 servers:
-- url: http://localhost:8081
+- url: https://api.odlab.kr
 tags: []
 paths:
   /accounts:
@@ -984,3 +984,11 @@ components:
         message:
           type: string
           description: 상태 메시지
+
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: Authorization
+      in: header
+security:
+  - APIKey: []

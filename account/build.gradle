@@ -89,7 +89,7 @@ swaggerSources {
 // ./gradlew :account:openapi3 :account:copyOasToSwagger
 openapi3 {
     servers = [
-            { url = "http://localhost:8081" }
+            { url = "https://api.odlab.kr" }
     ]
     title = "Account API"
     description = "사용자 정보와 토큰을 관리하는 API 입니다"
