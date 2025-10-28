@@ -104,7 +104,7 @@ swaggerSources {
     }
 }
 
-// ./gradlew clean generateProto
+// ./gradlew :order:openapi3 :order:copyOasToSwagger
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:${protobufVersion}"

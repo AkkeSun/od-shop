@@ -41,7 +41,9 @@ public class SecurityConfig {
 
             // --------------- 인가 정책 ---------------
             .authorizeHttpRequests(auth -> {
-                auth.anyRequest().authenticated();
+                auth
+                    .requestMatchers("/orders/docs/**").permitAll()
+                    .anyRequest().authenticated();
             })
 
             // --------------- 인증/인가 예외처리 ---------------

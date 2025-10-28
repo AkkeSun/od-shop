@@ -8,8 +8,9 @@ services:
     environment:
       - URLS_PRIMARY_NAME=chameleon
       - "URLS=[ 
-                { url: 'http://localhost:8081/docs/account-api.yaml', name: 'account' },
-                { url: 'http://localhost:8082/docs/product-api.yaml', name: 'product' }
+                { url: 'http://localhost:8081/accounts/docs/account-api.yaml', name: 'account' },
+                { url: 'http://localhost:8082/products/docs/product-api.yaml', name: 'product' },
+                { url: 'http://localhost:8084/orders/docs/order-api.yaml', name: 'order' }
             ]"
     ports:
       - "8090:8080"

@@ -4,7 +4,7 @@ info:
   description: 상품 정보를 관리하는 API 입니다
   version: 0.0.1
 servers:
-- url: http://localhost:8082
+- url: https://api.odlab.kr
 tags: []
 paths:
   /products:
@@ -62,7 +62,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "존재하지 않은 정렬 타입 입니다"
                       }
                     }
@@ -72,7 +72,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "검색어는 필수값 입니다"
                       }
                     }
@@ -82,7 +82,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "존재하지 않은 카테고리 입니다"
                       }
                     }
@@ -92,7 +92,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "정렬 타입은 필수값 입니다"
                       }
                     }
@@ -102,7 +102,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "카테고리는 필수값 입니다"
                       }
                     }
@@ -163,12 +163,11 @@ paths:
                 value: |-
                   {
                     "productName" : "상품명",
-                    "category" : "AUTOMOTIVE",
+                    "category" : "DIGITAL",
                     "price" : 10000,
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 상품 이미지 입력 사이즈 초과':
                 value: |-
@@ -178,19 +177,17 @@ paths:
                     "price" : 10000,
                     "quantity" : 20,
                     "productImgUrl" : "testtesttesttesttesttesttesttesttesttesttesttesttest",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 인증받지 않은 사용자 요청':
                 value: |-
                   {
                     "productName" : "상품명",
-                    "category" : "AUTOMOTIVE",
+                    "category" : "DIGITAL",
                     "price" : 10000,
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 상품 설명 이미지 미입력':
                 value: |-
@@ -200,8 +197,7 @@ paths:
                     "price" : 10000,
                     "quantity" : 20,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : null,
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : null
                   }
               '[register-product] 1 미만의 상품 금액 입력':
                 value: |-
@@ -211,8 +207,7 @@ paths:
                     "price" : -1,
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 상품명 미입력':
                 value: |-
@@ -222,19 +217,7 @@ paths:
                     "price" : 10000,
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
-                  }
-              '[register-product] 상품 옵션 미입력':
-                value: |-
-                  {
-                    "productName" : "상품명",
-                    "category" : "AUTOMOTIVE",
-                    "price" : 10000,
-                    "quantity" : 20,
-                    "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : null
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 상품 이미지 미입력':
                 value: |-
@@ -244,8 +227,7 @@ paths:
                     "price" : 10000,
                     "quantity" : 20,
                     "productImgUrl" : null,
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 20 미만의 상품 수량 입력':
                 value: |-
@@ -255,19 +237,17 @@ paths:
                     "price" : 10000,
                     "quantity" : 10,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] success':
                 value: |-
                   {
                     "productName" : "상품명",
-                    "category" : "AUTOMOTIVE",
+                    "category" : "DIGITAL",
                     "price" : 10000,
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 상품명 입력 사이즈 초과':
                 value: |-
@@ -277,8 +257,7 @@ paths:
                     "price" : 10000,
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 유효하지 않은 카테고리 입력':
                 value: |-
@@ -288,8 +267,7 @@ paths:
                     "price" : 10000,
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
               '[register-product] 상품 설명 이미지 입력 사이즈 초과':
                 value: |-
@@ -299,8 +277,7 @@ paths:
                     "price" : 10000,
                     "quantity" : 20,
                     "productImgUrl" : null,
-                    "descriptionImgUrl" : null,
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : null
                   }
               '[register-product] 카테고리 미입력':
                 value: |-
@@ -310,8 +287,7 @@ paths:
                     "price" : 10000,
                     "quantity" : 30,
                     "productImgUrl" : "상품 이미지",
-                    "descriptionImgUrl" : "상품 설명",
-                    "productOption" : [ "옵션2", "옵션1" ]
+                    "descriptionImgUrl" : "상품 설명"
                   }
       responses:
         "403":
@@ -344,7 +320,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품 이미지는 50자 이하여야 합니다"
                       }
                     }
@@ -354,7 +330,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품 설명 이미지는 필수값 입니다"
                       }
                     }
@@ -364,7 +340,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "금액은 필수값 입니다"
                       }
                     }
@@ -374,18 +350,8 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품명은 필수값 입니다"
-                      }
-                    }
-                '[register-product] 상품 옵션 미입력':
-                  value: |-
-                    {
-                      "httpStatus" : 400,
-                      "message" : "BAD_REQUEST",
-                      "data" : {
-                        "errorCode" : 1001,
-                        "errorMessage" : "상품 옵션은 필수값 입니다"
                       }
                     }
                 '[register-product] 상품 이미지 미입력':
@@ -394,7 +360,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품 이미지는 필수값 입니다"
                       }
                     }
@@ -404,7 +370,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품 수량은 20 이상이어야 합니다"
                       }
                     }
@@ -414,7 +380,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품명은 50자 이하여야 합니다"
                       }
                     }
@@ -424,7 +390,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "존재하지 않은 카테고리 입니다"
                       }
                     }
@@ -434,8 +400,8 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
-                        "errorMessage" : "상품 설명 이미지는 필수값 입니다"
+                        "errorCode" : 1099,
+                        "errorMessage" : "상품 이미지는 필수값 입니다"
                       }
                     }
                 '[register-product] 카테고리 미입력':
@@ -444,7 +410,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "카테고리는 필수값 입니다"
                       }
                     }
@@ -483,11 +449,10 @@ paths:
                         "productName" : "상품명",
                         "productImgUrl" : "상품 이미지",
                         "keywords" : [ "keyword2", "keyword1" ],
-                        "productOption" : [ "옵션2", "옵션1" ],
                         "descriptionImgUrl" : "상품 설명",
                         "price" : 10000,
                         "quantity" : 30,
-                        "category" : "자동차 용품"
+                        "category" : "전자제품"
                       }
                     }
   /products/recommendations:
@@ -528,7 +493,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "검색 날짜는 필수값 입니다"
                       }
                     }
@@ -538,8 +503,8 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
-                        "errorMessage" : "유효한 날짜 형식이 아닙니다"
+                        "errorCode" : 1099,
+                        "errorMessage" : "유효하지 않은 검색 날짜 입니다"
                       }
                     }
         "200":
@@ -629,10 +594,9 @@ paths:
                         "productImgUrl" : "http://example.com/product.jpg",
                         "descriptionImgUrl" : "http://example.com/description.jpg",
                         "keywords" : [ "Keyword2", "Keyword1" ],
-                        "productOption" : [ "Option2", "Option1" ],
                         "price" : 10000,
                         "quantity" : 30,
-                        "category" : "자동차 용품",
+                        "category" : "전자제품",
                         "regDateTime" : "2025-05-01 12:00:00"
                       }
                     }
@@ -838,7 +802,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품 설명 이미지는 50자 이하여야 합니다"
                       }
                     }
@@ -848,7 +812,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품 이미지는 50자 이하여야 합니다"
                       }
                     }
@@ -858,7 +822,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품명은 50자 이하여야 합니다"
                       }
                     }
@@ -880,7 +844,6 @@ paths:
                         "productName" : "Updated Product",
                         "productImgUrl" : "http://example.com/image.jpg",
                         "keywords" : [ "Keyword2", "Keyword1" ],
-                        "productOption" : [ "Option2", "Option1" ],
                         "descriptionImgUrl" : "http://example.com/description.jpg",
                         "price" : 10000,
                         "category" : "전체"
@@ -937,15 +900,15 @@ paths:
                         "errorMessage" : "유효한 인증 토큰이 아닙니다"
                       }
                     }
-  /products/{productId}/quantity:
+  /products/{productId}/restock:
     put:
       tags:
       - Product
-      summary: 상품 수량 수정 API
-      description: 상품 수량을 수정하는 API 입니다. <br><br>1. 테스트시 우측 자물쇠를 클릭하여 유효한 인증 토큰을 입력해야
+      summary: 상품 수량 추가 API
+      description: 상품 수량을 추가하는 API 입니다. <br><br>1. 테스트시 우측 자물쇠를 클릭하여 유효한 인증 토큰을 입력해야
         정상 테스트가 가능합니다. (요청 헤더에 인증 토큰을 입력하여 테스트하지 않습니다) <br>2. 권한을 가진 사용자만 상품 수량을 수정할
         수 있습니다.3. 상품 수량 추가는 해당 상품을 등록한 사용자만 수정 가능합니다.
-      operationId: "[register-product-quantity] "
+      operationId: "[increase-product-quantity] "
       parameters:
       - name: productId
         in: path
@@ -964,60 +927,49 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/[request] update-product-quantity"
+              $ref: "#/components/schemas/[request] increase-product-quantity"
             examples:
-              '[register-product-quantity] 상품 수량 추가 권한이 없는 사용자 요청':
+              '[increase-product-quantity] 인증받지 않은 사용자 요청':
                 value: |-
                   {
-                    "quantity" : 10,
-                    "quantityType" : "ADD_QUANTITY"
+                    "quantity" : 10
                   }
-              '[register-product-quantity] 상품 수량 음수로 입력':
+              '[increase-product-quantity] 상품 수량 음수로 입력':
                 value: |-
                   {
-                    "quantity" : -1,
-                    "quantityType" : "ADD_QUANTITY"
+                    "quantity" : -1
                   }
-              '[register-product-quantity] 유효하지 않은 수정타입 입력':
+              '[increase-product-quantity] 조회된 상품 정보 없음':
                 value: |-
                   {
-                    "quantity" : 20,
-                    "quantityType" : null
+                    "quantity" : 20
                   }
-              '[register-product-quantity] success':
+              '[increase-product-quantity] 상품 수량 추가 권한이 없는 사용자 요청':
                 value: |-
                   {
-                    "quantity" : 10,
-                    "quantityType" : "ADD_QUANTITY"
+                    "quantity" : 10
                   }
-              '[register-product-quantity] 조회된 상품 정보 없음':
+              '[increase-product-quantity] success':
                 value: |-
                   {
-                    "quantity" : 20,
-                    "quantityType" : "ADD_QUANTITY"
-                  }
-              '[register-product-quantity] 인증받지 않은 사용자 요청':
-                value: |-
-                  {
-                    "quantity" : 10,
-                    "quantityType" : "ADD_QUANTITY"
+                    "quantity" : 10
                   }
       responses:
-        "403":
-          description: "403"
+        "401":
+          description: "401"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/[response] error"
               examples:
-                '[register-product-quantity] 상품 수량 추가 권한이 없는 사용자 요청':
+                '[increase-product-quantity] 인증받지 않은 사용자 요청':
                   value: |-
                     {
-                      "httpStatus" : 403,
-                      "message" : "FORBIDDEN",
+                      "httpStatus" : 401,
+                      "message" : "UNAUTHORIZED",
                       "data" : {
-                        "errorCode" : 5001,
-                        "errorMessage" : "접근권한이 없습니다"
+                        "errorCode" : 3001,
+                        "errorMessage" : "유효한 인증 토큰이 아닙니다"
                       }
                     }
         "400":
@@ -1027,40 +979,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/[response] error"
               examples:
-                '[register-product-quantity] 상품 수량 음수로 입력':
+                '[increase-product-quantity] 상품 수량 음수로 입력':
                   value: |-
                     {
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "상품 수량은 1 이상 이어야 합니다"
-                      }
-                    }
-                '[register-product-quantity] 유효하지 않은 수정타입 입력':
-                  value: |-
-                    {
-                      "httpStatus" : 400,
-                      "message" : "BAD_REQUEST",
-                      "data" : {
-                        "errorCode" : 1001,
-                        "errorMessage" : "수정 타입은 필수 값 입니다"
-                      }
-                    }
-        "200":
-          description: "200"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/[response] update-product-quantity"
-              examples:
-                '[register-product-quantity] success':
-                  value: |-
-                    {
-                      "httpStatus" : 200,
-                      "message" : "OK",
-                      "data" : {
-                        "result" : true
                       }
                     }
         "404":
@@ -1070,7 +996,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/[response] error"
               examples:
-                '[register-product-quantity] 조회된 상품 정보 없음':
+                '[increase-product-quantity] 조회된 상품 정보 없음':
                   value: |-
                     {
                       "httpStatus" : 404,
@@ -1080,21 +1006,37 @@ paths:
                         "errorMessage" : "조회된 상픔 정보가 없습니다"
                       }
                     }
-        "401":
-          description: "401"
+        "403":
+          description: "403"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/[response] error"
               examples:
-                '[register-product-quantity] 인증받지 않은 사용자 요청':
+                '[increase-product-quantity] 상품 수량 추가 권한이 없는 사용자 요청':
                   value: |-
                     {
-                      "httpStatus" : 401,
-                      "message" : "UNAUTHORIZED",
+                      "httpStatus" : 403,
+                      "message" : "FORBIDDEN",
                       "data" : {
-                        "errorCode" : 3001,
-                        "errorMessage" : "유효한 인증 토큰이 아닙니다"
+                        "errorCode" : 5001,
+                        "errorMessage" : "접근권한이 없습니다"
+                      }
+                    }
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/[response] update-product-quantity"
+              examples:
+                '[increase-product-quantity] success':
+                  value: |-
+                    {
+                      "httpStatus" : 200,
+                      "message" : "OK",
+                      "data" : {
+                        "result" : true
                       }
                     }
   /products/{productId}/reviews:
@@ -1257,7 +1199,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "리뷰는 필수값 입니다."
                       }
                     }
@@ -1267,7 +1209,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "점수는 0.5 이상 5.0 이하여야 합니다."
                       }
                     }
@@ -1277,7 +1219,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "점수는 필수값 입니다."
                       }
                     }
@@ -1287,7 +1229,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "리뷰는 10자 이상 50자 이하여야 합니다."
                       }
                     }
@@ -1297,7 +1239,7 @@ paths:
                       "httpStatus" : 400,
                       "message" : "BAD_REQUEST",
                       "data" : {
-                        "errorCode" : 1001,
+                        "errorCode" : 1099,
                         "errorMessage" : "리뷰는 필수값 입니다."
                       }
                     }
@@ -1353,6 +1295,23 @@ paths:
                     }
 components:
   schemas:
+    '[request] register-review':
+      title: "[request] register-review"
+      required:
+      - review
+      - score
+      type: object
+      properties:
+        score:
+          description: 점수 (0.5 이상 5.0 이하)
+          oneOf:
+          - type: number
+          - null
+        review:
+          description: 리뷰 (10자 이상 20자 이하)
+          oneOf:
+          - type: string
+          - null
     '[request] update-product':
       title: "[request] update-product"
       type: object
@@ -1393,23 +1352,6 @@ components:
           type: string
           description: 상품명 (50자 이하)
           nullable: true
-    '[request] register-review':
-      title: "[request] register-review"
-      required:
-      - review
-      - score
-      type: object
-      properties:
-        score:
-          description: 점수 (0.5 이상 5.0 이하)
-          oneOf:
-          - type: number
-          - null
-        review:
-          description: 리뷰 (10자 이상 20자 이하)
-          oneOf:
-          - type: string
-          - null
     '[response] delete-product':
       title: "[response] delete-product"
       required:
@@ -1433,77 +1375,53 @@ components:
         message:
           type: string
           description: 상태 메시지
-    '[response] register-product':
-      title: "[response] register-product"
+    '[request] register-product':
+      title: "[request] register-product"
       required:
-      - data
-      - httpStatus
-      - message
+      - category
+      - descriptionImgUrl
+      - price
+      - productImgUrl
+      - productName
+      - quantity
       type: object
       properties:
-        data:
-          required:
-          - category
-          - descriptionImgUrl
-          - keywords
-          - price
-          - productId
-          - productImgUrl
-          - productName
-          - productOption
-          - quantity
-          - sellerEmail
-          type: object
-          properties:
-            productOption:
-              type: array
-              description: 상품 옵션
-              items:
-                oneOf:
-                - type: object
-                - type: boolean
-                - type: string
-                - type: number
-            quantity:
-              type: number
-              description: 상품 수량
-            descriptionImgUrl:
-              type: string
-              description: 상품 설명 이미지
-            productImgUrl:
-              type: string
-              description: 상품 이미지
-            keywords:
-              type: array
-              description: 상품 키워드
-              items:
-                oneOf:
-                - type: object
-                - type: boolean
-                - type: string
-                - type: number
-            productId:
-              type: number
-              description: 상품 코드
-            price:
-              type: number
-              description: 상품 금액
-            category:
-              type: string
-              description: 상품 카테고리
-            sellerEmail:
-              type: string
-              description: 판매자 이메일
-            productName:
-              type: string
-              description: 판매자명
-          description: 응답 데이터
-        httpStatus:
+        quantity:
           type: number
-          description: 상태 코드
-        message:
-          type: string
-          description: 상태 메시지
+          description: 상품 수량 (20 이상)
+        productImgUrl:
+          description: 상품 이미지 (50자 이하)
+          oneOf:
+          - type: string
+          - null
+        descriptionImgUrl:
+          description: 상품 설명 이미지 (50자 이하)
+          oneOf:
+          - type: string
+          - null
+        price:
+          type: number
+          description: 상품 금액
+        category:
+          description: "카테고리 (ELECTRONICS, FASHION, DIGITAL, HOME_APPLIANCES, BEAUTY,\
+            \ BOOKS, SPORTS, FOOD, TOYS, FURNITURE, AUTOMOTIVE, HEALTH, TOTAL)"
+          oneOf:
+          - null
+          - type: string
+        productName:
+          description: 상품명 (50자 이하)
+          oneOf:
+          - type: string
+          - null
+    '[request] increase-product-quantity':
+      title: "[request] increase-product-quantity"
+      required:
+      - quantity
+      type: object
+      properties:
+        quantity:
+          type: number
+          description: 상품수량 (1 이상)
     '[response] update-product-quantity':
       title: "[response] update-product-quantity"
       required:
@@ -1586,21 +1504,6 @@ components:
         message:
           type: string
           description: 상태 메시지
-    '[request] update-product-quantity':
-      title: "[request] update-product-quantity"
-      required:
-      - quantity
-      - quantityType
-      type: object
-      properties:
-        quantityType:
-          description: "수정 타입 (ADD_QUANTITY, PURCHASE, REFUND"
-          oneOf:
-          - type: string
-          - null
-        quantity:
-          type: number
-          description: 상품수량 (1 이상)
     '[response] error':
       title: "[response] error"
       required:
@@ -1645,19 +1548,9 @@ components:
           - productId
           - productImgUrl
           - productName
-          - productOption
           - sellerEmail
           type: object
           properties:
-            productOption:
-              type: array
-              description: 상품 옵션
-              items:
-                oneOf:
-                - type: object
-                - type: boolean
-                - type: string
-                - type: number
             descriptionImgUrl:
               type: string
               description: 상품 설명 이미지 URL
@@ -1718,56 +1611,130 @@ components:
         message:
           type: string
           description: 상태 메시지
-    '[request] register-product':
-      title: "[request] register-product"
+    '[response] find-product':
+      title: "[response] find-product"
       required:
-      - category
-      - descriptionImgUrl
-      - price
-      - productImgUrl
-      - productName
-      - productOption
-      - quantity
+      - httpStatus
+      - message
       type: object
       properties:
-        productOption:
-          description: 상품 옵션
-          oneOf:
-          - type: array
-            items:
-              oneOf:
-              - type: object
-              - type: boolean
-              - type: string
-              - type: number
-          - null
-        quantity:
+        data:
+          required:
+          - category
+          - descriptionImgUrl
+          - keywords
+          - price
+          - productId
+          - productImgUrl
+          - productName
+          - quantity
+          - regDateTime
+          - sellerEmail
+          type: object
+          properties:
+            regDateTime:
+              type: string
+              description: 등록 일시
+            descriptionImgUrl:
+              type: string
+              description: 설명 이미지 URL
+            productImgUrl:
+              type: string
+              description: 상품 이미지 URL
+            quantity:
+              type: number
+              description: 수량
+            keywords:
+              type: array
+              description: 키워드 목록
+              items:
+                oneOf:
+                - type: object
+                - type: boolean
+                - type: string
+                - type: number
+            productId:
+              type: number
+              description: 상품 ID
+            price:
+              type: number
+              description: 가격
+            category:
+              type: string
+              description: 카테고리
+            sellerEmail:
+              type: string
+              description: 판매자 이메일
+            productName:
+              type: string
+              description: 상품 이름
+        httpStatus:
           type: number
-          description: 상품 수량 (20 이상)
-        productImgUrl:
-          description: 상품 이미지 (50자 이하)
-          oneOf:
-          - type: string
-          - null
-        descriptionImgUrl:
-          description: 상품 설명 이미지 (50자 이하)
-          oneOf:
-          - type: string
-          - null
-        price:
+          description: 상태 코드
+        message:
+          type: string
+          description: 상태 메시지
+    '[response] register-product':
+      title: "[response] register-product"
+      required:
+      - data
+      - httpStatus
+      - message
+      type: object
+      properties:
+        data:
+          required:
+          - category
+          - descriptionImgUrl
+          - keywords
+          - price
+          - productId
+          - productImgUrl
+          - productName
+          - quantity
+          - sellerEmail
+          type: object
+          properties:
+            quantity:
+              type: number
+              description: 상품 수량
+            descriptionImgUrl:
+              type: string
+              description: 상품 설명 이미지
+            productImgUrl:
+              type: string
+              description: 상품 이미지
+            keywords:
+              type: array
+              description: 상품 키워드
+              items:
+                oneOf:
+                - type: object
+                - type: boolean
+                - type: string
+                - type: number
+            productId:
+              type: number
+              description: 상품 코드
+            price:
+              type: number
+              description: 상품 금액
+            category:
+              type: string
+              description: 상품 카테고리
+            sellerEmail:
+              type: string
+              description: 판매자 이메일
+            productName:
+              type: string
+              description: 판매자명
+          description: 응답 데이터
+        httpStatus:
           type: number
-          description: 상품 금액
-        category:
-          description: "카테고리 (ELECTRONICS, FASHION, DIGITAL, HOME_APPLIANCES, BEAUTY,\
-            \ BOOKS, SPORTS, FOOD, TOYS, FURNITURE, AUTOMOTIVE, HEALTH, TOTAL)"
-          oneOf:
-          - null
-          - type: string
-        productName:
-          description: 상품명 (50자 이하)
-          oneOf:
-          - type: string
-          - null
+          description: 상태 코드
+        message:
+          type: string
+          description: 상태 메시지
     '[response] find-review-list':
       title: "[response] find-review-list"
       required:
@@ -1922,87 +1889,7 @@ components:
         message:
           type: string
           description: 상태 메시지
-    '[response] find-product':
-      title: "[response] find-product"
-      required:
-      - httpStatus
-      - message
-      type: object
-      properties:
-        data:
-          required:
-          - category
-          - descriptionImgUrl
-          - keywords
-          - price
-          - productId
-          - productImgUrl
-          - productName
-          - productOption
-          - quantity
-          - regDateTime
-          - sellerEmail
-          type: object
-          properties:
-            regDateTime:
-              type: string
-              description: 등록 일시
-            productOption:
-              type: array
-              description: 상품 옵션 목록
-              items:
-                oneOf:
-                - type: object
-                - type: boolean
-                - type: string
-                - type: number
-            descriptionImgUrl:
-              type: string
-              description: 설명 이미지 URL
-            productImgUrl:
-              type: string
-              description: 상품 이미지 URL
-            quantity:
-              type: number
-              description: 수량
-            keywords:
-              type: array
-              description: 키워드 목록
-              items:
-                oneOf:
-                - type: object
-                - type: boolean
-                - type: string
-                - type: number
-            productId:
-              type: number
-              description: 상품 ID
-            price:
-              type: number
-              description: 가격
-            category:
-              type: string
-              description: 카테고리
-            sellerEmail:
-              type: string
-              description: 판매자 이메일
-            productName:
-              type: string
-              description: 상품 이름
-        httpStatus:
-          type: number
-          description: 상태 코드
-        message:
-          type: string
-          description: 상태 메시지
 
-  securitySchemes:
-    APIKey:
-      type: apiKey
-      name: Authorization
-      in: header
-security:
-  - APIKey: []
   securitySchemes:
     APIKey:
       type: apiKey
