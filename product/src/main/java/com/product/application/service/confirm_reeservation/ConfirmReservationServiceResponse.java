@@ -15,7 +15,7 @@ public record ConfirmReservationServiceResponse(
     public static ConfirmReservationServiceResponse of(Product product,
         ProductReserveHistory reserveHistory) {
         return ConfirmReservationServiceResponse.builder()
-            .result(true)
+            .result(Boolean.TRUE)
             .productId(product.getId())
             .sellerId(product.getSellerId())
             .buyQuantity(reserveHistory.reservedQuantity())

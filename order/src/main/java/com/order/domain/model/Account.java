@@ -14,7 +14,9 @@ public record Account(
     public static Account of(Claims claims) {
         return Account.builder()
             .id(Long.valueOf(claims.get("accountId").toString()))
-            .roles(Arrays.stream(claims.get("roles").toString().split(",")).toList())
+            .roles(Arrays.stream(claims.get("roles").toString()
+                    .split(","))
+                .toList())
             .build();
     }
 }
