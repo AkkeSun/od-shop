@@ -1,10 +1,9 @@
 # <font color="#de7802">OD-SHOP</font>
 
----
-
-od-shop은 헥사고날 아키텍처 기반의 마이크로서비스 쇼핑몰 플랫폼입니다. 
-
+od-shop은 헥사고날 아키텍처 기반의 마이크로서비스 쇼핑몰 플랫폼입니다. <br >
 Account, Product, Order 도메인을 중심으로 각각의 비즈니스 서비스와 이벤트 처리를 위한 Agent 서비스로 구성되어 있습니다.
+
+![Image](https://github.com/user-attachments/assets/33a5430c-8b51-4bb7-8fa6-be696c2b039b)
 
 ### 핵심 특징
 
@@ -224,8 +223,7 @@ Spring Rest Docs Test 를 통해 openapi3 문서를 생성하고 이를 Swagger 
 
 ### 개요
 
-모든 마이크로서비스는 **SigNoz**를 통해 통합 옵저버빌리티를 제공합니다.
-
+모든 마이크로서비스는 **SigNoz**를 통해 통합 옵저버빌리티를 제공합니다.<br >
 [SigNoz](https://velog.io/@akkessun/Signoz)는 오픈소스 APM(Application Performance Monitoring) 플랫폼으로, 분산 추적(Distributed Tracing), 메트릭(Metrics), 로그(Logs)를 통합하여 시스템의 성능과 동작을 모니터링합니다.
 
 <br>
