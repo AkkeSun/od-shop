@@ -23,8 +23,7 @@ paths:
           type: string
       - name: category
         in: query
-        description: "카테고리 (ELECTRONICS, FASHION, HOME_APPLIANCES, BEAUTY, BOOKS,\
-          \ SPORTS FOOD, TOYS, FURNITURE, AUTOMOTIVE, HEALTH, TOTAL)"
+        description: "카테고리 (DIGITAL, FASHION, SPORTS, FOOD, LIFE, TOTAL)"
         required: true
         schema:
           type: string
@@ -448,7 +447,7 @@ paths:
                         "sellerEmail" : "od@test.com",
                         "productName" : "상품명",
                         "productImgUrl" : "상품 이미지",
-                        "keywords" : [ "keyword2", "keyword1" ],
+                        "keywords" : [ "keyword1", "keyword2" ],
                         "descriptionImgUrl" : "상품 설명",
                         "price" : 10000,
                         "quantity" : 30,
@@ -593,7 +592,7 @@ paths:
                         "productName" : "Test Product",
                         "productImgUrl" : "http://example.com/product.jpg",
                         "descriptionImgUrl" : "http://example.com/description.jpg",
-                        "keywords" : [ "Keyword2", "Keyword1" ],
+                        "keywords" : [ "Keyword1", "Keyword2" ],
                         "price" : 10000,
                         "quantity" : 30,
                         "category" : "전자제품",
@@ -722,8 +721,8 @@ paths:
                 value: |-
                   {
                     "price" : 10000,
-                    "productOption" : [ "Option2", "Option1" ],
-                    "keywords" : [ "Keyword2", "Keyword1" ],
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
                     "productName" : "Updated Product",
                     "productImgUrl" : "http://example.com/image.jpg",
                     "descriptionImgUrl" : "testtesttesttesttesttesttesttesttesttesttesttesttest"
@@ -732,8 +731,8 @@ paths:
                 value: |-
                   {
                     "price" : 10000,
-                    "productOption" : [ "Option2", "Option1" ],
-                    "keywords" : [ "Keyword2", "Keyword1" ],
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
                     "productName" : "Updated Product",
                     "productImgUrl" : "http://example.com/image.jpg",
                     "descriptionImgUrl" : "http://example.com/description.jpg"
@@ -742,8 +741,8 @@ paths:
                 value: |-
                   {
                     "price" : 10000,
-                    "productOption" : [ "Option2", "Option1" ],
-                    "keywords" : [ "Keyword2", "Keyword1" ],
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
                     "productName" : "Updated Product",
                     "productImgUrl" : "http://example.com/image.jpg",
                     "descriptionImgUrl" : "http://example.com/description.jpg"
@@ -752,8 +751,8 @@ paths:
                 value: |-
                   {
                     "price" : 10000,
-                    "productOption" : [ "Option2", "Option1" ],
-                    "keywords" : [ "Keyword2", "Keyword1" ],
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
                     "productName" : "Updated Product",
                     "productImgUrl" : "testtesttesttesttesttesttesttesttesttesttesttesttest",
                     "descriptionImgUrl" : "http://example.com/description.jpg"
@@ -762,8 +761,8 @@ paths:
                 value: |-
                   {
                     "price" : 10000,
-                    "productOption" : [ "Option2", "Option1" ],
-                    "keywords" : [ "Keyword2", "Keyword1" ],
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
                     "productName" : "Updated Product",
                     "productImgUrl" : "http://example.com/image.jpg",
                     "descriptionImgUrl" : "http://example.com/description.jpg"
@@ -772,8 +771,8 @@ paths:
                 value: |-
                   {
                     "price" : 10000,
-                    "productOption" : [ "Option2", "Option1" ],
-                    "keywords" : [ "Keyword2", "Keyword1" ],
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
                     "productName" : "Updated Product",
                     "productImgUrl" : "http://example.com/image.jpg",
                     "descriptionImgUrl" : "http://example.com/description.jpg"
@@ -782,8 +781,8 @@ paths:
                 value: |-
                   {
                     "price" : 10000,
-                    "productOption" : [ "Option2", "Option1" ],
-                    "keywords" : [ "Keyword2", "Keyword1" ],
+                    "productOption" : [ "Option1", "Option2" ],
+                    "keywords" : [ "Keyword1", "Keyword2" ],
                     "productName" : "testtesttesttesttesttesttesttesttesttesttesttesttest",
                     "productImgUrl" : "http://example.com/image.jpg",
                     "descriptionImgUrl" : "http://example.com/description.jpg"
@@ -843,7 +842,7 @@ paths:
                         "sellerEmail" : "sellerEmail",
                         "productName" : "Updated Product",
                         "productImgUrl" : "http://example.com/image.jpg",
-                        "keywords" : [ "Keyword2", "Keyword1" ],
+                        "keywords" : [ "Keyword1", "Keyword2" ],
                         "descriptionImgUrl" : "http://example.com/description.jpg",
                         "price" : 10000,
                         "category" : "전체"
