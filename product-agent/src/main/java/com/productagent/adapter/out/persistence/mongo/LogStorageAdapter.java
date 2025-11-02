@@ -38,6 +38,10 @@ class LogStorageAdapter implements LogStoragePort {
         Query query = new Query().with(Sort.by(Sort.Direction.DESC, "regDateTime")).limit(1);
         MetricUpdateTime metricUpdateTime = mongoTemplate.findOne(query, MetricUpdateTime.class,
             METRIC_UPDATE_TIME);
+
+        if (metricUpdateTime == null) {
+            return DateUtil.getCurrentLocalDateTime().toLocalDate().atStartOfDay();
+        }
         return parseDateTime(metricUpdateTime.regDateTime());
     }
 
