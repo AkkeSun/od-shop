@@ -35,10 +35,10 @@ class RegisterHistoryConsumer {
     )
     void registerHistoryDlq(@Payload String payload) {
         try {
-            log.info("[account-history-dql] <== " + payload);
+            log.info("[account-history-dql] <== {}", payload);
             RegisterHistoryServiceResponse response = registerHistoryUseCase
                 .registerHistory(payload);
-            log.info("[account-history-dql] result - " + response.result());
+            log.info("[account-history-dql] result - {}", response.result());
         } catch (Exception e) {
             log.error("[account-history-dlq] error - ", e);
             registerDqlInfoUseCase.registerDqlInfo("account-history", payload);
