@@ -18,11 +18,7 @@ public class DateUtil {
 
     public static String getCurrentDate() {
         return ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            .format(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT));
-    }
-
-    public static LocalDateTime getCurrentLocalDateTime() {
-        return LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            .format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
 
     public static String formatDateTime(LocalDateTime dateTime) {
