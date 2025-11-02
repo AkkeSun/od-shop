@@ -13,12 +13,12 @@ public class DateUtil {
 
     public static String getCurrentDateTime() {
         return ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            .format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"));
+            .format(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT));
     }
 
     public static String getCurrentDate() {
         return ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            .format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            .format(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT));
     }
 
     public static LocalDateTime getCurrentLocalDateTime() {
