@@ -247,6 +247,17 @@ class LogStorageAdapterTest {
             // then
             assertThat(lastTime).isEqualTo(LocalDateTime.of(2025, 1, 15, 10, 0, 0));
         }
+
+        @Test
+        @DisplayName("[success] MetricUpdateTime이 없을 때 오늘 자정을 반환한다")
+        void success_whenNoData() {
+            // when
+            LocalDateTime lastTime = adapter.findLastMetricUpdateTime();
+
+            // then
+            LocalDateTime expectedTime = LocalDateTime.now().toLocalDate().atStartOfDay();
+            assertThat(lastTime).isEqualTo(expectedTime);
+        }
     }
 
     @Nested
