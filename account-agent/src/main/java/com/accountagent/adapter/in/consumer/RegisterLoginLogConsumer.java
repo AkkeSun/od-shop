@@ -23,10 +23,10 @@ public class RegisterLoginLogConsumer {
         concurrency = "1"
     )
     void registerHistory(@Payload String payload) {
-        log.info("[login-log] <== " + payload);
+        log.info("[login-log] <== {}", payload);
         RegisterLoginLogServiceResponse response = registerLoginLogUseCase
             .registerLoginLog(payload);
-        log.info("[login-log] result - " + response.result());
+        log.info("[login-log] result - {}", response.result());
     }
 
     @KafkaListener(
