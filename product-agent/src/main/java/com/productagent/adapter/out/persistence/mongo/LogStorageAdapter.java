@@ -40,7 +40,7 @@ class LogStorageAdapter implements LogStoragePort {
             METRIC_UPDATE_TIME);
 
         if (metricUpdateTime == null) {
-            return LocalDateTime.now().toLocalDate().atStartOfDay();
+            return DateUtil.getCurrentLocalDateTime().toLocalDate().atStartOfDay();
         }
         return parseDateTime(metricUpdateTime.regDateTime());
     }

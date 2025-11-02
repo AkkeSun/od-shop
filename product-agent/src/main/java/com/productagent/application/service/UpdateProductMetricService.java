@@ -35,7 +35,7 @@ class UpdateProductMetricService implements UpdateProductMetricUseCase {
     public void update() {
         boolean isLastTime = false;
         LocalDateTime startTime = logStoragePort.findLastMetricUpdateTime().plusSeconds(1);
-        LocalDateTime lastTime = LocalDateTime.now();
+        LocalDateTime lastTime = DateUtil.getCurrentLocalDateTime();
 
         if (!startTime.toLocalDate().equals(lastTime.toLocalDate())) {
             isLastTime = true;

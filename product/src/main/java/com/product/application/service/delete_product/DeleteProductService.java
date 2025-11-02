@@ -1,6 +1,7 @@
 package com.product.application.service.delete_product;
 
 import static com.common.infrastructure.exception.ErrorCode.ACCESS_DENIED;
+import static com.common.infrastructure.util.DateUtil.getCurrentLocalDateTime;
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.common.infrastructure.exception.CustomAuthorizationException;
@@ -35,7 +36,7 @@ class DeleteProductService implements DeleteProductUseCase {
             throw new CustomAuthorizationException(ACCESS_DENIED);
         }
 
-        LocalDateTime deleteAt = LocalDateTime.now();
+        LocalDateTime deleteAt = getCurrentLocalDateTime();
         reviewStoragePort.deleteByProductId(productId);
         productStoragePort.softDeleteById(productId, deleteAt);
         elasticSearchClientPort.deleteById(productId);

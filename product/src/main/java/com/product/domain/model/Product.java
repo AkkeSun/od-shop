@@ -1,5 +1,6 @@
 package com.product.domain.model;
 
+import com.common.infrastructure.util.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.product.application.port.in.command.IncreaseProductQuantityCommand;
 import com.product.application.port.in.command.RegisterProductCommand;
@@ -91,7 +92,7 @@ public class Product {
             .category(Category.valueOf(command.category()))
             .deleteYn("N")
             .regDate(LocalDate.now())
-            .regDateTime(LocalDateTime.now())
+            .regDateTime(DateUtil.getCurrentLocalDateTime())
             .build();
     }
 
@@ -155,7 +156,7 @@ public class Product {
             updateList.add("price");
         }
 
-        this.updateDateTime = LocalDateTime.now();
+        this.updateDateTime = DateUtil.getCurrentLocalDateTime();
         this.needsEsUpdate = true;
         return updateList;
     }
@@ -168,7 +169,7 @@ public class Product {
     @JsonIgnore
     public void reserve(long reservedQuantity) {
         this.reservedQuantity += reservedQuantity;
-        this.updateDateTime = LocalDateTime.now();
+        this.updateDateTime = DateUtil.getCurrentLocalDateTime();
     }
 
     @JsonIgnore
@@ -176,19 +177,19 @@ public class Product {
         this.reservedQuantity -= reservation.reservedQuantity();
         this.quantity -= reservation.reservedQuantity();
         this.salesCount += reservation.reservedQuantity();
-        this.updateDateTime = LocalDateTime.now();
+        this.updateDateTime = DateUtil.getCurrentLocalDateTime();
     }
 
     @JsonIgnore
     public void cancelReservation(ProductReserveHistory reservation) {
         this.reservedQuantity -= reservation.reservedQuantity();
-        this.updateDateTime = LocalDateTime.now();
+        this.updateDateTime = DateUtil.getCurrentLocalDateTime();
     }
 
     @JsonIgnore
     public void increaseQuantity(IncreaseProductQuantityCommand command) {
         this.quantity += command.quantity();
-        this.updateDateTime = LocalDateTime.now();
+        this.updateDateTime = DateUtil.getCurrentLocalDateTime();
     }
 
     @JsonIgnore

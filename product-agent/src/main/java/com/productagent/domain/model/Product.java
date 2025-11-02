@@ -1,5 +1,6 @@
 package com.productagent.domain.model;
 
+import com.common.infrastructure.util.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -90,7 +91,7 @@ public class Product {
             reviewScoreNormalized * 0.3) * 100.0;
 
         needsEsUpdate = true;
-        updateDateTime = LocalDateTime.now();
+        updateDateTime = DateUtil.getCurrentLocalDateTime();
     }
 
     @JsonIgnore

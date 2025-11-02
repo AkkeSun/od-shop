@@ -1,5 +1,6 @@
 package com.product.domain.model;
 
+import com.common.infrastructure.util.DateUtil;
 import com.product.application.port.in.command.RegisterReviewCommand;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public record Review(
             .score(command.score())
             .review(command.review())
             .regDate(LocalDate.now())
-            .regDateTime(LocalDateTime.now())
+            .regDateTime(DateUtil.getCurrentLocalDateTime())
             .build();
     }
 }

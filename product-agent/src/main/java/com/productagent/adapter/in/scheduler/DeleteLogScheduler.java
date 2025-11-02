@@ -1,5 +1,6 @@
 package com.productagent.adapter.in.scheduler;
 
+import com.common.infrastructure.util.DateUtil;
 import com.productagent.application.port.in.DeleteLogUseCase;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,6 @@ class DeleteLogScheduler {
     @Scheduled(cron = "0 0 6 * * *")
     @SchedulerLock(name = "delete-log", lockAtLeastFor = "1s", lockAtMostFor = "30s")
     void update() {
-        useCase.delete(LocalDateTime.now().minusDays(90));
+        useCase.delete(DateUtil.getCurrentLocalDateTime().minusDays(90));
     }
 }

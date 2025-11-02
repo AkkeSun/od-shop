@@ -21,6 +21,10 @@ public class DateUtil {
             .format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
 
+    public static LocalDateTime getCurrentLocalDateTime() {
+        return LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+    }
+
     public static String formatDateTime(LocalDateTime dateTime) {
         return dateTime.format(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT, Locale.KOREA));
     }

@@ -1,6 +1,7 @@
 package com.productagent.adapter.out.persistence.jpa.shard2;
 
 
+import com.common.infrastructure.util.DateUtil;
 import com.productagent.application.port.out.ProductStoragePort;
 import com.productagent.domain.model.Product;
 import java.time.LocalDateTime;
@@ -38,7 +39,7 @@ public class ProductShard2Adapter implements ProductStoragePort {
 
     @Override
     public void deleteBySellerId(Long sellerId) {
-        productRepository.softDeleteByIdSellerId(sellerId, LocalDateTime.now());
+        productRepository.softDeleteByIdSellerId(sellerId, DateUtil.getCurrentLocalDateTime());
         metricRepository.deleteAllById(productRepository.findIdBySellerId(sellerId));
     }
 

@@ -1,5 +1,6 @@
 package com.product.domain.model;
 
+import com.common.infrastructure.util.DateUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -30,8 +31,8 @@ public record ProductMetric(
             .totalScore(0)
             .needsEsUpdate(false)
             .regDate(LocalDate.now())
-            .regDateTime(LocalDateTime.now())
-            .updateTime(LocalDateTime.now())
+            .regDateTime(DateUtil.getCurrentLocalDateTime())
+            .updateTime(DateUtil.getCurrentLocalDateTime())
             .build();
     }
 }

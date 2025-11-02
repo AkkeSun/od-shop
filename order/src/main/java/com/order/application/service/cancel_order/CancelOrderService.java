@@ -2,6 +2,7 @@ package com.order.application.service.cancel_order;
 
 import static com.common.infrastructure.exception.ErrorCode.Business_ALREADY_CANCEL_ORDCER;
 import static com.common.infrastructure.exception.ErrorCode.Business_NO_CUSTOMER;
+import static com.common.infrastructure.util.DateUtil.getCurrentLocalDateTime;
 import static com.common.infrastructure.util.JsonUtil.toJsonString;
 
 import com.common.infrastructure.exception.CustomBusinessException;
@@ -35,7 +36,7 @@ class CancelOrderService implements CancelOrderUseCase {
             throw new CustomBusinessException(Business_ALREADY_CANCEL_ORDCER);
         }
 
-        order.cancel(LocalDateTime.now());
+        order.cancel(getCurrentLocalDateTime());
         orderStoragePort.cancel(order);
         messageProducerPort.sendMessage(kafkaTopicProperties.cancelOrder(), toJsonString(order.products()));
         return CancelOrderServiceResponse.ofSuccess();

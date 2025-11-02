@@ -1,6 +1,7 @@
 package com.account.domain.model;
 
 import static com.common.infrastructure.util.DateUtil.getCurrentDate;
+import static com.common.infrastructure.util.DateUtil.getCurrentLocalDateTime;
 
 import com.account.applicaiton.port.in.command.RegisterAccountCommand;
 import com.account.applicaiton.port.in.command.UpdateAccountCommand;
@@ -61,7 +62,7 @@ public class Account {
             .roles(command.roles().stream()
                 .map(validRoles::get)
                 .toList())
-            .regDateTime(LocalDateTime.now())
+            .regDateTime(getCurrentLocalDateTime())
             .regDate(getCurrentDate())
             .build();
     }

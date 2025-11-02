@@ -1,6 +1,7 @@
 package com.order.domain.model;
 
 import com.common.infrastructure.resolver.LoginAccountInfo;
+import com.common.infrastructure.util.DateUtil;
 import com.order.application.port.in.command.RegisterOrderCommand;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +27,7 @@ public record Order(
             .receiverTel(command.receiverTel())
             .receiverAddress(command.receiverAddress())
             .products(products)
-            .regDateTime(LocalDateTime.now())
+            .regDateTime(DateUtil.getCurrentLocalDateTime())
             .build();
     }
 
