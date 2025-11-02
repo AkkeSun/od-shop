@@ -38,4 +38,8 @@ public class DateUtil {
         return LocalDateTime.parse(date,
             DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT, Locale.KOREA));
     }
+
+    public static LocalDateTime getCurrentLocalDateTime() {
+        return LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+    }
 }
