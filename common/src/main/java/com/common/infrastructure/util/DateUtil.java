@@ -9,7 +9,7 @@ import java.util.Locale;
 public class DateUtil {
 
     public static String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+    public static String DEFAULT_DATE_FORMAT = "yyyyMMdd";
 
     public static String getCurrentDateTime() {
         return ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
